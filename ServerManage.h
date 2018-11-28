@@ -1,5 +1,4 @@
-#ifndef SERVERMANAGE_H_HEADER_INCLUDED_A5CF6A84
-#define SERVERMANAGE_H_HEADER_INCLUDED_A5CF6A84
+#pragma once
 /*************************************************************************
 * function：服务器连接管理的定义文件
 * author :	明巧文
@@ -46,7 +45,3 @@ protected:
 private:
 	std::atomic<unsigned> m_uSrvUidGenerator = 1;
 };
-
-
-
-#endif /* SERVERMANAGE_H_HEADER_INCLUDED_A5CF6A84 */

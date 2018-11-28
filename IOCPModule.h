@@ -1,5 +1,4 @@
-#ifndef IOCPMODULE_H_HEADER_INCLUDED_A5CF4138
-#define IOCPMODULE_H_HEADER_INCLUDED_A5CF4138
+#pragma once
 /*************************************************************************
 * function：iocp模型定义文件，封装相关的网络操作，方便调用系统的网络操作
 * author :	明巧文
@@ -84,5 +83,3 @@ private:
 	LPFN_DISCONNECTEX m_fnDisconnectEx = NULL;
 	LPFN_GETACCEPTEXSOCKADDRS m_fnGetAcceptExSockaddrs = NULL;
 };
-
-#endif /* IOCPMODULE_H_HEADER_INCLUDED_A5CF4138 */

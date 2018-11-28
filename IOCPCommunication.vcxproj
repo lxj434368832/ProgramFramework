@@ -81,9 +81,11 @@
   <ItemGroup>
     <ClInclude Include="ClientManage.h" />
     <ClInclude Include="ConnectManage.h" />
-    <ClInclude Include="IOCPCommunication.h" />
+    <ClInclude Include="IOCPBase.h" />
+    <ClInclude Include="IOCPClient.h" />
     <ClInclude Include="IOCPModule.h" />
     <ClInclude Include="IOCPDef.h" />
+    <ClInclude Include="IOCPServer.h" />
     <ClInclude Include="MLock.h" />
     <ClInclude Include="ResourceManage.h" />
     <ClInclude Include="ServerManage.h" />
@@ -95,8 +97,10 @@
   <ItemGroup>
     <ClCompile Include="ClientManage.cpp" />
     <ClCompile Include="ConnectManage.cpp" />
-    <ClCompile Include="IOCPCommunication.cpp" />
+    <ClCompile Include="IOCPBase.cpp" />
+    <ClCompile Include="IOCPClient.cpp" />
     <ClCompile Include="IOCPModule.cpp" />
+    <ClCompile Include="IOCPServer.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MLock.cpp" />
     <ClCompile Include="ServerManage.cpp" />

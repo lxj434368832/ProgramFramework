@@ -1,5 +1,4 @@
-#ifndef CONNECTMANAGE_H_HEADER_INCLUDED_A5CF3E5A
-#define CONNECTMANAGE_H_HEADER_INCLUDED_A5CF3E5A
+#pragma once
 /*************************************************************************
 * function：连接管理定义文件
 * author :	明巧文
@@ -50,5 +49,3 @@ private:
 	mqw::ResourceManage<SOCKADDR_IN> m_rscAddr;
 };
 
-
-#endif /* CONNECTMANAGE_H_HEADER_INCLUDED_A5CF3E5A */

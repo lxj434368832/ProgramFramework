@@ -1,12 +1,12 @@
 #include "stdafx.h"
-#include "IOCPCommunication.h"
+#include "IOCPClient.h"
 #include "IOCPModule.h"
 #include "ConnectManage.h"
 #include "ServerManage.h"
 #include "ClientManage.h"
 #include <WS2tcpip.h>
 
-IOCPCommunication::IOCPCommunication(ConnectManage *pCnntMng,
+IOCPClient::IOCPClient(ConnectManage *pCnntMng,
 	ServerManage *pSrvMng, ClientManage *pClientMng):
 	 m_hIOCP(INVALID_HANDLE_VALUE), m_rscIO(1000)
 {
@@ -18,7 +18,7 @@ IOCPCommunication::IOCPCommunication(ConnectManage *pCnntMng,
 	m_pClientMng = pClientMng;
 }
 
-IOCPCommunication::~IOCPCommunication()
+IOCPClient::~IOCPClient()
 {
 	for (unsigned i = 0; i < m_uThreadCount; i++)
 	{
@@ -38,7 +38,7 @@ IOCPCommunication::~IOCPCommunication()
 	m_pClientMng = NULL;
 }
 
-bool IOCPCommunication::InitIOCP(unsigned uThreadCount)
+bool IOCPClient::InitIOCP(unsigned uThreadCount)
 {
 	assert(uThreadCount);
 
@@ -64,11 +64,11 @@ bool IOCPCommunication::InitIOCP(unsigned uThreadCount)
 	return true;
 }
 
-DWORD WINAPI  IOCPCommunication::WorkerThread(LPVOID lpParameter)
+DWORD WINAPI  IOCPClient::WorkerThread(LPVOID lpParameter)
 {
 	IOContext *pIO = NULL;
 	int iResult = 0;
-	IOCPCommunication *pThis = (IOCPCommunication*)lpParameter;
+	IOCPClient *pThis = (IOCPClient*)lpParameter;
 	while (true)
 	{
 		iResult = IOCPModule::Instance()->GetQueuedCompletionStatus(pThis->m_hIOCP, &pIO);
@@ -113,14 +113,12 @@ DWORD WINAPI  IOCPCommunication::WorkerThread(LPVOID lpParameter)
 	return 0;
 }
 
-unsigned IOCPCommunication::StartConnect(std::string ip, u_short port, IOContext* pIO, int iRecnnt)
+unsigned IOCPClient::StartConnect(std::string ip, u_short port, int iRecnnt = -1, const char* data = nullptr, int len = 0)
 {
 	unsigned uUserId = 0;
 	do 
 	{
-		if (NULL == pIO)
-			pIO = m_rscIO.get();
-
+		IOContext *pIO = m_rscIO.get();
 		pIO->wParam = iRecnnt;
 
 		if (INVALID_SOCKET == pIO->socket)
@@ -133,7 +131,7 @@ unsigned IOCPCommunication::StartConnect(std::string ip, u_short port, IOContext
 			MAssert(0 == IOCPModule::Instance()->BindIoCompletionPort(pIO->socket, m_hIOCP));
 		}
 
-		SOCKADDR_IN addrLocal;
+		SOCKADDR_IN addrLocal;	//貌似这个有问题,bind后被释放掉了
 		addrLocal.sin_addr.s_addr = ADDR_ANY;
 		addrLocal.sin_family = AF_INET;
 		addrLocal.sin_port = 0;
@@ -160,60 +158,7 @@ unsigned IOCPCommunication::StartConnect(std::string ip, u_short port, IOContext
 	return uUserId;
 }
 
-bool IOCPCommunication::StartServerListen(u_short port, unsigned iMaxServerCount)
-{
-	bool bRet = false;
-	SOCKET lstnSocket = INVALID_SOCKET;
-	do 
-	{
-		lstnSocket = IOCPModule::Instance()->Socket();
-		if (INVALID_SOCKET == lstnSocket)
-		{
-			MLOG("创建Server监听socket失败，错误码：%d", WSAGetLastError());
-			break;
-		}
-		int nOpt = 1;
-		setsockopt(lstnSocket, SOL_SOCKET, SO_REUSEADDR, (char*)&nOpt, sizeof(nOpt));
-
-		SOCKADDR_IN addrLocal;
-		addrLocal.sin_family = AF_INET;
-		addrLocal.sin_addr.s_addr = ADDR_ANY;
-		addrLocal.sin_port = htons(port);
-		if(IOCPModule::Instance()->Bind(lstnSocket, (LPSOCKADDR)&addrLocal)) break;
-
-		if (IOCPModule::Instance()->Listen(lstnSocket, SOMAXCONN)) break;
-
-		if (IOCPModule::Instance()->BindIoCompletionPort(lstnSocket, m_hIOCP)) break;
-
-		//投递接受操作
-		for (unsigned i = 0; i < iMaxServerCount; i++)
-		{
-			if (false == (bRet = PostAcceptEx(lstnSocket, EOP_SRV_ACCEPT)))
-			{
-				break;
-			}
-		}
-
-	} while (0);
-
-	if (bRet)
-	{
-		m_pSrvMng->SetSrvListenSocket(lstnSocket);
-	}
-	else
-	{
-		closesocket(lstnSocket);
-	}
-	
-	return bRet;
-}
-
-bool IOCPCommunication::StartClientListen(u_short port, unsigned iMaxUserCount)
-{
-	return true;
-}
-
-void IOCPCommunication::HandConnectOperate(int iResult, IOContext* pIO)
+void IOCPClient::HandConnectOperate(int iResult, IOContext* pIO)
 {
 	switch (pIO->oprateType)
 	{
@@ -314,78 +259,12 @@ void IOCPCommunication::HandConnectOperate(int iResult, IOContext* pIO)
 	}
 }
 
-void IOCPCommunication::HandClientOperate(int iResult, IOContext* pIO)
+void IOCPClient::HandClientOperate(int iResult, IOContext* pIO)
 {
 
 }
 
-void IOCPCommunication::HandServerOperate(int iResult, IOContext* pIO)
-{
-	switch (pIO->oprateType)
-	{
-	case EOP_SRV_ACCEPT:
-		if (0 == iResult)	//投递AcceptEx成功
-		{
-			pIO->uUserId = m_pSrvMng->GetSrvUserId();
-			m_pSrvMng->SrvAcceptNotify(pIO->uUserId, pIO->socket);
-			pIO->oprateType = EOP_SRV_RECEIVE;
-			UnpackReceivedData(pIO, std::bind(&ServerManage::HandSrvData, m_pSrvMng,
-				std::placeholders::_1, std::placeholders::_2, std::placeholders::_3));
-
-			SOCKADDR_IN *pUserAddr = NULL;
-			IOCPModule::Instance()->GetAcceptExSockaddrs(pIO, (LPSOCKADDR*)&pUserAddr);
-			char strIP[255];	inet_ntop(AF_INET, &pUserAddr->sin_addr, strIP, 255);
-			MLOG("新用户连入。用户IP：%s，用户套接字：%d", strIP, pIO->socket);
-
-			PostAcceptEx(m_pSrvMng->GetSrvListenSocket(), EOP_SRV_ACCEPT);	//
-		}
-		else
-		{
-			MLOG("投递AcceptEx失败，错误码：%d", iResult);
-			ReleaseIOContext(pIO);			//？这个有待验证
-		}
-		break;
-
-	case EOP_SRV_DISCONNECT:
-		if (iResult)
-		{
-			MLOG("Server断开连接失败，错误码:%d", iResult);
-		}
-		ReleaseIOContext(pIO);
-		break;
-
-	case EOP_SRV_RECEIVE:
-		DoReceive(pIO, iResult, std::bind(&ServerManage::HandSrvData, m_pSrvMng,
-			std::placeholders::_1, std::placeholders::_2, std::placeholders::_3));
-		break;
-
-	case EOP_SRV_SEND:
-		if (0 == pIO->overlapped.InternalHigh)
-		{
-			MLOG("网络的另一端已断开socket：%d 的连接！");
-			shutdown(pIO->socket, SD_BOTH);
-		}
-		else if (iResult)
-		{
-			if (ERROR_NETNAME_DELETED == iResult)
-				MLOG("网络的另一端已下线！");
-			else
-				MLOG("SRV发送失败，错误码：%d", iResult);
-
-			shutdown(pIO->socket, SD_BOTH);
-		}
-
-		ReleaseIOContext(pIO);
-
-		break;
-	default:
-		MLOG("未知的服务操作码：%d", pIO->oprateType);
-		MAssert(false);
-		break;
-	}
-}
-
-void IOCPCommunication::DoReceive(IOContext* pIO, int iResult,std::function<void(unsigned, const char*, unsigned)> HandData)
+void IOCPClient::DoReceive(IOContext* pIO, int iResult,std::function<void(unsigned, const char*, unsigned)> HandData)
 {
 	if (0 == pIO->overlapped.InternalHigh)	//代表服务器已断开此socket连接
 	{
@@ -407,19 +286,19 @@ void IOCPCommunication::DoReceive(IOContext* pIO, int iResult,std::function<void
 	}
 }
 
-IOContext* IOCPCommunication::GetIOContext()
+IOContext* IOCPClient::GetIOContext()
 {
 	return m_rscIO.get();
 }
 
-void IOCPCommunication::ReleaseIOContext(IOContext *pIO)
+void IOCPClient::ReleaseIOContext(IOContext *pIO)
 {
 	pIO->reset();
 	m_rscIO.put(pIO);
 }
 
 //
-void IOCPCommunication::UnpackReceivedData(IOContext* pIO, std::function<void(unsigned, const char*, unsigned)> HandData)
+void IOCPClient::UnpackReceivedData(IOContext* pIO, std::function<void(unsigned, const char*, unsigned)> HandData)
 {
 	pIO->dataLength += pIO->overlapped.InternalHigh;
 	char *buf = pIO->buffer;
@@ -460,7 +339,7 @@ void IOCPCommunication::UnpackReceivedData(IOContext* pIO, std::function<void(un
 	}
 }
 
-bool IOCPCommunication::PostConnectEx(IOContext* pIO, SOCKADDR* pSrvAddr)
+bool IOCPClient::PostConnectEx(IOContext* pIO, SOCKADDR* pSrvAddr)
 {
 	MAssert(pIO && pSrvAddr);
 	pIO->oprateType = EOP_CNNT_CONNECT;
@@ -475,7 +354,7 @@ bool IOCPCommunication::PostConnectEx(IOContext* pIO, SOCKADDR* pSrvAddr)
 	return true;
 }
 
-bool IOCPCommunication::PostAcceptEx(SOCKET listenSocket, EOperateType op)
+bool IOCPClient::PostAcceptEx(SOCKET listenSocket, EOperateType op)
 {
 	if (INVALID_SOCKET == listenSocket)
 	{
@@ -509,7 +388,7 @@ bool IOCPCommunication::PostAcceptEx(SOCKET listenSocket, EOperateType op)
 		return true;
 }
 
-void IOCPCommunication::PostDisconnectEx(IOContext* pIO, EOperateType op)
+void IOCPClient::PostDisconnectEx(IOContext* pIO, EOperateType op)
 {
 	UserInfo *pInfo = NULL;
 
@@ -560,7 +439,7 @@ void IOCPCommunication::PostDisconnectEx(IOContext* pIO, EOperateType op)
 
 }
 
-void IOCPCommunication::PostReceive(IOContext* pIO, EOperateType op)
+void IOCPClient::PostReceive(IOContext* pIO, EOperateType op)
 {
 	pIO->oprateType = op;
 	if (IOCPModule::Instance()->Receive(pIO))	//接受失败的处理
@@ -571,7 +450,7 @@ void IOCPCommunication::PostReceive(IOContext* pIO, EOperateType op)
 	}
 }
 
-void IOCPCommunication::PostSend(IOContext* pIO, EOperateType op)
+void IOCPClient::PostSend(IOContext* pIO, EOperateType op)
 {
 	pIO->oprateType = op;
 	if (IOCPModule::Instance()->Send(pIO))	//发送失败的处理
@@ -582,4 +461,3 @@ void IOCPCommunication::PostSend(IOContext* pIO, EOperateType op)
 	}
 
 }
-

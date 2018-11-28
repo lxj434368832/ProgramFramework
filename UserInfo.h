@@ -1,5 +1,4 @@
-#ifndef USERINFO_H_HEADER_INCLUDED_A5CF5013
-#define USERINFO_H_HEADER_INCLUDED_A5CF5013
+#pragma once
 
 #include "stdafx.h"
 
@@ -10,4 +9,3 @@ struct UserInfo
     SOCKET m_socket = INVALID_SOCKET;
 };
 
-#endif /* USERINFO_H_HEADER_INCLUDED_A5CF5013 */

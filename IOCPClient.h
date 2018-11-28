@@ -1,5 +1,4 @@
-#ifndef IOCPCOMMUNICATION_H_HEADER_INCLUDED_A5CF6C7D
-#define IOCPCOMMUNICATION_H_HEADER_INCLUDED_A5CF6C7D
+#pragma once
 /*************************************************************************
 * function：iocp通讯定义文件
 * author :	明巧文
@@ -18,12 +17,12 @@ class ClientManage;
 // 2、负责初始化所有类型的连接。
 // 3、统一创建iocp，统一创建iocp线程。
 
-class IOCPCommunication
+class IOCPClient
 {
   public:
-	  IOCPCommunication(ConnectManage *pCnntMng = NULL, 
+	  IOCPClient(ConnectManage *pCnntMng = NULL, 
 		  ServerManage *pSrvMng = NULL, ClientManage *pClientMng = NULL);
-	  virtual ~IOCPCommunication();
+	  virtual ~IOCPClient();
 
     bool InitIOCP(unsigned uThreadCount);
 
@@ -37,23 +36,7 @@ class IOCPCommunication
 	* param iRecnnt: 是否重连标识,小于0代表不需要重连
 	* return:		 返回此连接对应的id,但不代表连接成功，为0代表连接出现了错误
 	*************************************************************************/
-	unsigned StartConnect(std::string ip, u_short port, IOContext* pIO = NULL, int iRecnnt = -1);
-
-	/*************************************************************************
-	* function：  开启针对服务端的监听
-	* param port: 本地监听的端口号
-	* param iMaxServerCount:最大的连接个数
-	* return:	  成功返回true,失败返回false.
-	*************************************************************************/
-    bool StartServerListen(u_short port, unsigned iMaxServerCount);
-
-	/*************************************************************************
-	* function：  开启针对客户端的监听
-	* param port: 本地监听的端口号
-	* param iMaxServerCount:最大的连接个数
-	* return:	  成功返回true,失败返回false.
-	*************************************************************************/
-    bool StartClientListen(u_short port, unsigned iMaxUserCount);
+	unsigned StartConnect(std::string ip, u_short port, int iRecnnt = -1, const char* data = nullptr, int len = 0);
 
     //处理连接操作
     void HandConnectOperate(int iResult, IOContext* pIO);
@@ -104,6 +87,3 @@ private:
 	ClientManage					*m_pClientMng;	//客户端管理
 };
 
-
-
-#endif /* IOCPCOMMUNICATION_H_HEADER_INCLUDED_A5CF6C7D */

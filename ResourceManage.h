@@ -1,5 +1,4 @@
-#ifndef ZXI_RESOURCE_MANAGE_H_
-#define ZXI_RESOURCE_MANAGE_H_
+#pragma once
 /*************************************************************************
 * function：资源管理器定义文件，
 * author :	明巧文
@@ -212,5 +211,3 @@ namespace mqw
         unused_list_.clear();
     }
 }
-
-#endif

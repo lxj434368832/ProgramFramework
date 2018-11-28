@@ -24,9 +24,6 @@
     <ClInclude Include="ConnectManage.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="IOCPCommunication.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="IOCPModule.h">
       <Filter>头文件</Filter>
     </ClInclude>
@@ -54,6 +51,15 @@
     <ClInclude Include="ClientManage.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="IOCPBase.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="IOCPClient.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="IOCPServer.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -63,9 +69,6 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="ConnectManage.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="IOCPCommunication.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="IOCPModule.cpp">
@@ -87,6 +90,15 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="ClientManage.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="IOCPBase.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="IOCPClient.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="IOCPServer.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
