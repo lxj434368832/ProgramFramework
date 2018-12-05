@@ -81,6 +81,7 @@
   <ItemGroup>
     <ClInclude Include="ClientManage.h" />
     <ClInclude Include="ConnectManage.h" />
+    <ClInclude Include="INetInterface.h" />
     <ClInclude Include="IOCPBase.h" />
     <ClInclude Include="IOCPClient.h" />
     <ClInclude Include="IOCPModule.h" />
@@ -97,6 +98,7 @@
   <ItemGroup>
     <ClCompile Include="ClientManage.cpp" />
     <ClCompile Include="ConnectManage.cpp" />
+    <ClCompile Include="INetInterface.cpp" />
     <ClCompile Include="IOCPBase.cpp" />
     <ClCompile Include="IOCPClient.cpp" />
     <ClCompile Include="IOCPModule.cpp" />

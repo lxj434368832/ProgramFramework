@@ -9,9 +9,8 @@
 #include "stdafx.h"
 #include <queue>
 
-#define MAX_BUF_LEN 512 //512B
-#define RECEIVE_BUF_COUNT 10
-
+#define MAX_BUF_LEN 512			//发送缓冲区大小512B
+#define MAX_RCV_BUF_LEN 5120	//接收缓冲区大小5K
 
 // 在完成端口上投递的I/O操作的类型
 enum EOperateType
@@ -79,8 +78,8 @@ struct PER_RECEIVE_IO_CONTEXT :public PER_IO_CONTEXT
 	PER_RECEIVE_IO_CONTEXT()
 	{
 		m_socket = INVALID_SOCKET;
-		m_uBufLength = MAX_BUF_LEN * RECEIVE_BUF_COUNT;
-		m_szBuffer = new char[m_uBufLength];
+		m_uBufLength = MAX_RCV_BUF_LEN;
+		m_szBuffer = new char[MAX_RCV_BUF_LEN];
 
 		reset();
 	}
@@ -94,8 +93,8 @@ struct PER_RECEIVE_IO_CONTEXT :public PER_IO_CONTEXT
 
 struct PER_SOCKET_CONTEXT
 {
-	SOCKET					m_Socket;                   // 每一个客户端连接的Socket
-	SOCKADDR_IN				m_ClientAddr;               // 客户端的地址
+	SOCKET					m_socket;                   // 每一个客户端连接的Socket
+	SOCKADDR_IN				m_clientAddr;               // 客户端的地址
 	PER_RECEIVE_IO_CONTEXT	m_ReceiveContext;			//接收上下文
 	int						m_iDisconnectFlag;			//断开连接标识
 	int						m_iSendPendingFlag;			//发送请求标识
@@ -104,17 +103,17 @@ struct PER_SOCKET_CONTEXT
 	// 初始化
 	PER_SOCKET_CONTEXT()
 	{
-		m_Socket = INVALID_SOCKET;
-		memset(&m_ClientAddr, 0, sizeof(m_ClientAddr));
+		m_socket = INVALID_SOCKET;
+		memset(&m_clientAddr, 0, sizeof(m_clientAddr));
 	}
 
 	// 释放资源
 	~PER_SOCKET_CONTEXT()
 	{
-		if (m_Socket != INVALID_SOCKET)
+		if (m_socket != INVALID_SOCKET)
 		{
-			closesocket(m_Socket);
-			m_Socket = INVALID_SOCKET;
+			closesocket(m_socket);
+			m_socket = INVALID_SOCKET;
 		}
 	}
 };

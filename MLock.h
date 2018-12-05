@@ -27,6 +27,7 @@ public:
 	{
 		m_pLock->lock();
 	}
+
 private:
 	MLock *m_pLock;
 };

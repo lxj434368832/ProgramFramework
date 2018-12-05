@@ -38,5 +38,5 @@
 
 //  Õ∑≈Socket∫Í
 #ifndef RELEASE_SOCKET
-#define RELEASE_SOCKET(x) {if(x !=INVALID_SOCKET) { ::shutdown(x,2);::closesocket(x);x = INVALID_SOCKET;}}
+#define RELEASE_SOCKET(x) {if(x !=INVALID_SOCKET) { ::closesocket(x);x = INVALID_SOCKET;}}
 #endif

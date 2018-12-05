@@ -75,6 +75,7 @@ private:
 	IOCPModule();
 	IOCPModule(const IOCPModule&);
 	IOCPModule& operator=(const IOCPModule&);
+
 	void LoadAllWSAFunction();
 
 private:

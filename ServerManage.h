@@ -16,9 +16,6 @@ class ServerManage
 {
 public:
 	virtual ~ServerManage();
-	void SetSrvListenSocket(SOCKET listenSocket);
-
-	SOCKET GetSrvListenSocket();
 
 	unsigned GetSrvUserId();
 
@@ -37,8 +34,6 @@ protected:
 	virtual void ReleaseSrvUserInfo(UserInfo* pSrvUserInfo) = 0;
 
 protected:
-	SOCKET m_sSrvLstnSocket;
-
 	std::map<unsigned, UserInfo*> m_mapSrvUserList;	//服务用户列表
 	MLock						 m_lckSrvUserList;	//服务用户列表锁
 

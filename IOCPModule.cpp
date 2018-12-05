@@ -65,10 +65,10 @@ HANDLE IOCPModule::CreateIoCompletionPort()
 int IOCPModule::BindIoCompletionPort(PER_SOCKET_CONTEXT *pSkContext, HANDLE hIOCP)
 {
 	int iRet = 0;
-	if (NULL == ::CreateIoCompletionPort((HANDLE)pSkContext->m_Socket, hIOCP, (DWORD_PTR)pSkContext, 0))
+	if (NULL == ::CreateIoCompletionPort((HANDLE)pSkContext->m_socket, hIOCP, (DWORD_PTR)pSkContext, 0))
 	{
 		iRet = ::WSAGetLastError();
-		MLOG("socket:%d绑定到完成端口失败，错误码：%d", pSkContext->m_Socket, iRet);
+		MLOG("socket:%d绑定到完成端口失败，错误码：%d", pSkContext->m_socket, iRet);
 	}
 	return iRet;
 }
@@ -95,7 +95,7 @@ int IOCPModule::AcceptEx(SOCKET listenSocket, PER_IO_CONTEXT *pIO)
 
 void IOCPModule::GetAcceptExSockaddrs(PER_IO_CONTEXT *pIO, LPSOCKADDR *client)
 {
-	LPSOCKADDR local = NULL;
+	LPSOCKADDR local = nullptr;
 	int iAddrLen = sizeof(SOCKADDR);
 	DWORD dwFlag = 0;
 	int iRet = 0;

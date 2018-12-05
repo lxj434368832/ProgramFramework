@@ -7,16 +7,6 @@ ServerManage::~ServerManage()
 
 }
 
-void ServerManage::SetSrvListenSocket(SOCKET listenSocket)
-{
-	m_sSrvLstnSocket = listenSocket;
-}
-
-SOCKET ServerManage::GetSrvListenSocket()
-{
-	return m_sSrvLstnSocket;
-}
-
 unsigned ServerManage::GetSrvUserId()
 {
 	return m_uSrvUidGenerator ++;
