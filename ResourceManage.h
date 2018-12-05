@@ -132,6 +132,7 @@ namespace mqw
             {
                 return nullptr;
             }
+
             try{
                 T *new_block = new T[count_per_unit_];
                 for (std::size_t i = 0; i < count_per_unit_; i++)
@@ -146,6 +147,7 @@ namespace mqw
                 return nullptr;
             }
         }
+
         T *tmp_user = unused_list_.front();
         unused_list_.pop_front();
         using_list_[tmp_user] = tmp_user;

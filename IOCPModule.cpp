@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "IOCPModule.h"
 #include "IOCPDef.h"
+#include <mstcpip.h>
 
 #pragma comment(lib,"Ws2_32.lib")
 #pragma comment(lib,"Kernel32.lib")
@@ -61,26 +62,27 @@ HANDLE IOCPModule::CreateIoCompletionPort()
 	return::CreateIoCompletionPort(INVALID_HANDLE_VALUE, NULL, 0, 0);
 }
 
-int IOCPModule::BindIoCompletionPort(SOCKET s, HANDLE hIOCP)
+int IOCPModule::BindIoCompletionPort(PER_SOCKET_CONTEXT *pSkContext, HANDLE hIOCP)
 {
 	int iRet = 0;
-	if (NULL == ::CreateIoCompletionPort((HANDLE)s,hIOCP,0, 0))
+	if (NULL == ::CreateIoCompletionPort((HANDLE)pSkContext->m_Socket, hIOCP, (DWORD_PTR)pSkContext, 0))
 	{
-		iRet = WSAGetLastError();
-		MLOG("socket:%d°ó¶¨µ½Íê³É¶Ë¿ÚÊ§°Ü£¬´íÎóÂë£º%d", s, iRet);
+		iRet = ::WSAGetLastError();
+		MLOG("socket:%d°ó¶¨µ½Íê³É¶Ë¿ÚÊ§°Ü£¬´íÎóÂë£º%d", pSkContext->m_Socket, iRet);
 	}
 	return iRet;
 }
 
-int IOCPModule::AcceptEx(SOCKET srvSocket, PER_IO_CONTEXT *pIO)
+int IOCPModule::AcceptEx(SOCKET listenSocket, PER_IO_CONTEXT *pIO)
 {
 	int iRet = 0;
 	int iSockaddrSize = sizeof(SOCKADDR) + 16;
 	DWORD dwBytes = 0;
-	if (false == m_fnAcceptEx(srvSocket,pIO->m_socket,pIO->m_wsaBuf.buf,pIO->m_wsaBuf.len - iSockaddrSize*2,
+	pIO->m_oprateType = EOP_ACCEPT;
+	if (false == m_fnAcceptEx(listenSocket,pIO->m_socket,pIO->m_wsaBuf.buf,pIO->m_wsaBuf.len - iSockaddrSize*2,
 		iSockaddrSize,iSockaddrSize,&dwBytes,&pIO->m_overlapped))
 	{
-		iRet = WSAGetLastError();
+		iRet = ::WSAGetLastError();
 		if (WSA_IO_PENDING != iRet)
 		{
 			MLOG("¿ªÆôAcceptExÊ§°Ü£¬´íÎóÂë:%d", iRet);
@@ -138,20 +140,6 @@ int IOCPModule::DisconnectEx(PER_IO_CONTEXT *pIO)
 	return iRet;
 }
 
-int IOCPModule::GetQueuedCompletionStatus(HANDLE hcp, PER_IO_CONTEXT **ppIOContext)
-{
-	int iRet = 0;
-	DWORD dwBytes = 0;
-	LPOVERLAPPED pOL = NULL;
-	if (false == ::GetQueuedCompletionStatus(hcp, &dwBytes, 0, &pOL, INFINITY))
-	{
-		iRet = GetLastError();
-	}
-	*ppIOContext = CONTAINING_RECORD(pOL, PER_IO_CONTEXT, m_overlapped);
-
-	return iRet;
-}
-
 int IOCPModule::PostQueuedCompletionStatus(HANDLE hCP, DWORD dwTransBytes, ULONG_PTR dwCompletionKey,LPOVERLAPPED lpOL)
 {
 	int iRet = 0;
@@ -168,7 +156,7 @@ int IOCPModule::Send(PER_IO_CONTEXT *pIO)
 	DWORD dwFlags = 0;
 	int iRet = 0;
 
-	if (SOCKET_ERROR == WSASend(pIO->m_socket, &pIO->m_wsaBuf, 1, NULL, dwFlags, &pIO->m_overlapped, NULL))
+	if (SOCKET_ERROR == WSASend(pIO->m_socket, &pIO->m_wsaBuf, 1, nullptr, dwFlags, &pIO->m_overlapped, NULL))
 	{
 		iRet = WSAGetLastError();
 		if (iRet != WSA_IO_PENDING)
@@ -184,7 +172,7 @@ int IOCPModule::Receive(PER_IO_CONTEXT *pIO)
 {
 	DWORD dwFlags = 0;
 	int iRet = 0;
-	if (SOCKET_ERROR == WSARecv(pIO->m_socket, &pIO->m_wsaBuf,1,NULL,&dwFlags,&pIO->m_overlapped,NULL))
+	if (SOCKET_ERROR == WSARecv(pIO->m_socket, &pIO->m_wsaBuf, 1, nullptr, &dwFlags, &pIO->m_overlapped, nullptr))
 	{
 		iRet = WSAGetLastError();
 		if (WSA_IO_PENDING != iRet)
@@ -193,6 +181,33 @@ int IOCPModule::Receive(PER_IO_CONTEXT *pIO)
 			iRet = 0;
 	}
 	return iRet;
+}
+
+bool IOCPModule::SetKeepLiveParam(PER_IO_CONTEXT *pIO)
+{
+	bool bKeepAlive = true;
+	int nRet = setsockopt(pIO->m_socket, SOL_SOCKET, SO_KEEPALIVE,
+		(char*)&bKeepAlive, sizeof(bKeepAlive));
+	if (nRet == SOCKET_ERROR)
+	{
+		MLOG("setsockopt failed: %d/n", WSAGetLastError());
+		return false;
+	}
+
+	// set KeepAlive parameter
+	tcp_keepalive alive_in;
+	alive_in.keepalivetime = 5000;  // 5s
+	alive_in.keepaliveinterval = 1000; //1s,total time 1000*10(10s)
+	alive_in.onoff = TRUE;
+	unsigned long ulBytesReturn = 0;
+
+	nRet = WSAIoctl(pIO->m_socket, SIO_KEEPALIVE_VALS, &alive_in, sizeof(alive_in),
+		nullptr, 0, &ulBytesReturn, &pIO->m_overlapped, NULL);
+	if (nRet == SOCKET_ERROR)
+	{
+		MLOG("WSAIoctl failed: %d/n", WSAGetLastError());
+		return false;
+	}
 }
 
 void IOCPModule::LoadAllWSAFunction()

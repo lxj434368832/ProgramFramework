@@ -43,13 +43,13 @@ public:
 	* function：将socket绑定到完成端口hIOCP上
 	* return:	成功返回0，失败返回WSAGetLastError()的值
 	*************************************************************************/
-	int BindIoCompletionPort(SOCKET socket, HANDLE hIOCP);
+	int BindIoCompletionPort(PER_SOCKET_CONTEXT *pSkContext, HANDLE hIOCP);
 	
 	/*************************************************************************
 	* function：开启客户端的连接
 	* return:	成功返回0，失败返回WSAGetLastError()的值
 	*************************************************************************/
-	int AcceptEx(SOCKET srvSocket, PER_IO_CONTEXT *pIO);
+	int AcceptEx(SOCKET listenSocket, PER_IO_CONTEXT *pIO);
 
 	void GetAcceptExSockaddrs(PER_IO_CONTEXT *pIO, LPSOCKADDR *client);
 
@@ -60,9 +60,6 @@ public:
 	int DisconnectEx(PER_IO_CONTEXT *pIO);
 
 	//成功返回0，不成功返回GetLastError()的值
-	int GetQueuedCompletionStatus(HANDLE hcp, PER_IO_CONTEXT **ppIOContext);
-
-	//成功返回0，不成功返回GetLastError()的值
 	int PostQueuedCompletionStatus(HANDLE hCP, DWORD dwTransBytes, ULONG_PTR dwCompletionKey, LPOVERLAPPED lpOL);
 
 	//成功返回0，不成功返回GetLastError()的值
@@ -70,6 +67,9 @@ public:
 
 	//成功返回0，不成功返回GetLastError()的值
 	int Receive(PER_IO_CONTEXT *pIO);
+
+	//设置keeplive参数,服务端调用
+	bool SetKeepLiveParam(PER_IO_CONTEXT *pIO);
 
 private:
 	IOCPModule();
