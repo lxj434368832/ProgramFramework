@@ -39,48 +39,48 @@ class IOCPClient
 	unsigned StartConnect(std::string ip, u_short port, int iRecnnt = -1, const char* data = nullptr, int len = 0);
 
     //处理连接操作
-    void HandConnectOperate(int iResult, IOContext* pIO);
+    void HandConnectOperate(int iResult, PER_IO_CONTEXT* pIO);
 
     //处理客户端操作
-    void HandClientOperate(int iResult, IOContext* pIO);
+    void HandClientOperate(int iResult, PER_IO_CONTEXT* pIO);
 
     //处理服务端操作
-    void HandServerOperate(int iResult, IOContext* pIO);
+    void HandServerOperate(int iResult, PER_IO_CONTEXT* pIO);
 
 	/*************************************************************************
 	* function：获取一个IOContext的结构
 	* return:	IOContext的指针
 	*************************************************************************/
-    IOContext* GetIOContext();
+    PER_IO_CONTEXT* GetIOContext();
 
 	//回收利用IOContext
-	void ReleaseIOContext(IOContext *pIO);
+	void ReleaseIOContext(PER_IO_CONTEXT *pIO);
 
   private:
-	  bool PostConnectEx(IOContext* pIO, SOCKADDR* serverAddr);
+	  bool PostConnectEx(PER_IO_CONTEXT* pIO, SOCKADDR* serverAddr);
 
     //投递接受
 	  bool PostAcceptEx(SOCKET listenSocket, EOperateType op);
 
     //
-	void PostDisconnectEx(IOContext* pIO, EOperateType op);
+	void PostDisconnectEx(PER_IO_CONTEXT* pIO, EOperateType op);
 
     //
-    void PostReceive(IOContext* pIO, EOperateType op);
+    void PostReceive(PER_IO_CONTEXT* pIO, EOperateType op);
 
     //发送
-	void PostSend(IOContext* pIO, EOperateType op);
+	void PostSend(PER_IO_CONTEXT* pIO, EOperateType op);
 
 	//解包接收到的数据
-	void UnpackReceivedData(IOContext* pIO, std::function<void(unsigned, const char*, unsigned)> HandData);
+	void UnpackReceivedData(PER_IO_CONTEXT* pIO, std::function<void(unsigned, const char*, unsigned)> HandData);
 
-	void DoReceive(IOContext* pIO, int iResult, std::function<void(unsigned, const char*, unsigned)> HandData);
+	void DoReceive(PER_IO_CONTEXT* pIO, int iResult, std::function<void(unsigned, const char*, unsigned)> HandData);
 
 private:
 	HANDLE 							m_hIOCP;		//完成端口
 	unsigned						m_uThreadCount;	//线程个数
 	HANDLE				 			*m_aThreadList;	//线程池列表
-    mqw::ResourceManage<IOContext>	m_rscIO;		//IO资源管理
+    mqw::ResourceManage<PER_IO_CONTEXT>	m_rscIO;		//IO资源管理
 
 	ConnectManage					*m_pCnntMng;	//连接管理
 	ServerManage					*m_pSrvMng;		//服务器管理

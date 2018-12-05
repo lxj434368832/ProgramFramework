@@ -1,11 +1,11 @@
-#ifndef IOCPCOMMUNICATION_H_HEADER_INCLUDED_A5CF6C7D
-#define IOCPCOMMUNICATION_H_HEADER_INCLUDED_A5CF6C7D
+#pragma once
 /*************************************************************************
 * function：iocp通讯定义文件
 * author :	明巧文
 * datetime：2017-12-14
 * company:  安碧捷科技股份有限公司
 *************************************************************************/
+
 #include "stdafx.h"
 #include "IOCPDef.h"
 #include "ResourceManage.h"
@@ -18,12 +18,12 @@ class ClientManage;
 // 2、负责初始化所有类型的连接。
 // 3、统一创建iocp，统一创建iocp线程。
 
-class IOCPCommunication
+class IOCPServier
 {
   public:
-	  IOCPCommunication(ConnectManage *pCnntMng = NULL, 
+	  IOCPServier(ConnectManage *pCnntMng = NULL, 
 		  ServerManage *pSrvMng = NULL, ClientManage *pClientMng = NULL);
-	  virtual ~IOCPCommunication();
+	  virtual ~IOCPServier();
 
     bool InitIOCP(unsigned uThreadCount);
 
@@ -37,7 +37,7 @@ class IOCPCommunication
 	* param iRecnnt: 是否重连标识,小于0代表不需要重连
 	* return:		 返回此连接对应的id,但不代表连接成功，为0代表连接出现了错误
 	*************************************************************************/
-	unsigned StartConnect(std::string ip, u_short port, IOContext* pIO = NULL, int iRecnnt = -1);
+	unsigned StartConnect(std::string ip, u_short port, PER_IO_CONTEXT* pIO = NULL, int iRecnnt = -1);
 
 	/*************************************************************************
 	* function：  开启针对服务端的监听
@@ -56,54 +56,54 @@ class IOCPCommunication
     bool StartClientListen(u_short port, unsigned iMaxUserCount);
 
     //处理连接操作
-    void HandConnectOperate(int iResult, IOContext* pIO);
+    void HandConnectOperate(int iResult, PER_IO_CONTEXT* pIO);
 
     //处理客户端操作
-    void HandClientOperate(int iResult, IOContext* pIO);
+    void HandClientOperate(int iResult, PER_IO_CONTEXT* pIO);
 
     //处理服务端操作
-    void HandServerOperate(int iResult, IOContext* pIO);
+    void HandServerOperate(int iResult, PER_IO_CONTEXT* pIO);
 
 	/*************************************************************************
 	* function：获取一个IOContext的结构
 	* return:	IOContext的指针
 	*************************************************************************/
-    IOContext* GetIOContext();
+    PER_IO_CONTEXT* GetIOContext();
 
 	//回收利用IOContext
-	void ReleaseIOContext(IOContext *pIO);
+	void ReleaseIOContext(PER_IO_CONTEXT *pIO);
 
   private:
-	  bool PostConnectEx(IOContext* pIO, SOCKADDR* serverAddr);
+	  bool PostConnectEx(PER_IO_CONTEXT* pIO, SOCKADDR* serverAddr);
 
     //投递接受
 	  bool PostAcceptEx(SOCKET listenSocket, EOperateType op);
 
     //
-	void PostDisconnectEx(IOContext* pIO, EOperateType op);
+	void PostDisconnectEx(PER_IO_CONTEXT* pIO, EOperateType op);
 
     //
-    void PostReceive(IOContext* pIO, EOperateType op);
+    void PostReceive(PER_IO_CONTEXT* pIO, EOperateType op);
 
     //发送
-	void PostSend(IOContext* pIO, EOperateType op);
+	void PostSend(PER_IO_CONTEXT* pIO, EOperateType op);
 
 	//解包接收到的数据
-	void UnpackReceivedData(IOContext* pIO, std::function<void(unsigned, const char*, unsigned)> HandData);
+	void UnpackReceivedData(PER_IO_CONTEXT* pIO, std::function<void(unsigned, const char*, unsigned)> HandData);
 
-	void DoReceive(IOContext* pIO, int iResult, std::function<void(unsigned, const char*, unsigned)> HandData);
+	void DoReceive(PER_IO_CONTEXT* pIO, int iResult, std::function<void(unsigned, const char*, unsigned)> HandData);
 
 private:
-	HANDLE 							m_hIOCP;		//完成端口
-	unsigned						m_uThreadCount;	//线程个数
-	HANDLE				 			*m_aThreadList;	//线程池列表
-    mqw::ResourceManage<IOContext>	m_rscIO;		//IO资源管理
+	HANDLE 							m_hIOCompletionPort;		//完成端口
+	unsigned						m_uThreadCount;				//线程个数
+	HANDLE				 			*m_aThreadList;				//线程池列表
+	std::map<SOCKET, PER_SOCKET_CONTEXT> m_mapConnectList;		//连接列表
+	mqw::ResourceManage<PER_SOCKET_CONTEXT>	m_rscSocketContext;	//IO资源管理
+
+    mqw::ResourceManage<PER_IO_CONTEXT>	m_rscIO;	//IO资源管理
 
 	ConnectManage					*m_pCnntMng;	//连接管理
 	ServerManage					*m_pSrvMng;		//服务器管理
 	ClientManage					*m_pClientMng;	//客户端管理
 };
 
-
-
-#endif /* IOCPCOMMUNICATION_H_HEADER_INCLUDED_A5CF6C7D */

@@ -9,7 +9,7 @@
 #include "stdafx.h"
 #include <MSWSock.h>
 
-struct IOContext;
+struct PER_IO_CONTEXT;
 
 // 主要封装iocp相关的连接、接收、发送函数
 
@@ -49,27 +49,27 @@ public:
 	* function：开启客户端的连接
 	* return:	成功返回0，失败返回WSAGetLastError()的值
 	*************************************************************************/
-	int AcceptEx(SOCKET srvSocket, IOContext *pIO);
+	int AcceptEx(SOCKET srvSocket, PER_IO_CONTEXT *pIO);
 
-	void GetAcceptExSockaddrs(IOContext *pIO, LPSOCKADDR *client);
-
-	//成功返回0，不成功返回GetLastError()的值
-	int ConnectEx(IOContext *pIO, const LPSOCKADDR name);
+	void GetAcceptExSockaddrs(PER_IO_CONTEXT *pIO, LPSOCKADDR *client);
 
 	//成功返回0，不成功返回GetLastError()的值
-	int DisconnectEx(IOContext *pIO);
+	int ConnectEx(PER_IO_CONTEXT *pIO, const LPSOCKADDR name);
 
 	//成功返回0，不成功返回GetLastError()的值
-	int GetQueuedCompletionStatus(HANDLE hcp, IOContext **ppIOContext);
+	int DisconnectEx(PER_IO_CONTEXT *pIO);
+
+	//成功返回0，不成功返回GetLastError()的值
+	int GetQueuedCompletionStatus(HANDLE hcp, PER_IO_CONTEXT **ppIOContext);
 
 	//成功返回0，不成功返回GetLastError()的值
 	int PostQueuedCompletionStatus(HANDLE hCP, DWORD dwTransBytes, ULONG_PTR dwCompletionKey, LPOVERLAPPED lpOL);
 
 	//成功返回0，不成功返回GetLastError()的值
-	int Send(IOContext *pIO);
+	int Send(PER_IO_CONTEXT *pIO);
 
 	//成功返回0，不成功返回GetLastError()的值
-	int Receive(IOContext *pIO);
+	int Receive(PER_IO_CONTEXT *pIO);
 
 private:
 	IOCPModule();

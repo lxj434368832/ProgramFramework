@@ -72,13 +72,13 @@ int IOCPModule::BindIoCompletionPort(SOCKET s, HANDLE hIOCP)
 	return iRet;
 }
 
-int IOCPModule::AcceptEx(SOCKET srvSocket, IOContext *pIO)
+int IOCPModule::AcceptEx(SOCKET srvSocket, PER_IO_CONTEXT *pIO)
 {
 	int iRet = 0;
 	int iSockaddrSize = sizeof(SOCKADDR) + 16;
 	DWORD dwBytes = 0;
-	if (false == m_fnAcceptEx(srvSocket,pIO->socket,pIO->wsabuf.buf,pIO->wsabuf.len - iSockaddrSize*2,
-		iSockaddrSize,iSockaddrSize,&dwBytes,&pIO->overlapped))
+	if (false == m_fnAcceptEx(srvSocket,pIO->m_socket,pIO->m_wsaBuf.buf,pIO->m_wsaBuf.len - iSockaddrSize*2,
+		iSockaddrSize,iSockaddrSize,&dwBytes,&pIO->m_overlapped))
 	{
 		iRet = WSAGetLastError();
 		if (WSA_IO_PENDING != iRet)
@@ -91,22 +91,22 @@ int IOCPModule::AcceptEx(SOCKET srvSocket, IOContext *pIO)
 	return iRet;
 }
 
-void IOCPModule::GetAcceptExSockaddrs(IOContext *pIO, LPSOCKADDR *client)
+void IOCPModule::GetAcceptExSockaddrs(PER_IO_CONTEXT *pIO, LPSOCKADDR *client)
 {
 	LPSOCKADDR local = NULL;
 	int iAddrLen = sizeof(SOCKADDR);
 	DWORD dwFlag = 0;
 	int iRet = 0;
-	m_fnGetAcceptExSockaddrs(pIO->wsabuf.buf, pIO->wsabuf.len - (iAddrLen + 16) * 2, iAddrLen, iAddrLen,
+	m_fnGetAcceptExSockaddrs(pIO->m_wsaBuf.buf, pIO->m_wsaBuf.len - (iAddrLen + 16) * 2, iAddrLen, iAddrLen,
 		&local, &iAddrLen, client, &iAddrLen);
 }
 
-int IOCPModule::ConnectEx(IOContext *pIO, const LPSOCKADDR name)
+int IOCPModule::ConnectEx(PER_IO_CONTEXT *pIO, const LPSOCKADDR name)
 {
 	int bRet = 0;
 	DWORD dwLen = 0;
-	if (false == m_fnConnectEx(pIO->socket, name, sizeof(SOCKADDR),
-			pIO->wsabuf.buf, pIO->wsabuf.len, &dwLen,&pIO->overlapped))
+	if (false == m_fnConnectEx(pIO->m_socket, name, sizeof(SOCKADDR),
+			pIO->m_wsaBuf.buf, pIO->m_wsaBuf.len, &dwLen,&pIO->m_overlapped))
 	{
 		bRet = GetLastError();
 		if (WSA_IO_PENDING != bRet)
@@ -120,10 +120,10 @@ int IOCPModule::ConnectEx(IOContext *pIO, const LPSOCKADDR name)
 	return bRet;
 }
 
-int IOCPModule::DisconnectEx(IOContext *pIO)
+int IOCPModule::DisconnectEx(PER_IO_CONTEXT *pIO)
 {
 	int iRet = 0;
-	if (false == m_fnDisconnectEx(pIO->socket,&pIO->overlapped, TF_REUSE_SOCKET,0))
+	if (false == m_fnDisconnectEx(pIO->m_socket,&pIO->m_overlapped, TF_REUSE_SOCKET,0))
 	{
 		iRet = GetLastError();
 		if (WSA_IO_PENDING != iRet)
@@ -138,7 +138,7 @@ int IOCPModule::DisconnectEx(IOContext *pIO)
 	return iRet;
 }
 
-int IOCPModule::GetQueuedCompletionStatus(HANDLE hcp, IOContext **ppIOContext)
+int IOCPModule::GetQueuedCompletionStatus(HANDLE hcp, PER_IO_CONTEXT **ppIOContext)
 {
 	int iRet = 0;
 	DWORD dwBytes = 0;
@@ -147,7 +147,7 @@ int IOCPModule::GetQueuedCompletionStatus(HANDLE hcp, IOContext **ppIOContext)
 	{
 		iRet = GetLastError();
 	}
-	*ppIOContext = CONTAINING_RECORD(pOL, IOContext, overlapped);
+	*ppIOContext = CONTAINING_RECORD(pOL, PER_IO_CONTEXT, m_overlapped);
 
 	return iRet;
 }
@@ -163,12 +163,12 @@ int IOCPModule::PostQueuedCompletionStatus(HANDLE hCP, DWORD dwTransBytes, ULONG
 	return iRet;
 }
 
-int IOCPModule::Send(IOContext *pIO)
+int IOCPModule::Send(PER_IO_CONTEXT *pIO)
 {
 	DWORD dwFlags = 0;
 	int iRet = 0;
 
-	if (SOCKET_ERROR == WSASend(pIO->socket, &pIO->wsabuf, 1, NULL, dwFlags, &pIO->overlapped, NULL))
+	if (SOCKET_ERROR == WSASend(pIO->m_socket, &pIO->m_wsaBuf, 1, NULL, dwFlags, &pIO->m_overlapped, NULL))
 	{
 		iRet = WSAGetLastError();
 		if (iRet != WSA_IO_PENDING)
@@ -180,11 +180,11 @@ int IOCPModule::Send(IOContext *pIO)
 	return iRet;
 }
 
-int IOCPModule::Receive(IOContext *pIO)
+int IOCPModule::Receive(PER_IO_CONTEXT *pIO)
 {
 	DWORD dwFlags = 0;
 	int iRet = 0;
-	if (SOCKET_ERROR == WSARecv(pIO->socket, &pIO->wsabuf,1,NULL,&dwFlags,&pIO->overlapped,NULL))
+	if (SOCKET_ERROR == WSARecv(pIO->m_socket, &pIO->m_wsaBuf,1,NULL,&dwFlags,&pIO->m_overlapped,NULL))
 	{
 		iRet = WSAGetLastError();
 		if (WSA_IO_PENDING != iRet)

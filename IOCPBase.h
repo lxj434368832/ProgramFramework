@@ -36,7 +36,7 @@ public:
 	* param iRecnnt: 是否重连标识,小于0代表不需要重连
 	* return:		 返回此连接对应的id,但不代表连接成功，为0代表连接出现了错误
 	*************************************************************************/
-	unsigned StartConnect(std::string ip, u_short port, IOContext* pIO = NULL, int iRecnnt = -1);
+	unsigned StartConnect(std::string ip, u_short port, PER_IO_CONTEXT* pIO = NULL, int iRecnnt = -1);
 
 	/*************************************************************************
 	* function：  开启针对服务端的监听
@@ -47,48 +47,48 @@ public:
 	bool StartServerListen(u_short port, unsigned iMaxServerCount);
 
 	//处理连接操作
-	void HandConnectOperate(int iResult, IOContext* pIO);
+	void HandConnectOperate(int iResult, PER_IO_CONTEXT* pIO);
 
 	//处理客户端操作
-	void HandClientOperate(int iResult, IOContext* pIO);
+	void HandClientOperate(int iResult, PER_IO_CONTEXT* pIO);
 
 	//处理服务端操作
-	void HandServerOperate(int iResult, IOContext* pIO);
+	void HandServerOperate(int iResult, PER_IO_CONTEXT* pIO);
 
 protected:
 	/*************************************************************************
 	* function：获取一个IOContext的结构
 	* return:	IOContext的指针
 	*************************************************************************/
-	IOContext* GetIOContext();
+	PER_IO_CONTEXT* GetIOContext();
 
 	//回收利用IOContext
-	void ReleaseIOContext(IOContext *pIO);
+	void ReleaseIOContext(PER_IO_CONTEXT *pIO);
 
-	bool PostConnectEx(IOContext* pIO, SOCKADDR* serverAddr);
+	bool PostConnectEx(PER_IO_CONTEXT* pIO, SOCKADDR* serverAddr);
 
 	//投递接受
 	bool PostAcceptEx(SOCKET listenSocket, EOperateType op);
 
 	//
-	void PostDisconnectEx(IOContext* pIO, EOperateType op);
+	void PostDisconnectEx(PER_IO_CONTEXT* pIO, EOperateType op);
 
 	//
-	void PostReceive(IOContext* pIO, EOperateType op);
+	void PostReceive(PER_IO_CONTEXT* pIO, EOperateType op);
 
 	//发送
-	void PostSend(IOContext* pIO, EOperateType op);
+	void PostSend(PER_IO_CONTEXT* pIO, EOperateType op);
 
 	//解包接收到的数据
-	void UnpackReceivedData(IOContext* pIO, std::function<void(unsigned, const char*, unsigned)> HandData);
+	void UnpackReceivedData(PER_IO_CONTEXT* pIO, std::function<void(unsigned, const char*, unsigned)> HandData);
 
-	void DoReceive(IOContext* pIO, int iResult, std::function<void(unsigned, const char*, unsigned)> HandData);
+	void DoReceive(PER_IO_CONTEXT* pIO, int iResult, std::function<void(unsigned, const char*, unsigned)> HandData);
 
 protected:
 	HANDLE 							m_hIOCP;		//完成端口
 	unsigned						m_uThreadCount;	//线程个数
 	HANDLE				 			*m_aThreadList;	//线程池列表
-	mqw::ResourceManage<IOContext>	m_rscIO;		//IO资源管理
+	mqw::ResourceManage<PER_IO_CONTEXT>	m_rscIO;		//IO资源管理
 
 	ConnectManage					*m_pCnntMng;	//连接管理
 	ServerManage					*m_pSrvMng;		//服务器管理

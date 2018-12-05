@@ -1,14 +1,15 @@
 #include "stdafx.h"
-#include "IOCPCommunication.h"
+#include "IOCPServer.h"
 #include "IOCPModule.h"
 #include "ConnectManage.h"
 #include "ServerManage.h"
 #include "ClientManage.h"
 #include <WS2tcpip.h>
+#include <assert.h>
 
-IOCPCommunication::IOCPCommunication(ConnectManage *pCnntMng,
+IOCPServier::IOCPServier(ConnectManage *pCnntMng,
 	ServerManage *pSrvMng, ClientManage *pClientMng):
-	 m_hIOCP(INVALID_HANDLE_VALUE), m_rscIO(1000)
+	 m_hIOCompletionPort(INVALID_HANDLE_VALUE), m_rscIO(1000)
 {
 	m_uThreadCount = 0;
 	m_aThreadList = NULL;
@@ -18,11 +19,11 @@ IOCPCommunication::IOCPCommunication(ConnectManage *pCnntMng,
 	m_pClientMng = pClientMng;
 }
 
-IOCPCommunication::~IOCPCommunication()
+IOCPServier::~IOCPServier()
 {
 	for (unsigned i = 0; i < m_uThreadCount; i++)
 	{
-		IOCPModule::Instance()->PostQueuedCompletionStatus(m_hIOCP, 0, NULL, NULL);
+		IOCPModule::Instance()->PostQueuedCompletionStatus(m_hIOCompletionPort, 0, NULL, NULL);
 	}
 
 	for (unsigned i = 0; i < m_uThreadCount; i++)
@@ -31,19 +32,19 @@ IOCPCommunication::~IOCPCommunication()
 		::CloseHandle(m_aThreadList[i]);
 	}
 
-	RELEASE_HANDLE(m_hIOCP);
+	RELEASE_HANDLE(m_hIOCompletionPort);
 	delete[] m_aThreadList;
 	m_pCnntMng = NULL;
 	m_pSrvMng = NULL;
 	m_pClientMng = NULL;
 }
 
-bool IOCPCommunication::InitIOCP(unsigned uThreadCount)
+bool IOCPServier::InitIOCP(unsigned uThreadCount)
 {
 	assert(uThreadCount);
 
-	m_hIOCP = IOCPModule::Instance()->CreateIoCompletionPort();
-	if (NULL == m_hIOCP)
+	m_hIOCompletionPort = IOCPModule::Instance()->CreateIoCompletionPort();
+	if (NULL == m_hIOCompletionPort)
 	{
 		MLOG("创建完成端口失败，错误码：%d", GetLastError());
 		return false;
@@ -64,17 +65,26 @@ bool IOCPCommunication::InitIOCP(unsigned uThreadCount)
 	return true;
 }
 
-DWORD WINAPI  IOCPCommunication::WorkerThread(LPVOID lpParameter)
+DWORD WINAPI  IOCPServier::WorkerThread(LPVOID lpParameter)
 {
-	IOContext *pIO = NULL;
+	PER_IO_CONTEXT *pIO = NULL;
 	int iResult = 0;
-	IOCPCommunication *pThis = (IOCPCommunication*)lpParameter;
+	IOCPServier *pThis = (IOCPServier*)lpParameter;
 	while (true)
 	{
-		iResult = IOCPModule::Instance()->GetQueuedCompletionStatus(pThis->m_hIOCP, &pIO);
+		int iRet = 0;
+		DWORD dwBytes = 0;
+		LPOVERLAPPED pOL = NULL;
+		if (false == ::GetQueuedCompletionStatus(pThis->m_hIOCompletionPort, &dwBytes, 0, &pOL, INFINITY))
+		{
+			iResult = ::GetLastError();
+		}
+		pIO = CONTAINING_RECORD(pOL, PER_IO_CONTEXT, m_overlapped);
+
+		iResult = IOCPModule::Instance()->GetQueuedCompletionStatus(pThis->m_hIOCompletionPort, &pIO);
 		if (pIO)
 		{
-			switch (pIO->oprateType)
+			switch (pIO->m_oprateType)
 			{
 			case EOP_CNNT_CONNECT:
 			case EOP_CNNT_DISCONNECT:
@@ -98,7 +108,7 @@ DWORD WINAPI  IOCPCommunication::WorkerThread(LPVOID lpParameter)
 				break;
 
 			default:
-				MLOG("未知的操作类型：%d", pIO->oprateType);
+				MLOG("未知的操作类型：%d", pIO->m_oprateType);
 				MAssert(false);
 				break;
 			}
@@ -113,7 +123,7 @@ DWORD WINAPI  IOCPCommunication::WorkerThread(LPVOID lpParameter)
 	return 0;
 }
 
-unsigned IOCPCommunication::StartConnect(std::string ip, u_short port, IOContext* pIO, int iRecnnt)
+unsigned IOCPServier::StartConnect(std::string ip, u_short port, PER_IO_CONTEXT* pIO, int iRecnnt)
 {
 	unsigned uUserId = 0;
 	do 
@@ -121,23 +131,23 @@ unsigned IOCPCommunication::StartConnect(std::string ip, u_short port, IOContext
 		if (NULL == pIO)
 			pIO = m_rscIO.get();
 
-		pIO->wParam = iRecnnt;
+		pIO->m_wParam = iRecnnt;
 
-		if (INVALID_SOCKET == pIO->socket)
+		if (INVALID_SOCKET == pIO->m_socket)
 		{
-			if (INVALID_SOCKET == (pIO->socket = IOCPModule::Instance()->Socket()))
+			if (INVALID_SOCKET == (pIO->m_socket = IOCPModule::Instance()->Socket()))
 			{
 				MLOG("创建socket失败，错误码：%d", WSAGetLastError());
 				break;
 			}
-			MAssert(0 == IOCPModule::Instance()->BindIoCompletionPort(pIO->socket, m_hIOCP));
+			MAssert(0 == IOCPModule::Instance()->BindIoCompletionPort(pIO->m_socket, m_hIOCompletionPort));
 		}
 
 		SOCKADDR_IN addrLocal;
 		addrLocal.sin_addr.s_addr = ADDR_ANY;
 		addrLocal.sin_family = AF_INET;
 		addrLocal.sin_port = 0;
-		MAssert(0 == IOCPModule::Instance()->Bind(pIO->socket, (LPSOCKADDR)&addrLocal));
+		MAssert(0 == IOCPModule::Instance()->Bind(pIO->m_socket, (LPSOCKADDR)&addrLocal));
 
 		if (NULL == m_pCnntMng)
 		{
@@ -150,17 +160,17 @@ unsigned IOCPCommunication::StartConnect(std::string ip, u_short port, IOContext
 		pAddrSrv->sin_family = AF_INET;
 		inet_pton(AF_INET, ip.c_str(), &pAddrSrv->sin_addr);
 		pAddrSrv->sin_port = htons(port);
-		pIO->lParam = (LPARAM)pAddrSrv;
+		pIO->m_lParam = (LPARAM)pAddrSrv;
 
-		pIO->uUserId = m_pCnntMng->GetCnntUserId();
+		pIO->m_uUserId = m_pCnntMng->GetCnntUserId();
 		PostConnectEx(pIO, (LPSOCKADDR)pAddrSrv);
-		uUserId = pIO->uUserId;		//因为连接失败时pIO->uUserId=0
+		uUserId = pIO->m_uUserId;		//因为连接失败时pIO->uUserId=0
 
 	} while (0);
 	return uUserId;
 }
 
-bool IOCPCommunication::StartServerListen(u_short port, unsigned iMaxServerCount)
+bool IOCPServier::StartServerListen(u_short port, unsigned iMaxServerCount)
 {
 	bool bRet = false;
 	SOCKET lstnSocket = INVALID_SOCKET;
@@ -183,7 +193,7 @@ bool IOCPCommunication::StartServerListen(u_short port, unsigned iMaxServerCount
 
 		if (IOCPModule::Instance()->Listen(lstnSocket, SOMAXCONN)) break;
 
-		if (IOCPModule::Instance()->BindIoCompletionPort(lstnSocket, m_hIOCP)) break;
+		if (IOCPModule::Instance()->BindIoCompletionPort(lstnSocket, m_hIOCompletionPort)) break;
 
 		//投递接受操作
 		for (unsigned i = 0; i < iMaxServerCount; i++)
@@ -208,17 +218,17 @@ bool IOCPCommunication::StartServerListen(u_short port, unsigned iMaxServerCount
 	return bRet;
 }
 
-bool IOCPCommunication::StartClientListen(u_short port, unsigned iMaxUserCount)
+bool IOCPServier::StartClientListen(u_short port, unsigned iMaxUserCount)
 {
 	return true;
 }
 
-void IOCPCommunication::HandConnectOperate(int iResult, IOContext* pIO)
+void IOCPServier::HandConnectOperate(int iResult, PER_IO_CONTEXT* pIO)
 {
-	switch (pIO->oprateType)
+	switch (pIO->m_oprateType)
 	{
 	case EOP_CNNT_CONNECT:
-		m_pCnntMng->ConnectNotify(pIO->uUserId, pIO->socket, 0 == iResult);
+		m_pCnntMng->ConnectNotify(pIO->m_uUserId, pIO->m_socket, 0 == iResult);
 
 		if (0 == iResult)
 		{
@@ -231,15 +241,15 @@ void IOCPCommunication::HandConnectOperate(int iResult, IOContext* pIO)
 			else
 				MLOG("连接失败，错误码：%d", iResult);
 		
-			if ((int)pIO->wParam > 0)
+			if ((int)pIO->m_wParam > 0)
 			{
-				MLOG("socket:%d开启重连!", pIO->socket);
+				MLOG("socket:%d开启重连!", pIO->m_socket);
 				Sleep(1000);
-				PostConnectEx(pIO, (LPSOCKADDR)pIO->lParam);
+				PostConnectEx(pIO, (LPSOCKADDR)pIO->m_lParam);
 			}
 			else
 			{
-				m_pCnntMng->RecycleSOCKADDR((LPSOCKADDR_IN)pIO->lParam);
+				m_pCnntMng->RecycleSOCKADDR((LPSOCKADDR_IN)pIO->m_lParam);
 				ReleaseIOContext(pIO);
 			}
 		}
@@ -248,14 +258,14 @@ void IOCPCommunication::HandConnectOperate(int iResult, IOContext* pIO)
 	case EOP_CNNT_DISCONNECT:
 		if (0 == iResult)
 		{
-			if ((int)pIO->wParam > 0)	//需要重连
+			if ((int)pIO->m_wParam > 0)	//需要重连
 			{
-				MLOG("socket:%d开启重连!", pIO->socket);
-				PostConnectEx(pIO, (LPSOCKADDR)pIO->lParam);
+				MLOG("socket:%d开启重连!", pIO->m_socket);
+				PostConnectEx(pIO, (LPSOCKADDR)pIO->m_lParam);
 			}
 			else
 			{
-				m_pCnntMng->RecycleSOCKADDR((LPSOCKADDR_IN)pIO->lParam);
+				m_pCnntMng->RecycleSOCKADDR((LPSOCKADDR_IN)pIO->m_lParam);
 				ReleaseIOContext(pIO);
 			}
 		}
@@ -267,10 +277,10 @@ void IOCPCommunication::HandConnectOperate(int iResult, IOContext* pIO)
 
 		break;
 	case EOP_CNNT_RECEIVE:
-		if (0 == pIO->overlapped.InternalHigh)	//代表服务器已断开此socket连接
+		if (0 == pIO->m_overlapped.InternalHigh)	//代表服务器已断开此socket连接
 		{
-			MLOG("网络的另一端已断开socket：%d 的连接！",pIO->socket, iResult);
-			PostDisconnectEx(pIO, pIO->oprateType);
+			MLOG("网络的另一端已断开socket：%d 的连接！",pIO->m_socket, iResult);
+			PostDisconnectEx(pIO, pIO->m_oprateType);
 		}
 		else if (0 == iResult)
 		{
@@ -284,15 +294,15 @@ void IOCPCommunication::HandConnectOperate(int iResult, IOContext* pIO)
 			else
 				MLOG("connect接收失败，错误码：%d", iResult);
 
-			PostDisconnectEx(pIO, pIO->oprateType);
+			PostDisconnectEx(pIO, pIO->m_oprateType);
 		}
 
 		break;
 	case EOP_CNNT_SEND:
-		if (0 == pIO->overlapped.InternalHigh)
+		if (0 == pIO->m_overlapped.InternalHigh)
 		{
 			MLOG("网络的另一端已断开socket：%d 的连接！");
-			shutdown(pIO->socket, SD_BOTH);
+			shutdown(pIO->m_socket, SD_BOTH);
 		}
 		else if (iResult)
 		{
@@ -301,41 +311,41 @@ void IOCPCommunication::HandConnectOperate(int iResult, IOContext* pIO)
 			else
 				MLOG("connect发送失败，错误码：%d", iResult);
 
-			shutdown(pIO->socket, SD_BOTH);
+			shutdown(pIO->m_socket, SD_BOTH);
 		}
 
 		ReleaseIOContext(pIO);
 
 		break;
 	default:
-		MLOG("未知的连接操作码：%d", pIO->oprateType);
+		MLOG("未知的连接操作码：%d", pIO->m_oprateType);
 		MAssert(false);
 		break;
 	}
 }
 
-void IOCPCommunication::HandClientOperate(int iResult, IOContext* pIO)
+void IOCPServier::HandClientOperate(int iResult, PER_IO_CONTEXT* pIO)
 {
 
 }
 
-void IOCPCommunication::HandServerOperate(int iResult, IOContext* pIO)
+void IOCPServier::HandServerOperate(int iResult, PER_IO_CONTEXT* pIO)
 {
-	switch (pIO->oprateType)
+	switch (pIO->m_oprateType)
 	{
 	case EOP_SRV_ACCEPT:
 		if (0 == iResult)	//投递AcceptEx成功
 		{
-			pIO->uUserId = m_pSrvMng->GetSrvUserId();
-			m_pSrvMng->SrvAcceptNotify(pIO->uUserId, pIO->socket);
-			pIO->oprateType = EOP_SRV_RECEIVE;
+			pIO->m_uUserId = m_pSrvMng->GetSrvUserId();
+			m_pSrvMng->SrvAcceptNotify(pIO->m_uUserId, pIO->m_socket);
+			pIO->m_oprateType = EOP_SRV_RECEIVE;
 			UnpackReceivedData(pIO, std::bind(&ServerManage::HandSrvData, m_pSrvMng,
 				std::placeholders::_1, std::placeholders::_2, std::placeholders::_3));
 
 			SOCKADDR_IN *pUserAddr = NULL;
 			IOCPModule::Instance()->GetAcceptExSockaddrs(pIO, (LPSOCKADDR*)&pUserAddr);
 			char strIP[255];	inet_ntop(AF_INET, &pUserAddr->sin_addr, strIP, 255);
-			MLOG("新用户连入。用户IP：%s，用户套接字：%d", strIP, pIO->socket);
+			MLOG("新用户连入。用户IP：%s，用户套接字：%d", strIP, pIO->m_socket);
 
 			PostAcceptEx(m_pSrvMng->GetSrvListenSocket(), EOP_SRV_ACCEPT);	//
 		}
@@ -360,10 +370,10 @@ void IOCPCommunication::HandServerOperate(int iResult, IOContext* pIO)
 		break;
 
 	case EOP_SRV_SEND:
-		if (0 == pIO->overlapped.InternalHigh)
+		if (0 == pIO->m_overlapped.InternalHigh)
 		{
 			MLOG("网络的另一端已断开socket：%d 的连接！");
-			shutdown(pIO->socket, SD_BOTH);
+			shutdown(pIO->m_socket, SD_BOTH);
 		}
 		else if (iResult)
 		{
@@ -372,25 +382,25 @@ void IOCPCommunication::HandServerOperate(int iResult, IOContext* pIO)
 			else
 				MLOG("SRV发送失败，错误码：%d", iResult);
 
-			shutdown(pIO->socket, SD_BOTH);
+			shutdown(pIO->m_socket, SD_BOTH);
 		}
 
 		ReleaseIOContext(pIO);
 
 		break;
 	default:
-		MLOG("未知的服务操作码：%d", pIO->oprateType);
+		MLOG("未知的服务操作码：%d", pIO->m_oprateType);
 		MAssert(false);
 		break;
 	}
 }
 
-void IOCPCommunication::DoReceive(IOContext* pIO, int iResult,std::function<void(unsigned, const char*, unsigned)> HandData)
+void IOCPServier::DoReceive(PER_IO_CONTEXT* pIO, int iResult,std::function<void(unsigned, const char*, unsigned)> HandData)
 {
-	if (0 == pIO->overlapped.InternalHigh)	//代表服务器已断开此socket连接
+	if (0 == pIO->m_overlapped.InternalHigh)	//代表服务器已断开此socket连接
 	{
-		MLOG("网络的另一端已断开socket：%d 的连接！错误码：%d", pIO->socket, iResult);
-		PostDisconnectEx(pIO, pIO->oprateType);
+		MLOG("网络的另一端已断开socket：%d 的连接！错误码：%d", pIO->m_socket, iResult);
+		PostDisconnectEx(pIO, pIO->m_oprateType);
 	}
 	else if (0 == iResult)
 	{
@@ -403,26 +413,26 @@ void IOCPCommunication::DoReceive(IOContext* pIO, int iResult,std::function<void
 		else
 			MLOG("SRV接收失败，错误码：%d", iResult);
 
-		PostDisconnectEx(pIO, pIO->oprateType);
+		PostDisconnectEx(pIO, pIO->m_oprateType);
 	}
 }
 
-IOContext* IOCPCommunication::GetIOContext()
+PER_IO_CONTEXT* IOCPServier::GetIOContext()
 {
 	return m_rscIO.get();
 }
 
-void IOCPCommunication::ReleaseIOContext(IOContext *pIO)
+void IOCPServier::ReleaseIOContext(PER_IO_CONTEXT *pIO)
 {
 	pIO->reset();
 	m_rscIO.put(pIO);
 }
 
 //
-void IOCPCommunication::UnpackReceivedData(IOContext* pIO, std::function<void(unsigned, const char*, unsigned)> HandData)
+void IOCPServier::UnpackReceivedData(PER_IO_CONTEXT* pIO, std::function<void(unsigned, const char*, unsigned)> HandData)
 {
-	pIO->dataLength += pIO->overlapped.InternalHigh;
-	char *buf = pIO->buffer;
+	pIO->m_uDataLength += pIO->m_overlapped.InternalHigh;
+	char *buf = pIO->m_szBuffer;
 
 	PackHeader *head = NULL;
 	unsigned uDataLength = 0;
@@ -432,42 +442,42 @@ void IOCPCommunication::UnpackReceivedData(IOContext* pIO, std::function<void(un
 	{
 		head = (PackHeader*)buf;
 		uPackLength = sizeof(PackHeader) + head->ulBodyLength;
-		uDataLength = pIO->dataLength;
+		uDataLength = pIO->m_uDataLength;
 
 		if (uDataLength >= sizeof(PackHeader) && uPackLength > MAX_BUF_LEN)	//接收到的数据不正确
 		{
 			MLOG("接收到的数据长度太大，断开连接！");
-			PostDisconnectEx(pIO, pIO->oprateType);
+			PostDisconnectEx(pIO, pIO->m_oprateType);
 			break;
 		}
 		else if (uDataLength < sizeof(PackHeader) || uDataLength < uPackLength)	//不够 一个包头或者一包数据
 		{
-			if (buf != pIO->buffer)
+			if (buf != pIO->m_szBuffer)
 			{
-				memmove(pIO->buffer, buf, uDataLength);
+				memmove(pIO->m_szBuffer, buf, uDataLength);
 			}
-			pIO->wsabuf.buf = pIO->buffer + uDataLength;
-			pIO->wsabuf.len = pIO->bufLength - uDataLength;
-			PostReceive(pIO, pIO->oprateType);
+			pIO->m_wsaBuf.buf = pIO->m_szBuffer + uDataLength;
+			pIO->m_wsaBuf.len = pIO->m_uBufLength - uDataLength;
+			PostReceive(pIO, pIO->m_oprateType);
 			break;
 		}
 		else //至少有一个完整的网络包，开始拆包
 		{
-			HandData(pIO->uUserId, buf, uPackLength);	//调用具体的业务处理数据，有包头和包体
+			HandData(pIO->m_uUserId, buf, uPackLength);	//调用具体的业务处理数据，有包头和包体
 			buf += uPackLength;
-			pIO->dataLength -= uPackLength;
+			pIO->m_uDataLength -= uPackLength;
 		}
 	}
 }
 
-bool IOCPCommunication::PostConnectEx(IOContext* pIO, SOCKADDR* pSrvAddr)
+bool IOCPServier::PostConnectEx(PER_IO_CONTEXT* pIO, SOCKADDR* pSrvAddr)
 {
 	MAssert(pIO && pSrvAddr);
-	pIO->oprateType = EOP_CNNT_CONNECT;
+	pIO->m_oprateType = EOP_CNNT_CONNECT;
 	if (IOCPModule::Instance()->ConnectEx(pIO, pSrvAddr))
 	{
 		MAssert(false);
-		m_pCnntMng->RecycleSOCKADDR((LPSOCKADDR_IN)pIO->lParam);
+		m_pCnntMng->RecycleSOCKADDR((LPSOCKADDR_IN)pIO->m_lParam);
 		ReleaseIOContext(pIO);
 
 		return false;
@@ -475,7 +485,7 @@ bool IOCPCommunication::PostConnectEx(IOContext* pIO, SOCKADDR* pSrvAddr)
 	return true;
 }
 
-bool IOCPCommunication::PostAcceptEx(SOCKET listenSocket, EOperateType op)
+bool IOCPServier::PostAcceptEx(SOCKET listenSocket, EOperateType op)
 {
 	if (INVALID_SOCKET == listenSocket)
 	{
@@ -488,18 +498,18 @@ bool IOCPCommunication::PostAcceptEx(SOCKET listenSocket, EOperateType op)
 		return false;
 	}
 
-	IOContext *pIO = GetIOContext();
-	if (INVALID_SOCKET == pIO->socket)
+	PER_IO_CONTEXT *pIO = GetIOContext();
+	if (INVALID_SOCKET == pIO->m_socket)
 	{
-		if (INVALID_SOCKET == (pIO->socket = IOCPModule::Instance()->Socket()))
+		if (INVALID_SOCKET == (pIO->m_socket = IOCPModule::Instance()->Socket()))
 		{
 			MLOG("创建socket失败，错误码：%d", WSAGetLastError());
 			return false;
 		}
-		MAssert(0 == IOCPModule::Instance()->BindIoCompletionPort(pIO->socket, m_hIOCP));
+		MAssert(0 == IOCPModule::Instance()->BindIoCompletionPort(pIO->m_socket, m_hIOCompletionPort));
 	}
 
-	pIO->oprateType = op;
+	pIO->m_oprateType = op;
 	if (IOCPModule::Instance()->AcceptEx(listenSocket, pIO))	//失败
 	{
 		ReleaseIOContext(pIO);
@@ -509,23 +519,23 @@ bool IOCPCommunication::PostAcceptEx(SOCKET listenSocket, EOperateType op)
 		return true;
 }
 
-void IOCPCommunication::PostDisconnectEx(IOContext* pIO, EOperateType op)
+void IOCPServier::PostDisconnectEx(PER_IO_CONTEXT* pIO, EOperateType op)
 {
 	UserInfo *pInfo = NULL;
 
 	if (op < EOP_CNNT_OPERATE)
 	{
-		pInfo = m_pCnntMng->DeleteCnntUser(pIO->uUserId);
+		pInfo = m_pCnntMng->DeleteCnntUser(pIO->m_uUserId);
 		op = EOP_CNNT_DISCONNECT;
 	}
 	else if (op < EOP_CLIENT_OPRATE)
 	{
-		pInfo = m_pClientMng->DeleteClientUser(pIO->uUserId);
+		pInfo = m_pClientMng->DeleteClientUser(pIO->m_uUserId);
 		op = EOP_CLIENT_DISCONNECT;
 	}
 	else if (op < EOP_SRV_OPERATE)
 	{
-		pInfo = m_pSrvMng->DeleteSrvUser(pIO->uUserId);
+		pInfo = m_pSrvMng->DeleteSrvUser(pIO->m_uUserId);
 		op = EOP_SRV_DISCONNECT;
 	}
 	else
@@ -535,12 +545,12 @@ void IOCPCommunication::PostDisconnectEx(IOContext* pIO, EOperateType op)
 
 	if (pInfo)
 	{
-		pIO->oprateType = op;
+		pIO->m_oprateType = op;
 		if (IOCPModule::Instance()->DisconnectEx(pIO))
 		{
-			if (op < EOP_CNNT_OPERATE && pIO->lParam)
+			if (op < EOP_CNNT_OPERATE && pIO->m_lParam)
 			{
-				m_pCnntMng->RecycleSOCKADDR((LPSOCKADDR_IN)pIO->lParam);
+				m_pCnntMng->RecycleSOCKADDR((LPSOCKADDR_IN)pIO->m_lParam);
 			}
 
 			ReleaseIOContext(pIO);
@@ -550,9 +560,9 @@ void IOCPCommunication::PostDisconnectEx(IOContext* pIO, EOperateType op)
 	{
 		MLOG("用户不存在，不应该执行到这里请注意！");
 
-		if (op < EOP_CNNT_OPERATE && pIO->lParam)
+		if (op < EOP_CNNT_OPERATE && pIO->m_lParam)
 		{
-			m_pCnntMng->RecycleSOCKADDR((LPSOCKADDR_IN)pIO->lParam);
+			m_pCnntMng->RecycleSOCKADDR((LPSOCKADDR_IN)pIO->m_lParam);
 		}
 
 		ReleaseIOContext(pIO);
@@ -560,24 +570,24 @@ void IOCPCommunication::PostDisconnectEx(IOContext* pIO, EOperateType op)
 
 }
 
-void IOCPCommunication::PostReceive(IOContext* pIO, EOperateType op)
+void IOCPServier::PostReceive(PER_IO_CONTEXT* pIO, EOperateType op)
 {
-	pIO->oprateType = op;
+	pIO->m_oprateType = op;
 	if (IOCPModule::Instance()->Receive(pIO))	//接受失败的处理
 	{
 		MAssert(false);
-		shutdown(pIO->socket, SD_BOTH);
+		shutdown(pIO->m_socket, SD_BOTH);
 		PostDisconnectEx(pIO, op);
 	}
 }
 
-void IOCPCommunication::PostSend(IOContext* pIO, EOperateType op)
+void IOCPServier::PostSend(PER_IO_CONTEXT* pIO, EOperateType op)
 {
-	pIO->oprateType = op;
+	pIO->m_oprateType = op;
 	if (IOCPModule::Instance()->Send(pIO))	//发送失败的处理
 	{
 		MAssert(false);
-		shutdown(pIO->socket, SD_BOTH);	//接受那边会收到错误
+		shutdown(pIO->m_socket, SD_BOTH);	//接受那边会收到错误
 		ReleaseIOContext(pIO);
 	}
 
