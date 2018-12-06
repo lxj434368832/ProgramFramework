@@ -409,7 +409,7 @@ PER_IO_CONTEXT* IOCPBase::GetIOContext()
 
 void IOCPBase::ReleaseIOContext(PER_IO_CONTEXT *pIO)
 {
-	pIO->reset();
+	pIO->Reset();
 	m_rscIO.put(pIO);
 }
 

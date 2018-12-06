@@ -52,7 +52,7 @@ struct PER_IO_CONTEXT
 		m_uBufLength = MAX_BUF_LEN;
 		m_szBuffer = new char[MAX_BUF_LEN];
 
-		reset();
+		Reset();
 	}
 
 	virtual ~PER_IO_CONTEXT()
@@ -60,13 +60,13 @@ struct PER_IO_CONTEXT
 		delete[] m_szBuffer;
 		RELEASE_SOCKET(m_socket);		//释放socket资源，可能不必要
 	}
-	void reset()
+	void Reset()
 	{
-		ZeroMemory(&m_overlapped, sizeof(m_overlapped));
-		ZeroMemory(m_szBuffer, MAX_BUF_LEN);
+		m_socket = INVALID_SOCKET;
 		m_oprateType = EOP_UNKNOWN;
 		m_wsaBuf.buf = m_szBuffer;
 		m_wsaBuf.len = m_uBufLength;
+		ZeroMemory(m_szBuffer, MAX_BUF_LEN);
 		m_uDataLength = 0;
 		m_wParam = 0;
 		m_lParam = 0;
@@ -81,7 +81,7 @@ struct PER_RECEIVE_IO_CONTEXT :public PER_IO_CONTEXT
 		m_uBufLength = MAX_RCV_BUF_LEN;
 		m_szBuffer = new char[MAX_RCV_BUF_LEN];
 
-		reset();
+		Reset();
 	}
 };
 
@@ -114,6 +114,20 @@ struct PER_SOCKET_CONTEXT
 		{
 			closesocket(m_socket);
 			m_socket = INVALID_SOCKET;
+		}
+	}
+
+	void Reset()
+	{
+		//socket 由外部管理，此处不清理
+		memset(&m_clientAddr, 0, sizeof(m_clientAddr));
+		m_ReceiveContext.Reset();
+		m_iDisconnectFlag = 0;
+		m_iSendPendingFlag = 0;
+		
+		if(false == m_queueIoContext.empty())
+		{
+			MLOG("socket:%d上可能存在%d个IO资源泄露，请提前释放！", m_socket, m_queueIoContext.size());
 		}
 	}
 };

@@ -294,7 +294,7 @@ PER_IO_CONTEXT* IOCPClient::GetIOContext()
 
 void IOCPClient::ReleaseIOContext(PER_IO_CONTEXT *pIO)
 {
-	pIO->reset();
+	pIO->Reset();
 	m_rscIO.put(pIO);
 }
 

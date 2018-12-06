@@ -170,16 +170,6 @@ DWORD WINAPI  IOCPServier::WorkerThread(LPVOID lpParameter)
 	return 0;
 }
 
-void IOCPServier::HandleError(PER_SOCKET_CONTEXT *pContext, const DWORD& dwErr)
-{
-	// 可能是客户端异常退出了
-	if (ERROR_NETNAME_DELETED == dwErr)
-	{
-		MLOG("检测到客户端异常退出！");
-	}
-	//this->_RemoveContext(pContext);
-}
-
 void IOCPServier::HandServerOperate(int iResult, PER_SOCKET_CONTEXT *pSkContext, PER_IO_CONTEXT* pIO, DWORD dwBytesTransfered)
 {
 	switch (pIO->m_oprateType)
@@ -187,12 +177,12 @@ void IOCPServier::HandServerOperate(int iResult, PER_SOCKET_CONTEXT *pSkContext,
 	case EOP_ACCEPT:
 	{
 		PER_SOCKET_CONTEXT *pClientSkContext = nullptr;
-		m_lckConnect.lock();
+		m_lckConnectList.lock();
 		if (m_mapConnectList.find(pIO->m_socket) != m_mapConnectList.end())
 		{
 			pClientSkContext = m_mapConnectList[pIO->m_socket];
 		}
-		m_lckConnect.unlock();
+		m_lckConnectList.unlock();
 
 		if (0 == iResult)	//投递AcceptEx成功
 		{
@@ -204,8 +194,7 @@ void IOCPServier::HandServerOperate(int iResult, PER_SOCKET_CONTEXT *pSkContext,
 			//通知服务端连接
 			m_pNetInterface->AddUser((unsigned)pIO->m_socket);
 			pIO->m_oprateType = EOP_RECEIVE;
-			UnpackReceivedData(pIO, std::bind(&INetInterface::HandSrvData, m_pNetInterface,
-				std::placeholders::_1, std::placeholders::_2, std::placeholders::_3));
+			UnpackReceivedData(pClientSkContext, pIO);
 			if (pClientSkContext)
 			{
 				memcpy(&(pClientSkContext->m_clientAddr), pClientAddr, sizeof(SOCKADDR_IN));
@@ -218,14 +207,14 @@ void IOCPServier::HandServerOperate(int iResult, PER_SOCKET_CONTEXT *pSkContext,
 			MLOG("投递AcceptEx失败，错误码：%d", iResult);
 			if (pClientSkContext)
 			{
-				m_lckConnect.lock();
+				m_lckConnectList.lock();
 				m_mapConnectList.erase(pClientSkContext->m_socket);
-				m_lckConnect.unlock();
+				m_lckConnectList.unlock();
 
-				int index = pClientSkContext->m_socket / SOCKET_CONTEXT_LOCK_COUNT;
-				m_arraylckSocketContext[index].lock();
+				int index = pClientSkContext->m_socket % SOCKET_CONTEXT_LOCK_COUNT;
+				m_aLckSocketContext[index].lock();
 				RELEASE_SOCKET(pClientSkContext->m_socket);
-				m_arraylckSocketContext[index].unlock();
+				m_aLckSocketContext[index].unlock();
 
 				m_rscSocketContext.put(pClientSkContext);
 			}
@@ -234,16 +223,11 @@ void IOCPServier::HandServerOperate(int iResult, PER_SOCKET_CONTEXT *pSkContext,
 	break;
 
 	case EOP_DISCONNECT:
-		if (iResult)
-		{
-			MLOG("Server断开连接失败，错误码:%d", iResult);
-		}
-		//ReleaseIOContext(pIO);
+		DoDisconnect(iResult, pSkContext, pIO);
 		break;
 
 	case EOP_RECEIVE:
-		DoReceive(pIO, iResult, std::bind(&INetInterface::HandSrvData, m_pNetInterface,
-			std::placeholders::_1, std::placeholders::_2, std::placeholders::_3));
+		DoReceive(iResult, pSkContext,pIO, dwBytesTransfered);
 		break;
 
 	case EOP_SEND:
@@ -272,30 +256,8 @@ void IOCPServier::HandServerOperate(int iResult, PER_SOCKET_CONTEXT *pSkContext,
 	}
 }
 
-void IOCPServier::DoReceive(PER_IO_CONTEXT* pIO, int iResult, std::function<void(unsigned, const char*, unsigned)> HandData)
-{
-	if (0 == pIO->m_overlapped.InternalHigh)	//代表服务器已断开此socket连接
-	{
-		MLOG("网络的另一端已断开socket：%d 的连接！错误码：%d", pIO->m_socket, iResult);
-		PostDisconnectEx(pIO);
-	}
-	else if (0 == iResult)
-	{
-		UnpackReceivedData(pIO, HandData);
-	}
-	else
-	{
-		if (ERROR_NETNAME_DELETED == iResult)
-			MLOG("网络的另一端已下线！");
-		else
-			MLOG("SRV接收失败，错误码：%d", iResult);
-
-		PostDisconnectEx(pIO);
-	}
-}
-
 //
-void IOCPServier::UnpackReceivedData(PER_IO_CONTEXT* pIO, std::function<void(unsigned, const char*, unsigned)> HandData)
+void IOCPServier::UnpackReceivedData(PER_SOCKET_CONTEXT *pSkContext, PER_IO_CONTEXT* pIO)
 {
 	pIO->m_uDataLength += pIO->m_overlapped.InternalHigh;
 	char *buf = pIO->m_szBuffer;
@@ -313,7 +275,7 @@ void IOCPServier::UnpackReceivedData(PER_IO_CONTEXT* pIO, std::function<void(uns
 		if (uDataLength >= sizeof(PackHeader) && uPackLength > MAX_RCV_BUF_LEN)	//接收到的数据不正确
 		{
 			MLOG("接收到的数据长度太大，断开连接！");
-			PostDisconnectEx(pIO);
+			PostDisconnectEx(pSkContext,pIO);
 			break;
 		}
 		else if (uDataLength < sizeof(PackHeader) || uDataLength < uPackLength)	//不够 一个包头或者一包数据
@@ -324,12 +286,12 @@ void IOCPServier::UnpackReceivedData(PER_IO_CONTEXT* pIO, std::function<void(uns
 			}
 			pIO->m_wsaBuf.buf = pIO->m_szBuffer + uDataLength;
 			pIO->m_wsaBuf.len = pIO->m_uBufLength - uDataLength;
-			PostReceive(pIO);
+			PostReceive(pSkContext, pIO);
 			break;
 		}
 		else //至少有一个完整的网络包，开始拆包
 		{
-			HandData(pIO->m_socket, buf, uPackLength);	//调用具体的业务处理数据，有包头和包体
+			m_pNetInterface->HandSrvData(pIO->m_socket, buf, uPackLength);	//调用具体的业务处理数据，有包头和包体
 			buf += uPackLength;
 			pIO->m_uDataLength -= uPackLength;
 		}
@@ -345,6 +307,7 @@ bool IOCPServier::PostAcceptEx(SOCKET listenSocket)
 	}
 
 	PER_SOCKET_CONTEXT *pSocketContext = m_rscSocketContext.get();
+	pSocketContext->Reset();
 
 	if (INVALID_SOCKET == pSocketContext->m_socket)
 	{
@@ -366,54 +329,131 @@ bool IOCPServier::PostAcceptEx(SOCKET listenSocket)
 	}
 	else
 	{
-		m_lckConnect.lock();
+		m_lckConnectList.lock();
 		m_mapConnectList[pSocketContext->m_socket] = pSocketContext;
-		m_lckConnect.unlock();
+		m_lckConnectList.unlock();
 		return true;
 	}
 }
 
-void IOCPServier::PostDisconnectEx(PER_IO_CONTEXT* pIO)
+void IOCPServier::DoAccept(int iResult, PER_SOCKET_CONTEXT *pSkContext, PER_IO_CONTEXT* pIO)
 {
-	//通知上层接口关闭连接
-	m_pNetInterface->DeleteUser((unsigned)pIO->m_socket);
-	::shutdown(pIO->m_socket, SD_BOTH);
-
-	pIO->m_oprateType = EOP_DISCONNECT;
-	if (IOCPModule::Instance()->DisconnectEx(pIO))
-	{
-		m_lckConnect.lock();
-		PER_SOCKET_CONTEXT *pSkContext = m_mapConnectList.at(pIO->m_socket);
-		m_mapConnectList.erase(pIO->m_socket);
-		m_lckConnect.unlock();
-
-		::closesocket(pSkContext->m_socket);
-		
-		m_rscSocketContext.put(pSkContext);
-		m_rscIoContext.put(pIO);
-
-	}
 
 }
 
-void IOCPServier::PostReceive(PER_IO_CONTEXT* pIO)
+void IOCPServier::PostDisconnectEx(PER_SOCKET_CONTEXT *pSkContext, PER_IO_CONTEXT* pIO)
+{
+	bool bHandled = false;
+	int idxLock = pSkContext->m_socket % SOCKET_CONTEXT_LOCK_COUNT;
+
+	m_aLckSocketContext[idxLock].lock();
+	if (1 == pSkContext->m_iDisconnectFlag)
+		bHandled = true;//已经处理过断开连接了
+	else
+		pSkContext->m_iDisconnectFlag = 1;
+
+	if (bHandled)
+	{
+		pIO->Reset();
+		m_rscIoContext.put(pIO);
+		return;
+	}
+
+	//通知上层接口关闭连接
+	m_pNetInterface->DeleteUser((unsigned)pSkContext->m_socket);
+	::shutdown(pSkContext->m_socket, SD_BOTH);		//此时发送和接收IO应该会返回错误
+	MLOG("关闭socket:%d的连接。", pSkContext->m_socket);
+
+	if (IOCPModule::Instance()->DisconnectEx(pIO))
+	{
+		//投递失败，直接回收资源
+		//更好的方法是对m_iDisconnectFlag计数，当接收和发送都处理完毕后再回收资源
+		m_lckConnectList.lock();
+		m_mapConnectList.erase(pSkContext->m_socket);
+		m_lckConnectList.unlock();
+
+		m_aLckSocketContext[idxLock].lock();
+		RELEASE_SOCKET(pSkContext->m_socket);
+		m_aLckSocketContext[idxLock].unlock();
+		m_rscSocketContext.put(pSkContext);
+
+		pIO->Reset();
+		m_rscIoContext.put(pIO);
+	}
+}
+
+void IOCPServier::DoDisconnect(int iResult, PER_SOCKET_CONTEXT *pSkContext, PER_IO_CONTEXT* pIO)
+{
+	int idxLock = pSkContext->m_socket % SOCKET_CONTEXT_LOCK_COUNT;
+	if (iResult)
+	{
+		MLOG("Server断开连接失败，错误码:%d", iResult);
+		m_aLckSocketContext[idxLock].lock();
+		RELEASE_SOCKET(pSkContext->m_socket);
+		m_aLckSocketContext[idxLock].unlock();
+	}
+
+	m_lckConnectList.lock();
+	m_mapConnectList.erase(pSkContext->m_socket);
+	m_lckConnectList.unlock();
+	m_rscSocketContext.put(pSkContext);
+
+	pIO->Reset();
+	m_rscIoContext.put(pIO);
+}
+
+void IOCPServier::PostReceive(PER_SOCKET_CONTEXT *pSkContext, PER_IO_CONTEXT* pIO)
 {
 	if (IOCPModule::Instance()->Receive(pIO))	//接受失败的处理
 	{
 		MAssert(false);
 		shutdown(pIO->m_socket, SD_BOTH);
-		PostDisconnectEx(pIO);
+		PostDisconnectEx(pSkContext,pIO);
 	}
 }
 
-void IOCPServier::PostSend(PER_IO_CONTEXT* pIO, EOperateType op)
+void IOCPServier::DoReceive(int iResult, PER_SOCKET_CONTEXT *pSkContext, PER_IO_CONTEXT* pIO, DWORD dwBytesTransfered)
 {
-	pIO->m_oprateType = op;
+	MLOG("dwBytesTransfered:%d  InternalHigh:%d.", dwBytesTransfered, pIO->m_overlapped.InternalHigh);
+
+	if (iResult)
+	{
+		if (ERROR_NETNAME_DELETED == iResult)
+			MLOG("网络的另一端已下线！");
+		else
+			MLOG("SRV接收失败，错误码：%d", iResult);
+		PER_IO_CONTEXT *pIOTemp = m_rscIoContext.get();
+		pIOTemp->m_socket = pSkContext->m_socket;
+		PostDisconnectEx(pSkContext, pIOTemp);
+	}
+	else if (0 == dwBytesTransfered)	//代表服务器已断开此socket连接
+	{
+		MLOG("网络的另一端已断开socket：%d的连接！", pIO->m_socket);
+
+		PER_IO_CONTEXT *pIOTemp = m_rscIoContext.get();
+		pIOTemp->m_socket = pSkContext->m_socket;
+		PostDisconnectEx(pSkContext, pIO);
+	}
+	else
+	{
+		UnpackReceivedData(pSkContext, pIO);
+	}
+
+}
+
+void IOCPServier::PostSend(PER_SOCKET_CONTEXT *pSkContext, PER_IO_CONTEXT* pIO)
+{
+	pIO->m_oprateType = EOP_SEND;
 	if (IOCPModule::Instance()->Send(pIO))	//发送失败的处理
 	{
 		MAssert(false);
 		shutdown(pIO->m_socket, SD_BOTH);	//接受那边会收到错误
 		//ReleaseIOContext(pIO);
 	}
+}
+
+void IOCPServier::DoSend(int iResult, PER_SOCKET_CONTEXT *pSkContext, PER_IO_CONTEXT* pIO, DWORD dwBytesTransfered)
+{
+
 }
 

@@ -45,23 +45,29 @@ protected:
 	//处理服务端操作
 	void HandServerOperate(int iResult, PER_SOCKET_CONTEXT *pSkContext, PER_IO_CONTEXT* pIO, DWORD dwBytesTransfered);
 
-	void HandleError(PER_SOCKET_CONTEXT *pContext, const DWORD& dwErr);
     //投递接受
-	  bool PostAcceptEx(SOCKET listenSocket);
+	bool PostAcceptEx(SOCKET listenSocket);
+
+	void DoAccept(int iResult, PER_SOCKET_CONTEXT *pSkContext, PER_IO_CONTEXT* pIO);
 
     //
-	void PostDisconnectEx(PER_IO_CONTEXT* pIO);
+	  void PostDisconnectEx(PER_SOCKET_CONTEXT *pSkContext, PER_IO_CONTEXT* pIO);
+
+	  void DoDisconnect(int iResult, PER_SOCKET_CONTEXT *pSkContext, PER_IO_CONTEXT* pIO);
 
     //
-    void PostReceive(PER_IO_CONTEXT* pIO);
+	  void PostReceive(PER_SOCKET_CONTEXT *pSkContext, PER_IO_CONTEXT* pIO);
+
+	  void DoReceive(int iResult, PER_SOCKET_CONTEXT *pSkContext, PER_IO_CONTEXT* pIO, DWORD dwBytesTransfered);
 
     //发送
-	void PostSend(PER_IO_CONTEXT* pIO, EOperateType op);
+	  void PostSend(PER_SOCKET_CONTEXT *pSkContext, PER_IO_CONTEXT* pIO);
+
+	  void DoSend(int iResult, PER_SOCKET_CONTEXT *pSkContext, PER_IO_CONTEXT* pIO, DWORD dwBytesTransfered);
+
 
 	//解包接收到的数据
-	void UnpackReceivedData(PER_IO_CONTEXT* pIO, std::function<void(unsigned, const char*, unsigned)> HandData);
-
-	void DoReceive(PER_IO_CONTEXT* pIO, int iResult, std::function<void(unsigned, const char*, unsigned)> HandData);
+	  void UnpackReceivedData(PER_SOCKET_CONTEXT *pSkContext, PER_IO_CONTEXT* pIO);
 
 private:
 	//工作线程
@@ -78,8 +84,8 @@ protected:
 	HANDLE				 			*m_aThreadList;				//线程池列表
 	PER_SOCKET_CONTEXT				*m_pListenSocketContext;	//监听socket上下文
 	std::map<SOCKET, PER_SOCKET_CONTEXT*>	m_mapConnectList;	//连接列表
-	MLock	m_arraylckSocketContext[SOCKET_CONTEXT_LOCK_COUNT];	//socket上下文锁
-	MLock									m_lckConnect;		//连接列表锁
+	MLock	m_aLckSocketContext[SOCKET_CONTEXT_LOCK_COUNT];	//socket上下文锁
+	MLock									m_lckConnectList;		//连接列表锁
 	mqw::ResourceManage<PER_SOCKET_CONTEXT>	m_rscSocketContext;	//socket资源管理
     mqw::ResourceManage<PER_IO_CONTEXT>		m_rscIoContext;		//IO资源管理
 	INetInterface *m_pNetInterface;								//服务管理器

@@ -107,6 +107,7 @@ int IOCPModule::ConnectEx(PER_IO_CONTEXT *pIO, const LPSOCKADDR name)
 {
 	int bRet = 0;
 	DWORD dwLen = 0;
+	pIO->m_oprateType = EOP_CONNECT;
 	if (false == m_fnConnectEx(pIO->m_socket, name, sizeof(SOCKADDR),
 			pIO->m_wsaBuf.buf, pIO->m_wsaBuf.len, &dwLen,&pIO->m_overlapped))
 	{
@@ -125,6 +126,7 @@ int IOCPModule::ConnectEx(PER_IO_CONTEXT *pIO, const LPSOCKADDR name)
 int IOCPModule::DisconnectEx(PER_IO_CONTEXT *pIO)
 {
 	int iRet = 0;
+	pIO->m_oprateType = EOP_DISCONNECT;
 	if (false == m_fnDisconnectEx(pIO->m_socket,&pIO->m_overlapped, TF_REUSE_SOCKET,0))
 	{
 		iRet = GetLastError();
@@ -156,6 +158,7 @@ int IOCPModule::Send(PER_IO_CONTEXT *pIO)
 	DWORD dwFlags = 0;
 	int iRet = 0;
 
+	pIO->m_oprateType = EOP_SEND;
 	if (SOCKET_ERROR == WSASend(pIO->m_socket, &pIO->m_wsaBuf, 1, nullptr, dwFlags, &pIO->m_overlapped, NULL))
 	{
 		iRet = WSAGetLastError();
@@ -172,6 +175,7 @@ int IOCPModule::Receive(PER_IO_CONTEXT *pIO)
 {
 	DWORD dwFlags = 0;
 	int iRet = 0;
+	pIO->m_oprateType = EOP_RECEIVE;
 	if (SOCKET_ERROR == WSARecv(pIO->m_socket, &pIO->m_wsaBuf, 1, nullptr, &dwFlags, &pIO->m_overlapped, nullptr))
 	{
 		iRet = WSAGetLastError();
@@ -201,6 +205,7 @@ bool IOCPModule::SetKeepLiveParam(PER_IO_CONTEXT *pIO)
 	alive_in.onoff = TRUE;
 	unsigned long ulBytesReturn = 0;
 
+	pIO->m_oprateType = EOP_KEEP_LIVE;
 	nRet = WSAIoctl(pIO->m_socket, SIO_KEEPALIVE_VALS, &alive_in, sizeof(alive_in),
 		nullptr, 0, &ulBytesReturn, &pIO->m_overlapped, NULL);
 	if (nRet == SOCKET_ERROR)
@@ -251,6 +256,6 @@ void IOCPModule::LoadAllWSAFunction()
 		MLOG("获取函数指针失败，错误码：%d", WSAGetLastError());
 	}
 
-	closesocket(socket);
+	::closesocket(socket);
 }
 
