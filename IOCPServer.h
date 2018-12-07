@@ -39,35 +39,36 @@ class IOCPServier
 	* param data:需要发送的数据
 	* return:	 无
 	*************************************************************************/
-	void Send(int key, std::string data);
+	void Send(unsigned uUserKey, unsigned uMsgType, const char* data, unsigned uLength);
+
+	void Disconnect(unsigned uUserKey);
 
 protected:
 	//处理服务端操作
 	void HandServerOperate(int iResult, PER_SOCKET_CONTEXT *pSkContext, PER_IO_CONTEXT* pIO, DWORD dwBytesTransfered);
 
-    //投递接受
+	//投递接受
 	bool PostAcceptEx(SOCKET listenSocket);
 
 	void DoAccept(int iResult, PER_SOCKET_CONTEXT *pSkContext, PER_IO_CONTEXT* pIO);
 
-    //
-	  void PostDisconnectEx(PER_SOCKET_CONTEXT *pSkContext, PER_IO_CONTEXT* pIO);
+	//
+	void PostDisconnectEx(PER_SOCKET_CONTEXT *pSkContext, PER_IO_CONTEXT* pIO);
 
-	  void DoDisconnect(int iResult, PER_SOCKET_CONTEXT *pSkContext, PER_IO_CONTEXT* pIO);
+	void DoDisconnect(int iResult, PER_SOCKET_CONTEXT *pSkContext, PER_IO_CONTEXT* pIO);
 
-    //
-	  void PostReceive(PER_SOCKET_CONTEXT *pSkContext, PER_IO_CONTEXT* pIO);
+	//
+	void PostReceive(PER_SOCKET_CONTEXT *pSkContext, PER_IO_CONTEXT* pIO);
 
-	  void DoReceive(int iResult, PER_SOCKET_CONTEXT *pSkContext, PER_IO_CONTEXT* pIO, DWORD dwBytesTransfered);
-
-    //发送
-	  void PostSend(PER_SOCKET_CONTEXT *pSkContext, PER_IO_CONTEXT* pIO);
-
-	  void DoSend(int iResult, PER_SOCKET_CONTEXT *pSkContext, PER_IO_CONTEXT* pIO, DWORD dwBytesTransfered);
-
+	void DoReceive(int iResult, PER_SOCKET_CONTEXT *pSkContext, PER_IO_CONTEXT* pIO, DWORD dwBytesTransfered);
 
 	//解包接收到的数据
-	  void UnpackReceivedData(PER_SOCKET_CONTEXT *pSkContext, PER_IO_CONTEXT* pIO);
+	void UnpackReceivedData(PER_SOCKET_CONTEXT *pSkContext, PER_IO_CONTEXT* pIO);
+	//发送
+	bool PostSend(PER_SOCKET_CONTEXT *pSkContext, PER_IO_CONTEXT* pIO);
+
+	void DoSend(int iResult, PER_SOCKET_CONTEXT *pSkContext, PER_IO_CONTEXT* pIO, DWORD dwBytesTransfered);
+
 
 private:
 	//工作线程
@@ -78,7 +79,7 @@ protected:
 	{
 		SOCKET_CONTEXT_LOCK_COUNT = 100
 	};
-	const unsigned					m_uSocketContextLockCount = 100;
+
 	HANDLE 							m_hIOCompletionPort;		//完成端口
 	unsigned						m_uThreadCount;				//线程个数
 	HANDLE				 			*m_aThreadList;				//线程池列表

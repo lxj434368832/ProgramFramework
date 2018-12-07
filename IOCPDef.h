@@ -11,6 +11,7 @@
 
 #define MAX_BUF_LEN 512			//发送缓冲区大小512B
 #define MAX_RCV_BUF_LEN 5120	//接收缓冲区大小5K
+#define CHECK_VALUE 0xfafbfcfd	//网络包检测值
 
 // 在完成端口上投递的I/O操作的类型
 enum EOperateType
@@ -27,11 +28,11 @@ enum EOperateType
 #pragma pack(push,1)
 struct PackHeader
 {
-	unsigned long ulBodyLength;
-	int			  msgType;
+	unsigned		uMsgType;
+	unsigned long	ulBodyLength;
+	unsigned		uCheck = CHECK_VALUE;	//主要用于防止错包
 };
 #pragma pack(pop)
-
 
 //单IO数据结构体定义(用于每一个重叠操作的参数)
 struct PER_IO_CONTEXT
@@ -50,7 +51,7 @@ struct PER_IO_CONTEXT
 	{
 		m_socket = INVALID_SOCKET;
 		m_uBufLength = MAX_BUF_LEN;
-		m_szBuffer = new char[MAX_BUF_LEN];
+		m_szBuffer = new char[m_uBufLength];
 
 		Reset();
 	}
@@ -65,9 +66,9 @@ struct PER_IO_CONTEXT
 		m_socket = INVALID_SOCKET;
 		m_oprateType = EOP_UNKNOWN;
 		m_wsaBuf.buf = m_szBuffer;
-		m_wsaBuf.len = m_uBufLength;
-		ZeroMemory(m_szBuffer, MAX_BUF_LEN);
-		m_uDataLength = 0;
+		m_wsaBuf.len = 0;
+		ZeroMemory(m_szBuffer, m_uBufLength);
+		m_uDataLength = 0;	
 		m_wParam = 0;
 		m_lParam = 0;
 	}
@@ -94,6 +95,7 @@ struct PER_RECEIVE_IO_CONTEXT :public PER_IO_CONTEXT
 struct PER_SOCKET_CONTEXT
 {
 	SOCKET					m_socket;                   // 每一个客户端连接的Socket
+	bool					m_bSocketDirty;				//socket为脏数据的标识
 	SOCKADDR_IN				m_clientAddr;               // 客户端的地址
 	PER_RECEIVE_IO_CONTEXT	m_ReceiveContext;			//接收上下文
 	int						m_iDisconnectFlag;			//断开连接标识

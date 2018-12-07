@@ -79,8 +79,12 @@ int IOCPModule::AcceptEx(SOCKET listenSocket, PER_IO_CONTEXT *pIO)
 	int iSockaddrSize = sizeof(SOCKADDR) + 16;
 	DWORD dwBytes = 0;
 	pIO->m_oprateType = EOP_ACCEPT;
-	if (false == m_fnAcceptEx(listenSocket,pIO->m_socket,pIO->m_wsaBuf.buf,pIO->m_wsaBuf.len - iSockaddrSize*2,
-		iSockaddrSize,iSockaddrSize,&dwBytes,&pIO->m_overlapped))
+
+	//if (false == m_fnAcceptEx(listenSocket,pIO->m_socket,pIO->m_wsaBuf.buf,pIO->m_wsaBuf.len - iSockaddrSize*2,
+	//	iSockaddrSize,iSockaddrSize,&dwBytes,&pIO->m_overlapped))
+	//为了防止针对服务器的攻击，连接时不接收数据，连接到达立即返回。
+	if (false == m_fnAcceptEx(listenSocket, pIO->m_socket, pIO->m_wsaBuf.buf, 0,
+			iSockaddrSize, iSockaddrSize, &dwBytes, &pIO->m_overlapped))
 	{
 		iRet = ::WSAGetLastError();
 		if (WSA_IO_PENDING != iRet)

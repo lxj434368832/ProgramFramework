@@ -17,7 +17,7 @@
 #define LOGS
 
 #define MLOG(format, ...)  do{  \
-	printf("FKLog msg: function:%s line:%d",__FUNCTION__,__LINE__);  \
+	printf("MLog msg: function:%s line:%d",__FUNCTION__,__LINE__);  \
 	printf(format, ##__VA_ARGS__); printf("\n"); }while(0)
 #define MAssert(express) {if(!express){char a[1];a[-0xffff];} }
 
