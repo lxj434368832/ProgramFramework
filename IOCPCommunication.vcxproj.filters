@@ -13,6 +13,9 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Framework">
+      <UniqueIdentifier>{3943f37e-2a18-472a-b398-ad8d66c8231e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -51,16 +54,25 @@
     <ClInclude Include="ClientManage.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="IOCPBase.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="IOCPClient.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="IOCPServer.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="INetInterface.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="MainServer.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Framework\zxl_logging.h">
+      <Filter>Framework</Filter>
+    </ClInclude>
+    <ClInclude Include="Framework\zxu_utils.h">
+      <Filter>Framework</Filter>
+    </ClInclude>
+    <ClInclude Include="IOCPBase.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="IOCPClient.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
@@ -95,16 +107,25 @@
     <ClCompile Include="ClientManage.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="IOCPBase.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="IOCPClient.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
     <ClCompile Include="IOCPServer.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="INetInterface.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="MainServer.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Framework\zxl_logging.cpp">
+      <Filter>Framework</Filter>
+    </ClCompile>
+    <ClCompile Include="Framework\zxu_utils.cpp">
+      <Filter>Framework</Filter>
+    </ClCompile>
+    <ClCompile Include="IOCPBase.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="IOCPClient.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

@@ -30,6 +30,13 @@ IOCPModule* IOCPModule::Instance()
 	return &s_instance;
 }
 
+int IOCPModule::GetProcessorCount()
+{
+	SYSTEM_INFO si;
+	GetSystemInfo(&si);
+	return si.dwNumberOfProcessors;
+}
+
 SOCKET IOCPModule::Socket()
 {
 	return::WSASocket(AF_INET, SOCK_STREAM, IPPROTO_TCP, NULL, 0, WSA_FLAG_OVERLAPPED);
@@ -262,4 +269,3 @@ void IOCPModule::LoadAllWSAFunction()
 
 	::closesocket(socket);
 }
-

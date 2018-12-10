@@ -10,6 +10,7 @@
 #include <MSWSock.h>
 
 struct PER_IO_CONTEXT;
+struct PER_SOCKET_CONTEXT;
 
 // 主要封装iocp相关的连接、接收、发送函数
 
@@ -18,6 +19,9 @@ class IOCPModule
 public:
 	~IOCPModule();
 	static IOCPModule* Instance();
+
+	// 获得本机中处理器的数量
+	int GetProcessorCount();
 
 	SOCKET Socket();
 

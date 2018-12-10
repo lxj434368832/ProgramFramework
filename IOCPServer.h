@@ -3,7 +3,7 @@
 * function：iocp通讯定义文件
 * author :	明巧文
 * datetime：2017-12-14
-* company:  安碧捷科技股份有限公司
+* company: 
 *************************************************************************/
 
 #include "stdafx.h"
@@ -13,17 +13,19 @@
 
 class INetInterface;
 
-// 1、将所有类型的连接集中在一个地方。
-// 2、负责初始化所有类型的连接。
-// 3、统一创建iocp，统一创建iocp线程。
-
 class IOCPServier
 {
-  public:
-	  IOCPServier(INetInterface *pSrvMng = nullptr);
-	  virtual ~IOCPServier();
+public:
+	IOCPServier(INetInterface *pSrvMng = nullptr);
+	virtual ~IOCPServier();
 
-    bool InitIOCP(unsigned uThreadCount);
+	bool StartServer(USHORT nPort, unsigned dwMaxConnection = 10, unsigned uThreadCount = 0);
+	bool StopServer();
+
+	//心跳检测函数，由主线程定时调用。
+	void HeartbeatCheck();
+
+	bool InitIOCP(unsigned uThreadCount);
 
 	/*************************************************************************
 	* function：  开启针对服务端的监听
@@ -31,7 +33,7 @@ class IOCPServier
 	* param iMaxServerCount:最大的连接个数
 	* return:	  成功返回true,失败返回false.
 	*************************************************************************/
-    bool StartServerListen(u_short port, unsigned iMaxServerCount);
+	bool StartServerListen(u_short port, unsigned iMaxConnectCount);
 
 	/*************************************************************************
 	* function： 发送数据
@@ -40,7 +42,7 @@ class IOCPServier
 	* return:	 无
 	*************************************************************************/
 	void Send(unsigned uUserKey, unsigned uMsgType, const char* data, unsigned uLength);
-
+	
 	void Disconnect(unsigned uUserKey);
 
 protected:
@@ -64,6 +66,8 @@ protected:
 
 	//解包接收到的数据
 	void UnpackReceivedData(PER_SOCKET_CONTEXT *pSkContext, PER_IO_CONTEXT* pIO);
+	//打包数据
+	void PackSendData(PER_SOCKET_CONTEXT * pSkContext, unsigned uMsgType, const char* data, unsigned length);
 	//发送
 	bool PostSend(PER_SOCKET_CONTEXT *pSkContext, PER_IO_CONTEXT* pIO);
 
@@ -85,8 +89,9 @@ protected:
 	HANDLE				 			*m_aThreadList;				//线程池列表
 	PER_SOCKET_CONTEXT				*m_pListenSocketContext;	//监听socket上下文
 	std::map<SOCKET, PER_SOCKET_CONTEXT*>	m_mapConnectList;	//连接列表
-	MLock	m_aLckSocketContext[SOCKET_CONTEXT_LOCK_COUNT];	//socket上下文锁
-	MLock									m_lckConnectList;		//连接列表锁
+	MLock									m_lckConnectList;	//连接列表锁
+
+	MLock	m_aLckSocketContext[SOCKET_CONTEXT_LOCK_COUNT];		//socket上下文锁
 	mqw::ResourceManage<PER_SOCKET_CONTEXT>	m_rscSocketContext;	//socket资源管理
     mqw::ResourceManage<PER_IO_CONTEXT>		m_rscIoContext;		//IO资源管理
 	INetInterface *m_pNetInterface;								//服务管理器

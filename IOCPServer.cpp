@@ -4,9 +4,9 @@
 #include "ConnectManage.h"
 #include "ServerManage.h"
 #include "ClientManage.h"
+#include "INetInterface.h"
 #include <WS2tcpip.h>
 #include <assert.h>
-#include "INetInterface.h"
 
 IOCPServier::IOCPServier(INetInterface *pNet) :
 m_pNetInterface(pNet),
@@ -27,26 +27,115 @@ m_rscIoContext(1000)
 
 IOCPServier::~IOCPServier()
 {
+	m_pNetInterface = nullptr;
+}
+
+bool IOCPServier::StartServer(USHORT nPort, unsigned dwMaxConnection, unsigned uThreadCount)
+{
+	if (false == InitIOCP(uThreadCount))
+		return false;
+
+	if (StartServerListen(nPort, dwMaxConnection))
+	{
+		//3、安全地让线程退出
+		for (unsigned i = 0; i < m_uThreadCount; i++)
+		{
+			IOCPModule::Instance()->PostQueuedCompletionStatus(m_hIOCompletionPort, 0, NULL, NULL);
+		}
+
+		::WaitForMultipleObjects(m_uThreadCount, m_aThreadList, TRUE, INFINITE);
+
+		for (unsigned i = 0; i < m_uThreadCount; i++)
+		{
+			::CloseHandle(m_aThreadList[i]);
+		}
+		delete[] m_aThreadList;
+		m_aThreadList = nullptr;
+
+		RELEASE_HANDLE(m_hIOCompletionPort);
+		return false;
+	}
+	return true;
+}
+
+bool IOCPServier::StopServer()
+{
+	//1、关闭监听套接字
+	::shutdown(m_pListenSocketContext->m_socket, SD_BOTH);
+	::closesocket(m_pListenSocketContext->m_socket);
+	m_pListenSocketContext->m_socket = INVALID_SOCKET;
+	m_rscSocketContext.put(m_pListenSocketContext);
+	m_pListenSocketContext = nullptr;
+
+	//2、等待AcceptEx IO操作完成
+	while (true)
+	{
+		bool bFind = false;
+		for (auto value : m_mapConnectList)
+		{
+			if (EOP_ACCEPT == value.second->m_ReceiveContext.m_oprateType)
+			{
+				bFind = true;
+			}
+		}
+		if (false == bFind) break;
+
+		::Sleep(10);
+	}
+
+	//3、关闭客户端连接并取消所有IO
+	m_lckConnectList.lock();
+	auto iter = m_mapConnectList.begin();
+	while (iter != m_mapConnectList.end())
+	{
+		PER_SOCKET_CONTEXT *pSkContext = iter->second;
+		if (INVALID_SOCKET != pSkContext->m_socket &&
+			EOP_RECEIVE == pSkContext->m_ReceiveContext.m_oprateType)
+		{
+			m_pNetInterface->DeleteUser(pSkContext->m_socket);
+			::shutdown(pSkContext->m_socket, SD_BOTH);
+			RELEASE_SOCKET(pSkContext->m_socket);
+			m_mapConnectList.erase(iter++);
+			m_rscSocketContext.put(pSkContext);
+		}
+		else
+		{
+			MLOG("连接列表中的资源不正确！");
+			iter++;
+		}
+	}
+	m_lckConnectList.unlock();
+	
+	//3、安全地让线程退出
 	for (unsigned i = 0; i < m_uThreadCount; i++)
 	{
 		IOCPModule::Instance()->PostQueuedCompletionStatus(m_hIOCompletionPort, 0, NULL, NULL);
 	}
 
+	::WaitForMultipleObjects(m_uThreadCount, m_aThreadList, TRUE, INFINITE);
+
 	for (unsigned i = 0; i < m_uThreadCount; i++)
 	{
-		::WaitForSingleObject(m_aThreadList[i], INFINITE);
 		::CloseHandle(m_aThreadList[i]);
 	}
 	delete[] m_aThreadList;
+	m_aThreadList = nullptr;
 
 	RELEASE_HANDLE(m_hIOCompletionPort);
-	RELEASE(m_pListenSocketContext);
+	return true;
+}
+
+void IOCPServier::HeartbeatCheck()
+{
 
 }
 
 bool IOCPServier::InitIOCP(unsigned uThreadCount)
 {
-	assert(uThreadCount);
+	if (0 == uThreadCount)
+	{
+		uThreadCount = IOCPModule::Instance()->GetProcessorCount() * 2 - 1;
+	}
 
 	m_hIOCompletionPort = IOCPModule::Instance()->CreateIoCompletionPort();
 	if (NULL == m_hIOCompletionPort)
@@ -70,7 +159,7 @@ bool IOCPServier::InitIOCP(unsigned uThreadCount)
 	return true;
 }
 
-bool IOCPServier::StartServerListen(u_short port, unsigned iMaxServerCount)
+bool IOCPServier::StartServerListen(u_short port, unsigned iMaxConnectCount)
 {
 	bool bRet = false;
 	do
@@ -105,7 +194,7 @@ bool IOCPServier::StartServerListen(u_short port, unsigned iMaxServerCount)
 		if (IOCPModule::Instance()->BindIoCompletionPort(m_pListenSocketContext, m_hIOCompletionPort)) break;
 
 		//投递接受操作
-		for (unsigned i = 0; i < iMaxServerCount; i++)
+		for (unsigned i = 0; i < iMaxConnectCount; i++)
 		{
 			if (false == (bRet = PostAcceptEx(m_pListenSocketContext->m_socket)))
 			{
@@ -117,15 +206,30 @@ bool IOCPServier::StartServerListen(u_short port, unsigned iMaxServerCount)
 
 	if (false == bRet)
 	{
-		::closesocket(m_pListenSocketContext->m_socket);
-		m_pListenSocketContext->m_socket = INVALID_SOCKET;
+		RELEASE_SOCKET(m_pListenSocketContext->m_socket);
+		m_rscSocketContext.put(m_pListenSocketContext);
+		m_pListenSocketContext = nullptr;
 	}
 	return bRet;
 }
 
 void IOCPServier::Disconnect(unsigned uUserKey)
 {
+	PER_SOCKET_CONTEXT *pSkContext = nullptr;
+	PER_IO_CONTEXT *pIO = nullptr;
 
+	m_lckConnectList.lock();
+	if (m_mapConnectList.end() != m_mapConnectList.find(uUserKey))
+	{
+		pSkContext = m_mapConnectList.at(uUserKey); 
+		pIO = m_rscIoContext.get();
+	}
+	m_lckConnectList.unlock();
+
+	if (pSkContext && pIO)
+	{
+		PostDisconnectEx(pSkContext, pIO);
+	}
 }
 
 DWORD WINAPI  IOCPServier::WorkerThread(LPVOID lpParameter)
@@ -193,24 +297,9 @@ void IOCPServier::HandServerOperate(int iResult, PER_SOCKET_CONTEXT *pSkContext,
 		break;
 
 	case EOP_SEND:
-		if (0 == pIO->m_overlapped.InternalHigh)
-		{
-			MLOG("网络的另一端已断开socket：%d 的连接！", pIO->m_socket);
-			shutdown(pIO->m_socket, SD_BOTH);
-		}
-		else if (iResult)
-		{
-			if (ERROR_NETNAME_DELETED == iResult)
-				MLOG("网络的另一端已下线！");
-			else
-				MLOG("SRV发送失败，错误码：%d", iResult);
-
-			shutdown(pIO->m_socket, SD_BOTH);
-		}
-
-		//ReleaseIOContext(pIO);
-
+		DoSend(iResult, pSkContext, pIO, dwBytesTransfered);
 		break;
+
 	default:
 		MLOG("未知的服务操作码：%d", pIO->m_oprateType);
 		MAssert(false);
@@ -282,6 +371,7 @@ void IOCPServier::DoAccept(int iResult, PER_SOCKET_CONTEXT *pSkContext, PER_IO_C
 			MLOG("pClientSkContext为空，发生错误！");
 			assert(pClientSkContext);
 		}
+
 		//通知服务端连接
 		m_pNetInterface->AddUser((unsigned)pIO->m_socket);
 		PostReceive(pClientSkContext, pIO);
@@ -459,6 +549,12 @@ void IOCPServier::UnpackReceivedData(PER_SOCKET_CONTEXT *pSkContext, PER_IO_CONT
 		}
 		else //至少有一个完整的网络包，开始拆包
 		{
+			if (CHECK_VALUE != head->uCheck)
+			{
+				MLOG("包校验不对，将断开连接！");
+				PostDisconnectEx(pSkContext, pIO);
+				break;
+			}
 			m_pNetInterface->HandSrvData(pIO->m_socket, head->uMsgType, buf, uPackLength);	//调用具体的业务处理数据，有包头和包体
 			buf += uPackLength;
 			pIO->m_uDataLength -= uPackLength;
@@ -466,17 +562,17 @@ void IOCPServier::UnpackReceivedData(PER_SOCKET_CONTEXT *pSkContext, PER_IO_CONT
 	}
 }
 
-void IOCPServier::Send(unsigned uUserKey, unsigned uMsgType, const char* data, unsigned length)
+void IOCPServier::Send(unsigned uUserKey, unsigned uMsgType, const char* data, unsigned uLength)
 {
-	if (nullptr == data || 0 == length)
+	if (nullptr == data || 0 == uLength)
 	{
 		MLOG("发送的数据为空！");
 		return;
 	}
 
-	if (length > MAX_RCV_BUF_LEN - sizeof(PackHeader))
+	if (uLength > MAX_RCV_BUF_LEN - sizeof(PackHeader))
 	{
-		MLOG("需要发送数据(%d)大于发送缓冲区(%d),不能发送数据！", length, MAX_RCV_BUF_LEN - sizeof(PackHeader));
+		MLOG("需要发送数据(%d)大于发送缓冲区(%d),不能发送数据！", uLength, MAX_RCV_BUF_LEN - sizeof(PackHeader));
 		return;
 	}
 
@@ -488,7 +584,7 @@ void IOCPServier::Send(unsigned uUserKey, unsigned uMsgType, const char* data, u
 	{
 		pSkContext = m_mapConnectList.at(uUserKey);
 	}
-	m_lckConnectList.unlock;
+	m_lckConnectList.unlock();
 
 	if (nullptr == pSkContext)
 	{
@@ -496,57 +592,62 @@ void IOCPServier::Send(unsigned uUserKey, unsigned uMsgType, const char* data, u
 		return;
 	}
 
+	MAutoLock lck(&m_aLckSocketContext[idxLock]);
+	PackSendData(pSkContext,uMsgType, data, uLength);
+	return;
+
+}
+
+void IOCPServier::PackSendData(PER_SOCKET_CONTEXT * pSkContext,unsigned uMsgType, const char* data,unsigned length)
+{
+	unsigned uLeftLen = length;
+	unsigned uCurrentCpyLen = 0;
+
+	if (1 == pSkContext->m_iDisconnectFlag)
 	{
-		unsigned uLeftLen = length;
-		unsigned uCurrentCpyLen = 0;
-		MAutoLock lck(&m_aLckSocketContext[idxLock]);
+		MLOG("当前用户:%d已断开，停止发送数据", pSkContext->m_socket);
+		return;
+	}
 
-		if (1 == pSkContext->m_iDisconnectFlag)
+	for (int i = 0; 0 != uLeftLen; i++)
+	{
+		if (uLeftLen < 0)
 		{
-			MLOG("当前用户:%d已断开，停止发送数据", uUserKey);
-			return;
+			MLOG("发送数据逻辑出现错误，uLeftLen小于0！");
+			break;
 		}
 
-		for (int i = 0; 0 != uLeftLen; i++)
+		PER_IO_CONTEXT *pIO = m_rscIoContext.get();
+		pIO->m_socket = pSkContext->m_socket;
+		if (0 == i)
 		{
-			if (uLeftLen < 0)
-			{
-				MLOG("发送数据逻辑出现错误，uLeftLen小于0！");
-				break;
-			}
+			PackHeader head;
+			unsigned uHeadSize = sizeof(PackHeader);
+			head.uMsgType = uMsgType;
+			head.ulBodyLength = length;
+			memcpy(pIO->m_szBuffer, (char*)&head, uHeadSize);
+			uCurrentCpyLen = min(uLeftLen, MAX_BUF_LEN - uHeadSize);
+			memcpy(pIO->m_szBuffer + uHeadSize, data, uCurrentCpyLen);
+			pIO->m_uDataLength = uCurrentCpyLen + uHeadSize;
 
-			PER_IO_CONTEXT *pIO = m_rscIoContext.get();
-			pIO->m_socket = pSkContext->m_socket;
-			if (0 == i)
-			{
-				PackHeader head;
-				unsigned uHeadSize = sizeof(PackHeader);
-				head.uMsgType = uMsgType;
-				head.ulBodyLength = length;
-				memcpy(pIO->m_szBuffer, (char*)&head, uHeadSize);
-				uCurrentCpyLen = min(uLeftLen, MAX_BUF_LEN - uHeadSize);
-				memcpy(pIO->m_szBuffer + uHeadSize, data, uCurrentCpyLen);
-				pIO->m_uDataLength = uCurrentCpyLen + uHeadSize;
-
-			}
-			else
-			{
-				uCurrentCpyLen = min(uLeftLen, MAX_BUF_LEN);
-				memcpy(pIO->m_szBuffer, data, uCurrentCpyLen);
-				pIO->m_uDataLength = uCurrentCpyLen;
-			}
-
-			pIO->m_wsaBuf.buf = pIO->m_szBuffer;
-			pIO->m_wsaBuf.len = pIO->m_uDataLength;
-			if (false == PostSend(pSkContext, pIO))
-			{
-				MLOG("发送数据失败，还剩%d数据未发送！", uLeftLen);
-				break;
-			}
-
-			uLeftLen -= uCurrentCpyLen;
-			data += uCurrentCpyLen;
 		}
+		else
+		{
+			uCurrentCpyLen = min(uLeftLen, MAX_BUF_LEN);
+			memcpy(pIO->m_szBuffer, data, uCurrentCpyLen);
+			pIO->m_uDataLength = uCurrentCpyLen;
+		}
+
+		pIO->m_wsaBuf.buf = pIO->m_szBuffer;
+		pIO->m_wsaBuf.len = pIO->m_uDataLength;
+		if (false == PostSend(pSkContext, pIO))
+		{
+			MLOG("发送数据失败，还剩%d byte数据未发送！", uLeftLen);
+			break;
+		}
+
+		uLeftLen -= uCurrentCpyLen;
+		data += uCurrentCpyLen;
 	}
 
 }
@@ -554,36 +655,51 @@ void IOCPServier::Send(unsigned uUserKey, unsigned uMsgType, const char* data, u
 bool IOCPServier::PostSend(PER_SOCKET_CONTEXT *pSkContext, PER_IO_CONTEXT* pIO)
 {
 	bool bRet = true;
-
-	int idxLock = pIO->m_socket % SOCKET_CONTEXT_LOCK_COUNT;
 	if (1 == pSkContext->m_iDisconnectFlag)
 	{
+		MLOG("用户已经断开连接:%d,将停止发送数据！", pIO->m_socket);
 		bRet = false;
-		m_rscIoContext.put(pIO);
-		MLOG("检测到连接断开，故停止发送数据！");
 	}
-	else if (0 == pSkContext->m_iSendPendingFlag)
+	else if (nullptr == pIO)	//发送下条IO
 	{
-		//投递第一个发送
-		pSkContext->m_iSendPendingFlag = 1;
-		if (IOCPModule::Instance()->Send(pIO))	//发送失败的处理
+		if (pSkContext->m_queueIoContext.empty())
 		{
-			bRet = false;
-			PostDisconnectEx(pSkContext, pIO);
+			pSkContext->m_iSendPendingFlag = 0;
+		}
+		else
+		{
+			pIO = pSkContext->m_queueIoContext.front();
+			pSkContext->m_queueIoContext.pop();
+			if (IOCPModule::Instance()->Send(pIO))	//发送失败的处理
+			{
+				PostDisconnectEx(pSkContext, pIO);
+				bRet = false;
+			}
 		}
 	}
 	else
 	{
-		//将当前IO放入发送队列
-		pSkContext->m_queueIoContext.push(pIO);
+		if (pSkContext->m_queueIoContext.empty())
+		{
+			//投递第一个发送
+			pSkContext->m_iSendPendingFlag = 1;
+			if (IOCPModule::Instance()->Send(pIO))	//发送失败的处理
+			{
+				PostDisconnectEx(pSkContext, pIO);
+				bRet = false;
+			}
+		}
+		else
+		{
+			//将当前IO放入发送队列
+			pSkContext->m_queueIoContext.push(pIO);
+		}
 	}
-
 	return bRet;
 }
 
 void IOCPServier::DoSend(int iResult, PER_SOCKET_CONTEXT *pSkContext, PER_IO_CONTEXT* pIO, DWORD dwBytesTransfered)
 {
-	int idxLock = pIO->m_socket % SOCKET_CONTEXT_LOCK_COUNT;
 	MLOG("dwBytesTransfered:%d  InternalHigh:%d.", dwBytesTransfered, pIO->m_overlapped.InternalHigh);
 
 	if (iResult)
@@ -603,26 +719,12 @@ void IOCPServier::DoSend(int iResult, PER_SOCKET_CONTEXT *pSkContext, PER_IO_CON
 	}
 	else
 	{
+		int idxLock = pIO->m_socket % SOCKET_CONTEXT_LOCK_COUNT;
+		pIO->Reset();
 		m_rscIoContext.put(pIO);
-		MAutoLock lck(&m_aLckSocketContext[idxLock]);
-		if (1 == pSkContext->m_iDisconnectFlag)
-		{
-			MLOG("用户已经断开连接:%d,将停止发送数据！", pIO->m_socket);
-			return;
-		}
-		else if (false == pSkContext->m_queueIoContext.empty())
-		{
-			pIO = pSkContext->m_queueIoContext.front();
-			pSkContext->m_queueIoContext.pop();
-			if (IOCPModule::Instance()->Send(pIO))	//发送失败的处理
-			{
-				PostDisconnectEx(pSkContext, pIO);
-			}
-		}
-		else
-		{
-			pSkContext->m_iSendPendingFlag = 0;
-		}
+		m_aLckSocketContext[idxLock].lock();
+		PostSend(pSkContext, nullptr);
+		m_aLckSocketContext[idxLock].unlock();
+
 	}
 }
-

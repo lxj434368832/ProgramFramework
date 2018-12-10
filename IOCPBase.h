@@ -3,31 +3,31 @@
 * function：iocp通讯定义文件
 * author :	明巧文
 * datetime：2017-12-14
-* company:  安碧捷科技股份有限公司
+* company:  
 *************************************************************************/
+
 #include "stdafx.h"
 #include "IOCPDef.h"
 #include "ResourceManage.h"
+#include "MLock.h"
 
-class ConnectManage;
-class ServerManage;
-class ClientManage;
-
-// 1、将所有类型的连接集中在一个地方。
-// 2、负责初始化所有类型的连接。
-// 3、统一创建iocp，统一创建iocp线程。
+class INetInterface;
 
 class IOCPBase
 {
 public:
-	IOCPBase(ConnectManage *pCnntMng = NULL,
-		ServerManage *pSrvMng = NULL, ClientManage *pClientMng = NULL);
+	IOCPBase(INetInterface *pNet);
 	virtual ~IOCPBase();
 
 	bool InitIOCP(unsigned uThreadCount);
 
-	//工作线程
-	static DWORD WINAPI WorkerThread(LPVOID lpParameter);
+	/*************************************************************************
+	* function：  开启针对服务端的监听
+	* param port: 本地监听的端口号
+	* param iMaxServerCount:最大的连接个数
+	* return:	  成功返回true,失败返回false.
+	*************************************************************************/
+	bool StartServerListen(u_short port, unsigned iMaxConnectCount);
 
 	/*************************************************************************
 	* function：开启一个连接需要考虑是否需要重连
@@ -36,62 +36,71 @@ public:
 	* param iRecnnt: 是否重连标识,小于0代表不需要重连
 	* return:		 返回此连接对应的id,但不代表连接成功，为0代表连接出现了错误
 	*************************************************************************/
-	unsigned StartConnect(std::string ip, u_short port, PER_IO_CONTEXT* pIO = NULL, int iRecnnt = -1);
+	unsigned StartConnect(std::string ip, u_short port, int iRecnnt = -1, const char* data = nullptr, int len = 0);
 
-	/*************************************************************************
-	* function：  开启针对服务端的监听
-	* param port: 本地监听的端口号
-	* param iMaxServerCount:最大的连接个数
-	* return:	  成功返回true,失败返回false.
-	*************************************************************************/
-	bool StartServerListen(u_short port, unsigned iMaxServerCount);
-
-	//处理连接操作
-	void HandConnectOperate(int iResult, PER_IO_CONTEXT* pIO);
-
-	//处理客户端操作
-	void HandClientOperate(int iResult, PER_IO_CONTEXT* pIO);
-
-	//处理服务端操作
-	void HandServerOperate(int iResult, PER_IO_CONTEXT* pIO);
 
 protected:
-	/*************************************************************************
-	* function：获取一个IOContext的结构
-	* return:	IOContext的指针
-	*************************************************************************/
-	PER_IO_CONTEXT* GetIOContext();
-
-	//回收利用IOContext
-	void ReleaseIOContext(PER_IO_CONTEXT *pIO);
+	//处理服务端操作
+	void HandServerOperate(int iResult, PER_SOCKET_CONTEXT *pSkContext, PER_IO_CONTEXT* pIO, DWORD dwBytesTransfered);
 
 	bool PostConnectEx(PER_IO_CONTEXT* pIO, SOCKADDR* serverAddr);
 
+	void DoConnect(int iResult, PER_SOCKET_CONTEXT *pSkContext, PER_IO_CONTEXT* pIO);
+
 	//投递接受
-	bool PostAcceptEx(SOCKET listenSocket, EOperateType op);
+	bool PostAcceptEx(SOCKET listenSocket);
+
+	void DoAccept(int iResult, PER_SOCKET_CONTEXT *pSkContext, PER_IO_CONTEXT* pIO);
 
 	//
-	void PostDisconnectEx(PER_IO_CONTEXT* pIO, EOperateType op);
+	void PostReceive(PER_SOCKET_CONTEXT *pSkContext, PER_IO_CONTEXT* pIO);
 
-	//
-	void PostReceive(PER_IO_CONTEXT* pIO, EOperateType op);
-
-	//发送
-	void PostSend(PER_IO_CONTEXT* pIO, EOperateType op);
+	void DoReceive(int iResult, PER_SOCKET_CONTEXT *pSkContext, PER_IO_CONTEXT* pIO, DWORD dwBytesTransfered);
 
 	//解包接收到的数据
-	void UnpackReceivedData(PER_IO_CONTEXT* pIO, std::function<void(unsigned, const char*, unsigned)> HandData);
+	void UnpackReceivedData(PER_SOCKET_CONTEXT *pSkContext, PER_IO_CONTEXT* pIO);
 
-	void DoReceive(PER_IO_CONTEXT* pIO, int iResult, std::function<void(unsigned, const char*, unsigned)> HandData);
+	/*************************************************************************
+	* function： 发送数据
+	* param key: 用户id
+	* param data:需要发送的数据
+	* return:	 无
+	*************************************************************************/
+	void Send(unsigned uUserKey, unsigned uMsgType, const char* data, unsigned uLength);
+
+	//打包数据
+	void PackSendData(PER_SOCKET_CONTEXT * pSkContext, unsigned uMsgType, const char* data, unsigned length);
+	//发送
+	bool PostSend(PER_SOCKET_CONTEXT *pSkContext, PER_IO_CONTEXT* pIO);
+
+	void DoSend(int iResult, PER_SOCKET_CONTEXT *pSkContext, PER_IO_CONTEXT* pIO, DWORD dwBytesTransfered);
+
+	void Disconnect(unsigned uUserKey);
+	//
+	void PostDisconnectEx(PER_SOCKET_CONTEXT *pSkContext, PER_IO_CONTEXT* pIO);
+
+	void DoDisconnect(int iResult, PER_SOCKET_CONTEXT *pSkContext, PER_IO_CONTEXT* pIO);
+
+private:
+	//工作线程
+	static DWORD WINAPI WorkerThread(LPVOID lpParameter);
 
 protected:
-	HANDLE 							m_hIOCP;		//完成端口
-	unsigned						m_uThreadCount;	//线程个数
-	HANDLE				 			*m_aThreadList;	//线程池列表
-	mqw::ResourceManage<PER_IO_CONTEXT>	m_rscIO;		//IO资源管理
+	enum
+	{
+		SOCKET_CONTEXT_LOCK_COUNT = 100
+	};
 
-	ConnectManage					*m_pCnntMng;	//连接管理
-	ServerManage					*m_pSrvMng;		//服务器管理
-	ClientManage					*m_pClientMng;	//客户端管理
+	HANDLE 							m_hIOCompletionPort;		//完成端口
+	unsigned						m_uThreadCount;				//线程个数
+	HANDLE				 			*m_aThreadList;				//线程池列表
+	PER_SOCKET_CONTEXT				*m_pListenSocketContext;	//监听socket上下文
+	std::map<SOCKET, PER_SOCKET_CONTEXT*>	m_mapConnectList;	//连接列表
+	MLock									m_lckConnectList;	//连接列表锁
+
+	MLock	m_aLckSocketContext[SOCKET_CONTEXT_LOCK_COUNT];		//socket上下文锁
+	mqw::ResourceManage<PER_SOCKET_CONTEXT>	m_rscSocketContext;	//socket资源管理
+	mqw::ResourceManage<PER_IO_CONTEXT>		m_rscIoContext;		//IO资源管理
+	INetInterface *m_pNetInterface;								//网络接口
 };
 
