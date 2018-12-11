@@ -1,9 +1,6 @@
 #include "stdafx.h"
 #include "IOCPBase.h"
 #include "IOCPModule.h"
-#include "ConnectManage.h"
-#include "ServerManage.h"
-#include "ClientManage.h"
 #include "INetInterface.h"
 #include <WS2tcpip.h>
 #include <assert.h>
@@ -11,7 +8,7 @@
 IOCPBase::IOCPBase(INetInterface *pNet):
 	m_pNetInterface(pNet),
 	m_hIOCompletionPort(INVALID_HANDLE_VALUE),
-	m_rscSocketContext(10),
+	m_rscSocketContext(100),
 	m_rscIoContext(1000)
 {
 	m_uThreadCount = 0;
@@ -62,7 +59,7 @@ bool IOCPBase::InitIOCP(unsigned uThreadCount)
 bool IOCPBase::StartServerListen(u_short port, unsigned iMaxConnectCount)
 {
 	bool bRet = false;
-	do
+	/*do
 	{
 		if (nullptr == m_pListenSocketContext)
 		{
@@ -109,14 +106,14 @@ bool IOCPBase::StartServerListen(u_short port, unsigned iMaxConnectCount)
 		RELEASE_SOCKET(m_pListenSocketContext->m_socket);
 		m_rscSocketContext.put(m_pListenSocketContext);
 		m_pListenSocketContext = nullptr;
-	}
+	}*/
 	return bRet;
 }
 
-unsigned IOCPBase::StartConnect(std::string ip, u_short port, int iRecnnt, const char* data, int len)
+bool IOCPBase::StartConnect(unsigned uUserKey, std::string ip, u_short port, int iRecnnt = -1)
 {
 	bool bRet = false;
-	PER_SOCKET_CONTEXT *pSkContext = m_rscSocketContext.get();
+	/*PER_SOCKET_CONTEXT *pSkContext = m_rscSocketContext.get();
 	do
 	{
 		PER_IO_CONTEXT *pIO = &pSkContext->m_ReceiveContext;
@@ -154,14 +151,13 @@ unsigned IOCPBase::StartConnect(std::string ip, u_short port, int iRecnnt, const
 		m_lckConnectList.lock();
 		m_mapConnectList[pSkContext->m_socket] = pSkContext;
 		m_lckConnectList.unlock();
-		return pSkContext->m_socket;
 	}
 	else
 	{
 		RELEASE_SOCKET(pSkContext->m_socket);
 		m_rscSocketContext.put(pSkContext);
-		return 0;
-	}
+	}*/
+	return bRet;
 }
 
 DWORD WINAPI IOCPBase::WorkerThread(LPVOID lpParameter)
@@ -221,7 +217,7 @@ void IOCPBase::HandServerOperate(int iResult, PER_SOCKET_CONTEXT *pSkContext, PE
 		DoAccept(iResult, pSkContext, pIO);
 		break;
 	case EOP_CONNECT:
-		DoAccept(iResult, pSkContext, pIO);
+		DoConnect(iResult, pSkContext, pIO);
 		break;
 
 	case EOP_DISCONNECT:
@@ -243,10 +239,21 @@ void IOCPBase::HandServerOperate(int iResult, PER_SOCKET_CONTEXT *pSkContext, PE
 	}
 }
 
-bool IOCPBase::PostConnectEx(PER_IO_CONTEXT* pIO, SOCKADDR* pSrvAddr)
+bool IOCPBase::PostConnectEx(PER_SOCKET_CONTEXT *pSkContext)
 {
+	PER_IO_CONTEXT *pIO = &pSkContext->m_ReceiveContext;
 	pIO->m_oprateType = EOP_CONNECT;
-	return 0 == IOCPModule::Instance()->ConnectEx(pIO, pSrvAddr);
+	if (IOCPModule::Instance()->ConnectEx(pIO, (LPSOCKADDR)&pSkContext->m_clientAddr))
+	{
+		m_lckConnectList.lock();
+		m_mapConnectList[pSkContext->m_uUserKey] = pSkContext;
+		m_lckConnectList.unlock();
+	}
+	else
+	{
+		RELEASE_SOCKET(pSkContext->m_socket);
+		m_rscSocketContext.put(pSkContext);
+	}
 }
 
 void IOCPBase::DoConnect(int iResult, PER_SOCKET_CONTEXT *pSkContext, PER_IO_CONTEXT* pIO)
@@ -254,18 +261,22 @@ void IOCPBase::DoConnect(int iResult, PER_SOCKET_CONTEXT *pSkContext, PER_IO_CON
 	if (0 == iResult)
 	{
 		//通知服务端连接
-		m_pNetInterface->AddUser((unsigned)pIO->m_socket);
+		m_pNetInterface->AddUser((unsigned)pSkContext->m_uUserKey);
 		PostReceive(pSkContext, pIO);
 	}
 	else
 	{
-		MLOG("投递ConnectEx失败，错误码：%d", iResult);
-		m_lckConnectList.lock();
-		m_mapConnectList.erase(pSkContext->m_socket);
-		m_lckConnectList.unlock();
-
-		RELEASE_SOCKET(pSkContext->m_socket);
-		//m_rscSocketContext();
+		MLOG("user:%d投递ConnectEx失败，错误码：%d。", pIO->m_socket, iResult);
+		if (pIO->m_wParam > 0)
+		{
+			PostConnectEx(pSkContext);
+		}
+		else
+		{
+			PER_IO_CONTEXT *pIONew = m_rscIoContext.get();
+			pIONew->m_socket = pSkContext->m_socket;
+			PostDisconnectEx(pSkContext, pIONew);
+		}
 	}
 }
 
@@ -289,6 +300,7 @@ bool IOCPBase::PostAcceptEx(SOCKET listenSocket)
 		}
 		MAssert(0 == IOCPModule::Instance()->BindIoCompletionPort(pSocketContext, m_hIOCompletionPort));
 	}
+	pSocketContext->m_uUserKey = pSocketContext->m_socket;
 
 	PER_IO_CONTEXT *pIO = &pSocketContext->m_ReceiveContext;
 	pIO->m_socket = pSocketContext->m_socket;
@@ -301,7 +313,7 @@ bool IOCPBase::PostAcceptEx(SOCKET listenSocket)
 	else
 	{
 		m_lckConnectList.lock();
-		m_mapConnectList[pSocketContext->m_socket] = pSocketContext;
+		m_mapConnectList[pSocketContext->m_uUserKey] = pSocketContext;
 		m_lckConnectList.unlock();
 		return true;
 	}
@@ -311,7 +323,7 @@ void IOCPBase::DoAccept(int iResult, PER_SOCKET_CONTEXT *pSkContext, PER_IO_CONT
 {
 	PER_SOCKET_CONTEXT *pClientSkContext = nullptr;
 	m_lckConnectList.lock();
-	if (m_mapConnectList.find(pIO->m_socket) != m_mapConnectList.end())
+	if (m_mapConnectList.find(pIO->m_socket) != m_mapConnectList.end())	//服务端的userkey就是socket
 	{
 		pClientSkContext = m_mapConnectList[pIO->m_socket];
 	}
@@ -334,7 +346,7 @@ void IOCPBase::DoAccept(int iResult, PER_SOCKET_CONTEXT *pSkContext, PER_IO_CONT
 			assert(pClientSkContext);
 		}
 		//通知服务端连接
-		m_pNetInterface->AddUser((unsigned)pIO->m_socket);
+		m_pNetInterface->AddUser(pClientSkContext->m_uUserKey);
 		PostReceive(pClientSkContext, pIO);
 		PostAcceptEx(pSkContext->m_socket);
 
@@ -345,10 +357,10 @@ void IOCPBase::DoAccept(int iResult, PER_SOCKET_CONTEXT *pSkContext, PER_IO_CONT
 		if (pClientSkContext)
 		{
 			m_lckConnectList.lock();
-			m_mapConnectList.erase(pClientSkContext->m_socket);
+			m_mapConnectList.erase(pClientSkContext->m_uUserKey);
 			m_lckConnectList.unlock();
 
-			int idxLock = pClientSkContext->m_socket % SOCKET_CONTEXT_LOCK_COUNT;
+			int idxLock = pClientSkContext->m_uUserKey % SOCKET_CONTEXT_LOCK_COUNT;
 			m_aLckSocketContext[idxLock].lock();
 			RELEASE_SOCKET(pClientSkContext->m_socket);
 			m_aLckSocketContext[idxLock].unlock();
@@ -515,7 +527,7 @@ void IOCPBase::DoSend(int iResult, PER_SOCKET_CONTEXT *pSkContext, PER_IO_CONTEX
 	}
 	else
 	{
-		int idxLock = pIO->m_socket % SOCKET_CONTEXT_LOCK_COUNT;
+		int idxLock = pSkContext->m_uUserKey % SOCKET_CONTEXT_LOCK_COUNT;
 		pIO->Reset();
 		m_rscIoContext.put(pIO);
 		m_aLckSocketContext[idxLock].lock();
@@ -547,7 +559,7 @@ void IOCPBase::Disconnect(unsigned uUserKey)
 void IOCPBase::PostDisconnectEx(PER_SOCKET_CONTEXT *pSkContext, PER_IO_CONTEXT* pIO)
 {
 	bool bHandled = false;
-	int idxLock = pIO->m_socket % SOCKET_CONTEXT_LOCK_COUNT;
+	int idxLock = pSkContext->m_uUserKey % SOCKET_CONTEXT_LOCK_COUNT;
 	{
 		MAutoLock lck(&m_aLckSocketContext[idxLock]);
 		if (1 == pSkContext->m_iDisconnectFlag)
@@ -572,13 +584,13 @@ void IOCPBase::PostDisconnectEx(PER_SOCKET_CONTEXT *pSkContext, PER_IO_CONTEXT* 
 	}
 
 	//通知上层接口关闭连接
-	m_pNetInterface->DeleteUser((unsigned)pSkContext->m_socket);
+	m_pNetInterface->DeleteUser(pSkContext->m_uUserKey);
 	::shutdown(pSkContext->m_socket, SD_BOTH);		//此时发送和接收IO应该会返回错误
-	MLOG("关闭socket:%d的连接。", pSkContext->m_socket);
+	MLOG("关闭user:%d的连接。", pSkContext->m_uUserKey);
 
 	//从连接列表中清除
 	m_lckConnectList.lock();
-	m_mapConnectList.erase(pSkContext->m_socket);
+	m_mapConnectList.erase(pSkContext->m_uUserKey);
 	m_lckConnectList.unlock();
 
 	if (IOCPModule::Instance()->DisconnectEx(pIO))
@@ -596,7 +608,7 @@ void IOCPBase::PostDisconnectEx(PER_SOCKET_CONTEXT *pSkContext, PER_IO_CONTEXT* 
 
 void IOCPBase::DoDisconnect(int iResult, PER_SOCKET_CONTEXT *pSkContext, PER_IO_CONTEXT* pIO)
 {
-	int idxLock = pIO->m_socket % SOCKET_CONTEXT_LOCK_COUNT;
+	int idxLock = pSkContext->m_uUserKey % SOCKET_CONTEXT_LOCK_COUNT;
 	if (iResult)
 	{
 		MLOG("Server断开连接失败，错误码:%d", iResult);
@@ -613,7 +625,7 @@ void IOCPBase::DoDisconnect(int iResult, PER_SOCKET_CONTEXT *pSkContext, PER_IO_
 
 void IOCPBase::PostReceive(PER_SOCKET_CONTEXT *pSkContext, PER_IO_CONTEXT* pIO)
 {
-	int idxLock = pIO->m_socket % SOCKET_CONTEXT_LOCK_COUNT;
+	int idxLock = pSkContext->m_uUserKey % SOCKET_CONTEXT_LOCK_COUNT;
 	{
 		MAutoLock lck(&m_aLckSocketContext[idxLock]);
 		if (1 == pSkContext->m_iDisconnectFlag)
@@ -701,7 +713,7 @@ void IOCPBase::UnpackReceivedData(PER_SOCKET_CONTEXT *pSkContext, PER_IO_CONTEXT
 				PostDisconnectEx(pSkContext, pIO);
 				break;
 			}
-			m_pNetInterface->HandSrvData(pIO->m_socket, head->uMsgType, buf, uPackLength);	//调用具体的业务处理数据，有包头和包体
+			m_pNetInterface->HandData(pSkContext->m_uUserKey, head->uMsgType, buf, uPackLength);	//调用具体的业务处理数据，有包头和包体
 			buf += uPackLength;
 			pIO->m_uDataLength -= uPackLength;
 		}

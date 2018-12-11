@@ -22,7 +22,7 @@ void INetInterface::AddUser(unsigned uUserKey)
 
 }
 
-void INetInterface::HandSrvData(unsigned uUserKey, unsigned uMsgType, const char* data, unsigned length)
+void INetInterface::HandData(unsigned uUserKey, unsigned uMsgType, const char* data, unsigned length)
 {
 
 }

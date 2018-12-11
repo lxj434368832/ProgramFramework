@@ -27,7 +27,7 @@ public:
 	* param iMaxServerCount:最大的连接个数
 	* return:	  成功返回true,失败返回false.
 	*************************************************************************/
-	bool StartServerListen(u_short port, unsigned iMaxConnectCount);
+	virtual bool StartServerListen(u_short port, unsigned iMaxConnectCount);
 
 	/*************************************************************************
 	* function：开启一个连接需要考虑是否需要重连
@@ -36,14 +36,13 @@ public:
 	* param iRecnnt: 是否重连标识,小于0代表不需要重连
 	* return:		 返回此连接对应的id,但不代表连接成功，为0代表连接出现了错误
 	*************************************************************************/
-	unsigned StartConnect(std::string ip, u_short port, int iRecnnt = -1, const char* data = nullptr, int len = 0);
-
+	virtual bool StartConnect(unsigned uUserKey, std::string ip, u_short port, int iRecnnt = -1);
 
 protected:
 	//处理服务端操作
 	void HandServerOperate(int iResult, PER_SOCKET_CONTEXT *pSkContext, PER_IO_CONTEXT* pIO, DWORD dwBytesTransfered);
 
-	bool PostConnectEx(PER_IO_CONTEXT* pIO, SOCKADDR* serverAddr);
+	bool PostConnectEx(PER_SOCKET_CONTEXT *pSkContext);
 
 	void DoConnect(int iResult, PER_SOCKET_CONTEXT *pSkContext, PER_IO_CONTEXT* pIO);
 

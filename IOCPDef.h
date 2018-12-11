@@ -94,8 +94,8 @@ struct PER_RECEIVE_IO_CONTEXT :public PER_IO_CONTEXT
 
 struct PER_SOCKET_CONTEXT
 {
+	unsigned				m_uUserKey;					//每个socket对应的UserKey
 	SOCKET					m_socket;                   // 每一个客户端连接的Socket
-	bool					m_bSocketDirty;				//socket为脏数据的标识
 	SOCKADDR_IN				m_clientAddr;               // 客户端的地址
 	PER_RECEIVE_IO_CONTEXT	m_ReceiveContext;			//接收上下文
 	int						m_iDisconnectFlag;			//断开连接标识
@@ -106,7 +106,6 @@ struct PER_SOCKET_CONTEXT
 	PER_SOCKET_CONTEXT()
 	{
 		m_socket = INVALID_SOCKET;
-		memset(&m_clientAddr, 0, sizeof(m_clientAddr));
 	}
 
 	// 释放资源
@@ -122,6 +121,7 @@ struct PER_SOCKET_CONTEXT
 	void Reset()
 	{
 		//socket 由外部管理，此处不清理
+		m_uUserKey = 0;
 		memset(&m_clientAddr, 0, sizeof(m_clientAddr));
 		m_ReceiveContext.Reset();
 		m_iDisconnectFlag = 0;

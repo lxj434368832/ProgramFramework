@@ -80,7 +80,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ClientManage.h" />
-    <ClInclude Include="ConnectManage.h" />
     <ClInclude Include="Framework\zxl_logging.h" />
     <ClInclude Include="Framework\zxu_utils.h" />
     <ClInclude Include="INetInterface.h" />
@@ -89,6 +88,7 @@
     <ClInclude Include="IOCPModule.h" />
     <ClInclude Include="IOCPDef.h" />
     <ClInclude Include="IOCPServer.h" />
+    <ClInclude Include="MainClient.h" />
     <ClInclude Include="MainServer.h" />
     <ClInclude Include="MLock.h" />
     <ClInclude Include="ResourceManage.h" />
@@ -100,7 +100,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ClientManage.cpp" />
-    <ClCompile Include="ConnectManage.cpp" />
     <ClCompile Include="Framework\zxl_logging.cpp" />
     <ClCompile Include="Framework\zxu_utils.cpp" />
     <ClCompile Include="INetInterface.cpp" />
@@ -109,6 +108,7 @@
     <ClCompile Include="IOCPModule.cpp" />
     <ClCompile Include="IOCPServer.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="MainClient.cpp" />
     <ClCompile Include="MainServer.cpp" />
     <ClCompile Include="MLock.cpp" />
     <ClCompile Include="ServerManage.cpp" />
