@@ -16,6 +16,9 @@
     <Filter Include="Framework">
       <UniqueIdentifier>{3943f37e-2a18-472a-b398-ad8d66c8231e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ProtobufMessage">
+      <UniqueIdentifier>{bb03404a-0b8d-4c15-96db-5081ba47009d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -75,6 +78,12 @@
     <ClInclude Include="MainClient.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="ProtobufMsg.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="ProtobufMessage\Message.pb.h">
+      <Filter>ProtobufMessage</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -127,6 +136,12 @@
     </ClCompile>
     <ClCompile Include="MainClient.cpp">
       <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="ProtobufMsg.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="ProtobufMessage\Message.pb.cc">
+      <Filter>ProtobufMessage</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

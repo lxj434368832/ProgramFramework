@@ -27,7 +27,7 @@ public:
 protected:
 	SendDataCallback	m_funSendData;		//发送数据回调
 	DisconnectCallback	m_fuDisconnect;		//主动断开连接回调
-	std::map<unsigned, UserInfo> m_mapUserList;
-
+	std::map<UserId, UserKey> m_mapIdKey;	//用户id和key的映射关系
+	std::map<UserKey, UserInfo*> m_mapUserList;	//用户key和UserInfo的映射
 };
 

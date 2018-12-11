@@ -1,46 +1,47 @@
 #include "ProtobufMsg.h"
 
 
-
 void BaseHandler::Register( BaseHandler * h )
 {
-    handers[h->GetType ()] = h;
+    s_handers[h->GetType()] = h;
 }
 
-void BaseHandler::Execute( const shared_ptr<pbmsg::Message> & msg, const shared_ptr<Client> & client/* , ...其它参数*/)
+void BaseHandler::Execute(unsigned uUserKey, const shared_ptr<pbmsg::Message> & msg, void* ptr)
 {
-    auto it = handers.find(msg->type());
+    auto it = s_handers.find(msg->msg_type());
 
-    if( it != handers.end ())
+    if( it != s_handers.end ())
     {
-        it->second->Process(msg, client);
+        it->second->Process(uUserKey, msg, ptr);
     }
     else
     {
-        LOG(ERROR) << "消息 " << msg->type()<< " 没有对应的处理方法.\n";
+        //LOG(ERROR) << "消息 " << msg->type()<< " 没有对应的处理方法.\n";
     }
 }
 
 //对每个MSG 枚举的消息值，都会特化一个Process方法。
 template<pbmsg::MSG Type>
-void MessageHandler<pbmsg::Login_Request>::Process( const shared_ptr<pbmsg::Message> & msg, const shared_ptr<Client> & client/* , ...其它参数*/)
+void MessageHandler<pbmsg::Login_Request>::Process(unsigned uUserKey, const shared_ptr<pbmsg::Message> & msg, void* ptr)
 {
 
 }
 
-
-//并且在全局空间创建对象，系统启动时，自动创建。如果需要在堆空间中分配，另行封装方法，并调用下面的代码，让编译器实例化类。
+//在全局空间创建对象，系统启动时，自动创建。如果需要在堆空间中分配，另行封装方法，并调用下面的代码，让编译器实例化类。
 MessageHandler<pbmsg::Login_Request> MessageHandler<pbmsg::Login_Request>::thisHandler;
 
 
+
 // 最后消息处理,非常的easy:
-HandleMsg()
+void HandleMsg()
 {
+	std::string msg;
+	unsigned uUserKey = 1;
     shared_ptr<pbmsg::Message> recvMessage( new pbmsg::Message());
-    bool parserOk = recvMessage->ParseFromArray((msg.rd_ptr ()+4), msg.size ()-4);
+    bool parserOk = recvMessage->ParseFromArray((msg.c_str()+ 4), msg.size() - 4);
     if( parserOk )
     {
-        BaseHandler::Execute (recvMessage, client/*, ...其它参数*/);
+        BaseHandler::Execute (uUserKey,recvMessage, nullptr);
     }
 }
 
@@ -56,7 +57,7 @@ HandleMsg()
 //}
 
 //消息发送代码：
-
+/*
 void MsgSender::Send(const std::string & sDest, const MsgPb::Msg & msg)
 {
     std::string s;
@@ -158,8 +159,8 @@ void MsgDispatcher::InsertHandler(const MsgPb::GoogleMsg & msg,
 
 //定义一个结构体
 struct SMsgCmd {
-                int msgtype;  /*msg type*/
-                int (*func)(const char *argv);           /* handler * 函数指针*/
+                int msgtype;					 //msg type
+                int (*func)(const char *argv);   //handler * 函数指针
             };
 
             //定义一个结构体数组，并初始化
@@ -179,3 +180,4 @@ void handData()
         }
     }
 }
+*/

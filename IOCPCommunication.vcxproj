@@ -41,6 +41,7 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
+    <IncludePath>.\Framework\protobuf\include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
@@ -91,6 +92,8 @@
     <ClInclude Include="MainClient.h" />
     <ClInclude Include="MainServer.h" />
     <ClInclude Include="MLock.h" />
+    <ClInclude Include="ProtobufMessage\Message.pb.h" />
+    <ClInclude Include="ProtobufMsg.h" />
     <ClInclude Include="ResourceManage.h" />
     <ClInclude Include="ServerManage.h" />
     <ClInclude Include="SocketContext.h" />
@@ -111,6 +114,8 @@
     <ClCompile Include="MainClient.cpp" />
     <ClCompile Include="MainServer.cpp" />
     <ClCompile Include="MLock.cpp" />
+    <ClCompile Include="ProtobufMessage\Message.pb.cc" />
+    <ClCompile Include="ProtobufMsg.cpp" />
     <ClCompile Include="ServerManage.cpp" />
     <ClCompile Include="SocketContext.cpp" />
     <ClCompile Include="stdafx.cpp">

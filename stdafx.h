@@ -14,6 +14,12 @@
 // TODO:  在此处引用程序需要的其他头文件
 #include "Framework/zxl_logging.h"
 
+#ifdef _DEBUG
+#pragma comment(lib,"../../common/lib/protobuf/Debug/libprotobuf.lib")
+#else
+#pragma comment(lib,"../../common/lib/protobuf/Release/libprotobuf.lib")
+#endif
+
 #ifndef LOGS
 #define LOGS
 #define MLOG(format, ...)  do{  \

@@ -93,7 +93,7 @@ message Response
 }
  
 /*与Request相同,把所有的XxxxxNotification消息集合在一起当作联合体使用.*/ 
-message Notification 
+message Notification
 {
  optional FriendNotification friend = 1;
  optional MessageNotification msg = 2;
@@ -102,7 +102,7 @@ message Notification
  
 /*顶层消息，包含所有的Request，Response，Notification，具体包含哪个消息由MSG msg_type字段决定，*/
 /*程序逻辑去保证msg_type和具体的消息进行匹配*/ 
- 
+
 message Message 
 {
  required MSG  msg_type = 1;
