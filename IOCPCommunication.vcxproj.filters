@@ -87,6 +87,9 @@
     <ClInclude Include="ProtobufMessage\ProtobufMsgFactory.h">
       <Filter>ProtobufMessage</Filter>
     </ClInclude>
+    <ClInclude Include="ProtobufMessage\LoginMessageHandle.h">
+      <Filter>ProtobufMessage</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -147,6 +150,9 @@
       <Filter>ProtobufMessage</Filter>
     </ClCompile>
     <ClCompile Include="ProtobufMessage\ProtobufMsgFactory.cpp">
+      <Filter>ProtobufMessage</Filter>
+    </ClCompile>
+    <ClCompile Include="ProtobufMessage\LoginMessageHandle.cpp">
       <Filter>ProtobufMessage</Filter>
     </ClCompile>
   </ItemGroup>

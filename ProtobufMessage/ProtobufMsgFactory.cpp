@@ -13,9 +13,24 @@ ProtobufMsgFactory::~ProtobufMsgFactory()
 {
 }
 
-void ProtobufMsgFactory::RegisterMessageFuncton(pbmsg::MSG msg_type, funMessageHandle handle)
+ProtobufMsgFactory* ProtobufMsgFactory::instance()
+{
+	static ProtobufMsgFactory s_instance;
+	return &s_instance;
+}
+
+void ProtobufMsgFactory::RegisterMessageFunction(pbmsg::MSG msg_type, funMessageHandle handle)
 {
 	m_mapMsgHandle[msg_type] = handle;
+}
+
+void ProtobufMsgFactory::RemoveMessageFunction(pbmsg::MSG msgType)
+{
+	auto iter = m_mapMsgHandle.find(msgType);
+	if (iter != m_mapMsgHandle.end())
+	{
+		m_mapMsgHandle.erase(iter);
+	}
 }
 
 bool ProtobufMsgFactory::Start(unsigned uThreadCount)
@@ -51,6 +66,7 @@ void ProtobufMsgFactory::Stop()
 
 void ProtobufMsgFactory::AddMessageData(unsigned uUserKey, const char* data, unsigned length)
 {
+	if (false == m_bStart) return;
 	SMessageData *msgData = m_rscMessage.get();
 	msgData->m_uUserKey = uUserKey;
 	msgData->m_msg.ParseFromArray(data, length);

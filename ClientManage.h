@@ -22,6 +22,11 @@ class ClientManage : public INetInterface
 public:
 	ClientManage();
 	virtual ~ClientManage();
+	void Start();
+	void Stop();
+	
+
+private:
 	//新服务用户成功连接通知
 	virtual void AddUser(unsigned uUserKey) override;
 

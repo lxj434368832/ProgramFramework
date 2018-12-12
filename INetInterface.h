@@ -12,6 +12,8 @@ class INetInterface
 public:
 	INetInterface();
 	virtual ~INetInterface();
+
+private:
 	//注册回调函数
 	void SetNetworkCallback(SendDataCallback funSendData, DisconnectCallback funDisconnect);
 
@@ -25,6 +27,7 @@ public:
 	virtual void DeleteUser(unsigned uUserKey);
 
 protected:
+	friend class IOCPBase;
 	SendDataCallback	m_funSendData;		//发送数据回调
 	DisconnectCallback	m_fuDisconnect;		//主动断开连接回调
 	std::map<UserId, UserKey> m_mapIdKey;	//用户id和key的映射关系

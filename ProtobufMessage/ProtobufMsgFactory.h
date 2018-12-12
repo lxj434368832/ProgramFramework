@@ -13,7 +13,9 @@ class ProtobufMsgFactory
 public:
 	ProtobufMsgFactory();
 	~ProtobufMsgFactory();
-	void RegisterMessageFuncton(pbmsg::MSG, funMessageHandle);
+	static ProtobufMsgFactory* instance();
+	void RegisterMessageFunction(pbmsg::MSG, funMessageHandle);
+	void RemoveMessageFunction(pbmsg::MSG msgType);
 	bool Start(unsigned uThreadCount);
 	void Stop();
 

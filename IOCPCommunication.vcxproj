@@ -92,6 +92,7 @@
     <ClInclude Include="MainClient.h" />
     <ClInclude Include="MainServer.h" />
     <ClInclude Include="MLock.h" />
+    <ClInclude Include="ProtobufMessage\LoginMessageHandle.h" />
     <ClInclude Include="ProtobufMessage\Message.pb.h" />
     <ClInclude Include="ProtobufMessage\ProtobufMsgFactory.h" />
     <ClInclude Include="ProtobufMessage\ProtobufMsg.h" />
@@ -115,6 +116,7 @@
     <ClCompile Include="MainClient.cpp" />
     <ClCompile Include="MainServer.cpp" />
     <ClCompile Include="MLock.cpp" />
+    <ClCompile Include="ProtobufMessage\LoginMessageHandle.cpp" />
     <ClCompile Include="ProtobufMessage\Message.pb.cc" />
     <ClCompile Include="ProtobufMessage\ProtobufMsgFactory.cpp" />
     <ClCompile Include="ProtobufMessage\ProtobufMsg.cpp" />
