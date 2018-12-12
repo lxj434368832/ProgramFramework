@@ -2,7 +2,7 @@
 
 #include <memory>
 #include <map>
-#include "ProtobufMessage/Message.pb.h"
+#include "Message.pb.h"
 
 using std::shared_ptr;
 

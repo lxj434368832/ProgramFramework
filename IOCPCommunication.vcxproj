@@ -93,7 +93,8 @@
     <ClInclude Include="MainServer.h" />
     <ClInclude Include="MLock.h" />
     <ClInclude Include="ProtobufMessage\Message.pb.h" />
-    <ClInclude Include="ProtobufMsg.h" />
+    <ClInclude Include="ProtobufMessage\ProtobufMsgFactory.h" />
+    <ClInclude Include="ProtobufMessage\ProtobufMsg.h" />
     <ClInclude Include="ResourceManage.h" />
     <ClInclude Include="ServerManage.h" />
     <ClInclude Include="SocketContext.h" />
@@ -115,7 +116,8 @@
     <ClCompile Include="MainServer.cpp" />
     <ClCompile Include="MLock.cpp" />
     <ClCompile Include="ProtobufMessage\Message.pb.cc" />
-    <ClCompile Include="ProtobufMsg.cpp" />
+    <ClCompile Include="ProtobufMessage\ProtobufMsgFactory.cpp" />
+    <ClCompile Include="ProtobufMessage\ProtobufMsg.cpp" />
     <ClCompile Include="ServerManage.cpp" />
     <ClCompile Include="SocketContext.cpp" />
     <ClCompile Include="stdafx.cpp">

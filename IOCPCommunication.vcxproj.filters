@@ -78,10 +78,13 @@
     <ClInclude Include="MainClient.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="ProtobufMsg.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="ProtobufMessage\Message.pb.h">
+      <Filter>ProtobufMessage</Filter>
+    </ClInclude>
+    <ClInclude Include="ProtobufMessage\ProtobufMsg.h">
+      <Filter>ProtobufMessage</Filter>
+    </ClInclude>
+    <ClInclude Include="ProtobufMessage\ProtobufMsgFactory.h">
       <Filter>ProtobufMessage</Filter>
     </ClInclude>
   </ItemGroup>
@@ -137,10 +140,13 @@
     <ClCompile Include="MainClient.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="ProtobufMsg.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
     <ClCompile Include="ProtobufMessage\Message.pb.cc">
+      <Filter>ProtobufMessage</Filter>
+    </ClCompile>
+    <ClCompile Include="ProtobufMessage\ProtobufMsg.cpp">
+      <Filter>ProtobufMessage</Filter>
+    </ClCompile>
+    <ClCompile Include="ProtobufMessage\ProtobufMsgFactory.cpp">
       <Filter>ProtobufMessage</Filter>
     </ClCompile>
   </ItemGroup>
