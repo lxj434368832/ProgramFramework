@@ -8,8 +8,8 @@
 
 #include "stdafx.h"
 #include "IOCPDef.h"
-#include "ResourceManage.h"
-#include "MLock.h"
+#include "Framework/ResourceManage.h"
+#include "Framework/MLock.h"
 
 class INetInterface;
 

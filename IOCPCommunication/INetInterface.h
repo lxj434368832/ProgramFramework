@@ -2,10 +2,18 @@
 
 #include <map>
 #include <functional>
-#include "UserInfo.h"
 
 typedef std::function<void(unsigned, unsigned, const char*, unsigned)> SendDataCallback;
 typedef std::function<void(unsigned)>	DisconnectCallback;
+
+typedef unsigned UserKey;
+typedef unsigned UserId;
+
+struct UserInfo
+{
+	UserKey	m_uUserKey = 0;
+	UserId m_uUserId = 0;
+};
 
 class INetInterface
 {

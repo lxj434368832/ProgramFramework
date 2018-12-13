@@ -1,10 +1,9 @@
 #pragma once
 
-#include <thread>
 #include <queue>
 #include <condition_variable>
 #include "Message.pb.h"
-#include "../ResourceManage.h"
+#include "../Framework/ResourceManage.h"
 
 typedef std::function<void(const unsigned uUserKey, const pbmsg::Message &msg, void* ptr)> funMessageHandle;
 

@@ -20,5 +20,6 @@ private:
 	void*		m_facade;
 	ProtobufMsgFactory			*m_pProtoMsgFtry;
 	std::set<IMessageHandle*>	m_setMessageHandle;
+
 };
 

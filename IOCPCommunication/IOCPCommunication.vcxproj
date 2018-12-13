@@ -80,35 +80,20 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="ClientManage.h" />
+    <ClInclude Include="Framework\MLock.h" />
+    <ClInclude Include="Framework\ResourceManage.h" />
     <ClInclude Include="Framework\zxl_logging.h" />
     <ClInclude Include="Framework\zxu_utils.h" />
-    <ClInclude Include="IMessageHandle.h" />
     <ClInclude Include="INetInterface.h" />
     <ClInclude Include="IOCPBase.h" />
     <ClInclude Include="IOCPClient.h" />
     <ClInclude Include="IOCPModule.h" />
     <ClInclude Include="IOCPDef.h" />
     <ClInclude Include="IOCPServer.h" />
-    <ClInclude Include="MainClient.h" />
-    <ClInclude Include="MainServer.h" />
-    <ClInclude Include="MessageBusiness\IMessageBusiness.h" />
-    <ClInclude Include="MessageBusiness\LoginMessageHandle.h" />
-    <ClInclude Include="MessageBusiness\Message.pb.h" />
-    <ClInclude Include="MessageBusiness\MessageBusiness.h" />
-    <ClInclude Include="MessageBusiness\metadata.h" />
-    <ClInclude Include="MessageBusiness\ProtobufMsg.h" />
-    <ClInclude Include="MessageBusiness\ProtobufMsgFactory.h" />
-    <ClInclude Include="MLock.h" />
-    <ClInclude Include="ResourceManage.h" />
-    <ClInclude Include="ServerManage.h" />
-    <ClInclude Include="SocketContext.h" />
     <ClInclude Include="stdafx.h" />
-    <ClInclude Include="UserInfo.h" />
-    <ClInclude Include="utils.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="ClientManage.cpp" />
+    <ClCompile Include="Framework\MLock.cpp" />
     <ClCompile Include="Framework\zxl_logging.cpp" />
     <ClCompile Include="Framework\zxu_utils.cpp" />
     <ClCompile Include="INetInterface.cpp" />
@@ -117,22 +102,10 @@
     <ClCompile Include="IOCPModule.cpp" />
     <ClCompile Include="IOCPServer.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="MainClient.cpp" />
-    <ClCompile Include="MainServer.cpp" />
-    <ClCompile Include="MessageBusiness\LoginMessageHandle.cpp" />
-    <ClCompile Include="MessageBusiness\Message.pb.cc" />
-    <ClCompile Include="MessageBusiness\MessageBusiness.cpp" />
-    <ClCompile Include="MessageBusiness\ProtobufMsg.cpp" />
-    <ClCompile Include="MessageBusiness\ProtobufMsgFactory.cpp" />
-    <ClCompile Include="MLock.cpp" />
-    <ClCompile Include="ServerManage.cpp" />
-    <ClCompile Include="SocketContext.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="UserInfo.cpp" />
-    <ClCompile Include="utils.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
