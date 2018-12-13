@@ -1,10 +1,13 @@
 #pragma once
 #include "Message.pb.h"
+#include "..\IMessageHandle.h"
 
-class LoginMessageHandle
+class MessageBusiness;
+
+class LoginMessageHandle : public IMessageHandle
 {
 public:
-	LoginMessageHandle();
+	LoginMessageHandle(MessageBusiness *pBusiness);
 	~LoginMessageHandle();
 
 private:

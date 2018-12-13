@@ -1,10 +1,1 @@
-﻿  MainServer.cpp
-  IOCPServer.cpp
-e:\programsrc\mycommunication\iocpserver.cpp(251): warning C4244: “参数”: 从“float”转换到“DWORD”，可能丢失数据
-e:\programsrc\mycommunication\iocpserver.cpp(261): warning C4477: “printf”: 格式字符串“%d”需要类型“int”的参数，但可变参数 1 拥有了类型“HANDLE”
-e:\programsrc\mycommunication\iocpserver.cpp(328): warning C4805: “==”: 在操作中将类型“bool”与类型“int”混合不安全
-  正在生成代码...
-e:\programsrc\mycommunication\mainserver.cpp(34): warning C4715: “MainServer::Start”: 不是所有的控件路径都返回值
-UserInfo.obj : warning LNK4221: 此对象文件未定义任何之前未定义的公共符号，因此任何耗用此库的链接操作都不会使用此文件
-SocketContext.obj : warning LNK4221: 此对象文件未定义任何之前未定义的公共符号，因此任何耗用此库的链接操作都不会使用此文件
-  IOCPCommunication.vcxproj -> E:\ProgramSrc\MyCommunication\Debug\IOCPCommunication.lib
+﻿C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V120\Microsoft.Cpp.Platform.targets(64,5): error MSB8020: The build tools for v140 (Platform Toolset = 'v140') cannot be found. To build using the v140 build tools, please install v140 build tools.  Alternatively, you may upgrade to the current Visual Studio tools by selecting the Project menu or right-click the solution, and then selecting "Upgrade Solution...".

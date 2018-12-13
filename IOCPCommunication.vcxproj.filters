@@ -16,8 +16,8 @@
     <Filter Include="Framework">
       <UniqueIdentifier>{3943f37e-2a18-472a-b398-ad8d66c8231e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ProtobufMessage">
-      <UniqueIdentifier>{bb03404a-0b8d-4c15-96db-5081ba47009d}</UniqueIdentifier>
+    <Filter Include="MessageBusiness">
+      <UniqueIdentifier>{9562c6ed-76f6-4246-b398-82def07c053f}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -78,17 +78,29 @@
     <ClInclude Include="MainClient.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="ProtobufMessage\Message.pb.h">
-      <Filter>ProtobufMessage</Filter>
+    <ClInclude Include="MessageBusiness\LoginMessageHandle.h">
+      <Filter>MessageBusiness</Filter>
     </ClInclude>
-    <ClInclude Include="ProtobufMessage\ProtobufMsg.h">
-      <Filter>ProtobufMessage</Filter>
+    <ClInclude Include="MessageBusiness\Message.pb.h">
+      <Filter>MessageBusiness</Filter>
     </ClInclude>
-    <ClInclude Include="ProtobufMessage\ProtobufMsgFactory.h">
-      <Filter>ProtobufMessage</Filter>
+    <ClInclude Include="MessageBusiness\metadata.h">
+      <Filter>MessageBusiness</Filter>
     </ClInclude>
-    <ClInclude Include="ProtobufMessage\LoginMessageHandle.h">
-      <Filter>ProtobufMessage</Filter>
+    <ClInclude Include="MessageBusiness\ProtobufMsg.h">
+      <Filter>MessageBusiness</Filter>
+    </ClInclude>
+    <ClInclude Include="MessageBusiness\ProtobufMsgFactory.h">
+      <Filter>MessageBusiness</Filter>
+    </ClInclude>
+    <ClInclude Include="MessageBusiness\MessageBusiness.h">
+      <Filter>MessageBusiness</Filter>
+    </ClInclude>
+    <ClInclude Include="IMessageHandle.h">
+      <Filter>MessageBusiness</Filter>
+    </ClInclude>
+    <ClInclude Include="MessageBusiness\IMessageBusiness.h">
+      <Filter>MessageBusiness</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -143,17 +155,20 @@
     <ClCompile Include="MainClient.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="ProtobufMessage\Message.pb.cc">
-      <Filter>ProtobufMessage</Filter>
+    <ClCompile Include="MessageBusiness\LoginMessageHandle.cpp">
+      <Filter>MessageBusiness</Filter>
     </ClCompile>
-    <ClCompile Include="ProtobufMessage\ProtobufMsg.cpp">
-      <Filter>ProtobufMessage</Filter>
+    <ClCompile Include="MessageBusiness\Message.pb.cc">
+      <Filter>MessageBusiness</Filter>
     </ClCompile>
-    <ClCompile Include="ProtobufMessage\ProtobufMsgFactory.cpp">
-      <Filter>ProtobufMessage</Filter>
+    <ClCompile Include="MessageBusiness\ProtobufMsg.cpp">
+      <Filter>MessageBusiness</Filter>
     </ClCompile>
-    <ClCompile Include="ProtobufMessage\LoginMessageHandle.cpp">
-      <Filter>ProtobufMessage</Filter>
+    <ClCompile Include="MessageBusiness\ProtobufMsgFactory.cpp">
+      <Filter>MessageBusiness</Filter>
+    </ClCompile>
+    <ClCompile Include="MessageBusiness\MessageBusiness.cpp">
+      <Filter>MessageBusiness</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
