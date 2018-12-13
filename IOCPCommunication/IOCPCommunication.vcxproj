@@ -41,7 +41,7 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>.\Framework\protobuf\include;$(IncludePath)</IncludePath>
+    <IncludePath>$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
@@ -80,10 +80,10 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Framework\MLock.h" />
-    <ClInclude Include="Framework\ResourceManage.h" />
-    <ClInclude Include="Framework\zxl_logging.h" />
-    <ClInclude Include="Framework\zxu_utils.h" />
+    <ClInclude Include="..\Framework\MLock.h" />
+    <ClInclude Include="..\Framework\ResourceManage.h" />
+    <ClInclude Include="..\Framework\zxl_logging.h" />
+    <ClInclude Include="..\Framework\zxu_utils.h" />
     <ClInclude Include="INetInterface.h" />
     <ClInclude Include="IOCPBase.h" />
     <ClInclude Include="IOCPClient.h" />
@@ -93,9 +93,9 @@
     <ClInclude Include="stdafx.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Framework\MLock.cpp" />
-    <ClCompile Include="Framework\zxl_logging.cpp" />
-    <ClCompile Include="Framework\zxu_utils.cpp" />
+    <ClCompile Include="..\Framework\MLock.cpp" />
+    <ClCompile Include="..\Framework\zxl_logging.cpp" />
+    <ClCompile Include="..\Framework\zxu_utils.cpp" />
     <ClCompile Include="INetInterface.cpp" />
     <ClCompile Include="IOCPBase.cpp" />
     <ClCompile Include="IOCPClient.cpp" />

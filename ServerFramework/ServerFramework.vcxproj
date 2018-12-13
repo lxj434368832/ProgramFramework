@@ -71,12 +71,14 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
+    <IncludePath>..\Framework\protobuf\include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
+    <IncludePath>..\Framework\protobuf\include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
@@ -145,13 +147,29 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="CommonDefine.h" />
+    <ClInclude Include="EnumDefine.h" />
     <ClInclude Include="MainServer.h" />
+    <ClInclude Include="MessageBusiness\IMessageBusiness.h" />
+    <ClInclude Include="MessageBusiness\IMessageHandle.h" />
+    <ClInclude Include="MessageBusiness\LoginMessageHandle.h" />
+    <ClInclude Include="MessageBusiness\Message.pb.h" />
+    <ClInclude Include="MessageBusiness\MessageBusiness.h" />
+    <ClInclude Include="MessageBusiness\metadata.h" />
+    <ClInclude Include="MessageBusiness\ProtobufMsg.h" />
+    <ClInclude Include="MessageBusiness\ProtobufMsgFactory.h" />
     <ClInclude Include="ServerManage.h" />
     <ClInclude Include="stdafx.h" />
+    <ClInclude Include="TypeDefine.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MainServer.cpp" />
+    <ClCompile Include="MessageBusiness\LoginMessageHandle.cpp" />
+    <ClCompile Include="MessageBusiness\Message.pb.cc" />
+    <ClCompile Include="MessageBusiness\MessageBusiness.cpp" />
+    <ClCompile Include="MessageBusiness\ProtobufMsg.cpp" />
+    <ClCompile Include="MessageBusiness\ProtobufMsgFactory.cpp" />
     <ClCompile Include="ServerManage.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

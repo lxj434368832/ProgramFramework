@@ -13,6 +13,9 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="MessageBusiness">
+      <UniqueIdentifier>{b45d1139-3395-43db-8f3f-6c9db1e43930}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -25,6 +28,39 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="ServerManage.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="MessageBusiness\IMessageBusiness.h">
+      <Filter>MessageBusiness</Filter>
+    </ClInclude>
+    <ClInclude Include="MessageBusiness\IMessageHandle.h">
+      <Filter>MessageBusiness</Filter>
+    </ClInclude>
+    <ClInclude Include="MessageBusiness\LoginMessageHandle.h">
+      <Filter>MessageBusiness</Filter>
+    </ClInclude>
+    <ClInclude Include="MessageBusiness\Message.pb.h">
+      <Filter>MessageBusiness</Filter>
+    </ClInclude>
+    <ClInclude Include="MessageBusiness\MessageBusiness.h">
+      <Filter>MessageBusiness</Filter>
+    </ClInclude>
+    <ClInclude Include="MessageBusiness\ProtobufMsg.h">
+      <Filter>MessageBusiness</Filter>
+    </ClInclude>
+    <ClInclude Include="MessageBusiness\ProtobufMsgFactory.h">
+      <Filter>MessageBusiness</Filter>
+    </ClInclude>
+    <ClInclude Include="MessageBusiness\metadata.h">
+      <Filter>MessageBusiness</Filter>
+    </ClInclude>
+    <ClInclude Include="CommonDefine.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="EnumDefine.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="TypeDefine.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
@@ -40,6 +76,21 @@
     </ClCompile>
     <ClCompile Include="ServerManage.cpp">
       <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="MessageBusiness\LoginMessageHandle.cpp">
+      <Filter>MessageBusiness</Filter>
+    </ClCompile>
+    <ClCompile Include="MessageBusiness\MessageBusiness.cpp">
+      <Filter>MessageBusiness</Filter>
+    </ClCompile>
+    <ClCompile Include="MessageBusiness\ProtobufMsg.cpp">
+      <Filter>MessageBusiness</Filter>
+    </ClCompile>
+    <ClCompile Include="MessageBusiness\ProtobufMsgFactory.cpp">
+      <Filter>MessageBusiness</Filter>
+    </ClCompile>
+    <ClCompile Include="MessageBusiness\Message.pb.cc">
+      <Filter>MessageBusiness</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

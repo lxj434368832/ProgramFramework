@@ -36,22 +36,22 @@
     <ClInclude Include="INetInterface.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="Framework\zxl_logging.h">
-      <Filter>Framework</Filter>
-    </ClInclude>
-    <ClInclude Include="Framework\zxu_utils.h">
-      <Filter>Framework</Filter>
-    </ClInclude>
     <ClInclude Include="IOCPBase.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="IOCPClient.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="Framework\MLock.h">
+    <ClInclude Include="..\Framework\MLock.h">
       <Filter>Framework</Filter>
     </ClInclude>
-    <ClInclude Include="Framework\ResourceManage.h">
+    <ClInclude Include="..\Framework\ResourceManage.h">
+      <Filter>Framework</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Framework\zxl_logging.h">
+      <Filter>Framework</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Framework\zxu_utils.h">
       <Filter>Framework</Filter>
     </ClInclude>
   </ItemGroup>
@@ -71,19 +71,19 @@
     <ClCompile Include="INetInterface.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="Framework\zxl_logging.cpp">
-      <Filter>Framework</Filter>
-    </ClCompile>
-    <ClCompile Include="Framework\zxu_utils.cpp">
-      <Filter>Framework</Filter>
-    </ClCompile>
     <ClCompile Include="IOCPBase.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="IOCPClient.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="Framework\MLock.cpp">
+    <ClCompile Include="..\Framework\MLock.cpp">
+      <Filter>Framework</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Framework\zxl_logging.cpp">
+      <Filter>Framework</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Framework\zxu_utils.cpp">
       <Filter>Framework</Filter>
     </ClCompile>
   </ItemGroup>

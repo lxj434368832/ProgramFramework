@@ -2,3 +2,4 @@
 *.VC.db
 *.opensdf
 *.opendb
+/Debug/

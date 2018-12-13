@@ -21,7 +21,6 @@ public:
 	INetInterface();
 	virtual ~INetInterface();
 
-private:
 	//×¢²á»Øµ÷º¯Êý
 	void SetNetworkCallback(SendDataCallback funSendData, DisconnectCallback funDisconnect);
 

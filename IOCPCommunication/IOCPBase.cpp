@@ -110,7 +110,7 @@ bool IOCPBase::StartServerListen(u_short port, unsigned iMaxConnectCount)
 	return bRet;
 }
 
-bool IOCPBase::StartConnect(unsigned uUserKey, std::string ip, u_short port, int iRecnnt = -1)
+bool IOCPBase::StartConnect(unsigned uUserKey, std::string ip, u_short port, int iRecnnt)
 {
 	bool bRet = false;
 	/*PER_SOCKET_CONTEXT *pSkContext = m_rscSocketContext.get();
@@ -245,14 +245,16 @@ bool IOCPBase::PostConnectEx(PER_SOCKET_CONTEXT *pSkContext)
 	pIO->m_oprateType = EOP_CONNECT;
 	if (IOCPModule::Instance()->ConnectEx(pIO, (LPSOCKADDR)&pSkContext->m_clientAddr))
 	{
-		m_lckConnectList.lock();
-		m_mapConnectList[pSkContext->m_uUserKey] = pSkContext;
-		m_lckConnectList.unlock();
+		RELEASE_SOCKET(pSkContext->m_socket);
+		m_rscSocketContext.put(pSkContext);
+		return false;
 	}
 	else
 	{
-		RELEASE_SOCKET(pSkContext->m_socket);
-		m_rscSocketContext.put(pSkContext);
+		m_lckConnectList.lock();
+		m_mapConnectList[pSkContext->m_uUserKey] = pSkContext;
+		m_lckConnectList.unlock();
+		return true;
 	}
 }
 
