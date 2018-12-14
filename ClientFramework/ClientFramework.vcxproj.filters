@@ -13,6 +13,9 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="MessageBusiness">
+      <UniqueIdentifier>{83e46903-8239-4aed-b787-73199ac5ca16}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -25,19 +28,16 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="MessageBusiness\LoginMessageHandle.cpp">
-      <Filter>源文件</Filter>
+      <Filter>MessageBusiness</Filter>
     </ClCompile>
     <ClCompile Include="MessageBusiness\Message.pb.cc">
-      <Filter>源文件</Filter>
+      <Filter>MessageBusiness</Filter>
     </ClCompile>
     <ClCompile Include="MessageBusiness\MessageBusiness.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="MessageBusiness\ProtobufMsg.cpp">
-      <Filter>源文件</Filter>
+      <Filter>MessageBusiness</Filter>
     </ClCompile>
     <ClCompile Include="MessageBusiness\ProtobufMsgFactory.cpp">
-      <Filter>源文件</Filter>
+      <Filter>MessageBusiness</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -45,30 +45,6 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="MainClient.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="MessageBusiness\IMessageBusiness.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="MessageBusiness\IMessageHandle.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="MessageBusiness\LoginMessageHandle.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="MessageBusiness\Message.pb.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="MessageBusiness\MessageBusiness.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="MessageBusiness\metadata.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="MessageBusiness\ProtobufMsg.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="MessageBusiness\ProtobufMsgFactory.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="CommonDefine.h">
@@ -79,6 +55,24 @@
     </ClInclude>
     <ClInclude Include="TypeDefine.h">
       <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="MessageBusiness\IMessageHandle.h">
+      <Filter>MessageBusiness</Filter>
+    </ClInclude>
+    <ClInclude Include="MessageBusiness\IMessageBusiness.h">
+      <Filter>MessageBusiness</Filter>
+    </ClInclude>
+    <ClInclude Include="MessageBusiness\LoginMessageHandle.h">
+      <Filter>MessageBusiness</Filter>
+    </ClInclude>
+    <ClInclude Include="MessageBusiness\Message.pb.h">
+      <Filter>MessageBusiness</Filter>
+    </ClInclude>
+    <ClInclude Include="MessageBusiness\MessageBusiness.h">
+      <Filter>MessageBusiness</Filter>
+    </ClInclude>
+    <ClInclude Include="MessageBusiness\ProtobufMsgFactory.h">
+      <Filter>MessageBusiness</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

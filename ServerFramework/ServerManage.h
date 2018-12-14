@@ -5,7 +5,7 @@
 * datetime£º2017-12-14
 * company:  
 *************************************************************************/
-#include "INetInterface.h"
+#include "../IOCPCommunication/INetInterface.h"
 
 struct UserInfo;
 

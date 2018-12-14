@@ -21,9 +21,6 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="stdafx.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="MainServer.h">
       <Filter>头文件</Filter>
     </ClInclude>
@@ -45,13 +42,7 @@
     <ClInclude Include="MessageBusiness\MessageBusiness.h">
       <Filter>MessageBusiness</Filter>
     </ClInclude>
-    <ClInclude Include="MessageBusiness\ProtobufMsg.h">
-      <Filter>MessageBusiness</Filter>
-    </ClInclude>
     <ClInclude Include="MessageBusiness\ProtobufMsgFactory.h">
-      <Filter>MessageBusiness</Filter>
-    </ClInclude>
-    <ClInclude Include="MessageBusiness\metadata.h">
       <Filter>MessageBusiness</Filter>
     </ClInclude>
     <ClInclude Include="CommonDefine.h">
@@ -65,9 +56,6 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="stdafx.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
     <ClCompile Include="main.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
@@ -81,9 +69,6 @@
       <Filter>MessageBusiness</Filter>
     </ClCompile>
     <ClCompile Include="MessageBusiness\MessageBusiness.cpp">
-      <Filter>MessageBusiness</Filter>
-    </ClCompile>
-    <ClCompile Include="MessageBusiness\ProtobufMsg.cpp">
       <Filter>MessageBusiness</Filter>
     </ClCompile>
     <ClCompile Include="MessageBusiness\ProtobufMsgFactory.cpp">

@@ -224,6 +224,7 @@ bool IOCPModule::SetKeepLiveParam(PER_IO_CONTEXT *pIO)
 		MLOG("WSAIoctl failed: %d/n", WSAGetLastError());
 		return false;
 	}
+	return true;
 }
 
 void IOCPModule::LoadAllWSAFunction()

@@ -1,5 +1,7 @@
 #pragma once
 
+#include <set>
+
 class ProtobufMsgFactory;
 class IMessageHandle;
 
@@ -10,14 +12,12 @@ public:
 	~MessageBusiness();
 	inline ProtobufMsgFactory* GetProtobufMsgFactory(){ return m_pProtoMsgFtry; }
 
-	void StartBusiness();
-	void StopBusiness();
 
 private:
 	void LoadMessageHandleModule();
 
 private:
-	void*		m_facade;
+	void*						m_facade;
 	ProtobufMsgFactory			*m_pProtoMsgFtry;
 	std::set<IMessageHandle*>	m_setMessageHandle;
 

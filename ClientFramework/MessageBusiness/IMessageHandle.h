@@ -1,5 +1,7 @@
 #pragma once
 
+class MessageBusiness;
+
 class IMessageHandle
 {
 public:

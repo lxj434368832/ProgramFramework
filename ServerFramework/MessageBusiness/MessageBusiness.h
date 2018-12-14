@@ -1,5 +1,7 @@
 #pragma once
 
+#include <set>
+
 class ProtobufMsgFactory;
 class IMessageHandle;
 

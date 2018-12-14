@@ -1,4 +1,4 @@
-#include "../stdafx.h"
+#include "../CommonDefine.h"
 #include "MessageBusiness.h"
 #include "ProtobufMsgFactory.h"
 #include "LoginMessageHandle.h"

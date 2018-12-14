@@ -1,11 +1,13 @@
 #pragma once
+
 #include "../Framework/zxl_logging.h"
 
-//#ifdef _DEBUG
-//#pragma comment(lib,"../../common/lib/protobuf/Debug/libprotobuf.lib")
-//#else
-//#pragma comment(lib,"../../common/lib/protobuf/Release/libprotobuf.lib")
-//#endif
+#ifdef _DEBUG
+#pragma comment(lib,"../protobuf/lib/libprotobufd.lib")
+#else
+#pragma comment(lib,"../protobuf/lib/libprotobuf.lib")
+#endif
+
 
 #ifndef LOGS
 #define LOGS

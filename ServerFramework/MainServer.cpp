@@ -1,8 +1,7 @@
-#include "stdafx.h"
 #include "MainServer.h"
-#include "./Framework/zxu_utils.h"
-#include "IOCPServer.h"
-#include "INetInterface.h"
+#include "../IOCPCommunication/IOCPServer.h"
+#include "../IOCPCommunication/INetInterface.h"
+#include "../Framework/zxu_utils.h"
 
 MainServer::MainServer()
 {
@@ -30,6 +29,8 @@ bool MainServer::Start()
 	if (false == m_pIOCPServer->StartServer(m_srvConfig.usListenPort,
 		m_srvConfig.uInitAcceptCount, m_srvConfig.uServerThreadCount))
 		return false;
+
+	return true;
 }
 
 bool MainServer::Stop()

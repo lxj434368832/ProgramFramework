@@ -1,6 +1,5 @@
-#include "stdafx.h"
 #include "ClientManage.h"
-#include "UserInfo.h"
+
 
 ClientManage::ClientManage()
 {

@@ -1,4 +1,5 @@
 #include "ProtobufMsgFactory.h"
+#include "../CommonDefine.h"
 #include <thread>
 
 

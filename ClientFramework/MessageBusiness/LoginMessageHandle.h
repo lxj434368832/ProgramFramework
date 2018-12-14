@@ -1,6 +1,6 @@
 #pragma once
 #include "Message.pb.h"
-#include "..\IMessageHandle.h"
+#include "IMessageHandle.h"
 
 class MessageBusiness;
 
