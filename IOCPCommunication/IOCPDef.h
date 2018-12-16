@@ -51,6 +51,7 @@ struct PER_IO_CONTEXT
 
 	PER_IO_CONTEXT()
 	{
+		ZeroMemory(&m_overlapped, sizeof(m_overlapped));
 		m_socket = INVALID_SOCKET;
 		m_uBufLength = MAX_BUF_LEN;
 		m_szBuffer = new char[m_uBufLength];

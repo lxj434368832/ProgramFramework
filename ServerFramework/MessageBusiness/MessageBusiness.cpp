@@ -2,6 +2,7 @@
 #include "MessageBusiness.h"
 #include "ProtobufMsgFactory.h"
 #include "LoginMessageHandle.h"
+#include "../MainServer.h"
 
 
 MessageBusiness::MessageBusiness(IMainServer *srv)
@@ -29,7 +30,7 @@ ProtobufMsgFactory* MessageBusiness::GetProtobufMsgFactory()
 bool MessageBusiness::Start()
 {
 	LoadMessageHandleModule();
-	return m_pProtoMsgFtry->Start(10);
+	return m_pProtoMsgFtry->Start(m_pSrv->GetServerConfig()->uMessageThreadCount);
 }
 
 void MessageBusiness::Stop()

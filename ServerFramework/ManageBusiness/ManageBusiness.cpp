@@ -3,8 +3,6 @@
 #include "UserInfoManage.h"
 #include "..\CommonDefine.h"
 
-
-
 ManageBusiness::ManageBusiness(IMainServer* srv)
 	:IManageBusiness(srv)
 {

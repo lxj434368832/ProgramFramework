@@ -38,6 +38,8 @@ public:
 	virtual bool StartConnect(unsigned uUserKey, std::string ip, u_short port, int iRecnnt = -1);
 
 protected:
+	void UninitIOCP();
+
 	//处理服务端操作
 	void HandServerOperate(int iResult, PER_SOCKET_CONTEXT *pSkContext, PER_IO_CONTEXT* pIO, DWORD dwBytesTransfered);
 

@@ -79,8 +79,8 @@ bool MainServer::ReadConfigFile()
 	m_srvConfig.uMessageThreadCount = std::stoul(cfg_reader.get_value_from_cfg("Server", "MessageThreadCount", "0"));
 	m_srvConfig.uInitAcceptCount = std::stoul(cfg_reader.get_value_from_cfg("Server", "InitAcceptCount", "0"));
 	m_srvConfig.uHeartbeatTime = std::stoul(cfg_reader.get_value_from_cfg("Server", "HeartbeatTime", "0"));
-	m_srvConfig.strServerIP = cfg_reader.get_value_from_cfg("Connect", "ServerIP", "");
-	m_srvConfig.usServerPort = std::stoi(cfg_reader.get_value_from_cfg("Connect", "ServerPort", "0"));
+	//m_srvConfig.strServerIP = cfg_reader.get_value_from_cfg("Connect", "ServerIP", "");
+	//m_srvConfig.usServerPort = std::stoi(cfg_reader.get_value_from_cfg("Connect", "ServerPort", "0"));
 
 	if (false == m_srvConfig.CheckValid())
 	{

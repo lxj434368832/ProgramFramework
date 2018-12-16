@@ -10,9 +10,7 @@ struct ServerConfig
 		if (usListenPort == 0
 			|| uInitAcceptCount == 0
 			|| uServerThreadCount == 0
-			|| uHeartbeatTime == 0
-			|| strServerIP.empty()
-			|| usServerPort == 0)
+			|| uHeartbeatTime == 0)
 		{
 			return false;
 		}
@@ -24,8 +22,6 @@ struct ServerConfig
 	unsigned int    uMessageThreadCount = 4;			// 消息处理线程数量
 	unsigned int    uInitAcceptCount	= 10;           // 服务端初始接受个数
 	unsigned int    uHeartbeatTime		= 6000;			// 定时心跳检测时间ms
-	std::string		strServerIP			= "";			//连接的IP
-	unsigned short  usServerPort		= 6666;			//连接端口
 };
 
 class MainServer : public IMainServer

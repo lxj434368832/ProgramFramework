@@ -17,11 +17,12 @@ public:
 	virtual ~IOCPServer();
 
 	bool StartServer(USHORT nPort, unsigned dwMaxConnection = 10, unsigned uThreadCount = 0);
-	bool StopServer();
+	void StopServer();
 
 	//心跳检测函数，由主线程定时调用。
-	void HeartbeatCheck();
+	void StartHeartbeatCheck();
 
+private:
 	/*************************************************************************
 	* function：  开启针对服务端的监听
 	* param port: 本地监听的端口号
@@ -30,4 +31,6 @@ public:
 	*************************************************************************/
 	bool StartServerListen(u_short port, unsigned iMaxConnectCount);
 
+private:
+	bool	m_bStart;
 };

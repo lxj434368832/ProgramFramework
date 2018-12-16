@@ -32,7 +32,7 @@ void ProtobufMsgFactory::RemoveMessageFunction(pbmsg::MSG msgType)
 bool ProtobufMsgFactory::Start(unsigned uThreadCount)
 {
 	if (uThreadCount == 0)
-		uThreadCount = 1;
+		uThreadCount = 2;
 
 	m_bStart = true;
 

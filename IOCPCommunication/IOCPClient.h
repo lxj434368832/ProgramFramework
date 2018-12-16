@@ -22,5 +22,8 @@ class IOCPClient :public IOCPBase
 	  *************************************************************************/
 	  bool StartConnect(unsigned uUserKey, std::string ip, u_short port, int iRecnnt = -1);
 
+	  void StopClient();
+	  //开启心跳发送线程
+	  void StartHeartbeatSend();
 };
 

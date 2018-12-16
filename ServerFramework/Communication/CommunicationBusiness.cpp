@@ -21,6 +21,7 @@ bool CommunicationBusiness::Start()
 	if (false == m_pIOCPServer->StartServer(srvCfg.usListenPort,
 		srvCfg.uInitAcceptCount, srvCfg.uServerThreadCount))
 		return false;
+
 	return true;
 }
 

@@ -27,11 +27,6 @@ IOCPBase::~IOCPBase()
 
 bool IOCPBase::InitIOCP(unsigned uThreadCount)
 {
-	if (0 == uThreadCount)
-	{
-		uThreadCount = IOCPModule::Instance()->GetProcessorCount() * 2 - 1;
-	}
-
 	m_hIOCompletionPort = IOCPModule::Instance()->CreateIoCompletionPort();
 	if (NULL == m_hIOCompletionPort)
 	{
@@ -39,8 +34,13 @@ bool IOCPBase::InitIOCP(unsigned uThreadCount)
 		return false;
 	}
 
-	m_aThreadList = new HANDLE[uThreadCount];
-	for (unsigned i = 0; i < uThreadCount; i++)
+	if (0 == uThreadCount)
+		m_uThreadCount = IOCPModule::Instance()->GetProcessorCount() * 2 + 1;
+	else
+		m_uThreadCount = uThreadCount;
+
+	m_aThreadList = new HANDLE[m_uThreadCount];
+	for (unsigned i = 0; i < m_uThreadCount; i++)
 	{
 		m_aThreadList[i] = ::CreateThread(NULL, 0, WorkerThread, this, 0, 0);
 		if (NULL == m_aThreadList[i])
@@ -49,9 +49,29 @@ bool IOCPBase::InitIOCP(unsigned uThreadCount)
 			return false;
 		}
 	}
-	m_uThreadCount = uThreadCount;
 
 	return true;
+}
+
+void IOCPBase::UninitIOCP()
+{
+	//优雅地关闭线程
+	for (unsigned i = 0; i < m_uThreadCount; i++)
+	{
+		IOCPModule::Instance()->PostQueuedCompletionStatus(m_hIOCompletionPort, 0, NULL, NULL);
+	}
+
+	::WaitForMultipleObjects(m_uThreadCount, m_aThreadList, TRUE, INFINITE);
+
+	for (unsigned i = 0; i < m_uThreadCount; i++)
+	{
+		::CloseHandle(m_aThreadList[i]);
+	}
+	delete[] m_aThreadList;
+	m_aThreadList = nullptr;
+
+	//关闭完成端口
+	RELEASE_HANDLE(m_hIOCompletionPort);
 }
 
 bool IOCPBase::StartServerListen(u_short port, unsigned iMaxConnectCount)
@@ -184,12 +204,20 @@ DWORD WINAPI IOCPBase::WorkerThread(LPVOID lpParameter)
 
 		if (nullptr == pOverlapped)
 		{
-			if (ERROR_ABANDONED_WAIT_0 == iResult)//735L
+			if (WAIT_TIMEOUT == iResult)
+			{
+				::Sleep(1000);
+				continue;
+			}
+			else if (0 == iResult)
+			{
+				logm() << "ThreadID:" << ::GetCurrentThreadId() << " 正常退出！";
+			}
+			else if (ERROR_ABANDONED_WAIT_0 == iResult)//735L
 				MLOG("完成端口句柄:%d被人为地关闭了!", pThis->m_hIOCompletionPort);
 			else
 				MLOG("完成端口发生了错误，错误码:%d ", iResult);
 
-			MLOG(",线程:%d将退出！", ::GetCurrentThreadId());
 			break;
 		}
 
@@ -204,7 +232,6 @@ DWORD WINAPI IOCPBase::WorkerThread(LPVOID lpParameter)
 
 	}
 
-	logm() << "ThreadID:" << ::GetCurrentThreadId() << "退出";
 	return 0;
 }
 
@@ -335,7 +362,7 @@ void IOCPBase::DoAccept(int iResult, PER_SOCKET_CONTEXT *pSkContext, PER_IO_CONT
 		SOCKADDR_IN *pClientAddr = nullptr;
 		IOCPModule::Instance()->GetAcceptExSockaddrs(pIO, (LPSOCKADDR*)&pClientAddr);
 		;
-		MLOG("客户端 %s:%d连入,用户套接字：%d", IOCPModule::Instance()->GetIPAddress((LPSOCKADDR)pClientAddr).c_str(), 
+		MLOG("客户端%s:%d连入,用户套接字：%d", IOCPModule::Instance()->GetIPAddress((LPSOCKADDR)pClientAddr).c_str(), 
 			ntohs(pClientAddr->sin_port), pIO->m_socket);
 
 		if (pClientSkContext)
@@ -349,6 +376,7 @@ void IOCPBase::DoAccept(int iResult, PER_SOCKET_CONTEXT *pSkContext, PER_IO_CONT
 		}
 		//通知服务端连接
 		m_pNetInterface->AddUser(pClientSkContext->m_uUserKey);
+		pIO->m_wsaBuf.len = pIO->m_uBufLength;
 		PostReceive(pClientSkContext, pIO);
 		PostAcceptEx(pSkContext->m_socket);
 

@@ -97,6 +97,7 @@ void UserInfoManage::DeleteUser(UserKey uUserKey)
 		m_lckIdKey.unlock();
 
 		m_rscUser.put(pUser);
+		logm() << "Á¬½Ó¶Ï¿ªuserKey:" << uUserKey;
 	}
 }
 
