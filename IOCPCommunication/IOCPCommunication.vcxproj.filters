@@ -54,6 +54,24 @@
     <ClInclude Include="..\Framework\zxu_utils.h">
       <Filter>Framework</Filter>
     </ClInclude>
+    <ClInclude Include="..\Framework\charset.h">
+      <Filter>Framework</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Framework\log_files.h">
+      <Filter>Framework</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Framework\hook.h">
+      <Filter>Framework</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Framework\cfg_reg_reader.h">
+      <Filter>Framework</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Framework\sockets.h">
+      <Filter>Framework</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Framework\CommonDefine.h">
+      <Filter>Framework</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -84,6 +102,21 @@
       <Filter>Framework</Filter>
     </ClCompile>
     <ClCompile Include="..\Framework\zxu_utils.cpp">
+      <Filter>Framework</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Framework\charset.cpp">
+      <Filter>Framework</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Framework\log_files.cpp">
+      <Filter>Framework</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Framework\hook.cpp">
+      <Filter>Framework</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Framework\cfg_reg_reader.cpp">
+      <Filter>Framework</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Framework\sockets.cpp">
       <Filter>Framework</Filter>
     </ClCompile>
   </ItemGroup>

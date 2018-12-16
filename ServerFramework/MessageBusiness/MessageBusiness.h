@@ -1,25 +1,24 @@
 #pragma once
 
 #include <set>
+#include "IMessageBusiness.h"
 
 class ProtobufMsgFactory;
 class IMessageHandle;
 
-class MessageBusiness
+class MessageBusiness : public IMessageBusiness
 {
 public:
-	MessageBusiness(void *facade);
+	MessageBusiness(IMainServer *srv = nullptr);
 	~MessageBusiness();
-	inline ProtobufMsgFactory* GetProtobufMsgFactory(){ return m_pProtoMsgFtry; }
-
-	void StartBusiness();
-	void StopBusiness();
+	ProtobufMsgFactory* GetProtobufMsgFactory() override;
+	bool Start() override;
+	void Stop() override;
 
 private:
 	void LoadMessageHandleModule();
 
 private:
-	void*		m_facade;
 	ProtobufMsgFactory			*m_pProtoMsgFtry;
 	std::set<IMessageHandle*>	m_setMessageHandle;
 

@@ -2,7 +2,7 @@
 
 #include <string>
 
-struct ClientConfig
+struct ServerConfig
 {
 	// 需要判断读取出来的配置是否正确
 	bool CheckValid()
@@ -41,7 +41,7 @@ private:
 	bool ReadConfigFile();
 
 private:
-	ClientConfig	m_srvConfig;	//服务配置项
+	ServerConfig	m_srvConfig;	//服务配置项
 	INetInterface	*m_pClientList;	//客户端列表
 	IOCPClient		*m_pIOCPClient;	//IOCP 客户端
 };

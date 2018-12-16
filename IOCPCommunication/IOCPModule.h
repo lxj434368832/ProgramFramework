@@ -6,8 +6,7 @@
 * company:  安碧捷科技股份有限公司
 *************************************************************************/
 
-#include "stdafx.h"
-#include <MSWSock.h>
+#include "IOCPDef.h"
 
 struct PER_IO_CONTEXT;
 struct PER_SOCKET_CONTEXT;
@@ -55,7 +54,9 @@ public:
 	*************************************************************************/
 	int AcceptEx(SOCKET listenSocket, PER_IO_CONTEXT *pIO);
 
-	void GetAcceptExSockaddrs(PER_IO_CONTEXT *pIO, LPSOCKADDR *client);
+	void GetAcceptExSockaddrs(PER_IO_CONTEXT *pIO, LPSOCKADDR *lpAddr);
+
+	std::string GetIPAddress(LPSOCKADDR lpAddr);
 
 	//成功返回0，不成功返回GetLastError()的值
 	int ConnectEx(PER_IO_CONTEXT *pIO, const LPSOCKADDR name);

@@ -1,7 +1,8 @@
 #pragma once
 #include <string>
+#include "IMainServer.h"
 
-struct ClientConfig
+struct ServerConfig
 {
 	// 需要判断读取出来的配置是否正确
 	bool CheckValid()
@@ -27,23 +28,27 @@ struct ClientConfig
 	unsigned short  usServerPort		= 6666;			//连接端口
 };
 
-class IOCPServier;
-class INetInterface;
-
-class MainServer
+class MainServer : public IMainServer
 {
 public:
 	MainServer();
 	~MainServer();
+	IMessageBusiness* GetMessageBusiness() override;
+	IManageBusiness* GetManageBusiness() override;
+	ICommunication* GetCommunication() override;
+	ServerConfig* GetServerConfig() override;
+
+
 	bool Start();
-	bool Stop();
+	void Stop();
 
 private:
 	bool ReadConfigFile();
 
-private: 
-	ClientConfig	m_srvConfig;	//服务配置项
-	INetInterface	*m_pClientList;	//客户端列表
-	IOCPServier		*m_pIOCPServer;	//IOCP 服务端
+private:
+	ServerConfig		m_srvConfig;		//服务配置项
+	IMessageBusiness*	m_pMessage;			//消息模块
+	IManageBusiness*	m_pManage;			//管理模块
+	ICommunication*		m_pCommunication;	//通讯模块
 };
 

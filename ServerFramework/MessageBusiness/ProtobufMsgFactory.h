@@ -10,9 +10,9 @@ typedef std::function<void(const unsigned uUserKey, const pbmsg::Message &msg, v
 class ProtobufMsgFactory
 {
 public:
-	ProtobufMsgFactory();
+	ProtobufMsgFactory(void * srv = nullptr);
 	~ProtobufMsgFactory();
-	static ProtobufMsgFactory* instance();
+
 	void RegisterMessageFunction(pbmsg::MSG, funMessageHandle);
 	void RemoveMessageFunction(pbmsg::MSG msgType);
 
@@ -31,9 +31,10 @@ private:
 		unsigned		m_uUserKey;
 		pbmsg::Message	m_msg;
 	};
-
+	void*						m_pSrv;				//传递给消息处理的指针
 	bool						m_bStart;			//是否开始的标识
 	std::vector<std::thread*>	m_threadList;		//线程池列表
+
 	mqw::ResourceManage<SMessageData> m_rscMessage;	//消息资源管理列表
 	std::queue<SMessageData*>	m_msgList;			//待处理的消息队列
 	std::mutex					m_mutexMsgList;

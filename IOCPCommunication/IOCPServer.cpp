@@ -1,20 +1,18 @@
-#include "stdafx.h"
 #include "IOCPServer.h"
 #include "IOCPModule.h"
 #include "INetInterface.h"
-#include <WS2tcpip.h>
 #include <assert.h>
 
-IOCPServier::IOCPServier(INetInterface *pNet) : 
+IOCPServer::IOCPServer(INetInterface *pNet) : 
 	IOCPBase(pNet)
 {
 }
 
-IOCPServier::~IOCPServier()
+IOCPServer::~IOCPServer()
 {
 }
 
-bool IOCPServier::StartServer(USHORT nPort, unsigned dwMaxConnection, unsigned uThreadCount)
+bool IOCPServer::StartServer(USHORT nPort, unsigned dwMaxConnection, unsigned uThreadCount)
 {
 	if (false == InitIOCP(uThreadCount))
 		return false;
@@ -42,7 +40,7 @@ bool IOCPServier::StartServer(USHORT nPort, unsigned dwMaxConnection, unsigned u
 	return true;
 }
 
-bool IOCPServier::StopServer()
+bool IOCPServer::StopServer()
 {
 	//1¡¢¹Ø±Õ¼àÌýÌ×½Ó×Ö
 	::shutdown(m_pListenSocketContext->m_socket, SD_BOTH);
@@ -109,12 +107,12 @@ bool IOCPServier::StopServer()
 	return true;
 }
 
-void IOCPServier::HeartbeatCheck()
+void IOCPServer::HeartbeatCheck()
 {
 
 }
 
-bool IOCPServier::StartServerListen(u_short port, unsigned iMaxConnectCount)
+bool IOCPServer::StartServerListen(u_short port, unsigned iMaxConnectCount)
 {
 	bool bRet = false;
 	do

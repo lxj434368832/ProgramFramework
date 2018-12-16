@@ -1,11 +1,16 @@
 #pragma once
-
-class MessageBusiness;
+/*************************************************************************
+* function：消息处理接口基类，所有需要处理消息的类都继承此类
+* author :	明巧文
+* datetime：2018-12-14
+* company:
+*************************************************************************/
+class IMessageBusiness;
 
 class IMessageHandle
 {
 public:
-	IMessageHandle(MessageBusiness *pBusiness = nullptr){
+	IMessageHandle(IMessageBusiness *pBusiness = nullptr){
 		m_pMsgBusiness = pBusiness;
 	}
 	virtual ~IMessageHandle(){
@@ -13,5 +18,5 @@ public:
 	}
 
 protected:
-	MessageBusiness *m_pMsgBusiness;
+	IMessageBusiness *m_pMsgBusiness;
 };

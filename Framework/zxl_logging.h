@@ -1,5 +1,6 @@
 #ifndef ZX_LOGGING_H_
 #define ZX_LOGGING_H_
+
 #include <iostream>
 #include <fstream>
 #include <sstream>

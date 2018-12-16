@@ -151,25 +151,32 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CommonDefine.h" />
+    <ClInclude Include="Communication\CommunicationBusiness.h" />
+    <ClInclude Include="Communication\ICommunication.h" />
     <ClInclude Include="EnumDefine.h" />
+    <ClInclude Include="IMainServer.h" />
     <ClInclude Include="MainServer.h" />
+    <ClInclude Include="ManageBusiness\IManageBusiness.h" />
+    <ClInclude Include="ManageBusiness\ManageBusiness.h" />
+    <ClInclude Include="ManageBusiness\UserInfoManage.h" />
     <ClInclude Include="MessageBusiness\IMessageBusiness.h" />
     <ClInclude Include="MessageBusiness\IMessageHandle.h" />
     <ClInclude Include="MessageBusiness\LoginMessageHandle.h" />
     <ClInclude Include="MessageBusiness\Message.pb.h" />
     <ClInclude Include="MessageBusiness\MessageBusiness.h" />
     <ClInclude Include="MessageBusiness\ProtobufMsgFactory.h" />
-    <ClInclude Include="ServerManage.h" />
     <ClInclude Include="TypeDefine.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Communication\CommunicationBusiness.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MainServer.cpp" />
+    <ClCompile Include="ManageBusiness\ManageBusiness.cpp" />
+    <ClCompile Include="ManageBusiness\UserInfoManage.cpp" />
     <ClCompile Include="MessageBusiness\LoginMessageHandle.cpp" />
     <ClCompile Include="MessageBusiness\Message.pb.cc" />
     <ClCompile Include="MessageBusiness\MessageBusiness.cpp" />
     <ClCompile Include="MessageBusiness\ProtobufMsgFactory.cpp" />
-    <ClCompile Include="ServerManage.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\IOCPCommunication\IOCPCommunication.vcxproj">

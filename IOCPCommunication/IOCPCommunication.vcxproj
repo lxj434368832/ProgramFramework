@@ -82,8 +82,14 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\Framework\cfg_reg_reader.h" />
+    <ClInclude Include="..\Framework\charset.h" />
+    <ClInclude Include="..\Framework\CommonDefine.h" />
+    <ClInclude Include="..\Framework\hook.h" />
+    <ClInclude Include="..\Framework\log_files.h" />
     <ClInclude Include="..\Framework\MLock.h" />
     <ClInclude Include="..\Framework\ResourceManage.h" />
+    <ClInclude Include="..\Framework\sockets.h" />
     <ClInclude Include="..\Framework\zxl_logging.h" />
     <ClInclude Include="..\Framework\zxu_utils.h" />
     <ClInclude Include="INetInterface.h" />
@@ -95,7 +101,12 @@
     <ClInclude Include="stdafx.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\Framework\cfg_reg_reader.cpp" />
+    <ClCompile Include="..\Framework\charset.cpp" />
+    <ClCompile Include="..\Framework\hook.cpp" />
+    <ClCompile Include="..\Framework\log_files.cpp" />
     <ClCompile Include="..\Framework\MLock.cpp" />
+    <ClCompile Include="..\Framework\sockets.cpp" />
     <ClCompile Include="..\Framework\zxl_logging.cpp" />
     <ClCompile Include="..\Framework\zxu_utils.cpp" />
     <ClCompile Include="INetInterface.cpp" />

@@ -3,11 +3,13 @@
 * function：iocp公共定义文件
 * author :	明巧文
 * datetime：2017-12-14
-* company:  安碧捷科技股份有限公司
+* company:  
 *************************************************************************/
 
-#include "stdafx.h"
+#include <WinSock2.h>
+#include <MSWSock.h>
 #include <queue>
+#include "stdafx.h"
 
 #define MAX_BUF_LEN 512			//发送缓冲区大小512B
 #define MAX_RCV_BUF_LEN 5120	//接收缓冲区大小5K

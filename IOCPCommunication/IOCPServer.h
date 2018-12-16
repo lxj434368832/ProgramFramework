@@ -10,11 +10,11 @@
 
 class INetInterface;
 
-class IOCPServier : public IOCPBase
+class IOCPServer : public IOCPBase
 {
 public:
-	IOCPServier(INetInterface *pSrvMng = nullptr);
-	virtual ~IOCPServier();
+	IOCPServer(INetInterface *pNet = nullptr);
+	virtual ~IOCPServer();
 
 	bool StartServer(USHORT nPort, unsigned dwMaxConnection = 10, unsigned uThreadCount = 0);
 	bool StopServer();

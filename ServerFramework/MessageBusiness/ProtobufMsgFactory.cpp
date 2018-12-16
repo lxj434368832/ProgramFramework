@@ -1,22 +1,18 @@
 #include "ProtobufMsgFactory.h"
 #include "../CommonDefine.h"
+#include "../EnumDefine.h"
 #include <thread>
 
 
-ProtobufMsgFactory::ProtobufMsgFactory() 
-	:m_rscMessage(100)
+ProtobufMsgFactory::ProtobufMsgFactory(void * srv)
+	:m_rscMessage(MESSAGE_RESOURCE_COUNT)
 {
+	m_pSrv = srv;
 	m_bStart = false;
 }
 
 ProtobufMsgFactory::~ProtobufMsgFactory()
 {
-}
-
-ProtobufMsgFactory* ProtobufMsgFactory::instance()
-{
-	static ProtobufMsgFactory s_instance;
-	return &s_instance;
 }
 
 void ProtobufMsgFactory::RegisterMessageFunction(pbmsg::MSG msg_type, funMessageHandle handle)
@@ -51,13 +47,15 @@ bool ProtobufMsgFactory::Start(unsigned uThreadCount)
 
 void ProtobufMsgFactory::Stop()
 {
+	m_pSrv = nullptr;
 	if (false == m_bStart) return;
 	m_bStart = false;
 
 	m_cvConsumer.notify_all();
 	for (auto value : m_threadList)
 	{
-		value->detach();
+		if(value->joinable())
+			value->join();
 	}
 	m_threadList.clear();
 
@@ -107,4 +105,6 @@ void ProtobufMsgFactory::MessageHandleThread()
 
 		m_rscMessage.put(msgData);
 	}
+
+	logm() << "ThreadID:" << std::this_thread::get_id() << "ÍË³ö";
 }

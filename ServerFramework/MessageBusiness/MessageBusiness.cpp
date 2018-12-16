@@ -4,15 +4,14 @@
 #include "LoginMessageHandle.h"
 
 
-MessageBusiness::MessageBusiness(void *facade)
+MessageBusiness::MessageBusiness(IMainServer *srv)
+	:IMessageBusiness(srv)
 {
-	m_facade = facade;
 	m_pProtoMsgFtry = new ProtobufMsgFactory;
 }
 
 MessageBusiness::~MessageBusiness()
 {
-	m_facade = nullptr;
 	RELEASE(m_pProtoMsgFtry);
 
 	for (auto value : m_setMessageHandle)
@@ -21,6 +20,21 @@ MessageBusiness::~MessageBusiness()
 	}
 
 	m_setMessageHandle.clear();
+}
+ProtobufMsgFactory* MessageBusiness::GetProtobufMsgFactory()
+{
+	return m_pProtoMsgFtry;
+}
+
+bool MessageBusiness::Start()
+{
+	LoadMessageHandleModule();
+	return m_pProtoMsgFtry->Start(10);
+}
+
+void MessageBusiness::Stop()
+{
+	m_pProtoMsgFtry->Stop();
 }
 
 void MessageBusiness::LoadMessageHandleModule()

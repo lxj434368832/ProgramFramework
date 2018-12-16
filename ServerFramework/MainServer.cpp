@@ -2,6 +2,10 @@
 #include "../IOCPCommunication/IOCPServer.h"
 #include "../IOCPCommunication/INetInterface.h"
 #include "../Framework/zxu_utils.h"
+#include "../Framework/cfg_reg_reader.h"
+#include "MessageBusiness/MessageBusiness.h"
+#include "ManageBusiness/ManageBusiness.h"
+#include "Communication/CommunicationBusiness.h"
 
 MainServer::MainServer()
 {
@@ -11,38 +15,60 @@ MainServer::MainServer()
 	zxl::configure tmp_cfg(zxl::helpers::get_module_dir() + "\\config\\LogConfig.ini");
 	logger->reconfiguration(tmp_cfg);
 #endif
-	m_pClientList = new INetInterface;
-	m_pIOCPServer = new IOCPServier(m_pClientList);
+
+	m_pMessage = new MessageBusiness(this);
+	m_pManage = new ManageBusiness(this);
+	m_pCommunication = new CommunicationBusiness(this);
 }
 
 MainServer::~MainServer()
 {
-	RELEASE(m_pIOCPServer);
-	RELEASE(m_pClientList);
-
+	RELEASE(m_pCommunication);
+	RELEASE(m_pManage);
+	RELEASE(m_pManage);
 	zxl::zx_logger::delete_instance();
+}
+
+IMessageBusiness* MainServer::GetMessageBusiness()
+{
+	return m_pMessage;
+}
+
+IManageBusiness* MainServer::GetManageBusiness()
+{
+	return m_pManage;
+}
+
+ICommunication * MainServer::GetCommunication()
+{
+	return m_pCommunication;
+}
+
+ServerConfig* MainServer::GetServerConfig()
+{
+	return &m_srvConfig;
 }
 
 bool MainServer::Start()
 {
-	if (false == ReadConfigFile()) return true;
-	if (false == m_pIOCPServer->StartServer(m_srvConfig.usListenPort,
-		m_srvConfig.uInitAcceptCount, m_srvConfig.uServerThreadCount))
-		return false;
-
+	if (false == ReadConfigFile()) return false;
+	if (false == m_pMessage->Start()) return false;
+	if (false == m_pManage->Start()) return false;
+	if (false == m_pCommunication->Start()) return false;
 	return true;
 }
 
-bool MainServer::Stop()
+void MainServer::Stop()
 {
-	m_pIOCPServer->StopServer();
-	return true;
+	m_pCommunication->Stop();
+	m_pManage->Stop();
+	m_pMessage->Stop();
 }
 
 bool MainServer::ReadConfigFile()
 {
-	std::string strConfigPath = zxu::get_module_path(zxu::get_self_module_handle(), "\\config\\ServerConfig.ini");
-	zxu::cfg_reg_reader cfg_reader;
+	std::string strConfigPath = zxu::get_module_path(nullptr, "\\config\\ServerConfig.ini");
+	cfg_reg_reader cfg_reader;
 	if (!cfg_reader.read_from_cfg(strConfigPath))
 	{
 		loge() << "¶ÁÈ¡ÅäÖÃÎÄ¼þ:" << strConfigPath.c_str() << "Ê§°Ü£¡";

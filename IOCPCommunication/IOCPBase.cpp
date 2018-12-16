@@ -1,8 +1,6 @@
-#include "stdafx.h"
 #include "IOCPBase.h"
 #include "IOCPModule.h"
 #include "INetInterface.h"
-#include <WS2tcpip.h>
 #include <assert.h>
 
 IOCPBase::IOCPBase(INetInterface *pNet):
@@ -206,6 +204,7 @@ DWORD WINAPI IOCPBase::WorkerThread(LPVOID lpParameter)
 
 	}
 
+	logm() << "ThreadID:" << ::GetCurrentThreadId() << "退出";
 	return 0;
 }
 
@@ -335,8 +334,9 @@ void IOCPBase::DoAccept(int iResult, PER_SOCKET_CONTEXT *pSkContext, PER_IO_CONT
 	{
 		SOCKADDR_IN *pClientAddr = nullptr;
 		IOCPModule::Instance()->GetAcceptExSockaddrs(pIO, (LPSOCKADDR*)&pClientAddr);
-		char strIP[255];	inet_ntop(AF_INET, &pClientAddr->sin_addr, strIP, 255);
-		MLOG("客户端 %s:%d连入,用户套接字：%d", strIP, ntohs(pClientAddr->sin_port), pIO->m_socket);
+		;
+		MLOG("客户端 %s:%d连入,用户套接字：%d", IOCPModule::Instance()->GetIPAddress((LPSOCKADDR)pClientAddr).c_str(), 
+			ntohs(pClientAddr->sin_port), pIO->m_socket);
 
 		if (pClientSkContext)
 		{

@@ -1,7 +1,6 @@
-#include "stdafx.h"
 #include "IOCPModule.h"
-#include "IOCPDef.h"
-#include <mstcpip.h>
+#include <mstcpip.h>	//keepliveœ‡πÿ
+#include <ws2tcpip.h>
 
 #pragma comment(lib,"Ws2_32.lib")
 #pragma comment(lib,"Kernel32.lib")
@@ -104,14 +103,21 @@ int IOCPModule::AcceptEx(SOCKET listenSocket, PER_IO_CONTEXT *pIO)
 	return iRet;
 }
 
-void IOCPModule::GetAcceptExSockaddrs(PER_IO_CONTEXT *pIO, LPSOCKADDR *client)
+void IOCPModule::GetAcceptExSockaddrs(PER_IO_CONTEXT *pIO, LPSOCKADDR *lpAddr)
 {
 	LPSOCKADDR local = nullptr;
 	int iAddrLen = sizeof(SOCKADDR);
 	DWORD dwFlag = 0;
 	int iRet = 0;
 	m_fnGetAcceptExSockaddrs(pIO->m_wsaBuf.buf, pIO->m_wsaBuf.len - (iAddrLen + 16) * 2, iAddrLen, iAddrLen,
-		&local, &iAddrLen, client, &iAddrLen);
+		&local, &iAddrLen, lpAddr, &iAddrLen);
+}
+
+std::string IOCPModule::GetIPAddress(LPSOCKADDR lpAddr)
+{
+	char strIP[255];	
+	inet_ntop(AF_INET, lpAddr, strIP, 255);
+	return strIP;
 }
 
 int IOCPModule::ConnectEx(PER_IO_CONTEXT *pIO, const LPSOCKADDR name)

@@ -1,7 +1,6 @@
-#include "stdafx.h"
 #include "IOCPClient.h"
 #include "IOCPModule.h"
-#include <WS2tcpip.h>
+
 
 IOCPClient::IOCPClient(INetInterface *pNet):
 	IOCPBase(pNet)
@@ -44,7 +43,7 @@ bool IOCPClient::StartConnect(unsigned uUserKey, std::string ip, u_short port, i
 
 		SOCKADDR_IN *pSrvAddr = &pSkContext->m_clientAddr;
 		pSrvAddr->sin_family = AF_INET;
-		inet_pton(AF_INET, ip.c_str(), &pSrvAddr->sin_addr);
+		IOCPModule::Instance()->GetIPAddress((LPSOCKADDR)&pSrvAddr->sin_addr);
 		pSrvAddr->sin_port = htons(port);
 
 		bRet = PostConnectEx(pSkContext);

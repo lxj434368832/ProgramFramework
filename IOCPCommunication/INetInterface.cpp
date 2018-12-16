@@ -17,17 +17,17 @@ void INetInterface::SetNetworkCallback(SendDataCallback funSendData, DisconnectC
 	m_fuDisconnect = funDisconnect;
 }
 
-void INetInterface::AddUser(unsigned uUserKey)
+void INetInterface::AddUser(UserKey uUserKey)
 {
 
 }
 
-void INetInterface::HandData(unsigned uUserKey, unsigned uMsgType, const char* data, unsigned length)
+void INetInterface::HandData(UserKey uUserKey, unsigned uMsgType, const char* data, unsigned length)
 {
 
 }
 
-void INetInterface::DeleteUser(unsigned uUserKey)
+void INetInterface::DeleteUser(UserKey uUserKey)
 {
 
 }

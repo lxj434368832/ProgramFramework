@@ -6,7 +6,6 @@
 * company:  
 *************************************************************************/
 
-#include "stdafx.h"
 #include "IOCPDef.h"
 #include "../Framework/ResourceManage.h"
 #include "../Framework/MLock.h"

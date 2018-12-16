@@ -1,6 +1,5 @@
 #include "MLock.h"
 
-
 MLock::MLock()
 {
 	InitializeCriticalSection(&cs);

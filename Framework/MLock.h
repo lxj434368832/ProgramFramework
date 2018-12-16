@@ -1,6 +1,7 @@
 #pragma once
 
-#include <windows.h>
+#include <Windows.h>
+
 class MLock
 {
 public:
@@ -11,7 +12,6 @@ public:
 private:
 	CRITICAL_SECTION cs;
 };
-
 
 class MAutoLock
 {

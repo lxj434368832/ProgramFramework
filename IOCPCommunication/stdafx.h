@@ -2,17 +2,10 @@
 // 或是经常使用但不常更改的
 // 特定于项目的包含文件
 //
-
 #pragma once
 
-#include <stdio.h>
-#include <iostream>
-#include <WinSock2.h>
-#include <windows.h>
-
-
 // TODO:  在此处引用程序需要的其他头文件
-#include "../Framework/zxl_logging.h"
+#include "../Framework/zxl_logging.h"	//此头文件包含了windows.h
 
 #ifndef LOGS
 #define LOGS
@@ -22,8 +15,8 @@
 
 #define MAssert(express) {if(!express){char a[1];a[-0xffff];} }
 
-#define Mcout std::cout<<"["<<__FUNCTION__<<":"<<__LINE__<<"]"
-#define Mcerr std::cerr<<"["<<__FUNCTION__<<":"<<__LINE__<<"]"
+//#define Mcout std::cout<<"["<<__FUNCTION__<<":"<<__LINE__<<"]"
+//#define Mcerr std::cerr<<"["<<__FUNCTION__<<":"<<__LINE__<<"]"
 #endif // !LOGS
 
 #ifndef ZX_LOGGING_H_
