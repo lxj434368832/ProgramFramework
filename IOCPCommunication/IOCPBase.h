@@ -7,8 +7,8 @@
 *************************************************************************/
 
 #include "IOCPDef.h"
-#include "../Framework/ResourceManage.h"
-#include "../Framework/MLock.h"
+#include "../Framework/include/ResourceManage.h"
+#include "../Framework/include/MLock.h"
 
 class INetInterface;
 

@@ -6,7 +6,7 @@
 * company:  
 *************************************************************************/
 #include "../../IOCPCommunication/INetInterface.h"
-#include "../../Framework/ResourceManage.h"
+#include "../../Framework/include/ResourceManage.h"
 #include "../TypeDefine.h"
 #include "../EnumDefine.h"
 

@@ -22,6 +22,9 @@
     <Filter Include="ManageBusiness">
       <UniqueIdentifier>{eaf33c1c-8cbc-445a-8523-810dcaa95dad}</UniqueIdentifier>
     </Filter>
+    <Filter Include="DatabaseModule">
+      <UniqueIdentifier>{37320982-f96c-4d2b-a3b1-993afd6c7e57}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />

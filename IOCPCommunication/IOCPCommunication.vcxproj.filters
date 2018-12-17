@@ -13,9 +13,6 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="Framework">
-      <UniqueIdentifier>{3943f37e-2a18-472a-b398-ad8d66c8231e}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -42,36 +39,6 @@
     <ClInclude Include="IOCPClient.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="..\Framework\MLock.h">
-      <Filter>Framework</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Framework\ResourceManage.h">
-      <Filter>Framework</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Framework\zxl_logging.h">
-      <Filter>Framework</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Framework\zxu_utils.h">
-      <Filter>Framework</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Framework\charset.h">
-      <Filter>Framework</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Framework\log_files.h">
-      <Filter>Framework</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Framework\hook.h">
-      <Filter>Framework</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Framework\cfg_reg_reader.h">
-      <Filter>Framework</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Framework\sockets.h">
-      <Filter>Framework</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Framework\CommonDefine.h">
-      <Filter>Framework</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -94,30 +61,6 @@
     </ClCompile>
     <ClCompile Include="IOCPClient.cpp">
       <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Framework\MLock.cpp">
-      <Filter>Framework</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Framework\zxl_logging.cpp">
-      <Filter>Framework</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Framework\zxu_utils.cpp">
-      <Filter>Framework</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Framework\charset.cpp">
-      <Filter>Framework</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Framework\log_files.cpp">
-      <Filter>Framework</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Framework\hook.cpp">
-      <Filter>Framework</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Framework\cfg_reg_reader.cpp">
-      <Filter>Framework</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Framework\sockets.cpp">
-      <Filter>Framework</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

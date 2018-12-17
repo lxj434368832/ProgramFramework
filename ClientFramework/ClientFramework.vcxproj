@@ -119,25 +119,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="ClientManage.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MainClient.cpp" />
-    <ClCompile Include="MessageBusiness\LoginMessageHandle.cpp" />
-    <ClCompile Include="MessageBusiness\Message.pb.cc" />
-    <ClCompile Include="MessageBusiness\MessageBusiness.cpp" />
-    <ClCompile Include="MessageBusiness\ProtobufMsgFactory.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="ClientManage.h" />
     <ClInclude Include="CommonDefine.h" />
     <ClInclude Include="EnumDefine.h" />
     <ClInclude Include="MainClient.h" />
-    <ClInclude Include="MessageBusiness\IMessageBusiness.h" />
-    <ClInclude Include="MessageBusiness\IMessageHandle.h" />
-    <ClInclude Include="MessageBusiness\LoginMessageHandle.h" />
-    <ClInclude Include="MessageBusiness\Message.pb.h" />
-    <ClInclude Include="MessageBusiness\MessageBusiness.h" />
-    <ClInclude Include="MessageBusiness\ProtobufMsgFactory.h" />
     <ClInclude Include="TypeDefine.h" />
   </ItemGroup>
   <ItemGroup>

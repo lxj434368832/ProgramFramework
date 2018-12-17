@@ -1,4 +1,5 @@
 #include "IOCPModule.h"
+#include "../Framework/include/CommonDefine.h"
 #include <mstcpip.h>	//keepliveœ‡πÿ
 #include <ws2tcpip.h>
 

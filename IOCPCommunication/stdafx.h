@@ -5,7 +5,7 @@
 #pragma once
 
 // TODO:  在此处引用程序需要的其他头文件
-#include "../Framework/zxl_logging.h"	//此头文件包含了windows.h
+#include "../Framework/include/Log/logging.h"	//此头文件包含了windows.h
 
 #ifndef LOGS
 #define LOGS
@@ -26,11 +26,6 @@ static HANDLE consolehwnd = ::GetStdHandle(STD_OUTPUT_HANDLE);
 #define logd() ::SetConsoleTextAttribute(consolehwnd, 7);std::cout<<"[D]:"
 #define logt() ::SetConsoleTextAttribute(consolehwnd, 4);std::cout<<"[T]:"<<::GetTickCount64()
 //#define logt() ::system("color 4");std::cout<<"[T]:"
-#else
-#define logm() LogInfo()<<"["<<__FUNCTION__<<":"<<__LINE__<<"|<message>]"<<std::endl
-#define loge() LogInfo()<<"["<<__FUNCTION__<<":"<<__LINE__<<"|<error>]"<<std::endl
-#define logd() LogInfo()<<"["<<__FUNCTION__<<":"<<__LINE__<<"|<debug>]"<<std::endl
-#define logt() LogInfo()<<"["<<__FUNCTION__<<":"<<__LINE__<<"|<trace>]"<<std::endl
 #endif
 
 // 释放指针宏

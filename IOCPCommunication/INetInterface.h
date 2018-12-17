@@ -2,7 +2,7 @@
 
 #include <map>
 #include <functional>
-#include "..\Framework\MLock.h"
+#include "..\Framework\include\MLock.h"
 
 typedef std::function<void(unsigned, unsigned, const char*, unsigned)> SendDataCallback;
 typedef std::function<void(unsigned)>	DisconnectCallback;

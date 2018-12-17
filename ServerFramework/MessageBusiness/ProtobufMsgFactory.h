@@ -3,7 +3,7 @@
 #include <queue>
 #include <condition_variable>
 #include "Message.pb.h"
-#include "../../Framework/ResourceManage.h"
+#include "../../Framework/include/ResourceManage.h"
 
 typedef std::function<void(const unsigned uUserKey, const pbmsg::Message &msg, void* ptr)> funMessageHandle;
 

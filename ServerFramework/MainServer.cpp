@@ -1,11 +1,13 @@
 #include "MainServer.h"
 #include "../IOCPCommunication/IOCPServer.h"
 #include "../IOCPCommunication/INetInterface.h"
-#include "../Framework/zxu_utils.h"
-#include "../Framework/cfg_reg_reader.h"
+#include "../Framework/include/log/logging.h"
+#include "../Framework/include/cfg_reg_reader.h"
+#include "../Framework/include/Utils.h"
 #include "MessageBusiness/MessageBusiness.h"
 #include "ManageBusiness/ManageBusiness.h"
 #include "Communication/CommunicationBusiness.h"
+#include "../Framework/Framework.h"
 
 MainServer::MainServer()
 {
@@ -67,7 +69,7 @@ void MainServer::Stop()
 
 bool MainServer::ReadConfigFile()
 {
-	std::string strConfigPath = zxu::get_module_path(nullptr, "\\config\\ServerConfig.ini");
+	std::string strConfigPath = Utils::get_module_path(nullptr, "\\config\\ServerConfig.ini");
 	cfg_reg_reader cfg_reader;
 	if (!cfg_reader.read_from_cfg(strConfigPath))
 	{
