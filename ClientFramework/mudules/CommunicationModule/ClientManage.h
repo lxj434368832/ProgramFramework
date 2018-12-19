@@ -7,7 +7,7 @@
 *************************************************************************/
 #include "../IOCPCommunication/INetInterface.h"
 
-class MessageBusiness;
+class MessageModule;
 struct UserInfo;
 
 //客户端的UserKey就使用此枚举变量

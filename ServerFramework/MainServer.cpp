@@ -7,7 +7,7 @@
 #include "MessageBusiness/MessageBusiness.h"
 #include "ManageBusiness/ManageBusiness.h"
 #include "Communication/CommunicationBusiness.h"
-#include "../Framework/Framework.h"
+#include "../Framework/FrameworkLibrary.h"
 
 MainServer::MainServer()
 {

@@ -1,7 +1,6 @@
 #include "MainClient.h"
 
 
-
 MainClient::MainClient()
 {
 }
@@ -16,10 +15,9 @@ bool MainClient::Start()
 	return true;
 }
 
-bool MainClient::Stop()
+void MainClient::Stop()
 {
 
-	return true;
 }
 
 bool MainClient::ReadConfigFile()

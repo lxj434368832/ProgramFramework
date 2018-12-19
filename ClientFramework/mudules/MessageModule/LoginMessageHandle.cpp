@@ -2,7 +2,7 @@
 #include "ProtobufMsgFactory.h"
 #include "MessageBusiness.h"
 
-LoginMessageHandle::LoginMessageHandle(MessageBusiness *pBusiness)
+LoginMessageHandle::LoginMessageHandle(MessageModule *pBusiness)
 	:IMessageHandle(pBusiness)
 {
 	ProtobufMsgFactory *pMsgFctry = pBusiness->GetProtobufMsgFactory();

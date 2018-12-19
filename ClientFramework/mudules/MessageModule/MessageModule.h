@@ -1,16 +1,16 @@
 #pragma once
 
 #include <set>
-#include "IMessageBusiness.h"
+#include "IMessage.h"
 
 class ProtobufMsgFactory;
 class IMessageHandle;
 
-class MessageBusiness : public IMessageBusiness
+class MessageModule : public IMessage
 {
 public:
-	MessageBusiness(IMainServer *srv = nullptr);
-	~MessageBusiness();
+	MessageModule(IMainClient *main = nullptr);
+	~MessageModule();
 	ProtobufMsgFactory* GetProtobufMsgFactory() override;
 	bool Start() override;
 	void Stop() override;

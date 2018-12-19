@@ -7,7 +7,7 @@ class IOCPServer;
 class CommunicationBusiness : public ICommunication
 {
 public:
-	CommunicationBusiness(IMainServer *srv = nullptr);
+	CommunicationBusiness(IMainClient *main = nullptr);
 	~CommunicationBusiness();
 
 

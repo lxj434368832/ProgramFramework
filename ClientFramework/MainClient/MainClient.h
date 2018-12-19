@@ -1,17 +1,19 @@
 #pragma once
 
 #include "TypeDefine.h"
+#include "IMainClient.h"
 
 class IOCPClient;
 class INetInterface;
 
-class MainClient
+class MainClient : public IMainClient
 {
 public:
 	MainClient();
 	~MainClient();
-	bool Start();
-	bool Stop();
+
+	bool Start() override;
+	void Stop() override;
 
 private:
 	bool ReadConfigFile();

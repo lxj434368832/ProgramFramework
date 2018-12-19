@@ -15,25 +15,16 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="main.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="MainClient.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
+    <ClInclude Include="IModelInterface.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="MainModel.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="MainClient.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="CommonDefine.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="EnumDefine.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="TypeDefine.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
+    <ClCompile Include="MainModel.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

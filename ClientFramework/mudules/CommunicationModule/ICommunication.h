@@ -6,17 +6,17 @@
 * company:
 *************************************************************************/
 
-class IMainServer;
+class IMainClient;
 
 class ICommunication
 {
 public:
-	ICommunication(IMainServer *srv = nullptr):m_srv(srv){};
-	virtual ~ICommunication() { m_srv = nullptr; };
+	ICommunication(IMainClient *main = nullptr):m_main(main){};
+	virtual ~ICommunication() { m_main = nullptr; };
 
 	virtual bool Start() = 0;
 	virtual void Stop() = 0;
 
 protected:
-	IMainServer *m_srv;
+	IMainClient *m_main;
 };

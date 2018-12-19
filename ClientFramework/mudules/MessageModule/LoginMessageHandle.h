@@ -2,12 +2,12 @@
 #include "Message.pb.h"
 #include "IMessageHandle.h"
 
-class MessageBusiness;
+class MessageModule;
 
 class LoginMessageHandle : public IMessageHandle
 {
 public:
-	LoginMessageHandle(MessageBusiness *pBusiness);
+	LoginMessageHandle(MessageModule *pBusiness);
 	~LoginMessageHandle();
 
 private:

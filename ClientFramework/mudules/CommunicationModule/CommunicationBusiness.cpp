@@ -4,10 +4,10 @@
 #include "../MainServer.h"
 #include "../ManageBusiness/IManageBusiness.h"
 
-CommunicationBusiness::CommunicationBusiness(IMainServer *srv)
-	:ICommunication(srv)
+CommunicationBusiness::CommunicationBusiness(IMainClient *main)
+	:ICommunication(main)
 {
-	m_pIOCPServer = new IOCPServer((INetInterface*)srv->GetManageBusiness()->GetUserInfoManage());
+	m_pIOCPServer = new IOCPServer((INetInterface*)main->GetManageBusiness()->GetUserInfoManage());
 }
 
 CommunicationBusiness::~CommunicationBusiness()
