@@ -22,12 +22,15 @@ public:
 	bool Start();
 	void Stop();
 
-	//新服务用户成功连接通知
-	void AddUser(UserKey uUserKey) override;
-	//处理服务数据
-	void HandData(UserKey uUserKey, unsigned uMsgType, const char* data, unsigned length) override;
-	// 如果成功删除用户返回删除的地址,如果用户不存在则返回NULL
-	void DeleteUser(UserKey uUserKey) override;
+	/*************************************************************************
+	* function： 发送数据
+	* param key: 用户id
+	* param data:需要发送的数据
+	* return:	 无
+	*************************************************************************/
+	void Send(UserKey uUserKey, const char* data, unsigned uLength);
+
+	void Disconnect(UserKey uUserKey);
 
 	/*************************************************************************
 	* function：获取客户端用户信息通过UserKey
@@ -58,6 +61,15 @@ public:
 	* return:	UserKey
 	*************************************************************************/
 	MLock*	GetClientUserLock(UserKey uUserKey);
+
+private:
+	//实现INetInterface接口
+	//新服务用户成功连接通知
+	void AddUser(UserKey uUserKey) override;
+	//处理服务数据
+	void HandData(UserKey uUserKey, unsigned uMsgType, const char* data, unsigned length) override;
+	// 如果成功删除用户返回删除的地址,如果用户不存在则返回NULL
+	void DeleteUser(UserKey uUserKey) override;
 
 private:
 	IManageBusiness*	m_pMgr;

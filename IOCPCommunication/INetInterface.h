@@ -31,11 +31,10 @@ public:
 	//处理服务数据
 	virtual void HandData(UserKey uUserKey, unsigned uMsgType, const char* data, unsigned length);
 
-	// 如果成功删除用户返回删除的地址,如果用户不存在则返回NULL
+	//通讯层回调删除用户
 	virtual void DeleteUser(UserKey uUserKey);
 
 protected:
-	friend class IOCPBase;
 
 	SendDataCallback				m_funSendData;		//发送数据回调
 	DisconnectCallback				m_fuDisconnect;		//主动断开连接回调

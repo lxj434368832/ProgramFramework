@@ -101,6 +101,20 @@ void UserInfoManage::DeleteUser(UserKey uUserKey)
 	}
 }
 
+void UserInfoManage::Send(UserKey uUserKey, const char * data, unsigned uLength)
+{
+	if (m_funSendData)
+		m_funSendData(uUserKey, 0, data, uLength);
+}
+
+void UserInfoManage::Disconnect(UserKey uUserKey)
+{
+	if (m_fuDisconnect)
+	{
+		m_fuDisconnect(uUserKey);
+	}
+}
+
 ClientUserInfo* UserInfoManage::GetClientUserInfo(UserKey uUserKey)
 {
 	ClientUserInfo *pUser = nullptr;

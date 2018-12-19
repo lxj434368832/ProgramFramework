@@ -2,7 +2,8 @@
 
 
 
-MainModel::MainModel()
+MainModel::MainModel(IMainClient *_main)
+	:IModelInterface(_main)
 {
 }
 
@@ -13,7 +14,7 @@ MainModel::~MainModel()
 
 bool MainModel::Start()
 {
-	return false;
+	return true;
 }
 
 void MainModel::Stop()

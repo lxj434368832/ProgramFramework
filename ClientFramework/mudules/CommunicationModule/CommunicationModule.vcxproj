@@ -112,12 +112,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="ClientManage.cpp" />
-    <ClCompile Include="CommunicationBusiness.cpp" />
+    <ClCompile Include="ServerConnect.cpp" />
+    <ClCompile Include="MainCommunication.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="ClientManage.h" />
-    <ClInclude Include="CommunicationBusiness.h" />
+    <ClInclude Include="ServerConnect.h" />
+    <ClInclude Include="MainCommunication.h" />
     <ClInclude Include="ICommunication.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

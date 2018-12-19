@@ -12,7 +12,12 @@ IOCPClient::~IOCPClient()
 {
 }
 
-bool IOCPClient::StartConnect(unsigned uUserKey, std::string ip, u_short port, int iRecnnt)
+bool IOCPClient::StartClient(unsigned uThreadCount)
+{
+	return InitIOCP(uThreadCount);
+}
+
+bool IOCPClient::AddConnect(unsigned uUserKey, std::string ip, u_short port, int iRecnnt)
 {
 	bool bRet = false;
 	PER_SOCKET_CONTEXT *pSkContext = m_rscSocketContext.get();

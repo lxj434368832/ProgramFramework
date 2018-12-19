@@ -35,7 +35,7 @@ public:
 	* param iRecnnt: 是否重连标识,小于0代表不需要重连
 	* return:		 返回此连接对应的id,但不代表连接成功，为0代表连接出现了错误
 	*************************************************************************/
-	virtual bool StartConnect(unsigned uUserKey, std::string ip, u_short port, int iRecnnt = -1);
+	virtual bool AddConnect(unsigned uUserKey, std::string ip, u_short port, int iRecnnt = -1);
 
 protected:
 	void UninitIOCP();
@@ -66,7 +66,7 @@ protected:
 	* param data:需要发送的数据
 	* return:	 无
 	*************************************************************************/
-	void Send(unsigned uUserKey, unsigned uMsgType, const char* data, unsigned uLength);
+	void Send(UserKey uUserKey, unsigned uMsgType, const char* data, unsigned uLength);
 
 	//打包数据
 	void PackSendData(PER_SOCKET_CONTEXT * pSkContext, unsigned uMsgType, const char* data, unsigned length);
@@ -75,7 +75,7 @@ protected:
 
 	void DoSend(int iResult, PER_SOCKET_CONTEXT *pSkContext, PER_IO_CONTEXT* pIO, DWORD dwBytesTransfered);
 
-	void Disconnect(unsigned uUserKey);
+	void Disconnect(UserKey uUserKey);
 	//
 	void PostDisconnectEx(PER_SOCKET_CONTEXT *pSkContext, PER_IO_CONTEXT* pIO);
 

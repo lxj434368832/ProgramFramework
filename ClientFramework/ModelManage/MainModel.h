@@ -5,7 +5,7 @@
 class MainModel : public IModelInterface
 {
 public:
-	MainModel();
+	MainModel(IMainClient *_main = nullptr);
 	~MainModel();
 
 	bool Start() override;

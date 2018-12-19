@@ -14,7 +14,7 @@ MainView::~MainView()
 
 bool MainView::Start()
 {
-	return false;
+	return true;
 }
 
 void MainView::Stop()

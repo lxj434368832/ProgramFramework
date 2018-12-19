@@ -15,21 +15,21 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="ClientManage.cpp">
+    <ClCompile Include="MainCommunication.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="CommunicationBusiness.cpp">
+    <ClCompile Include="ServerConnect.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="ClientManage.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="CommunicationBusiness.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="ICommunication.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="MainCommunication.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="ServerConnect.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

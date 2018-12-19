@@ -128,7 +128,7 @@ bool IOCPBase::StartServerListen(u_short port, unsigned iMaxConnectCount)
 	return bRet;
 }
 
-bool IOCPBase::StartConnect(unsigned uUserKey, std::string ip, u_short port, int iRecnnt)
+bool IOCPBase::AddConnect(unsigned uUserKey, std::string ip, u_short port, int iRecnnt)
 {
 	bool bRet = false;
 	/*PER_SOCKET_CONTEXT *pSkContext = m_rscSocketContext.get();
@@ -400,7 +400,7 @@ void IOCPBase::DoAccept(int iResult, PER_SOCKET_CONTEXT *pSkContext, PER_IO_CONT
 	}
 }
 
-void IOCPBase::Send(unsigned uUserKey, unsigned uMsgType, const char* data, unsigned uLength)
+void IOCPBase::Send(UserKey uUserKey, unsigned uMsgType, const char* data, unsigned uLength)
 {
 	if (nullptr == data || 0 == uLength)
 	{
@@ -567,7 +567,7 @@ void IOCPBase::DoSend(int iResult, PER_SOCKET_CONTEXT *pSkContext, PER_IO_CONTEX
 	}
 }
 
-void IOCPBase::Disconnect(unsigned uUserKey)
+void IOCPBase::Disconnect(UserKey uUserKey)
 {
 	PER_SOCKET_CONTEXT *pSkContext = nullptr;
 	PER_IO_CONTEXT *pIO = nullptr;

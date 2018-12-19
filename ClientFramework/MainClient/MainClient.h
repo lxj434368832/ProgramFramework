@@ -1,16 +1,20 @@
 #pragma once
 
-#include "TypeDefine.h"
+#include "../include/TypeDefine.h"
 #include "IMainClient.h"
-
-class IOCPClient;
-class INetInterface;
 
 class MainClient : public IMainClient
 {
 public:
 	MainClient();
 	~MainClient();
+	virtual ClientConfig* GetClientConfig() override;
+	virtual IViewInterface* GetViewInterface() override;
+	virtual ILogicInterface* GetLogicInterface() override;
+	virtual IModelInterface* GetModelInterface() override;
+
+	virtual ICommunication* GetMainCommunication() override;
+	virtual IMessage*	GetMessageModule() override;
 
 	bool Start() override;
 	void Stop() override;
@@ -19,8 +23,12 @@ private:
 	bool ReadConfigFile();
 
 private:
-	ClientConfig	m_srvConfig;	//服务配置项
-	INetInterface	*m_pClientList;	//客户端列表
-	IOCPClient		*m_pIOCPClient;	//IOCP 客户端
+	ClientConfig		m_clConfig;	//客户端配置项
+	IViewInterface*		m_pView;
+	ILogicInterface*	m_pLogic;
+	IModelInterface*	m_pModel;
+
+	ICommunication*		m_pCommunication;
+	IMessage*			m_pMessage;
 };
 

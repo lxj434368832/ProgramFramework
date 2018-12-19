@@ -14,7 +14,7 @@ MainLogic::~MainLogic()
 
 bool MainLogic::Start()
 {
-	return false;
+	return true;
 }
 
 void MainLogic::Stop()
