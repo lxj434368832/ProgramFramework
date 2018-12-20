@@ -9,8 +9,7 @@
 #include "IOCPDef.h"
 #include "../Framework/include/ResourceManage.h"
 #include "../Framework/include/MLock.h"
-
-class INetInterface;
+#include "INetInterface.h"
 
 class IOCPBase
 {

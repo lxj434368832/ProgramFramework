@@ -43,6 +43,7 @@ public:
 	void Disconnect(UserKey uUserKey);
 
 private:
+	//实现INetInterface接口
 	//新服务用户成功连接通知
 	virtual void AddUser(UserKey uUserKey) override;
 
