@@ -21,6 +21,7 @@ enum EServerType
 	EST_DATA_SERVER,
 	SERVER_COUNT
 };
+
 #define CONNECT_SHARE_LOCK_COUNT 
 
 class ServerConnect : public INetInterface

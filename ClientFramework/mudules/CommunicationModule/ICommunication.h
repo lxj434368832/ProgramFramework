@@ -11,8 +11,9 @@ class IMainClient;
 class ICommunication
 {
 public:
-	ICommunication(IMainClient *main = nullptr):m_main(main){};
-	virtual ~ICommunication() { m_main = nullptr; };
+	ICommunication(IMainClient *main = nullptr):m_main(main){}
+	virtual ~ICommunication() { m_main = nullptr; }
+	inline IMainClient* GetMainClient(){ return m_main; }
 
 	virtual bool Start() = 0;
 	virtual void Stop() = 0;
