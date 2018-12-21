@@ -3,3 +3,4 @@
 *.opensdf
 *.opendb
 /Debug/
+*.suo
