@@ -2,7 +2,7 @@
 
 
 
-MainLogic::MainLogic(IMainClient *_main = nullptr)
+MainLogic::MainLogic(IMainClient *_main)
 	:ILogicInterface(_main)
 {
 }

@@ -3,6 +3,7 @@
 #include "ProtobufMsgFactory.h"
 #include "LoginMessageHandle.h"
 #include "../../MainClient/MainClient.h"
+#include "../../include/TypeDefine.h"
 
 
 MessageModule::MessageModule(IMainClient *main)
@@ -22,7 +23,8 @@ MessageModule::~MessageModule()
 
 	m_setMessageHandle.clear();
 }
-ProtobufMsgFactory* MessageModule::GetProtobufMsgFactory()
+
+ProtobufMsgFactory * MessageModule::GetProtobufMsgFactory()
 {
 	return m_pProtoMsgFtry;
 }
@@ -30,12 +32,21 @@ ProtobufMsgFactory* MessageModule::GetProtobufMsgFactory()
 bool MessageModule::Start()
 {
 	LoadMessageHandleModule();
-	//return m_pProtoMsgFtry->Start(m_pSrv->GetServerConfig()->uMessageThreadCount);
+	return m_pProtoMsgFtry->Start(m_main->GetClientConfig()->uMessageThreadCount);
 }
 
 void MessageModule::Stop()
 {
 	m_pProtoMsgFtry->Stop();
+}
+
+void MessageModule::HandleProtobufMessage(unsigned uUserKey, const char * data, unsigned length)
+{
+	m_pProtoMsgFtry->AddMessageData(uUserKey, data, length);
+}
+
+void MessageModule::SendLoginMessage()
+{
 }
 
 void MessageModule::LoadMessageHandleModule()

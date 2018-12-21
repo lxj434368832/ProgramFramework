@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.168
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ViewManage", "ViewManage\ViewManage.vcxproj", "{710C49ED-BC1D-4ADD-831B-9D08BA3D0CC5}"
 EndProject
@@ -88,5 +88,8 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{BD0D4BC2-50FF-446E-B63C-3482F9665D2A} = {E550261F-6AA7-4242-ACF4-396B37221C3A}
 		{43A7F419-9674-4F0A-95DD-DB52260D1D4D} = {E550261F-6AA7-4242-ACF4-396B37221C3A}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {700425F3-CB4C-4A22-ADF2-E357948967DD}
 	EndGlobalSection
 EndGlobal

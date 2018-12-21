@@ -5,18 +5,18 @@
 * datetime£º2018-12-14
 * company:
 *************************************************************************/
-class IMessageBusiness;
+class IMessage;
 
 class IMessageHandle
 {
 public:
-	IMessageHandle(IMessageBusiness *pBusiness = nullptr){
-		m_pMsgBusiness = pBusiness;
+	IMessageHandle(IMessage *pMsg = nullptr){
+		m_pMsgModule = pMsg;
 	}
 	virtual ~IMessageHandle(){
-		m_pMsgBusiness = nullptr;
+		m_pMsgModule = nullptr;
 	}
 
 protected:
-	IMessageBusiness *m_pMsgBusiness;
+	IMessage *m_pMsgModule;
 };

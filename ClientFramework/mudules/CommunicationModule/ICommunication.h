@@ -1,4 +1,5 @@
 #pragma once
+#include "../../../IOCPCommunication/INetInterface.h"
 /*************************************************************************
 * function：对外的通讯服务的接口，所有的通讯包括数据库交互都在此模块中管理
 * author :	明巧文
@@ -7,6 +8,7 @@
 *************************************************************************/
 
 class IMainClient;
+class ServerConnect;
 
 class ICommunication
 {
@@ -14,9 +16,18 @@ public:
 	ICommunication(IMainClient *main = nullptr):m_main(main){}
 	virtual ~ICommunication() { m_main = nullptr; }
 	inline IMainClient* GetMainClient(){ return m_main; }
+	virtual ServerConnect* GetServerConnect() = 0;
 
 	virtual bool Start() = 0;
 	virtual void Stop() = 0;
+
+	/*************************************************************************
+	* function： 发送数据
+	* param key: 用户id
+	* param data:需要发送的数据
+	* return:	 无
+	*************************************************************************/
+	virtual void SendData(UserKey uUserKey, const char* data, unsigned uLength) = 0;
 
 protected:
 	IMainClient *m_main;

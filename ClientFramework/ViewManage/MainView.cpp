@@ -2,7 +2,7 @@
 
 
 
-MainView::MainView(IMainClient *_main = nullptr)
+MainView::MainView(IMainClient *_main)
 	:IViewInterface(_main)
 {
 }

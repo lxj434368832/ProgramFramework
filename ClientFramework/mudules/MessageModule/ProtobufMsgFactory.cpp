@@ -1,6 +1,6 @@
 #include "ProtobufMsgFactory.h"
-#include "../CommonDefine.h"
-#include "../EnumDefine.h"
+#include "..\..\include\CommonDefine.h"
+#include "..\..\include\EnumDefine.h"
 #include <thread>
 
 

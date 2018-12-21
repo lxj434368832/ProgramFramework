@@ -3,7 +3,6 @@
 #include "MainCommunication.h"
 #include "..\..\MainClient\IMainClient.h"
 #include "..\MessageModule\IMessage.h"
-#include "..\MessageModule\ProtobufMsgFactory.h"
 #include "..\..\include\TypeDefine.h"
 
 
@@ -18,21 +17,20 @@ ServerConnect::ServerConnect(ICommunication *pCmmnt)
 ServerConnect::~ServerConnect()
 {
 	m_pCommunication = nullptr;
-	m_pMsgFctry = nullptr;
 	RELEASE(m_pIOCPClient);
 }
 
 bool ServerConnect::Start()
 {
-	m_pMsgFctry = m_pCommunication->GetMainClient()->GetMessageModule()->GetProtobufMsgFactory();
-	if (nullptr == m_pMsgFctry)
+	m_pMsgModule = m_pCommunication->GetMainClient()->GetMessageModule();
+	if (nullptr == m_pMsgModule)
 	{
-		loge() << "获取消息工厂函数失败！";
+		loge() << "获取消息处理模块失败！";
 		return false;
 	}
 
 	ClientConfig &cfg = *m_pCommunication->GetMainClient()->GetClientConfig();
-	if (false == m_pIOCPClient->StartClient(cfg.uIOCPThreadCount)) return;
+	if (false == m_pIOCPClient->StartClient(cfg.uIOCPThreadCount)) return false;
 
 	if (false == m_pIOCPClient->AddConnect(EST_CMD_SERVER, cfg.strServerIP, cfg.usServerPort, 1))
 	{
@@ -46,7 +44,7 @@ bool ServerConnect::Start()
 void ServerConnect::Stop()
 {
 	m_pIOCPClient->StopClient();
-	m_pMsgFctry = nullptr;
+	m_pMsgModule = nullptr;
 }
 
 void ServerConnect::Send(UserKey uUserKey, const char * data, unsigned uLength)
@@ -84,9 +82,11 @@ void ServerConnect::AddUser(UserKey uUserKey)
 
 void ServerConnect::HandData(UserKey uUserKey, unsigned uMsgType, const char* data, unsigned length)
 {
-	if (m_pMsgFctry)
+	uMsgType;
+
+	if (m_pMsgModule)
 	{
-		m_pMsgFctry->AddMessageData(uUserKey, data, length);
+		m_pMsgModule->HandleProtobufMessage(uUserKey, data, length);
 	}
 }
 

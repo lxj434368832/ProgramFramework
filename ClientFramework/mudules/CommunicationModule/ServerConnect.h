@@ -7,20 +7,12 @@
 *************************************************************************/
 #include "../../../IOCPCommunication/INetInterface.h"
 #include "../../../Framework/include/ResourceManage.h"
+#include "..\..\include\EnumDefine.h"
 
 class MessageModule;
 class IOCPClient;
 class ICommunication;
-class ProtobufMsgFactory;
-
-//服务器类型，客户端的UserKey就使用此枚举变量
-enum EServerType
-{
-	EST_UNKNOWN,
-	EST_CMD_SERVER,
-	EST_DATA_SERVER,
-	SERVER_COUNT
-};
+class IMessage;
 
 #define CONNECT_SHARE_LOCK_COUNT 
 
@@ -55,7 +47,7 @@ private:
 
 private:
 	ICommunication*		m_pCommunication;
-	ProtobufMsgFactory* m_pMsgFctry;
+	IMessage*			m_pMsgModule;
 	IOCPClient			*m_pIOCPClient;	//IOCP 客户端
 
 	mqw::ResourceManage<UserInfo>	m_rscUser;

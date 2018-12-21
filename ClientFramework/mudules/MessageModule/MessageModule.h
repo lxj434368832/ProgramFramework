@@ -14,6 +14,9 @@ public:
 	ProtobufMsgFactory* GetProtobufMsgFactory() override;
 	bool Start() override;
 	void Stop() override;
+	//´¦protobufÊý¾Ý
+	void HandleProtobufMessage(unsigned uUserKey, const char* data, unsigned length) override;
+	void SendLoginMessage() override;
 
 private:
 	void LoadMessageHandleModule();
