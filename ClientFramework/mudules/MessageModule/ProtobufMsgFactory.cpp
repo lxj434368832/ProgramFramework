@@ -56,6 +56,7 @@ void ProtobufMsgFactory::Stop()
 	{
 		if(value->joinable())
 			value->join();
+		delete value;
 	}
 	m_threadList.clear();
 
@@ -96,7 +97,7 @@ void ProtobufMsgFactory::MessageHandleThread()
 		auto it = m_mapMsgHandle.find(msgData->m_msg.msg_type());
 		if (it != m_mapMsgHandle.end())
 		{
-			(it->second)(msgData->m_uUserKey, msgData->m_msg, nullptr);
+			(it->second)(msgData->m_uUserKey, &msgData->m_msg, nullptr);
 		}
 		else
 		{

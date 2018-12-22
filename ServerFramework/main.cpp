@@ -1,10 +1,11 @@
 // ServerFramework.cpp : 定义控制台应用程序的入口点。
 //
-
+#include <vld.h>
 #include "MainServer.h"
 #include "..\IOCPCommunication\stdafx.h"
 
 #define SZAPPNAME "ServerFramework"
+
 int main()
 {
 	IMainServer *pMain = new MainServer;
@@ -38,7 +39,8 @@ int main()
 		}
 
 	} while (true);
-
+	delete pMain;
+	system("pause");
     return 0;
 }
 

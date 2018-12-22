@@ -56,7 +56,8 @@ public:
 
 	void GetAcceptExSockaddrs(PER_IO_CONTEXT *pIO, LPSOCKADDR *lpAddr);
 
-	std::string GetIPAddress(LPSOCKADDR lpAddr);
+	std::string GetIPAddress(PVOID pAddrBuf);
+	bool ParseIPAddress(std::string strIP, PVOID pAddrBuf);
 
 	//成功返回0，不成功返回GetLastError()的值
 	int ConnectEx(PER_IO_CONTEXT *pIO, const LPSOCKADDR name);

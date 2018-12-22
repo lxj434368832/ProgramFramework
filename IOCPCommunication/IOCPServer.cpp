@@ -55,7 +55,7 @@ void IOCPServer::StopServer()
 		PER_SOCKET_CONTEXT *pSkContext = iter->second;
 		if (INVALID_SOCKET != pSkContext->m_socket)
 		{
-			if (EOP_RECEIVE != pSkContext->m_ReceiveContext.m_oprateType)
+			if (EOP_ACCEPT != pSkContext->m_ReceiveContext.m_oprateType)
 				m_pNetInterface->DeleteUser(pSkContext->m_uUserKey);
 
 			::shutdown(pSkContext->m_socket, SD_BOTH);
@@ -65,6 +65,7 @@ void IOCPServer::StopServer()
 		{
 			MLOG("连接列表中的资源不正确,不应该存在INVALID_SOCKET！");
 		}
+
 		m_mapConnectList.erase(iter++);
 		m_rscSocketContext.put(pSkContext);
 	}

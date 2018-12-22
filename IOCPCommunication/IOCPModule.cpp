@@ -114,11 +114,29 @@ void IOCPModule::GetAcceptExSockaddrs(PER_IO_CONTEXT *pIO, LPSOCKADDR *lpAddr)
 		&local, &iAddrLen, lpAddr, &iAddrLen);
 }
 
-std::string IOCPModule::GetIPAddress(LPSOCKADDR lpAddr)
+std::string IOCPModule::GetIPAddress(PVOID pAddrBuf)
 {
-	char strIP[255];	
-	inet_ntop(AF_INET, lpAddr, strIP, 255);
-	return strIP;
+	char strIP[INET_ADDRSTRLEN];
+	return inet_ntop(AF_INET, pAddrBuf, strIP, INET_ADDRSTRLEN);
+}
+
+bool IOCPModule::ParseIPAddress(std::string strIP, PVOID pAddrBuf)
+{
+	bool bRet = false;
+	int iRet = inet_pton(AF_INET, strIP.c_str(), pAddrBuf);
+	if (0 == iRet)
+	{
+		loge() << "IP:" << strIP.c_str() << "格式不正确！";
+	}
+	else if (-1 == iRet)
+	{
+		loge() << "解析IP地址失败，错误码:" << ::GetLastError();
+	}
+	else
+	{
+		bRet = true;
+	}
+	return bRet;
 }
 
 int IOCPModule::ConnectEx(PER_IO_CONTEXT *pIO, const LPSOCKADDR name)

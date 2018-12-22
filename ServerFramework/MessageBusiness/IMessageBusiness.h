@@ -8,6 +8,7 @@ class IMessageBusiness
 public:
 	IMessageBusiness(IMainServer *srv = nullptr):m_pSrv(srv){}
 	virtual ~IMessageBusiness() { m_pSrv = nullptr; }
+	inline IMainServer* GetMainServer() { return m_pSrv; }
 	virtual ProtobufMsgFactory* GetProtobufMsgFactory() = 0;
 
 	virtual bool Start() = 0;

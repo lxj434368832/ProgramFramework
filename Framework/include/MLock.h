@@ -25,7 +25,7 @@ public:
 
 	~MAutoLock()
 	{
-		m_pLock->lock();
+		m_pLock->unlock();
 	}
 
 private:

@@ -49,7 +49,7 @@ bool IOCPClient::AddConnect(unsigned uUserKey, std::string ip, u_short port, int
 
 		SOCKADDR_IN *pSrvAddr = &pSkContext->m_clientAddr;
 		pSrvAddr->sin_family = AF_INET;
-		IOCPModule::Instance()->GetIPAddress((LPSOCKADDR)&pSrvAddr->sin_addr);
+		IOCPModule::Instance()->ParseIPAddress(ip, &pSrvAddr->sin_addr);
 		pSrvAddr->sin_port = htons(port);
 
 		bRet = PostConnectEx(pSkContext);

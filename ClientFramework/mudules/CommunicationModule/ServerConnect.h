@@ -14,7 +14,7 @@ class IOCPClient;
 class ICommunication;
 class IMessage;
 
-#define CONNECT_SHARE_LOCK_COUNT 
+//#define CONNECT_SHARE_LOCK_COUNT 16
 
 class ServerConnect : public INetInterface
 {
@@ -51,6 +51,6 @@ private:
 	IOCPClient			*m_pIOCPClient;	//IOCP ¿Í»§¶Ë
 
 	mqw::ResourceManage<UserInfo>	m_rscUser;
-	MLock				m_shareLock[SERVER_COUNT];
+	//MLock				m_shareLock[CONNECT_SHARE_LOCK_COUNT];
 };
 

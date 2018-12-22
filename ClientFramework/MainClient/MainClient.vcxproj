@@ -74,6 +74,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -90,6 +91,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -111,11 +113,29 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="IMainClient.h" />
+    <ClInclude Include="ImportLibrary.h" />
     <ClInclude Include="MainClient.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MainClient.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\LogicManage\LogicManage.vcxproj">
+      <Project>{c313e386-6b82-4294-9e58-f9778f9c8ab3}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\ModelManage\ModelManage.vcxproj">
+      <Project>{0ac74eb7-6646-48ca-b205-2f0ce8185b54}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\mudules\CommunicationModule\CommunicationModule.vcxproj">
+      <Project>{bd0d4bc2-50ff-446e-b63c-3482f9665d2a}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\mudules\MessageModule\MessageModule.vcxproj">
+      <Project>{43a7f419-9674-4f0a-95dd-db52260d1d4d}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\ViewManage\ViewManage.vcxproj">
+      <Project>{710c49ed-bc1d-4add-831b-9d08ba3d0cc5}</Project>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

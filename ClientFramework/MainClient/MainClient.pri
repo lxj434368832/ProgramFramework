@@ -8,6 +8,7 @@ message("You are running qmake on a generated .pro file. This may not work!")
 
 
 HEADERS += ./IMainClient.h \
+    ./ImportLibrary.h \
     ./MainClient.h
 SOURCES += ./main.cpp \
     ./MainClient.cpp

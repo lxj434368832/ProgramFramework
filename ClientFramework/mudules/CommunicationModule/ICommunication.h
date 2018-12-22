@@ -1,11 +1,12 @@
 #pragma once
-#include "../../../IOCPCommunication/INetInterface.h"
 /*************************************************************************
-* function：对外的通讯服务的接口，所有的通讯包括数据库交互都在此模块中管理
+* function：对外的通讯服务的接口，所有的通讯都在此模块中管理
 * author :	明巧文
 * datetime：2017-12-14
 * company:
 *************************************************************************/
+
+#include "../../../IOCPCommunication/INetInterface.h"
 
 class IMainClient;
 class ServerConnect;

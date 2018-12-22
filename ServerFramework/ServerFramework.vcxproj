@@ -78,7 +78,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>..\Framework\protobuf\include;$(IncludePath)</IncludePath>
+    <IncludePath>..\protobuf\include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
@@ -150,11 +150,13 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="CommonDefine.h" />
     <ClInclude Include="Communication\CommunicationBusiness.h" />
     <ClInclude Include="Communication\ICommunication.h" />
-    <ClInclude Include="EnumDefine.h" />
     <ClInclude Include="IMainServer.h" />
+    <ClInclude Include="ImportLibrary.h" />
+    <ClInclude Include="include\CommonDefine.h" />
+    <ClInclude Include="include\EnumDefine.h" />
+    <ClInclude Include="include\TypeDefine.h" />
     <ClInclude Include="MainServer.h" />
     <ClInclude Include="ManageBusiness\IManageBusiness.h" />
     <ClInclude Include="ManageBusiness\ManageBusiness.h" />
@@ -165,7 +167,6 @@
     <ClInclude Include="MessageBusiness\Message.pb.h" />
     <ClInclude Include="MessageBusiness\MessageBusiness.h" />
     <ClInclude Include="MessageBusiness\ProtobufMsgFactory.h" />
-    <ClInclude Include="TypeDefine.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Communication\CommunicationBusiness.cpp" />

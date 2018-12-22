@@ -1,6 +1,6 @@
 #include "ProtobufMsgFactory.h"
-#include "../CommonDefine.h"
-#include "../EnumDefine.h"
+#include "../include/CommonDefine.h"
+#include "../include/EnumDefine.h"
 #include <thread>
 
 
@@ -56,6 +56,7 @@ void ProtobufMsgFactory::Stop()
 	{
 		if(value->joinable())
 			value->join();
+		delete value;
 	}
 	m_threadList.clear();
 
@@ -67,7 +68,11 @@ void ProtobufMsgFactory::AddMessageData(unsigned uUserKey, const char* data, uns
 	if (false == m_bStart) return;
 	SMessageData *msgData = m_rscMessage.get();
 	msgData->m_uUserKey = uUserKey;
-	msgData->m_msg.ParseFromArray(data, length);
+	if (false == msgData->m_msg.ParseFromArray(data, length))
+	{
+		m_rscMessage.put(msgData);//消息解析失败，直接返回
+		return;
+	}
 
 	m_mutexMsgList.lock();
 	m_msgList.push(msgData);

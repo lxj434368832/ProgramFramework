@@ -25,6 +25,9 @@
     <Filter Include="DatabaseModule">
       <UniqueIdentifier>{37320982-f96c-4d2b-a3b1-993afd6c7e57}</UniqueIdentifier>
     </Filter>
+    <Filter Include="include">
+      <UniqueIdentifier>{c39f1eae-4cb4-4cf0-8e9b-6a2b511e47c4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -51,15 +54,6 @@
     <ClInclude Include="MessageBusiness\ProtobufMsgFactory.h">
       <Filter>MessageBusiness</Filter>
     </ClInclude>
-    <ClInclude Include="CommonDefine.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="EnumDefine.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="TypeDefine.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="Communication\CommunicationBusiness.h">
       <Filter>Communication</Filter>
     </ClInclude>
@@ -77,6 +71,18 @@
     </ClInclude>
     <ClInclude Include="IMainServer.h">
       <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="ImportLibrary.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="include\CommonDefine.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\EnumDefine.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\TypeDefine.h">
+      <Filter>include</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

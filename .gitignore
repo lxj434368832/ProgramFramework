@@ -4,3 +4,4 @@
 *.opendb
 /Debug/
 *.suo
+/Release/

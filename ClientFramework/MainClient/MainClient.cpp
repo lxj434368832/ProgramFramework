@@ -33,6 +33,7 @@ MainClient::~MainClient()
 	RELEASE(m_pModel);
 	RELEASE(m_pCommunication);
 	RELEASE(m_pMessage);
+	zxl::zx_logger::delete_instance();
 }
 
 ClientConfig * MainClient::GetClientConfig()
@@ -68,9 +69,9 @@ IMessage * MainClient::GetMessageModule()
 bool MainClient::Start()
 {
 	if (false == ReadConfigFile()) return false;
-	//if (false == m_pView->Start()) return false;
-	//if (false == m_pLogic->Start()) return false;
-	//if (false == m_pModel->Start()) return false;
+	if (false == m_pView->Start()) return false;
+	if (false == m_pLogic->Start()) return false;
+	if (false == m_pModel->Start()) return false;
 	if (false == m_pCommunication->Start()) return false;
 	if (false == m_pMessage->Start()) return false;
 

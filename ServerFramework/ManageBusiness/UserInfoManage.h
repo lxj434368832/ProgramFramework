@@ -7,8 +7,8 @@
 *************************************************************************/
 #include "../../IOCPCommunication/INetInterface.h"
 #include "../../Framework/include/ResourceManage.h"
-#include "../TypeDefine.h"
-#include "../EnumDefine.h"
+#include "../include/TypeDefine.h"
+#include "../include/EnumDefine.h"
 
 class IManageBusiness;
 class ProtobufMsgFactory;

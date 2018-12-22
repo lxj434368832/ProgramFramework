@@ -49,12 +49,12 @@ struct PER_IO_CONTEXT
 	WPARAM		m_wParam;			// 扩展参数
 	LPARAM		m_lParam;			// 扩展参数2
 
-	PER_IO_CONTEXT()
+	PER_IO_CONTEXT(unsigned BufLen = MAX_BUF_LEN)
 	{
 		ZeroMemory(&m_overlapped, sizeof(m_overlapped));
 		m_socket = INVALID_SOCKET;
-		m_uBufLength = MAX_BUF_LEN;
-		m_szBuffer = new char[m_uBufLength];
+		m_uBufLength = BufLen;
+		m_szBuffer = new char[BufLen];
 
 		Reset();
 	}
@@ -62,8 +62,10 @@ struct PER_IO_CONTEXT
 	virtual ~PER_IO_CONTEXT()
 	{
 		delete[] m_szBuffer;
+		m_szBuffer = nullptr;
 		RELEASE_SOCKET(m_socket);		//释放socket资源，可能不必要
 	}
+
 	void Reset()
 	{
 		m_socket = INVALID_SOCKET;
@@ -80,12 +82,8 @@ struct PER_IO_CONTEXT
 struct PER_RECEIVE_IO_CONTEXT :public PER_IO_CONTEXT
 {
 	PER_RECEIVE_IO_CONTEXT()
+		:PER_IO_CONTEXT(MAX_RCV_BUF_LEN)
 	{
-		m_socket = INVALID_SOCKET;
-		m_uBufLength = MAX_RCV_BUF_LEN;
-		m_szBuffer = new char[MAX_RCV_BUF_LEN];
-
-		Reset();
 	}
 };
 

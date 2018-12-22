@@ -5,7 +5,7 @@
 #include "Message.pb.h"
 #include "../../../Framework/include/ResourceManage.h"
 
-typedef std::function<void(const unsigned uUserKey, const pbmsg::Message &msg, void* ptr)> funMessageHandle;
+typedef std::function<void(const unsigned uUserKey, const pbmsg::Message *msg, void* ptr)> funMessageHandle;
 
 class ProtobufMsgFactory
 {

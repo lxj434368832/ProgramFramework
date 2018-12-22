@@ -1,7 +1,7 @@
 #include "ManageBusiness.h"
 #include "..\MainServer.h"
 #include "UserInfoManage.h"
-#include "..\CommonDefine.h"
+#include "..\include\CommonDefine.h"
 
 ManageBusiness::ManageBusiness(IMainServer* srv)
 	:IManageBusiness(srv)

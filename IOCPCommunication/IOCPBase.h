@@ -87,7 +87,9 @@ private:
 protected:
 	enum
 	{
-		SOCKET_CONTEXT_LOCK_COUNT = 100
+		SOCKET_RESOURCE_COUNT = 5,
+		IO_RESOURCE_COUNT = 5,
+		SOCKET_CONTEXT_LOCK_COUNT = 10
 	};
 
 	HANDLE 							m_hIOCompletionPort;		//Íê³É¶Ë¿Ú

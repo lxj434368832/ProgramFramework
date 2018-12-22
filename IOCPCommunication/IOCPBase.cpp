@@ -6,8 +6,8 @@
 IOCPBase::IOCPBase(INetInterface *pNet):
 	m_pNetInterface(pNet),
 	m_hIOCompletionPort(INVALID_HANDLE_VALUE),
-	m_rscSocketContext(100),
-	m_rscIoContext(1000)
+	m_rscSocketContext(SOCKET_RESOURCE_COUNT),
+	m_rscIoContext(IO_RESOURCE_COUNT)
 {
 	m_uThreadCount = 0;
 	m_aThreadList = NULL;
@@ -61,7 +61,7 @@ void IOCPBase::UninitIOCP()
 		IOCPModule::Instance()->PostQueuedCompletionStatus(m_hIOCompletionPort, 0, NULL, NULL);
 	}
 
-	::WaitForMultipleObjects(m_uThreadCount, m_aThreadList, TRUE, INFINITE);
+	::WaitForMultipleObjects(m_uThreadCount, m_aThreadList, TRUE, 2000);
 
 	for (unsigned i = 0; i < m_uThreadCount; i++)
 	{
@@ -290,20 +290,27 @@ void IOCPBase::DoConnect(int iResult, PER_SOCKET_CONTEXT *pSkContext, PER_IO_CON
 	{
 		//通知服务端连接
 		m_pNetInterface->AddUser((unsigned)pSkContext->m_uUserKey);
+		//投递连接
+		pIO->m_wsaBuf.len = pIO->m_uBufLength;
 		PostReceive(pSkContext, pIO);
 	}
 	else
 	{
-		MLOG("user:%d投递ConnectEx失败，错误码：%d。", pIO->m_socket, iResult);
-		if (pIO->m_wParam > 0)
-		{
-			PostConnectEx(pSkContext);
-		}
-		else
+		if (ERROR_OPERATION_ABORTED == iResult || WSAENOTSOCK == iResult)
 		{
 			PER_IO_CONTEXT *pIONew = m_rscIoContext.get();
 			pIONew->m_socket = pSkContext->m_socket;
 			PostDisconnectEx(pSkContext, pIONew);
+		}
+		else if (ERROR_CONNECTION_REFUSED == iResult)
+		{
+			logm() << "服务端还未开启，将会重试。";
+			PostConnectEx(pSkContext);
+		}
+		else
+		{
+			MLOG("socket:%d投递ConnectEx失败，错误码：%d。", pIO->m_socket, iResult);
+			PostConnectEx(pSkContext);
 		}
 	}
 }
@@ -362,7 +369,7 @@ void IOCPBase::DoAccept(int iResult, PER_SOCKET_CONTEXT *pSkContext, PER_IO_CONT
 		SOCKADDR_IN *pClientAddr = nullptr;
 		IOCPModule::Instance()->GetAcceptExSockaddrs(pIO, (LPSOCKADDR*)&pClientAddr);
 		;
-		MLOG("客户端%s:%d连入,用户套接字：%d", IOCPModule::Instance()->GetIPAddress((LPSOCKADDR)pClientAddr).c_str(), 
+		MLOG("客户端%s:%d连入,用户套接字：%d", IOCPModule::Instance()->GetIPAddress(&pClientAddr->sin_addr).c_str(), 
 			ntohs(pClientAddr->sin_port), pIO->m_socket);
 
 		if (pClientSkContext)
@@ -430,10 +437,10 @@ void IOCPBase::Send(UserKey uUserKey, unsigned uMsgType, const char* data, unsig
 		return;
 	}
 
-	MAutoLock lck(&m_aLckSocketContext[idxLock]);
+	m_aLckSocketContext[idxLock].lock();
 	PackSendData(pSkContext, uMsgType, data, uLength);
+	m_aLckSocketContext[idxLock].unlock();
 	return;
-
 }
 
 void IOCPBase::PackSendData(PER_SOCKET_CONTEXT * pSkContext, unsigned uMsgType, const char* data, unsigned length)
@@ -700,18 +707,17 @@ void IOCPBase::DoReceive(int iResult, PER_SOCKET_CONTEXT *pSkContext, PER_IO_CON
 	{
 		UnpackReceivedData(pSkContext, pIO);
 	}
-
 }
 
 void IOCPBase::UnpackReceivedData(PER_SOCKET_CONTEXT *pSkContext, PER_IO_CONTEXT* pIO)
 {
-	pIO->m_uDataLength += pIO->m_overlapped.InternalHigh;
+	PackHeader *head = NULL;
 	char *buf = pIO->m_szBuffer;
 
-	PackHeader *head = NULL;
-	unsigned uDataLength = 0;
-	unsigned uPackLength = 0;
+	unsigned uDataLength = 0;	//剩余数据的长度
+	unsigned uPackLength = 0;	//待拆包数据的长度
 
+	pIO->m_uDataLength += pIO->m_overlapped.InternalHigh;
 	while (true)
 	{
 		head = (PackHeader*)buf;
@@ -743,7 +749,7 @@ void IOCPBase::UnpackReceivedData(PER_SOCKET_CONTEXT *pSkContext, PER_IO_CONTEXT
 				PostDisconnectEx(pSkContext, pIO);
 				break;
 			}
-			m_pNetInterface->HandData(pSkContext->m_uUserKey, head->uMsgType, buf, uPackLength);	//调用具体的业务处理数据，有包头和包体
+			m_pNetInterface->HandData(pSkContext->m_uUserKey, head->uMsgType, buf + sizeof(PackHeader), head->ulBodyLength);	//调用具体的业务处理数据，有包头和包体
 			buf += uPackLength;
 			pIO->m_uDataLength -= uPackLength;
 		}

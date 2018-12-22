@@ -4,11 +4,11 @@
 #include "..\..\MainClient\IMainClient.h"
 #include "..\MessageModule\IMessage.h"
 #include "..\..\include\TypeDefine.h"
-
+#include "..\MessageModule\LoginMessageHandle.h"
 
 ServerConnect::ServerConnect(ICommunication *pCmmnt)
 	:INetInterface(),
-	m_rscUser(SERVER_COUNT)
+	m_rscUser(EST_SERVER_COUNT)
 {
 	m_pCommunication = pCmmnt;
 	m_pIOCPClient = new IOCPClient(this);
@@ -32,10 +32,13 @@ bool ServerConnect::Start()
 	ClientConfig &cfg = *m_pCommunication->GetMainClient()->GetClientConfig();
 	if (false == m_pIOCPClient->StartClient(cfg.uIOCPThreadCount)) return false;
 
-	if (false == m_pIOCPClient->AddConnect(EST_CMD_SERVER, cfg.strServerIP, cfg.usServerPort, 1))
+	for (int i = EST_CMD_SERVER; i < EST_SERVER_COUNT ; i++)
 	{
-		loge() << "添加对命令服务器的连接失败！";
-		return false;
+		if (false == m_pIOCPClient->AddConnect(i, cfg.strServerIP, cfg.usServerPort, 1))
+		{
+			loge() << "添加对命令服务器的连接失败！";
+			return false;
+		}
 	}
 	return true;
 
@@ -77,7 +80,8 @@ void ServerConnect::AddUser(UserKey uUserKey)
 	m_mapUserList[uUserKey] = pUser;
 	m_lckUserList.unlock();
 
-	logm() << "连接服务:" << uUserKey<<"成功！";
+	logm() << "连接服务:" << uUserKey << "成功！";
+	m_pMsgModule->GetLoginMessageHandle()->SendLoginMessage(uUserKey);
 }
 
 void ServerConnect::HandData(UserKey uUserKey, unsigned uMsgType, const char* data, unsigned length)

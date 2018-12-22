@@ -5,23 +5,25 @@
 #include "../../MainClient/MainClient.h"
 #include "../../include/TypeDefine.h"
 
-
 MessageModule::MessageModule(IMainClient *main)
 	:IMessage(main)
 {
 	m_pProtoMsgFtry = new ProtobufMsgFactory;
+	LoadMessageHandleModule();
 }
 
 MessageModule::~MessageModule()
 {
 	RELEASE(m_pProtoMsgFtry);
 
-	for (auto value : m_setMessageHandle)
+	for (auto value : m_mapMessageHandle)
 	{
-		delete value;
+		delete value.second;
 	}
 
-	m_setMessageHandle.clear();
+	m_mapMessageHandle.clear();
+
+	google::protobuf::ShutdownProtobufLibrary();
 }
 
 ProtobufMsgFactory * MessageModule::GetProtobufMsgFactory()
@@ -29,9 +31,13 @@ ProtobufMsgFactory * MessageModule::GetProtobufMsgFactory()
 	return m_pProtoMsgFtry;
 }
 
+LoginMessageHandle * MessageModule::GetLoginMessageHandle()
+{
+	return static_cast<LoginMessageHandle*>(m_mapMessageHandle[EMHM_LOGIN]);
+}
+
 bool MessageModule::Start()
 {
-	LoadMessageHandleModule();
 	return m_pProtoMsgFtry->Start(m_main->GetClientConfig()->uMessageThreadCount);
 }
 
@@ -45,11 +51,7 @@ void MessageModule::HandleProtobufMessage(unsigned uUserKey, const char * data, 
 	m_pProtoMsgFtry->AddMessageData(uUserKey, data, length);
 }
 
-void MessageModule::SendLoginMessage()
-{
-}
-
 void MessageModule::LoadMessageHandleModule()
 {
-	m_setMessageHandle.emplace(new LoginMessageHandle(this));
+	m_mapMessageHandle.emplace(EMHM_LOGIN, new LoginMessageHandle(this));
 }

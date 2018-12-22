@@ -8,6 +8,7 @@ struct ServerConfig;
 class IMainServer
 {
 public:
+	virtual ~IMainServer(){}
 	virtual IMessageBusiness* GetMessageBusiness() = 0;
 	virtual IManageBusiness* GetManageBusiness() = 0;
 	virtual ICommunication* GetCommunication() = 0;

@@ -3,7 +3,7 @@
 #include "..\IMainServer.h"
 #include "..\MessageBusiness\IMessageBusiness.h"
 #include "..\MessageBusiness\ProtobufMsgFactory.h"
-#include "..\CommonDefine.h"
+#include "..\include\CommonDefine.h"
 
 UserInfoManage::UserInfoManage(IManageBusiness* pMgr)
 	:m_rscUser(USER_RESOURCE_COUNT)

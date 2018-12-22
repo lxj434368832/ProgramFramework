@@ -1,5 +1,5 @@
 #include "../../IOCPCommunication/IOCPServer.h"
-#include "../CommonDefine.h"
+#include "../include/CommonDefine.h"
 #include "CommunicationBusiness.h"
 #include "../MainServer.h"
 #include "../ManageBusiness/IManageBusiness.h"

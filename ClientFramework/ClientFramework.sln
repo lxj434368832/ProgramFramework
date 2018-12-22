@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.28307.168
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ViewManage", "ViewManage\ViewManage.vcxproj", "{710C49ED-BC1D-4ADD-831B-9D08BA3D0CC5}"
 EndProject
@@ -13,7 +13,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "include", "include", "{8C64
 	ProjectSection(SolutionItems) = preProject
 		include\CommonDefine.h = include\CommonDefine.h
 		include\EnumDefine.h = include\EnumDefine.h
-		include\ImportLibrary.h = include\ImportLibrary.h
 		include\TypeDefine.h = include\TypeDefine.h
 	EndProjectSection
 EndProject
@@ -24,6 +23,8 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CommunicationModule", "mudules\CommunicationModule\CommunicationModule.vcxproj", "{BD0D4BC2-50FF-446E-B63C-3482F9665D2A}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MessageModule", "mudules\MessageModule\MessageModule.vcxproj", "{43A7F419-9674-4F0A-95DD-DB52260D1D4D}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Utility", "Utility\Utility.vcxproj", "{AEB85249-94E2-461F-9490-CF9801714850}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -81,6 +82,14 @@ Global
 		{43A7F419-9674-4F0A-95DD-DB52260D1D4D}.Release|x64.Build.0 = Release|x64
 		{43A7F419-9674-4F0A-95DD-DB52260D1D4D}.Release|x86.ActiveCfg = Release|Win32
 		{43A7F419-9674-4F0A-95DD-DB52260D1D4D}.Release|x86.Build.0 = Release|Win32
+		{AEB85249-94E2-461F-9490-CF9801714850}.Debug|x64.ActiveCfg = Debug|x64
+		{AEB85249-94E2-461F-9490-CF9801714850}.Debug|x64.Build.0 = Debug|x64
+		{AEB85249-94E2-461F-9490-CF9801714850}.Debug|x86.ActiveCfg = Debug|Win32
+		{AEB85249-94E2-461F-9490-CF9801714850}.Debug|x86.Build.0 = Debug|Win32
+		{AEB85249-94E2-461F-9490-CF9801714850}.Release|x64.ActiveCfg = Release|x64
+		{AEB85249-94E2-461F-9490-CF9801714850}.Release|x64.Build.0 = Release|x64
+		{AEB85249-94E2-461F-9490-CF9801714850}.Release|x86.ActiveCfg = Release|Win32
+		{AEB85249-94E2-461F-9490-CF9801714850}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

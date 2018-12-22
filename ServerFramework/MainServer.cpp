@@ -7,7 +7,7 @@
 #include "MessageBusiness/MessageBusiness.h"
 #include "ManageBusiness/ManageBusiness.h"
 #include "Communication/CommunicationBusiness.h"
-#include "../Framework/FrameworkLibrary.h"
+#include "ImportLibrary.h"
 
 MainServer::MainServer()
 {
@@ -27,7 +27,7 @@ MainServer::~MainServer()
 {
 	RELEASE(m_pCommunication);
 	RELEASE(m_pManage);
-	RELEASE(m_pManage);
+	RELEASE(m_pMessage);
 	zxl::zx_logger::delete_instance();
 }
 
@@ -81,8 +81,6 @@ bool MainServer::ReadConfigFile()
 	m_srvConfig.uMessageThreadCount = std::stoul(cfg_reader.get_value_from_cfg("Server", "MessageThreadCount", "0"));
 	m_srvConfig.uInitAcceptCount = std::stoul(cfg_reader.get_value_from_cfg("Server", "InitAcceptCount", "0"));
 	m_srvConfig.uHeartbeatTime = std::stoul(cfg_reader.get_value_from_cfg("Server", "HeartbeatTime", "0"));
-	//m_srvConfig.strServerIP = cfg_reader.get_value_from_cfg("Connect", "ServerIP", "");
-	//m_srvConfig.usServerPort = std::stoi(cfg_reader.get_value_from_cfg("Connect", "ServerPort", "0"));
 
 	if (false == m_srvConfig.CheckValid())
 	{

@@ -1,4 +1,4 @@
-#include "../CommonDefine.h"
+#include "../include/CommonDefine.h"
 #include "MessageBusiness.h"
 #include "ProtobufMsgFactory.h"
 #include "LoginMessageHandle.h"
@@ -21,6 +21,9 @@ MessageBusiness::~MessageBusiness()
 	}
 
 	m_setMessageHandle.clear();
+
+	google::protobuf::ShutdownProtobufLibrary();
+
 }
 ProtobufMsgFactory* MessageBusiness::GetProtobufMsgFactory()
 {
