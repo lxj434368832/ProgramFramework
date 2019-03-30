@@ -443,11 +443,11 @@ namespace zxl{
 #define LogErr()    Log(zxl::level::error)
 #define LogWarn()   Log(zxl::level::warning)
 
-#define logm() LogInfo()<<"["<<__FUNCTION__<<"]|<message> "
-#define logw() LogInfo()<<"["<<__FUNCTION__<<"]|<warn> "
-#define loge() LogInfo()<<"["<<__FUNCTION__<<"]|<error> "
-#define logd() LogInfo()<<"["<<__FUNCTION__<<"]|<debug> "
-#define logt() LogInfo()<<"["<<__FUNCTION__<<"]|<trace> "
+#define logm() LogInfo()<<"["<<__FUNCTION__<<":"<<__LINE__<<"]|<message> "
+#define logw() LogInfo()<<"["<<__FUNCTION__<<":"<<__LINE__<<"]|<warn> "
+#define loge() LogInfo()<<"["<<__FUNCTION__<<":"<<__LINE__<<"]|<error> "
+#define logd() LogInfo()<<"["<<__FUNCTION__<<":"<<__LINE__<<"]|<debug> "
+#define logt() LogInfo()<<"["<<__FUNCTION__<<":"<<__LINE__<<"]|<trace> "
 
 extern zxl::zx_logger *g_logger;
 #endif

@@ -30,7 +30,7 @@ static HANDLE consolehwnd = ::GetStdHandle(STD_OUTPUT_HANDLE);
 
 //  Õ∑≈÷∏’Î∫Í
 #ifndef RELEASE
-#define RELEASE(x) {if(x!=NULL){delete x;x=NULL;}}
+#define RELEASE(x) {if(x != nullptr){delete x; x=nullptr;}}
 #endif
 
 //  Õ∑≈æ‰±˙∫Í
