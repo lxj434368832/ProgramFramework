@@ -76,6 +76,10 @@
       <SDLCheck>true</SDLCheck>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
+    <Link>
+      <AdditionalLibraryDirectories>$(OutDir);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>MessageModule.lib;CommunicationModule.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -126,12 +130,6 @@
     </ProjectReference>
     <ProjectReference Include="..\ModelManage\ModelManage.vcxproj">
       <Project>{0ac74eb7-6646-48ca-b205-2f0ce8185b54}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\mudules\CommunicationModule\CommunicationModule.vcxproj">
-      <Project>{bd0d4bc2-50ff-446e-b63c-3482f9665d2a}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\mudules\MessageModule\MessageModule.vcxproj">
-      <Project>{43a7f419-9674-4f0a-95dd-db52260d1d4d}</Project>
     </ProjectReference>
     <ProjectReference Include="..\ViewManage\ViewManage.vcxproj">
       <Project>{710c49ed-bc1d-4add-831b-9d08ba3d0cc5}</Project>

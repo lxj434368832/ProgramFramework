@@ -2,12 +2,11 @@
 #include "..\ViewManage\MainView.h"
 #include "..\LogicManage\MainLogic.h"
 #include "..\ModelManage\MainModel.h"
-#include "..\mudules\CommunicationModule\MainCommunication.h"
-#include "..\mudules\MessageModule\MessageModule.h"
+#include "..\modules\MessageModule\MessageModule.h"
 #include "..\include\CommonDefine.h"
 #include "..\..\Framework\include\Utils.h"
 #include "..\..\Framework\include\cfg_reg_reader.h"
-
+#include "..\modules\CommunicationModule\MainCommunication.h"
 
 MainClient::MainClient()
 {

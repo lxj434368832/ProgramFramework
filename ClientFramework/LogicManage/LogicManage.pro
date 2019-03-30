@@ -5,7 +5,7 @@
 TEMPLATE = lib
 TARGET = LogicManage
 DESTDIR = ../Release
-CONFIG += staticlib debug
+CONFIG += staticlib
 INCLUDEPATH += .
 LIBS += -L"."
 DEPENDPATH += .
