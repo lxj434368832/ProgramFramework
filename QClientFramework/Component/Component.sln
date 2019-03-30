@@ -1,0 +1,20 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2015
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CommunicationModule", "E:/ProgramSrc/ProgramFramework/QClientFramework/Component/CommunicationModule\CommunicationModule.vcxproj", "{E382740A-EFCB-3EF2-AD6E-2AAA3DDFB43A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E382740A-EFCB-3EF2-AD6E-2AAA3DDFB43A}.Debug|Win32.ActiveCfg = Debug|Win32
+		{E382740A-EFCB-3EF2-AD6E-2AAA3DDFB43A}.Debug|Win32.Build.0 = Debug|Win32
+		{E382740A-EFCB-3EF2-AD6E-2AAA3DDFB43A}.Release|Win32.ActiveCfg = Release|Win32
+		{E382740A-EFCB-3EF2-AD6E-2AAA3DDFB43A}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+	EndGlobalSection
+	GlobalSection(ExtensibilityAddIns) = postSolution
+	EndGlobalSection
+EndGlobal

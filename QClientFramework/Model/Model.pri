@@ -1,0 +1,2 @@
+
+include(ModelManage/ModelManage.pri)
