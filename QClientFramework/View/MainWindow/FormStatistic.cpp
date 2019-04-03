@@ -2,7 +2,6 @@
 #include "ui_FormStatistic.h"
 #include "../../Controller/ControllerManage/ControllerManage.h"
 #include "../../CommonFile/CommonDefine.h"
-#include "FormLotteryNumber.h"
 #include <QButtonGroup>
 #include <QCloseEvent>
 #include <QElapsedTimer>
@@ -35,7 +34,7 @@ FormStatistic::FormStatistic(ViewMediator *mdt, QWidget *parent) :
 
     QStringList headers;
     headers.append(QString::fromLocal8Bit("期号"));
-    headers.append(QString::fromLocal8Bit("开奖号"));
+    headers.append(QString::fromLocal8Bit("号码"));
     headers.append("AVG");
     headers.append("1");
     headers.append("2");
@@ -53,13 +52,14 @@ FormStatistic::FormStatistic(ViewMediator *mdt, QWidget *parent) :
 	ui->twStatisticList->setColumnWidth(2, 50);
     ui->twStatisticList->setHorizontalHeaderLabels(headers);
 
-	connect(m_mainLogic, SIGNAL(signalLotteryListChanged(QMap<QString, QString>)),
-		this, SLOT(slotLotteryListChanged(QMap<QString, QString>)));
+    connect(m_controller, SIGNAL(signalNumberListChanged(int)),
+        this, SLOT(slotNumberListChanged(int)));
+    connect(m_controller, SIGNAL(signalStatisticResultNotify(QList<QStringList>)),
+            this, SLOT(slotStatisticResultNotify(QList<QStringList>)));
 
     m_iStatisticCount = ui->sbTatisticPeriod->value();
     m_vctStatisticRank = {0,0,1,1,1,1,1,1,0,0};
-	m_iStatisticFigure = 6;
-    ExecuteStatistic(m_mainLogic->GetLotteryList());
+    m_iStatisticFigure = 6;
 }
 
 FormStatistic::~FormStatistic()
@@ -76,13 +76,13 @@ void FormStatistic::closeEvent(QCloseEvent *event)
 void FormStatistic::on_sbTatisticPeriod_editingFinished()
 {
     m_iStatisticCount = ui->sbTatisticPeriod->value();
-    ExecuteStatistic(m_mainLogic->GetLotteryList());
+    emit m_controller->signalExecuteStatistic(m_iStatisticCount, m_iStatisticFigure, m_vctStatisticRank);
 }
 
 void FormStatistic::on_cbStatisticMode_currentIndexChanged(int index)
 {
-	index;
-    ExecuteStatistic(m_mainLogic->GetLotteryList());
+    index;
+    emit m_controller->signalExecuteStatistic(m_iStatisticCount, m_iStatisticFigure, m_vctStatisticRank);
 }
 
 void FormStatistic::slotGroupButtonToggled(int id, bool checked)
@@ -97,109 +97,31 @@ void FormStatistic::slotGroupButtonToggled(int id, bool checked)
 		m_vctStatisticRank[id] = 0;
 		m_iStatisticFigure--;
 	}
-
-    ExecuteStatistic(m_mainLogic->GetLotteryList());
+    emit m_controller->signalExecuteStatistic(m_iStatisticCount, m_iStatisticFigure, m_vctStatisticRank);
 }
 
-void FormStatistic::slotLotteryListChanged(QMap<QString,QString> mapLotteryList)
+void FormStatistic::slotNumberListChanged(int iCount)
 {
-	QElapsedTimer time;
-	time.start();
-    ExecuteStatistic(mapLotteryList);
-	logm() << QStringLiteral("统计总共用时%1毫秒").arg(time.elapsed());
-}
-
-void FormStatistic::ExecuteStatistic(const QMap<QString, QString> mapLotteryList)
-{
-    if(0 == ui->cbStatisticMode->currentIndex())
-        StatisticHeat(mapLotteryList);
-    else
-        StatisticMissing(mapLotteryList);
-}
-
-void FormStatistic::StatisticHeat(const QMap<QString, QString> mapLotteryList)
-{
-    double dAvg;
-    int iCount = mapLotteryList.size();
-	if (0 == iCount || iCount < m_iStatisticCount)
-	{
-		loge() << QString::fromLocal8Bit("统计失败，总期数为:%1 统计期数为:%2").arg(iCount).arg(m_iStatisticCount);
-		return;
-	}
-
-	ui->twStatisticList->setRowCount(m_iStatisticCount);
     ui->leTotalPeriod->setText(QString::number(iCount));
-   ::memset(m_aHitCount,0,sizeof(m_aHitCount));
+    emit m_controller->signalExecuteStatistic(m_iStatisticCount, m_iStatisticFigure, m_vctStatisticRank);
+}
+
+void FormStatistic::slotStatisticResultNotify(QList<QStringList> rows)
+{
+    int iRowCount = rows.size();
+    ui->twStatisticList->setRowCount(iRowCount);
    QTableWidgetItem *item;
    int iRow = 0;
-   auto iter = mapLotteryList.begin();
-   for (iter = iter + (iCount - m_iStatisticCount); iter != mapLotteryList.end(); iter++)
+   for (QStringList row : rows)
    {
-       int iCol = 0;
-       //添加期号
-	   item = new QTableWidgetItem(iter.key());
-	   item->setTextAlignment(Qt::AlignCenter);
-       ui->twStatisticList->setItem(iRow, iCol++, item);
-
-       //添加开奖号
-	   QString qstrNums = iter.value();
-       ui->twStatisticList->setItem(iRow,  iCol, new QTableWidgetItem);
-        FormLotteryNumber   *form = new FormLotteryNumber();
-		form->SetLotteryNumbers(qstrNums);
-        ui->twStatisticList->setCellWidget(iRow, iCol++, form);
-
-        //添加平均值
-       dAvg = (iRow + 1) * 6.0 / 10;
-       item = new QTableWidgetItem(QString::number(dAvg, 'f' ,1));
-	   item->setTextAlignment(Qt::AlignCenter);
-       ui->twStatisticList->setItem(iRow,  iCol++,  item);
-
-       //添加各个数字的热度
-       StatisticOneHeat(qstrNums);
-	   for (int i = 0; i < 10; i++)
-	   {
-		   item = new QTableWidgetItem(QString::number(m_aHitCount[i]));
-		   item->setTextAlignment(Qt::AlignCenter);
-		   ui->twStatisticList->setItem(iRow, iCol++, item);
-	   }
-
-	   iRow++;
+       for(QString qstrCol : row)
+       {
+           int iCol = 0;
+           //添加期号
+           item = new QTableWidgetItem(qstrCol);
+           item->setTextAlignment(Qt::AlignCenter);
+           ui->twStatisticList->setItem(iRow, iCol++, item);
+       }
+       iRow++;
    }
-
-   HighlightFifthRow();
-}
-
-void FormStatistic::StatisticOneHeat(QString& qstrNums)
-{
-	int idx = 0;
-	QStringList numList = qstrNums.split(',');
-	for (QString qstrNum : numList)
-	{
-		int iNum = qstrNum.toInt() - 1;
-		if (1 == m_vctStatisticRank[idx++])
-		{
-			m_aHitCount[iNum]++;
-		}
-	}
-}
-
-void FormStatistic::HighlightFifthRow()
-{
-	QTableWidgetItem *item = nullptr;
-	int iRowCount = ui->twStatisticList->rowCount();
-	int iColCount = ui->twStatisticList->colorCount();
-	for (int iRow = 4; iRow < iRowCount; iRow+= 5)
-	{
-		for (int iCol = 0; iCol < iColCount; iCol++)
-		{
-			item = ui->twStatisticList->item(iRow, iCol);
-			if(item)
-				item->setBackground(QColor("#deffde"));//#fda4a4
-		}
-	}
-}
-
-void FormStatistic::StatisticMissing(const QMap<QString, QString> mapLotteryList)
-{
-
 }

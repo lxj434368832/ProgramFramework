@@ -12,13 +12,13 @@ exists( $${MFRAMELESSWIDGET_PATH} ) {
 
     INCLUDEPATH += $${MFRAMELESSWIDGET_HEADERS}
 
-    unix {
-        Debug:LIBS += -L$${MFRAMELESSWIDGET_LIBS}/Debug/ -lMFramelessWidget
-        Release:LIBS += -L$${MFRAMELESSWIDGET_LIBS}/Release/ -lMFramelessWidget
-    }
+#    unix {
+#        Debug:LIBS += -L$${MFRAMELESSWIDGET_LIBS}/Debug/ -lMFramelessWidget
+#        Release:LIBS += -L$${MFRAMELESSWIDGET_LIBS}/Release/ -lMFramelessWidget
+#    }
 win32 {
-    Debug:LIBS += -L$${MFRAMELESSWIDGET_LIBS}/Debug/ -lMFramelessWidgetd
-    Release:LIBS += -L$${MFRAMELESSWIDGET_LIBS}/Release/ -lMFramelessWidget
+    Debug:LIBS += -L$${MFRAMELESSWIDGET_LIBS}/ -lMFramelessWidgetd
+    Release:LIBS += -L$${MFRAMELESSWIDGET_LIBS}/ -lMFramelessWidget
 }
 
 #    MFRAMELESSWIDGET_install.files += $$MFRAMELESSWIDGET_PATH/bin/*

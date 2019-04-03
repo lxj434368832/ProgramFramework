@@ -2,7 +2,6 @@
 #include "ui_MMainWindow.h"
 #include "FormStatistic.h"
 #include "..\..\Controller\ControllerManage\ControllerManage.h"
-#include "formAddData.h"
 #include "..\..\CommonFile\CommonDefine.h"
 #include <QFileDialog>
 #include <QElapsedTimer>
@@ -13,7 +12,6 @@ MMainWindow::MMainWindow(ViewMediator *mdt, QWidget *parent) :
     ui(new Ui::MMainWindow)
 {
     ui->setupUi(this);
-//    setWindowFlags(Qt::FramelessWindowHint | Qt::Window);
     ui->frameStatusBar->setVisible(false);
     on_btnAddStatistic_clicked();
 }
@@ -35,23 +33,20 @@ void MMainWindow::on_btnImportData_clicked()
 
 	if (qstrFilePath.isEmpty()) return;
 	if (false == QFile::exists(qstrFilePath)) return;
-    emit m_mainLogic->signalImportData(QDir::toNativeSeparators(qstrFilePath));
+    emit m_controller->signalImportData(QDir::toNativeSeparators(qstrFilePath));
 }
 
 void MMainWindow::on_btnAddData_clicked()
 {
 	QString qstrPeriod;
-	QString qstrNum;
-	formAddData	dlg;
-	const QMap<QString, QString> lotteryList = m_mainLogic->GetLotteryList();
+    QString qstrNum;
+    const QMap<QString, QString> lotteryList = m_controller->GetNumberList();
 	if (false == lotteryList.isEmpty())
 	{
 		qstrPeriod = lotteryList.lastKey();
-	}
-    dlg.SetLastPeriod(qstrPeriod);
-    if(QDialog::Rejected == dlg.exec()) return;
-    dlg.GetData(qstrPeriod, qstrNum);
-    m_mainLogic->AddData(qstrPeriod, qstrNum);
+    }
+
+    m_controller->AddData(qstrPeriod, qstrNum);
 }
 
 void MMainWindow::on_btnAddStatistic_clicked()
@@ -73,7 +68,7 @@ void MMainWindow::on_tabStatistic_tabBarDoubleClicked(int index)
     widget->show();
     widget->raise();
     widget->activateWindow();
-	widget->move(50, 50);
+    widget->move(50, 50);
 }
 
 void MMainWindow::slotBackToTab(QWidget* widget, QString qstrTitle)

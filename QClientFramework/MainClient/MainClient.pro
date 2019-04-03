@@ -6,7 +6,7 @@
 include(ImportLibrary.pri)
 include(MainClient.pri)
 
-QT       += core gui
+QT       += core gui axcontainer
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 

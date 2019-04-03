@@ -12,8 +12,8 @@ exists( $${MLOG_PATH} ) {
 
     INCLUDEPATH += $${MLOG_HEADERS}
 
-    CONFIG(debug, debug|release): LIBS += -L$${MLOG_LIBS}/Debug/ -lMLogd
-    CONFIG(release, debug|release): LIBS += -L$${MLOG_LIBS}/Release/ -lMLog
+    CONFIG(debug, debug|release): LIBS += -L$${MLOG_LIBS}/ -lMLogd
+    CONFIG(release, debug|release): LIBS += -L$${MLOG_LIBS}/ -lMLog
 
 #    MLOG_install.files += $$MLOG_PATH/bin/*
 #    MLOG_install.path = $${IDE_APP_PATH}/

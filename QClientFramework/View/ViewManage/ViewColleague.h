@@ -14,7 +14,7 @@ public:
 protected:
     ViewMediator        *m_mediator;
     IMainClient         *m_mainClient; 
-	ControllerManage			*m_mainLogic;
+	ControllerManage			*m_controller;
 };
 
 #endif // VIEWCOLLEAGUE_H

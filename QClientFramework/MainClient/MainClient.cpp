@@ -14,7 +14,7 @@ MainClient::MainClient()
 {
     m_pController = new ControllerManage(this);
     m_pModel = new ModelManage(this);
-    m_pCommunication = new TCPCommunication(this);
+    m_pTCPCommunication = new TCPCommunication(this);
 	//	m_pMessage = new MessageModule(this);
 
     m_pView = new ViewManage(this);
@@ -25,7 +25,7 @@ MainClient::~MainClient()
 	RELEASE(m_pView);
     RELEASE(m_pController);
 	RELEASE(m_pModel);
-	RELEASE(m_pCommunication);
+    RELEASE(m_pTCPCommunication);
 //    RELEASE(m_pMessage);
 }
 
@@ -39,7 +39,7 @@ IViewManage * MainClient::GetViewInterface()
 	return m_pView;
 }
 
-IControllerManage * MainClient::GetLogicInterface()
+IControllerManage * MainClient::GetControllerManage()
 {
     return m_pController;
 }
@@ -49,9 +49,9 @@ IModelManage * MainClient::GetModelInterface()
 	return m_pModel;
 }
 
-ITCPCommunication * MainClient::GetMainCommunication()
+ITCPCommunication * MainClient::GetTCPCommunication()
 {
-	return m_pCommunication;
+    return m_pTCPCommunication;
 }
 
 IMessage * MainClient::GetMessageModule()
@@ -64,7 +64,7 @@ bool MainClient::Start()
 //	if (false == ReadConfigFile()) return false;
     if (false == m_pController->Start()) return false;
 	if (false == m_pModel->Start()) return false;
-	if (false == m_pCommunication->Start()) return false;
+    if (false == m_pTCPCommunication->Start()) return false;
 //	if (false == m_pMessage->Start()) return false;
 
 	if (false == m_pView->Start()) return false;
@@ -76,7 +76,7 @@ void MainClient::Stop()
 	m_pView->Stop();
     m_pController->Stop();
 	m_pModel->Stop();
-	m_pCommunication->Stop();
+    m_pTCPCommunication->Stop();
 //	m_pMessage->Stop();
 }
 

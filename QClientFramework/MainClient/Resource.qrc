@@ -7,6 +7,5 @@
         <file>Resource/StatusBarBgIcon.png</file>
         <file>Resource/TitleBarBgIcon.png</file>
         <file>Resource/TitleIcon.png</file>
-        <file>Resource/Lottery.ico</file>
     </qresource>
 </RCC>

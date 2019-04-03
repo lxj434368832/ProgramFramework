@@ -14,13 +14,18 @@ public:
 	bool Start() override;
 	void Stop() override;
 
-    int SaveLotteryNumberList(QList<QList<QVariant>>);
-    void AddLotteryNumberData(QString qstrPeriod, QString qstrNum);
+    int SaveNumberList(QList<QList<QVariant>>);
+    int AddNumberData(QString qstrPeriod, QString qstrNum);
+    QList<QStringList> ExecuteStatistic(int iStatisticCount, int iStatisticFigure,QVector<int> rank);
 
-    const QMap<QString, QString> GetLotteryList();
+    const QMap<QString, QString> GetNumberList();
+
+private:
+    void StatisticOneHeat(QString &qstrNums, QVector<int> rank);
 
 private:
 
-    QMap<QString, QString>        m_mapLotteryList;     //期数，开奖号
+    QMap<QString, QString>        m_mapNumberList;     //期数，号码
+    int                                                m_aHitCount[10];        //1--10命中的次数
 };
 

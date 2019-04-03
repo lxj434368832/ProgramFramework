@@ -10,10 +10,10 @@ public:
     ~MainClient() override;
 	virtual ClientConfig* GetClientConfig() override;
 	virtual IViewManage* GetViewInterface() override;
-	virtual IControllerManage* GetLogicInterface() override;
+	virtual IControllerManage* GetControllerManage() override;
 	virtual IModelManage* GetModelInterface() override;
 
-	virtual ITCPCommunication* GetMainCommunication() override;
+    virtual ITCPCommunication* GetTCPCommunication() override;
 	virtual IMessage*	GetMessageModule() override;
 
 	bool Start() override;
@@ -28,7 +28,7 @@ private:
     IControllerManage*	m_pController;
 	IModelManage*	m_pModel;
 
-	ITCPCommunication*		m_pCommunication;
+    ITCPCommunication*		m_pTCPCommunication;
     IMessage*                          m_pMessage;
 };
 
