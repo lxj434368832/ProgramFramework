@@ -2,3 +2,4 @@
 *.suo
 /Release/
 /.vs/
+/Win32/

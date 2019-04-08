@@ -12,7 +12,6 @@ ModelManage::ModelManage(IMainClient *_main)
     m_statistic = new StatisticModel;
 }
 
-
 ModelManage::~ModelManage()
 {
     RELEASE(m_mainModel);

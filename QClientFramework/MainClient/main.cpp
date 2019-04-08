@@ -1,8 +1,8 @@
-//#include <vld.h>
+#include <vld.h>
 #include "MainClient.h"
 #include "../CommonFile/CommonDefine.h"
 #include "../3rdParty/MLog/include/MLog.h"
-//#include "ImportLibrary.h"
+#include "ImportLibrary.h"
 #include <string>
 #include <QApplication>
 #include <QTextCodec>
