@@ -10,6 +10,8 @@ class ControllerManage : public QObject, public IControllerManage
 public:
     ControllerManage(IMainClient *_main = nullptr);
     ~ControllerManage() override;
+    MainController* GetMainController() override;
+    StatisticController* GetStatisticController() override;
 
 	bool Start() override;
 	void Stop() override;
@@ -52,7 +54,5 @@ private slots:
     void slotExecuteStatistic(int iStatisticCount, int iStatisticFigure,QVector<int> rank);
 
 private:
-    QThread                                     m_thread;                   //异步线程
-    ModelManage                           *m_model;                  //模型管理
 };
 

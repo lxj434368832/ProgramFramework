@@ -10,27 +10,26 @@ ControllerManage::ControllerManage(IMainClient *_main) :
 	QObject(),
     IControllerManage(_main)
 {
-    connect(this, SIGNAL(signalImportData(QString)),this, SLOT(slotImportData(QString)));
-    moveToThread(&m_thread);
-    m_thread.start();
+
 }
 
 ControllerManage::~ControllerManage()
 {
-    m_thread.quit();
-    m_thread.wait();
-//    m_thread.terminate();
+}
+
+MainController *ControllerManage::GetMainController()
+{
+
+}
+
+StatisticController *ControllerManage::GetStatisticController()
+{
+
 }
 
 bool ControllerManage::Start()
 {
-    m_model = dynamic_cast<ModelManage*>(m_main->GetModelInterface());
-    if(nullptr == m_model)
-    {
-        loge()<<QStringLiteral("获取模型管理失败!");
-        return false;
-    }
-	return true;
+
 }
 
 void ControllerManage::Stop()

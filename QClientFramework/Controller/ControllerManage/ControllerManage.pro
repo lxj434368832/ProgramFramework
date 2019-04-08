@@ -16,8 +16,12 @@ CONFIG(debug, debug|release) {
 HEADERS += \
     ControllerManage.h \
     IControllerManage.h \
-    IControllerManage.h
+    IControllerManage.h \
+    StatisticController.h \
+    MainController.h
 
 SOURCES += \
-    ControllerManage.cpp
+    ControllerManage.cpp \
+    StatisticController.cpp \
+    MainController.cpp
 
