@@ -77,7 +77,7 @@ QList<QStringList> StatisticModel::ExecuteStatistic(int iStatisticCount, int iSt
        row.append(qstrNums);
 
         //添加平均值
-       dAvg = (iRow + 1) * iStatisticFigure / 10;
+       dAvg = (iRow + 1) * iStatisticFigure / 10.0;
        row.append(QString::number(dAvg, 'f' ,1));
 
        //添加各个数字的热度

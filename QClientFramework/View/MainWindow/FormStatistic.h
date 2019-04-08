@@ -36,6 +36,7 @@ private slots:
     void slotStatisticResultNotify(QList<QStringList> rows);
 
 private:
+    void HighlightFifthRow();
 
 private:
     Ui::FormStatistic *ui;

@@ -1,5 +1,11 @@
-#ifndef MAINCONTROLLER_H
-#define MAINCONTROLLER_H
+#pragma once
+/************************************************************************
+* filename:MainController.h
+* function:主控制器，用于程序启动以及用户登陆业务的处理。
+* author :	明巧文
+* datetime:2018-12-14
+* company:
+/************************************************************************/
 
 #include <QThread>
 #include "ControllerColleague.h"
@@ -25,4 +31,3 @@ private:
     QThread       m_thread;                   //异步线程
 };
 
-#endif // MAINCONTROLLER_H

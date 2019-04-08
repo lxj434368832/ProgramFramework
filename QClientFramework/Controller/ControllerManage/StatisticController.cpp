@@ -8,7 +8,11 @@
 StatisticController::StatisticController(IMainClient *main)
     : ControllerColleague(main)
 {
+    qRegisterMetaType<QVector<int>>("QVector<int>");
+    qRegisterMetaType<QList<QStringList>>("QList<QStringList>");
+
     connect(this, SIGNAL(signalImportData(QString)),this, SLOT(slotImportData(QString)));
+    connect(this, SIGNAL(signalExecuteStatistic(int,int,QVector<int>)), this, SLOT(slotExecuteStatistic(int,int,QVector<int>)));
     moveToThread(&m_thread);
     m_thread.start();
 }

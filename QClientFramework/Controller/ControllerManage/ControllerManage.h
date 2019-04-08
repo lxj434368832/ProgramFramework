@@ -1,4 +1,12 @@
 #pragma once
+/************************************************************************
+* filename:ControllerManage.h
+* function: 主控制器，用于管理各个控制器
+* author :	明巧文
+* datetime:2018-12-14
+* company:
+/************************************************************************/
+
 #include <QObject>
 #include <QThread>
 #include <QMap>

@@ -6,7 +6,7 @@
 * company:  
 *************************************************************************/
 //#include "../../../IOCPCommunication/INetInterface.h"
-#include "../../../Framework/include/ResourceManage.h"
+//#include "../../../Framework/include/ResourceManage.h"
 #include "..\..\CommonFile\EnumDefine.h"
 
 class MessageModule;
