@@ -3,7 +3,9 @@
 
 class ViewMediator;
 class IMainClient;
-class ControllerManage;
+class IControllerManage;
+
+#define StatisticCtrl m_controller->GetStatisticController()
 
 class ViewColleague
 {
@@ -13,8 +15,8 @@ public:
 
 protected:
     ViewMediator        *m_mediator;
-    IMainClient         *m_mainClient; 
-	ControllerManage			*m_controller;
+    IMainClient             *m_mainClient;
+    IControllerManage	*m_controller;
 };
 
 #endif // VIEWCOLLEAGUE_H

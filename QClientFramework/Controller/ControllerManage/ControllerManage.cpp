@@ -1,70 +1,44 @@
 #include "ControllerManage.h"
+#include "MainController.h"
+#include "StatisticController.h"
 #include "../../CommonFile/CommonDefine.h"
-#include "../../MainClient/IMainClient.h"
 #include "../../Model/ModelManage/ModelManage.h"
-#include "../../3rdParty/ReadWriteExcel/include/ReadWriteExcel.h"
-#include <QElapsedTimer>
 
 
 ControllerManage::ControllerManage(IMainClient *_main) :
 	QObject(),
     IControllerManage(_main)
 {
-
+    m_mainController = new MainController(m_main);
+    m_statisticController = new StatisticController(m_main);
 }
 
 ControllerManage::~ControllerManage()
 {
+    RELEASE(m_mainController);
+    RELEASE(m_statisticController);
 }
 
 MainController *ControllerManage::GetMainController()
 {
-
+    return m_mainController;
 }
 
 StatisticController *ControllerManage::GetStatisticController()
 {
-
+    return m_statisticController;
 }
 
 bool ControllerManage::Start()
 {
+    if(false == m_mainController->Start()) return false;
+    if(false == m_statisticController->Start()) return false;
 
+    return true;
 }
 
 void ControllerManage::Stop()
 {
-    m_model = nullptr;
-}
-
-void ControllerManage::slotImportData(QString qstrFilePath)
-{
-    ReadWriteExcel rdExcel;
-    if(nullptr == m_model)  return;
-    rdExcel.OpenExcel(qstrFilePath);
-   int iCount = m_model->SaveNumberList(rdExcel.ReadAllData());
-
-   emit signalNumberListChanged(iCount);
-}
-
-void ControllerManage::slotExecuteStatistic(int iStatisticCount, int iStatisticFigure, QVector<int> rank)
-{
-    emit signalStatisticResultNotify( m_model->ExecuteStatistic(iStatisticCount, iStatisticFigure, rank));
-}
-
-void ControllerManage::AddData(QString qstrPeriod, QString qstrNum)
-{
-     if(nullptr == m_model)  return;
-    int iCount = m_model->AddNumberData(qstrPeriod, qstrNum);
-    emit signalNumberListChanged(iCount);
-}
-
-const QMap<QString, QString> ControllerManage::GetNumberList()
-{
-     if(nullptr == m_model)
-     {
-         QMap<QString, QString> map;
-         return map;
-     }
-    return m_model->GetNumberList();
+    m_mainController->Stop();
+    m_statisticController->Stop();
 }

@@ -16,7 +16,6 @@ public:
     virtual void Stop() = 0;
 
 protected:
-
-    IMainClient *m_main = nullptr;
+    IMainClient             *m_main = nullptr;
 };
 

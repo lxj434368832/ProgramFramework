@@ -10,7 +10,7 @@ public:
     ~MainClient() override;
 	virtual ClientConfig* GetClientConfig() override;
 	virtual IViewManage* GetViewInterface() override;
-	virtual IControllerManage* GetControllerManage() override;
+	virtual IControllerManage* GetControllerInterface() override;
 	virtual IModelManage* GetModelInterface() override;
 
     virtual ITCPCommunication* GetTCPCommunication() override;

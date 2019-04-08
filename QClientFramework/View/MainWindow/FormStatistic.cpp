@@ -1,6 +1,7 @@
 #include "FormStatistic.h"
 #include "ui_FormStatistic.h"
 #include "../../Controller/ControllerManage/ControllerManage.h"
+#include "../../Controller/ControllerManage/StatisticController.h"
 #include "../../CommonFile/CommonDefine.h"
 #include <QButtonGroup>
 #include <QCloseEvent>
@@ -52,9 +53,9 @@ FormStatistic::FormStatistic(ViewMediator *mdt, QWidget *parent) :
 	ui->twStatisticList->setColumnWidth(2, 50);
     ui->twStatisticList->setHorizontalHeaderLabels(headers);
 
-    connect(m_controller, SIGNAL(signalNumberListChanged(int)),
+    connect(m_controller->GetStatisticController(), SIGNAL(signalNumberListChanged(int)),
         this, SLOT(slotNumberListChanged(int)));
-    connect(m_controller, SIGNAL(signalStatisticResultNotify(QList<QStringList>)),
+    connect(m_controller->GetStatisticController(), SIGNAL(signalStatisticResultNotify(QList<QStringList>)),
             this, SLOT(slotStatisticResultNotify(QList<QStringList>)));
 
     m_iStatisticCount = ui->sbTatisticPeriod->value();
@@ -76,13 +77,13 @@ void FormStatistic::closeEvent(QCloseEvent *event)
 void FormStatistic::on_sbTatisticPeriod_editingFinished()
 {
     m_iStatisticCount = ui->sbTatisticPeriod->value();
-    emit m_controller->signalExecuteStatistic(m_iStatisticCount, m_iStatisticFigure, m_vctStatisticRank);
+    emit m_controller->GetStatisticController()->signalExecuteStatistic(m_iStatisticCount, m_iStatisticFigure, m_vctStatisticRank);
 }
 
 void FormStatistic::on_cbStatisticMode_currentIndexChanged(int index)
 {
     index;
-    emit m_controller->signalExecuteStatistic(m_iStatisticCount, m_iStatisticFigure, m_vctStatisticRank);
+    emit m_controller->GetStatisticController()->signalExecuteStatistic(m_iStatisticCount, m_iStatisticFigure, m_vctStatisticRank);
 }
 
 void FormStatistic::slotGroupButtonToggled(int id, bool checked)
@@ -97,13 +98,13 @@ void FormStatistic::slotGroupButtonToggled(int id, bool checked)
 		m_vctStatisticRank[id] = 0;
 		m_iStatisticFigure--;
 	}
-    emit m_controller->signalExecuteStatistic(m_iStatisticCount, m_iStatisticFigure, m_vctStatisticRank);
+    emit m_controller->GetStatisticController()->signalExecuteStatistic(m_iStatisticCount, m_iStatisticFigure, m_vctStatisticRank);
 }
 
 void FormStatistic::slotNumberListChanged(int iCount)
 {
     ui->leTotalPeriod->setText(QString::number(iCount));
-    emit m_controller->signalExecuteStatistic(m_iStatisticCount, m_iStatisticFigure, m_vctStatisticRank);
+    emit m_controller->GetStatisticController()->signalExecuteStatistic(m_iStatisticCount, m_iStatisticFigure, m_vctStatisticRank);
 }
 
 void FormStatistic::slotStatisticResultNotify(QList<QStringList> rows)

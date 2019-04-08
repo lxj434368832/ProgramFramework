@@ -13,7 +13,7 @@ public:
 	virtual ~IMainClient(){}
 	virtual ClientConfig* GetClientConfig() = 0;
 	virtual IViewManage* GetViewInterface() = 0;
-	virtual IControllerManage* GetControllerManage() = 0;
+	virtual IControllerManage* GetControllerInterface() = 0;
 	virtual IModelManage* GetModelInterface() = 0;
 
 	virtual ITCPCommunication* GetTCPCommunication() = 0;

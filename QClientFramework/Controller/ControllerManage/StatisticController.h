@@ -4,14 +4,16 @@
 #include <QObject>
 #include <QThread>
 #include <QMap>
+#include "ControllerColleague.h"
 
 class StatisticModel;
+class IMainClient;
 
-class StatisticController : public QObject
+class StatisticController : public ControllerColleague
 {
     Q_OBJECT
 public:
-    explicit StatisticController(QObject *parent = nullptr);
+    explicit StatisticController(IMainClient *main);
     ~StatisticController( ) override;
 
     bool Start();
@@ -55,8 +57,8 @@ public:
         void slotExecuteStatistic(int iStatisticCount, int iStatisticFigure,QVector<int> rank);
 
     private:
-        QThread                                     m_thread;                   //异步线程
-        StatisticModel                           *m_statisticModel;      //模型
+        StatisticModel                           *m_statisticModel;      //统计模型
+        QThread                                     m_thread;                    //异步线程
 };
 
 #endif // STATISTICCONTROLLER_H

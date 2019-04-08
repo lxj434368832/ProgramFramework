@@ -16,6 +16,5 @@ public:
 private:
     MainModel           *m_mainModel;
     StatisticModel      *m_statistic;
-
 };
 

@@ -2,6 +2,7 @@
 #include "ui_MMainWindow.h"
 #include "FormStatistic.h"
 #include "..\..\Controller\ControllerManage\ControllerManage.h"
+#include "..\..\Controller\ControllerManage\StatisticController.h"
 #include "..\..\CommonFile\CommonDefine.h"
 #include <QFileDialog>
 #include <QElapsedTimer>
@@ -33,20 +34,20 @@ void MMainWindow::on_btnImportData_clicked()
 
 	if (qstrFilePath.isEmpty()) return;
 	if (false == QFile::exists(qstrFilePath)) return;
-    emit m_controller->signalImportData(QDir::toNativeSeparators(qstrFilePath));
+    emit StatisticCtrl->signalImportData(QDir::toNativeSeparators(qstrFilePath));
 }
 
 void MMainWindow::on_btnAddData_clicked()
 {
 	QString qstrPeriod;
     QString qstrNum;
-    const QMap<QString, QString> lotteryList = m_controller->GetNumberList();
+    const QMap<QString, QString> lotteryList = StatisticCtrl->GetNumberList();
 	if (false == lotteryList.isEmpty())
 	{
 		qstrPeriod = lotteryList.lastKey();
     }
 
-    m_controller->AddData(qstrPeriod, qstrNum);
+    StatisticCtrl->AddData(qstrPeriod, qstrNum);
 }
 
 void MMainWindow::on_btnAddStatistic_clicked()

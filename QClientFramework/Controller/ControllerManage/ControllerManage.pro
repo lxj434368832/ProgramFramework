@@ -18,10 +18,12 @@ HEADERS += \
     IControllerManage.h \
     IControllerManage.h \
     StatisticController.h \
-    MainController.h
+    MainController.h \
+    ControllerColleague.h
 
 SOURCES += \
     ControllerManage.cpp \
     StatisticController.cpp \
-    MainController.cpp
+    MainController.cpp \
+    ControllerColleague.cpp
 
