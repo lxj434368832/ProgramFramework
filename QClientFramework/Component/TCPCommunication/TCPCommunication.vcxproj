@@ -14,6 +14,7 @@
     <ProjectGuid>{AE81810C-A233-34EF-BBA1-31E80507B03A}</ProjectGuid>
     <RootNamespace>TCPCommunication</RootNamespace>
     <Keyword>Qt4VSv1.0</Keyword>
+    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
@@ -26,7 +27,7 @@
     <PrimaryOutput>TCPCommunication</PrimaryOutput>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
-    <PlatformToolSet>v120</PlatformToolSet>
+    <PlatformToolSet>v140</PlatformToolSet>
     <OutputDirectory>..\..\bin\</OutputDirectory>
     <ATLMinimizesCRunTimeLibraryUsage>false</ATLMinimizesCRunTimeLibraryUsage>
     <CharacterSet>NotSet</CharacterSet>

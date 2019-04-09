@@ -2,7 +2,6 @@
 
 #include <queue>
 #include <condition_variable>
-#include <thread>
 #include "Message.pb.h"
 #include "../../../Framework/include/ResourceManage.h"
 

@@ -31,5 +31,5 @@ void TCPCommunication::Stop()
 
 void TCPCommunication::SendData(UserKey uUserKey, const char * data, unsigned uLength)
 {
-//	m_pConnect->Send(uUserKey, data, uLength);
+	m_pConnect->Send(uUserKey, data, uLength);
 }

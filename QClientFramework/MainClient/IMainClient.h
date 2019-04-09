@@ -17,7 +17,7 @@ public:
 	virtual IModelManage* GetModelInterface() = 0;
 
 	virtual ITCPCommunication* GetTCPCommunication() = 0;
-	virtual IMessage*	GetMessageModule() = 0;
+	virtual IMessage*	GetMessageHandle() = 0;
 
 	virtual bool Start() = 0;
 	virtual void Stop() = 0;

@@ -1,15 +1,24 @@
 #include "IOCPClient.h"
 #include "IOCPModule.h"
 #include "INetInterface.h"
+#include "stdafx.h"
 
 
 IOCPClient::IOCPClient(INetInterface *pNet):
 	IOCPBase(pNet)
 {
+#ifdef ZX_LOGGING_H_
+	zxl::zx_logger *logger = zxl::zx_logger::instance();
+	zxl::configure::add_flag(zxl::config_flag::rolling_by_day);		//dgx：设置按时间打印日志
+	zxl::configure tmp_cfg(zxl::helpers::get_module_dir() + "\\config\\LogConfig.ini");
+	logger->reconfiguration(tmp_cfg);
+#endif
+
 }
 
 IOCPClient::~IOCPClient()
 {
+	zxl::zx_logger::delete_instance();
 }
 
 bool IOCPClient::StartClient(unsigned uThreadCount)

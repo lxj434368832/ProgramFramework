@@ -2,7 +2,8 @@
 //
 #include <vld.h>
 #include "MainServer.h"
-#include "..\IOCPCommunication\stdafx.h"
+#include "ImportLibrary.h"
+#include "include/CommonDefine.h"
 
 #define SZAPPNAME "ServerFramework"
 

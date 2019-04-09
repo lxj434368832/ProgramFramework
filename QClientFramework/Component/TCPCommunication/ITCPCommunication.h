@@ -6,6 +6,7 @@
 * company:
 *************************************************************************/
 
+#include "../../../IOCPCommunication/INetInterface.h"
 
 class IMainClient;
 class ServerConnect;
@@ -27,7 +28,7 @@ public:
 	* param data:需要发送的数据
 	* return:	 无
 	*************************************************************************/
-//	virtual void SendData(UserKey uUserKey, const char* data, unsigned uLength) = 0;
+	virtual void SendData(UserKey uUserKey, const char* data, unsigned uLength) = 0;
 
 protected:
 	IMainClient *m_main;

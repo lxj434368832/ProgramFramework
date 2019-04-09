@@ -1,12 +1,12 @@
 #include"LoginMessageHandle.h"
 #include "ProtobufMsgFactory.h"
-#include "MessageModule.h"
+#include "MessageHandle.h"
 #include "..\..\CommonFile\CommonDefine.h"
 #include "../../MainClient/IMainClient.h"
-#include "../CommunicationModule/ICommunication.h"
-#include "../CommunicationModule/ServerConnect.h"
+#include "../TCPCommunication/ITCPCommunication.h"
+#include "../TCPCommunication/ServerConnect.h"
 
-LoginMessageHandle::LoginMessageHandle(MessageModule *pMsg)
+LoginMessageHandle::LoginMessageHandle(MessageHandle *pMsg)
 	:IMessageHandle(pMsg)
 {
 	ProtobufMsgFactory *pMsgFctry = pMsg->GetProtobufMsgFactory();
@@ -30,7 +30,7 @@ void LoginMessageHandle::SendLoginMessage(unsigned uUserKey)
 	login->set_password("mingqiaowen");
 	
 	std::string strMsg = msg.SerializeAsString();
-//	m_pMsgModule->GetMainClient()->GetMainCommunication()->SendData(uUserKey, strMsg.data(), strMsg.length());
+	m_pMsgModule->GetMainClient()->GetTCPCommunication()->SendData(uUserKey, strMsg.data(), strMsg.length());
 }
 
 void LoginMessageHandle::HandleLoginResponse(const unsigned uUserKey, const pbmsg::Message *msg, void* ptr)
@@ -43,7 +43,7 @@ void LoginMessageHandle::HandleLoginResponse(const unsigned uUserKey, const pbms
 	}
 	else
 	{
-        loge() << "登录服务端失败，错误消息为:" << loginrq.error_describe().c_str();
-//		m_pMsgModule->GetMainClient()->GetMainCommunication()->GetServerConnect()->Disconnect(uUserKey);
+		loge() << QString::fromLocal8Bit("登录服务端失败，错误消息为:%1").arg(loginrq.error_describe().c_str());
+		m_pMsgModule->GetMainClient()->GetTCPCommunication()->GetServerConnect()->Disconnect(uUserKey);
 	}
 }

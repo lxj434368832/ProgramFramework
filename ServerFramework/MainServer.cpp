@@ -7,7 +7,7 @@
 #include "MessageBusiness/MessageBusiness.h"
 #include "ManageBusiness/ManageBusiness.h"
 #include "Communication/CommunicationBusiness.h"
-#include "ImportLibrary.h"
+#include "include/CommonDefine.h"
 
 MainServer::MainServer()
 {

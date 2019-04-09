@@ -14,7 +14,7 @@ public:
 	virtual IModelManage* GetModelInterface() override;
 
     virtual ITCPCommunication* GetTCPCommunication() override;
-	virtual IMessage*	GetMessageModule() override;
+	virtual IMessage*	GetMessageHandle() override;
 
 	bool Start() override;
 	void Stop() override;
@@ -29,6 +29,6 @@ private:
 	IModelManage*	m_pModel;
 
     ITCPCommunication*		m_pTCPCommunication;
-    IMessage*                          m_pMessage;
+    IMessage*               m_pMessage;
 };
 

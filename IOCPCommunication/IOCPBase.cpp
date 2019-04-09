@@ -1,6 +1,7 @@
 #include "IOCPBase.h"
 #include "IOCPModule.h"
 #include "INetInterface.h"
+#include "stdafx.h"
 #include <assert.h>
 
 IOCPBase::IOCPBase(INetInterface *pNet):

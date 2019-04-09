@@ -9,7 +9,6 @@
 #include <WinSock2.h>
 #include <MSWSock.h>
 #include <queue>
-#include "stdafx.h"
 
 #define MAX_BUF_LEN 512			//发送缓冲区大小512B
 #define MAX_RCV_BUF_LEN 5120	//接收缓冲区大小5K
@@ -63,7 +62,11 @@ struct PER_IO_CONTEXT
 	{
 		delete[] m_szBuffer;
 		m_szBuffer = nullptr;
-		RELEASE_SOCKET(m_socket);		//释放socket资源，可能不必要
+		if (INVALID_SOCKET != m_socket)	//释放socket资源，可能不必要
+		{ 
+			::closesocket(m_socket);
+			m_socket = INVALID_SOCKET;
+		}
 	}
 
 	void Reset()
@@ -130,7 +133,7 @@ struct PER_SOCKET_CONTEXT
 		
 		if(false == m_queueIoContext.empty())
 		{
-			MLOG("socket:%d上可能存在%d个IO资源泄露，请提前释放！", m_socket, m_queueIoContext.size());
+			printf("socket:%d上可能存在%d个IO资源泄露，请提前释放！", m_socket, m_queueIoContext.size());
 		}
 	}
 };

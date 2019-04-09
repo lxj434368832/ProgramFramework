@@ -1,7 +1,8 @@
 #include "ProtobufMsgFactory.h"
 #include "..\..\CommonFile\CommonDefine.h"
 #include "..\..\CommonFile\EnumDefine.h"
-#include <QDebug>
+#include <thread>
+#include <QString>
 
 
 ProtobufMsgFactory::ProtobufMsgFactory(void * srv)
@@ -79,7 +80,7 @@ void ProtobufMsgFactory::AddMessageData(unsigned uUserKey, const char* data, uns
 
 void ProtobufMsgFactory::MessageHandleThread()
 {
-    logm() << "MessageHandleThread start.ThreadID:" /*<< (long)std::this_thread::get_id()*/;
+	//logm() << QString("MessageHandleThread start.ThreadID:%1").arg( (int)std::this_thread::get_id());
 	while (m_bStart)
 	{
 		SMessageData *msgData = nullptr;
@@ -107,5 +108,5 @@ void ProtobufMsgFactory::MessageHandleThread()
 		m_rscMessage.put(msgData);
 	}
 
-    logm() << "ThreadID:" /*<< std::this_thread::get_id() <<*/ "ÍË³ö";
+	//logm() << QString("ThreadID:%1 exit.").arg(std::this_thread::get_id());
 }

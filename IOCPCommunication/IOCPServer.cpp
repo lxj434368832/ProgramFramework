@@ -1,6 +1,7 @@
 #include "IOCPServer.h"
 #include "IOCPModule.h"
 #include "INetInterface.h"
+#include "stdafx.h"
 #include <assert.h>
 
 IOCPServer::IOCPServer(INetInterface *pNet) : 

@@ -2,7 +2,7 @@
 
 #include "IMessageHandle.h"
 
-class MessageModule;
+class MessageHandle;
 namespace pbmsg
 {
 	class Message;
@@ -11,7 +11,7 @@ namespace pbmsg
 class LoginMessageHandle : public IMessageHandle
 {
 public:
-	LoginMessageHandle(MessageModule *pMsg);
+	LoginMessageHandle(MessageHandle *pMsg);
 	~LoginMessageHandle();
 	void SendLoginMessage(unsigned uUserKey);
 
