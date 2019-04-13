@@ -42,7 +42,7 @@ private:
 	//处理服务数据
 	virtual void HandData(UserKey uUserKey, unsigned uMsgType, const char* data, unsigned length) override;
 
-	// 如果成功删除用户返回删除的地址,如果用户不存在则返回NULL
+	// 删除用户
 	virtual void DeleteUser(UserKey uUserKey) override;
 
 private:

@@ -1,2 +1,5 @@
 /Debug/
 /Release/
+/.vs/
+/Win32/
+/x64/
