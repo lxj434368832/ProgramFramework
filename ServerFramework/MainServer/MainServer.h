@@ -30,11 +30,10 @@ class MainServer : public IMainServer
 public:
 	MainServer();
 	~MainServer();
-	IMessageBusiness* GetMessageBusiness() override;
+	IMessageHandle* GetMessageBusiness() override;
 	IModelManage* GetManageBusiness() override;
 	ICommunication* GetCommunication() override;
 	ServerConfig* GetServerConfig() override;
-
 
 	bool Start();
 	void Stop();
@@ -44,8 +43,8 @@ private:
 
 private:
 	ServerConfig		m_srvConfig;		//服务配置项
-	IMessageBusiness*	m_pMessage;			//消息模块
-	IModelManage*	m_pManage;			//管理模块
+	IMessageHandle*		m_pMessage;			//消息模块
+	IModelManage*		m_pModel;			//模型模块
 	ICommunication*		m_pCommunication;	//通讯模块
 };
 

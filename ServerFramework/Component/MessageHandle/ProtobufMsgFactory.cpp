@@ -13,6 +13,7 @@ ProtobufMsgFactory::ProtobufMsgFactory(void * srv)
 
 ProtobufMsgFactory::~ProtobufMsgFactory()
 {
+	google::protobuf::ShutdownProtobufLibrary();
 }
 
 void ProtobufMsgFactory::RegisterMessageFunction(pbmsg::MSG msg_type, funMessageHandle handle)

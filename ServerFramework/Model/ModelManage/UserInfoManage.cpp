@@ -1,7 +1,7 @@
 #include "UserInfoManage.h"
 #include "IModelManage.h"
 #include "..\..\MainServer\IMainServer.h"
-#include "..\..\Component\MessageHandle\IMessageBusiness.h"
+#include "..\..\Component\MessageHandle\IMessageHandle.h"
 #include "..\..\CommonFile\CommonDefine.h"
 
 UserInfoManage::UserInfoManage(IModelManage* pMgr)

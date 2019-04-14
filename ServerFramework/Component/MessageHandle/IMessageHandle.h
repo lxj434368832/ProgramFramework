@@ -1,22 +1,22 @@
 #pragma once
-/*************************************************************************
-* function：消息处理接口基类，所有需要处理消息的类都继承此类
-* author :	明巧文
-* datetime：2018-12-14
-* company:
-*************************************************************************/
-class IMessageBusiness;
+
+class IMainServer;
+class ProtobufMsgFactory;
 
 class IMessageHandle
 {
 public:
-	IMessageHandle(IMessageBusiness *pBusiness = nullptr){
-		m_pMsgBusiness = pBusiness;
-	}
-	virtual ~IMessageHandle(){
-		m_pMsgBusiness = nullptr;
-	}
+	IMessageHandle(IMainServer *srv = nullptr):m_pSrv(srv){}
+	virtual ~IMessageHandle() { m_pSrv = nullptr; }
+	inline IMainServer* GetMainServer() { return m_pSrv; }
+	virtual ProtobufMsgFactory* GetProtobufMsgFactory() = 0;
+
+	virtual bool Start() = 0;
+	virtual void Stop() = 0;
+
+	//处protobuf数据
+	virtual void HandleProtobufMessage(unsigned uUserKey, const char* data, unsigned length) = 0;
 
 protected:
-	IMessageBusiness *m_pMsgBusiness;
+	IMainServer*	m_pSrv;
 };

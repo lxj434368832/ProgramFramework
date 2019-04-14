@@ -1,5 +1,5 @@
 
-include(../configuration.pri)
+include(../../configuration.pri)
 
 QT       += core
 

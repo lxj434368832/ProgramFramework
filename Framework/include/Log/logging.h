@@ -437,17 +437,17 @@ namespace zxl{
 
 #define Log(LEVEL) (zxl::writer(LEVEL))
 #define LogInfo()   Log(zxl::level::info)
+#define LogWarn()   Log(zxl::level::warning)
+#define LogErr()    Log(zxl::level::error)
 #define LogDebug()  Log(zxl::level::debug)
 #define LogTrace()  Log(zxl::level::trace)
 #define LogFatal()  Log(zxl::level::fatal)
-#define LogErr()    Log(zxl::level::error)
-#define LogWarn()   Log(zxl::level::warning)
 
 #define logm() LogInfo()<<"["<<__FUNCTION__<<":"<<__LINE__<<"]|<message> "
-#define logw() LogInfo()<<"["<<__FUNCTION__<<":"<<__LINE__<<"]|<warn> "
-#define loge() LogInfo()<<"["<<__FUNCTION__<<":"<<__LINE__<<"]|<error> "
-#define logd() LogInfo()<<"["<<__FUNCTION__<<":"<<__LINE__<<"]|<debug> "
-#define logt() LogInfo()<<"["<<__FUNCTION__<<":"<<__LINE__<<"]|<trace> "
+#define logw() LogWarn()<<"["<<__FUNCTION__<<":"<<__LINE__<<"]|<warn> "
+#define loge() LogErr()<<"["<<__FUNCTION__<<":"<<__LINE__<<"]|<error> "
+#define logd() LogDebug()<<"["<<__FUNCTION__<<":"<<__LINE__<<"]|<debug> "
+#define logt() LogTrace()<<"["<<__FUNCTION__<<":"<<__LINE__<<"]|<trace> "
 
 extern zxl::zx_logger *g_logger;
 #endif

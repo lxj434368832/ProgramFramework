@@ -11,7 +11,7 @@
 #include "../../CommonFile/EnumDefine.h"
 
 class IModelManage;
-class IMessageBusiness;
+class IMessageHandle;
 
 class UserInfoManage : public INetInterface
 {
@@ -73,7 +73,7 @@ private:
 
 private:
 	IModelManage*	m_pMgr;
-	IMessageBusiness* m_pMsgHandle;
+	IMessageHandle* m_pMsgHandle;
 
 	mqw::ResourceManage<ClientUserInfo>	m_rscUser;
 	MLock				m_UserShareLock[USER_SHARE_LOCK_COUNT];

@@ -15,10 +15,13 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="LoginMessageHandle.cpp">
+    <ClCompile Include="HandleRequestMessage.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="MessageBusiness.cpp">
+    <ClCompile Include="HandleRespondMessage.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="HandleNotifyMessage.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="ProtobufMsgFactory.cpp">
@@ -27,24 +30,33 @@
     <ClCompile Include="Message.pb.cc">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="MessageHandle.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="IMessageBusiness.h">
+    <ClInclude Include="HandleRequestMessage.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="IMessageHandle.h">
+    <ClInclude Include="HandleRespondMessage.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="LoginMessageHandle.h">
+    <ClInclude Include="HandleNotifyMessage.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Message.pb.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="MessageBusiness.h">
+    <ClInclude Include="ProtobufMsgFactory.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ProtobufMsgFactory.h">
+    <ClInclude Include="IMessageColleague.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="IMessageHandle.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MessageHandle.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

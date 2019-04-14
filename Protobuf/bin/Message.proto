@@ -2,19 +2,19 @@ syntax = "proto2";
 package pbmsg; //定义protobuf的包名称空间，对应C++,C#的nanmespace，Java的package
 enum MSG
 {
- Login_Request  = 10001;
- Login_Response  = 10002;
- Logout_Request  = 10003;
- Logout_Response  = 10004;
- Keepalive_Request = 10005;
- Keepalive_Response = 10006;
- Get_Friends_Request = 10007;
- Get_Friends_Response = 10008;
- Send_Message_Request = 10009;
- Send_Message_Response = 10010;
- Friend_Notification = 20001;
- Message_Notification = 20002;
- Welcome_Notification = 20003;
+ ELoginRequest  = 10001;
+ ELoginRespond  = 10002;
+ ELogoutRequest  = 10003;
+ ELogoutRespond  = 10004;
+ EKeepaliveRequest = 10005;
+ EKeepaliveRespond = 10006;
+ EGetFriendsRequest = 10007;
+ EGetFriendsRespond = 10008;
+ ESendMessageRequest = 10009;
+ ESendMessageRespond = 10010;
+ EFriendNotify = 20001;
+ EMessageNotify = 20002;
+ EWelcomeNotify = 20003;
 }
 
 enum ERR_CODE {
@@ -32,7 +32,7 @@ message LoginRequest
  optional string password = 2;
 }
  
-message LoginResponse
+message LoginRespond
 {
  required fixed32 ttl = 1;
 }
@@ -45,7 +45,7 @@ message Friend
  optional bool  online = 2;
 }
  
-message GetFriendsResponse
+message GetFriendsRespond
 {
  repeated Friend  friends  = 1;
 }
@@ -56,20 +56,20 @@ message SendMessageRequest
  required bytes  text  = 2;
 }
  
-message FriendNotification
+message FriendNotify
 {
  required bytes name  = 1;
  optional bool online = 2;
 }
  
-message MessageNotification
+message MessageNotify
 {
  required bytes sender = 1;
  required bytes text = 2;
  required string timestamp = 3;
 }
  
-message WelcomeNotification
+message WelcomeNotify
 {
  required  bytes text = 1;
 }
@@ -80,36 +80,36 @@ message WelcomeNotification
 message Request
 {
  optional LoginRequest login = 1;
- optional SendMessageRequest send_message = 2;
+ optional SendMessageRequest sendMessage = 2;
 }
 
-/*与Request作用相同，把所有的XxxxResponse消息集合在一起，当作联合体使用，不过额外多了几个字段用于表示应答的结果*/ 
-message Response
+/*与Request作用相同，把所有的XxxxRespond消息集合在一起，当作联合体使用，不过额外多了几个字段用于表示应答的结果*/ 
+message Respond
 {
  required bool result = 1;  //true表示应答成功，false表示应答失败
- required bool last_response = 2;// 一个请求可以包含多个应答，用于指示是否为最后一个应答
- optional bytes error_describe = 3;// result == false时，用于描述错误信息
- optional LoginResponse login = 4;
- optional GetFriendsResponse get_friends = 5;
+ required bool lastRespond = 2;// 一个请求可以包含多个应答，用于指示是否为最后一个应答
+ optional bytes errorDescribe = 3;// result == false时，用于描述错误信息
+ optional LoginRespond login = 4;
+ optional GetFriendsRespond friends = 5;
 }
  
-/*与Request相同,把所有的XxxxxNotification消息集合在一起当作联合体使用.*/ 
-message Notification
+/*与Request相同,把所有的XxxxxNotify消息集合在一起当作联合体使用.*/ 
+message Notify
 {
- optional FriendNotification friend = 1;
- optional MessageNotification msg = 2;
- optional WelcomeNotification welcome = 3;
+ optional FriendNotify friend = 1;
+ optional MessageNotify msg = 2;
+ optional WelcomeNotify welcome = 3;
 }
  
-/*顶层消息，包含所有的Request，Response，Notification，具体包含哪个消息由MSG msg_type字段决定，*/
+/*顶层消息，包含所有的Request，Respond，Notify，具体包含哪个消息由MSG msg_type字段决定，*/
 /*程序逻辑去保证msg_type和具体的消息进行匹配*/ 
 
 message Message 
 {
- required MSG  msg_type = 1;
- required fixed32 sequence = 2;//消息系列号，主要用于Request和Response，Response的值必须和Request相同，使得发送端可以进行事务匹配处理
- optional fixed32 session_id = 3;
+ required MSG  		msgType = 1;
+ required fixed32 sequence = 2;//消息系列号，主要用于Request和Respond，Respond的值必须和Request相同，使得发送端可以进行事务匹配处理
+ optional fixed32 sessionId = 3;
  optional Request request  = 4;
- optional Response response = 5;
- optional Notification notification = 6;
+ optional Respond respond = 5;
+ optional Notify  notify = 6;
 }

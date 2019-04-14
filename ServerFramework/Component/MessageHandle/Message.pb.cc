@@ -21,16 +21,16 @@
 
 namespace protobuf_Message_2eproto {
 extern PROTOBUF_INTERNAL_EXPORT_protobuf_Message_2eproto ::google::protobuf::internal::SCCInfo<0> scc_info_Friend;
-extern PROTOBUF_INTERNAL_EXPORT_protobuf_Message_2eproto ::google::protobuf::internal::SCCInfo<0> scc_info_FriendNotification;
+extern PROTOBUF_INTERNAL_EXPORT_protobuf_Message_2eproto ::google::protobuf::internal::SCCInfo<0> scc_info_FriendNotify;
 extern PROTOBUF_INTERNAL_EXPORT_protobuf_Message_2eproto ::google::protobuf::internal::SCCInfo<0> scc_info_LoginRequest;
-extern PROTOBUF_INTERNAL_EXPORT_protobuf_Message_2eproto ::google::protobuf::internal::SCCInfo<0> scc_info_LoginResponse;
-extern PROTOBUF_INTERNAL_EXPORT_protobuf_Message_2eproto ::google::protobuf::internal::SCCInfo<0> scc_info_MessageNotification;
+extern PROTOBUF_INTERNAL_EXPORT_protobuf_Message_2eproto ::google::protobuf::internal::SCCInfo<0> scc_info_LoginRespond;
+extern PROTOBUF_INTERNAL_EXPORT_protobuf_Message_2eproto ::google::protobuf::internal::SCCInfo<0> scc_info_MessageNotify;
 extern PROTOBUF_INTERNAL_EXPORT_protobuf_Message_2eproto ::google::protobuf::internal::SCCInfo<0> scc_info_SendMessageRequest;
-extern PROTOBUF_INTERNAL_EXPORT_protobuf_Message_2eproto ::google::protobuf::internal::SCCInfo<0> scc_info_WelcomeNotification;
-extern PROTOBUF_INTERNAL_EXPORT_protobuf_Message_2eproto ::google::protobuf::internal::SCCInfo<1> scc_info_GetFriendsResponse;
+extern PROTOBUF_INTERNAL_EXPORT_protobuf_Message_2eproto ::google::protobuf::internal::SCCInfo<0> scc_info_WelcomeNotify;
+extern PROTOBUF_INTERNAL_EXPORT_protobuf_Message_2eproto ::google::protobuf::internal::SCCInfo<1> scc_info_GetFriendsRespond;
 extern PROTOBUF_INTERNAL_EXPORT_protobuf_Message_2eproto ::google::protobuf::internal::SCCInfo<2> scc_info_Request;
-extern PROTOBUF_INTERNAL_EXPORT_protobuf_Message_2eproto ::google::protobuf::internal::SCCInfo<2> scc_info_Response;
-extern PROTOBUF_INTERNAL_EXPORT_protobuf_Message_2eproto ::google::protobuf::internal::SCCInfo<3> scc_info_Notification;
+extern PROTOBUF_INTERNAL_EXPORT_protobuf_Message_2eproto ::google::protobuf::internal::SCCInfo<2> scc_info_Respond;
+extern PROTOBUF_INTERNAL_EXPORT_protobuf_Message_2eproto ::google::protobuf::internal::SCCInfo<3> scc_info_Notify;
 }  // namespace protobuf_Message_2eproto
 namespace pbmsg {
 class LoginRequestDefaultTypeInternal {
@@ -38,56 +38,56 @@ class LoginRequestDefaultTypeInternal {
   ::google::protobuf::internal::ExplicitlyConstructed<LoginRequest>
       _instance;
 } _LoginRequest_default_instance_;
-class LoginResponseDefaultTypeInternal {
+class LoginRespondDefaultTypeInternal {
  public:
-  ::google::protobuf::internal::ExplicitlyConstructed<LoginResponse>
+  ::google::protobuf::internal::ExplicitlyConstructed<LoginRespond>
       _instance;
-} _LoginResponse_default_instance_;
+} _LoginRespond_default_instance_;
 class FriendDefaultTypeInternal {
  public:
   ::google::protobuf::internal::ExplicitlyConstructed<Friend>
       _instance;
 } _Friend_default_instance_;
-class GetFriendsResponseDefaultTypeInternal {
+class GetFriendsRespondDefaultTypeInternal {
  public:
-  ::google::protobuf::internal::ExplicitlyConstructed<GetFriendsResponse>
+  ::google::protobuf::internal::ExplicitlyConstructed<GetFriendsRespond>
       _instance;
-} _GetFriendsResponse_default_instance_;
+} _GetFriendsRespond_default_instance_;
 class SendMessageRequestDefaultTypeInternal {
  public:
   ::google::protobuf::internal::ExplicitlyConstructed<SendMessageRequest>
       _instance;
 } _SendMessageRequest_default_instance_;
-class FriendNotificationDefaultTypeInternal {
+class FriendNotifyDefaultTypeInternal {
  public:
-  ::google::protobuf::internal::ExplicitlyConstructed<FriendNotification>
+  ::google::protobuf::internal::ExplicitlyConstructed<FriendNotify>
       _instance;
-} _FriendNotification_default_instance_;
-class MessageNotificationDefaultTypeInternal {
+} _FriendNotify_default_instance_;
+class MessageNotifyDefaultTypeInternal {
  public:
-  ::google::protobuf::internal::ExplicitlyConstructed<MessageNotification>
+  ::google::protobuf::internal::ExplicitlyConstructed<MessageNotify>
       _instance;
-} _MessageNotification_default_instance_;
-class WelcomeNotificationDefaultTypeInternal {
+} _MessageNotify_default_instance_;
+class WelcomeNotifyDefaultTypeInternal {
  public:
-  ::google::protobuf::internal::ExplicitlyConstructed<WelcomeNotification>
+  ::google::protobuf::internal::ExplicitlyConstructed<WelcomeNotify>
       _instance;
-} _WelcomeNotification_default_instance_;
+} _WelcomeNotify_default_instance_;
 class RequestDefaultTypeInternal {
  public:
   ::google::protobuf::internal::ExplicitlyConstructed<Request>
       _instance;
 } _Request_default_instance_;
-class ResponseDefaultTypeInternal {
+class RespondDefaultTypeInternal {
  public:
-  ::google::protobuf::internal::ExplicitlyConstructed<Response>
+  ::google::protobuf::internal::ExplicitlyConstructed<Respond>
       _instance;
-} _Response_default_instance_;
-class NotificationDefaultTypeInternal {
+} _Respond_default_instance_;
+class NotifyDefaultTypeInternal {
  public:
-  ::google::protobuf::internal::ExplicitlyConstructed<Notification>
+  ::google::protobuf::internal::ExplicitlyConstructed<Notify>
       _instance;
-} _Notification_default_instance_;
+} _Notify_default_instance_;
 class MessageDefaultTypeInternal {
  public:
   ::google::protobuf::internal::ExplicitlyConstructed<Message>
@@ -109,19 +109,19 @@ static void InitDefaultsLoginRequest() {
 ::google::protobuf::internal::SCCInfo<0> scc_info_LoginRequest =
     {{ATOMIC_VAR_INIT(::google::protobuf::internal::SCCInfoBase::kUninitialized), 0, InitDefaultsLoginRequest}, {}};
 
-static void InitDefaultsLoginResponse() {
+static void InitDefaultsLoginRespond() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
 
   {
-    void* ptr = &::pbmsg::_LoginResponse_default_instance_;
-    new (ptr) ::pbmsg::LoginResponse();
+    void* ptr = &::pbmsg::_LoginRespond_default_instance_;
+    new (ptr) ::pbmsg::LoginRespond();
     ::google::protobuf::internal::OnShutdownDestroyMessage(ptr);
   }
-  ::pbmsg::LoginResponse::InitAsDefaultInstance();
+  ::pbmsg::LoginRespond::InitAsDefaultInstance();
 }
 
-::google::protobuf::internal::SCCInfo<0> scc_info_LoginResponse =
-    {{ATOMIC_VAR_INIT(::google::protobuf::internal::SCCInfoBase::kUninitialized), 0, InitDefaultsLoginResponse}, {}};
+::google::protobuf::internal::SCCInfo<0> scc_info_LoginRespond =
+    {{ATOMIC_VAR_INIT(::google::protobuf::internal::SCCInfoBase::kUninitialized), 0, InitDefaultsLoginRespond}, {}};
 
 static void InitDefaultsFriend() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
@@ -137,19 +137,19 @@ static void InitDefaultsFriend() {
 ::google::protobuf::internal::SCCInfo<0> scc_info_Friend =
     {{ATOMIC_VAR_INIT(::google::protobuf::internal::SCCInfoBase::kUninitialized), 0, InitDefaultsFriend}, {}};
 
-static void InitDefaultsGetFriendsResponse() {
+static void InitDefaultsGetFriendsRespond() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
 
   {
-    void* ptr = &::pbmsg::_GetFriendsResponse_default_instance_;
-    new (ptr) ::pbmsg::GetFriendsResponse();
+    void* ptr = &::pbmsg::_GetFriendsRespond_default_instance_;
+    new (ptr) ::pbmsg::GetFriendsRespond();
     ::google::protobuf::internal::OnShutdownDestroyMessage(ptr);
   }
-  ::pbmsg::GetFriendsResponse::InitAsDefaultInstance();
+  ::pbmsg::GetFriendsRespond::InitAsDefaultInstance();
 }
 
-::google::protobuf::internal::SCCInfo<1> scc_info_GetFriendsResponse =
-    {{ATOMIC_VAR_INIT(::google::protobuf::internal::SCCInfoBase::kUninitialized), 1, InitDefaultsGetFriendsResponse}, {
+::google::protobuf::internal::SCCInfo<1> scc_info_GetFriendsRespond =
+    {{ATOMIC_VAR_INIT(::google::protobuf::internal::SCCInfoBase::kUninitialized), 1, InitDefaultsGetFriendsRespond}, {
       &protobuf_Message_2eproto::scc_info_Friend.base,}};
 
 static void InitDefaultsSendMessageRequest() {
@@ -166,47 +166,47 @@ static void InitDefaultsSendMessageRequest() {
 ::google::protobuf::internal::SCCInfo<0> scc_info_SendMessageRequest =
     {{ATOMIC_VAR_INIT(::google::protobuf::internal::SCCInfoBase::kUninitialized), 0, InitDefaultsSendMessageRequest}, {}};
 
-static void InitDefaultsFriendNotification() {
+static void InitDefaultsFriendNotify() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
 
   {
-    void* ptr = &::pbmsg::_FriendNotification_default_instance_;
-    new (ptr) ::pbmsg::FriendNotification();
+    void* ptr = &::pbmsg::_FriendNotify_default_instance_;
+    new (ptr) ::pbmsg::FriendNotify();
     ::google::protobuf::internal::OnShutdownDestroyMessage(ptr);
   }
-  ::pbmsg::FriendNotification::InitAsDefaultInstance();
+  ::pbmsg::FriendNotify::InitAsDefaultInstance();
 }
 
-::google::protobuf::internal::SCCInfo<0> scc_info_FriendNotification =
-    {{ATOMIC_VAR_INIT(::google::protobuf::internal::SCCInfoBase::kUninitialized), 0, InitDefaultsFriendNotification}, {}};
+::google::protobuf::internal::SCCInfo<0> scc_info_FriendNotify =
+    {{ATOMIC_VAR_INIT(::google::protobuf::internal::SCCInfoBase::kUninitialized), 0, InitDefaultsFriendNotify}, {}};
 
-static void InitDefaultsMessageNotification() {
+static void InitDefaultsMessageNotify() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
 
   {
-    void* ptr = &::pbmsg::_MessageNotification_default_instance_;
-    new (ptr) ::pbmsg::MessageNotification();
+    void* ptr = &::pbmsg::_MessageNotify_default_instance_;
+    new (ptr) ::pbmsg::MessageNotify();
     ::google::protobuf::internal::OnShutdownDestroyMessage(ptr);
   }
-  ::pbmsg::MessageNotification::InitAsDefaultInstance();
+  ::pbmsg::MessageNotify::InitAsDefaultInstance();
 }
 
-::google::protobuf::internal::SCCInfo<0> scc_info_MessageNotification =
-    {{ATOMIC_VAR_INIT(::google::protobuf::internal::SCCInfoBase::kUninitialized), 0, InitDefaultsMessageNotification}, {}};
+::google::protobuf::internal::SCCInfo<0> scc_info_MessageNotify =
+    {{ATOMIC_VAR_INIT(::google::protobuf::internal::SCCInfoBase::kUninitialized), 0, InitDefaultsMessageNotify}, {}};
 
-static void InitDefaultsWelcomeNotification() {
+static void InitDefaultsWelcomeNotify() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
 
   {
-    void* ptr = &::pbmsg::_WelcomeNotification_default_instance_;
-    new (ptr) ::pbmsg::WelcomeNotification();
+    void* ptr = &::pbmsg::_WelcomeNotify_default_instance_;
+    new (ptr) ::pbmsg::WelcomeNotify();
     ::google::protobuf::internal::OnShutdownDestroyMessage(ptr);
   }
-  ::pbmsg::WelcomeNotification::InitAsDefaultInstance();
+  ::pbmsg::WelcomeNotify::InitAsDefaultInstance();
 }
 
-::google::protobuf::internal::SCCInfo<0> scc_info_WelcomeNotification =
-    {{ATOMIC_VAR_INIT(::google::protobuf::internal::SCCInfoBase::kUninitialized), 0, InitDefaultsWelcomeNotification}, {}};
+::google::protobuf::internal::SCCInfo<0> scc_info_WelcomeNotify =
+    {{ATOMIC_VAR_INIT(::google::protobuf::internal::SCCInfoBase::kUninitialized), 0, InitDefaultsWelcomeNotify}, {}};
 
 static void InitDefaultsRequest() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
@@ -224,38 +224,38 @@ static void InitDefaultsRequest() {
       &protobuf_Message_2eproto::scc_info_LoginRequest.base,
       &protobuf_Message_2eproto::scc_info_SendMessageRequest.base,}};
 
-static void InitDefaultsResponse() {
+static void InitDefaultsRespond() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
 
   {
-    void* ptr = &::pbmsg::_Response_default_instance_;
-    new (ptr) ::pbmsg::Response();
+    void* ptr = &::pbmsg::_Respond_default_instance_;
+    new (ptr) ::pbmsg::Respond();
     ::google::protobuf::internal::OnShutdownDestroyMessage(ptr);
   }
-  ::pbmsg::Response::InitAsDefaultInstance();
+  ::pbmsg::Respond::InitAsDefaultInstance();
 }
 
-::google::protobuf::internal::SCCInfo<2> scc_info_Response =
-    {{ATOMIC_VAR_INIT(::google::protobuf::internal::SCCInfoBase::kUninitialized), 2, InitDefaultsResponse}, {
-      &protobuf_Message_2eproto::scc_info_LoginResponse.base,
-      &protobuf_Message_2eproto::scc_info_GetFriendsResponse.base,}};
+::google::protobuf::internal::SCCInfo<2> scc_info_Respond =
+    {{ATOMIC_VAR_INIT(::google::protobuf::internal::SCCInfoBase::kUninitialized), 2, InitDefaultsRespond}, {
+      &protobuf_Message_2eproto::scc_info_LoginRespond.base,
+      &protobuf_Message_2eproto::scc_info_GetFriendsRespond.base,}};
 
-static void InitDefaultsNotification() {
+static void InitDefaultsNotify() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
 
   {
-    void* ptr = &::pbmsg::_Notification_default_instance_;
-    new (ptr) ::pbmsg::Notification();
+    void* ptr = &::pbmsg::_Notify_default_instance_;
+    new (ptr) ::pbmsg::Notify();
     ::google::protobuf::internal::OnShutdownDestroyMessage(ptr);
   }
-  ::pbmsg::Notification::InitAsDefaultInstance();
+  ::pbmsg::Notify::InitAsDefaultInstance();
 }
 
-::google::protobuf::internal::SCCInfo<3> scc_info_Notification =
-    {{ATOMIC_VAR_INIT(::google::protobuf::internal::SCCInfoBase::kUninitialized), 3, InitDefaultsNotification}, {
-      &protobuf_Message_2eproto::scc_info_FriendNotification.base,
-      &protobuf_Message_2eproto::scc_info_MessageNotification.base,
-      &protobuf_Message_2eproto::scc_info_WelcomeNotification.base,}};
+::google::protobuf::internal::SCCInfo<3> scc_info_Notify =
+    {{ATOMIC_VAR_INIT(::google::protobuf::internal::SCCInfoBase::kUninitialized), 3, InitDefaultsNotify}, {
+      &protobuf_Message_2eproto::scc_info_FriendNotify.base,
+      &protobuf_Message_2eproto::scc_info_MessageNotify.base,
+      &protobuf_Message_2eproto::scc_info_WelcomeNotify.base,}};
 
 static void InitDefaultsMessage() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
@@ -271,21 +271,21 @@ static void InitDefaultsMessage() {
 ::google::protobuf::internal::SCCInfo<3> scc_info_Message =
     {{ATOMIC_VAR_INIT(::google::protobuf::internal::SCCInfoBase::kUninitialized), 3, InitDefaultsMessage}, {
       &protobuf_Message_2eproto::scc_info_Request.base,
-      &protobuf_Message_2eproto::scc_info_Response.base,
-      &protobuf_Message_2eproto::scc_info_Notification.base,}};
+      &protobuf_Message_2eproto::scc_info_Respond.base,
+      &protobuf_Message_2eproto::scc_info_Notify.base,}};
 
 void InitDefaults() {
   ::google::protobuf::internal::InitSCC(&scc_info_LoginRequest.base);
-  ::google::protobuf::internal::InitSCC(&scc_info_LoginResponse.base);
+  ::google::protobuf::internal::InitSCC(&scc_info_LoginRespond.base);
   ::google::protobuf::internal::InitSCC(&scc_info_Friend.base);
-  ::google::protobuf::internal::InitSCC(&scc_info_GetFriendsResponse.base);
+  ::google::protobuf::internal::InitSCC(&scc_info_GetFriendsRespond.base);
   ::google::protobuf::internal::InitSCC(&scc_info_SendMessageRequest.base);
-  ::google::protobuf::internal::InitSCC(&scc_info_FriendNotification.base);
-  ::google::protobuf::internal::InitSCC(&scc_info_MessageNotification.base);
-  ::google::protobuf::internal::InitSCC(&scc_info_WelcomeNotification.base);
+  ::google::protobuf::internal::InitSCC(&scc_info_FriendNotify.base);
+  ::google::protobuf::internal::InitSCC(&scc_info_MessageNotify.base);
+  ::google::protobuf::internal::InitSCC(&scc_info_WelcomeNotify.base);
   ::google::protobuf::internal::InitSCC(&scc_info_Request.base);
-  ::google::protobuf::internal::InitSCC(&scc_info_Response.base);
-  ::google::protobuf::internal::InitSCC(&scc_info_Notification.base);
+  ::google::protobuf::internal::InitSCC(&scc_info_Respond.base);
+  ::google::protobuf::internal::InitSCC(&scc_info_Notify.base);
   ::google::protobuf::internal::InitSCC(&scc_info_Message.base);
 }
 
@@ -302,12 +302,12 @@ const ::google::protobuf::uint32 TableStruct::offsets[] GOOGLE_PROTOBUF_ATTRIBUT
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::pbmsg::LoginRequest, password_),
   0,
   1,
-  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::pbmsg::LoginResponse, _has_bits_),
-  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::pbmsg::LoginResponse, _internal_metadata_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::pbmsg::LoginRespond, _has_bits_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::pbmsg::LoginRespond, _internal_metadata_),
   ~0u,  // no _extensions_
   ~0u,  // no _oneof_case_
   ~0u,  // no _weak_field_map_
-  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::pbmsg::LoginResponse, ttl_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::pbmsg::LoginRespond, ttl_),
   0,
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::pbmsg::Friend, _has_bits_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::pbmsg::Friend, _internal_metadata_),
@@ -318,12 +318,12 @@ const ::google::protobuf::uint32 TableStruct::offsets[] GOOGLE_PROTOBUF_ATTRIBUT
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::pbmsg::Friend, online_),
   0,
   1,
-  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::pbmsg::GetFriendsResponse, _has_bits_),
-  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::pbmsg::GetFriendsResponse, _internal_metadata_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::pbmsg::GetFriendsRespond, _has_bits_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::pbmsg::GetFriendsRespond, _internal_metadata_),
   ~0u,  // no _extensions_
   ~0u,  // no _oneof_case_
   ~0u,  // no _weak_field_map_
-  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::pbmsg::GetFriendsResponse, friends_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::pbmsg::GetFriendsRespond, friends_),
   ~0u,
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::pbmsg::SendMessageRequest, _has_bits_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::pbmsg::SendMessageRequest, _internal_metadata_),
@@ -334,32 +334,32 @@ const ::google::protobuf::uint32 TableStruct::offsets[] GOOGLE_PROTOBUF_ATTRIBUT
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::pbmsg::SendMessageRequest, text_),
   0,
   1,
-  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::pbmsg::FriendNotification, _has_bits_),
-  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::pbmsg::FriendNotification, _internal_metadata_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::pbmsg::FriendNotify, _has_bits_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::pbmsg::FriendNotify, _internal_metadata_),
   ~0u,  // no _extensions_
   ~0u,  // no _oneof_case_
   ~0u,  // no _weak_field_map_
-  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::pbmsg::FriendNotification, name_),
-  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::pbmsg::FriendNotification, online_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::pbmsg::FriendNotify, name_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::pbmsg::FriendNotify, online_),
   0,
   1,
-  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::pbmsg::MessageNotification, _has_bits_),
-  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::pbmsg::MessageNotification, _internal_metadata_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::pbmsg::MessageNotify, _has_bits_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::pbmsg::MessageNotify, _internal_metadata_),
   ~0u,  // no _extensions_
   ~0u,  // no _oneof_case_
   ~0u,  // no _weak_field_map_
-  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::pbmsg::MessageNotification, sender_),
-  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::pbmsg::MessageNotification, text_),
-  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::pbmsg::MessageNotification, timestamp_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::pbmsg::MessageNotify, sender_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::pbmsg::MessageNotify, text_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::pbmsg::MessageNotify, timestamp_),
   0,
   1,
   2,
-  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::pbmsg::WelcomeNotification, _has_bits_),
-  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::pbmsg::WelcomeNotification, _internal_metadata_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::pbmsg::WelcomeNotify, _has_bits_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::pbmsg::WelcomeNotify, _internal_metadata_),
   ~0u,  // no _extensions_
   ~0u,  // no _oneof_case_
   ~0u,  // no _weak_field_map_
-  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::pbmsg::WelcomeNotification, text_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::pbmsg::WelcomeNotify, text_),
   0,
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::pbmsg::Request, _has_bits_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::pbmsg::Request, _internal_metadata_),
@@ -367,32 +367,32 @@ const ::google::protobuf::uint32 TableStruct::offsets[] GOOGLE_PROTOBUF_ATTRIBUT
   ~0u,  // no _oneof_case_
   ~0u,  // no _weak_field_map_
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::pbmsg::Request, login_),
-  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::pbmsg::Request, send_message_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::pbmsg::Request, sendmessage_),
   0,
   1,
-  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::pbmsg::Response, _has_bits_),
-  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::pbmsg::Response, _internal_metadata_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::pbmsg::Respond, _has_bits_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::pbmsg::Respond, _internal_metadata_),
   ~0u,  // no _extensions_
   ~0u,  // no _oneof_case_
   ~0u,  // no _weak_field_map_
-  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::pbmsg::Response, result_),
-  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::pbmsg::Response, last_response_),
-  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::pbmsg::Response, error_describe_),
-  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::pbmsg::Response, login_),
-  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::pbmsg::Response, get_friends_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::pbmsg::Respond, result_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::pbmsg::Respond, lastrespond_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::pbmsg::Respond, errordescribe_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::pbmsg::Respond, login_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::pbmsg::Respond, friends_),
   3,
   4,
   0,
   1,
   2,
-  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::pbmsg::Notification, _has_bits_),
-  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::pbmsg::Notification, _internal_metadata_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::pbmsg::Notify, _has_bits_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::pbmsg::Notify, _internal_metadata_),
   ~0u,  // no _extensions_
   ~0u,  // no _oneof_case_
   ~0u,  // no _weak_field_map_
-  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::pbmsg::Notification, friend__),
-  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::pbmsg::Notification, msg_),
-  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::pbmsg::Notification, welcome_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::pbmsg::Notify, friend__),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::pbmsg::Notify, msg_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::pbmsg::Notify, welcome_),
   0,
   1,
   2,
@@ -401,12 +401,12 @@ const ::google::protobuf::uint32 TableStruct::offsets[] GOOGLE_PROTOBUF_ATTRIBUT
   ~0u,  // no _extensions_
   ~0u,  // no _oneof_case_
   ~0u,  // no _weak_field_map_
-  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::pbmsg::Message, msg_type_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::pbmsg::Message, msgtype_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::pbmsg::Message, sequence_),
-  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::pbmsg::Message, session_id_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::pbmsg::Message, sessionid_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::pbmsg::Message, request_),
-  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::pbmsg::Message, response_),
-  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::pbmsg::Message, notification_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::pbmsg::Message, respond_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::pbmsg::Message, notify_),
   5,
   3,
   4,
@@ -416,31 +416,31 @@ const ::google::protobuf::uint32 TableStruct::offsets[] GOOGLE_PROTOBUF_ATTRIBUT
 };
 static const ::google::protobuf::internal::MigrationSchema schemas[] GOOGLE_PROTOBUF_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {
   { 0, 7, sizeof(::pbmsg::LoginRequest)},
-  { 9, 15, sizeof(::pbmsg::LoginResponse)},
+  { 9, 15, sizeof(::pbmsg::LoginRespond)},
   { 16, 23, sizeof(::pbmsg::Friend)},
-  { 25, 31, sizeof(::pbmsg::GetFriendsResponse)},
+  { 25, 31, sizeof(::pbmsg::GetFriendsRespond)},
   { 32, 39, sizeof(::pbmsg::SendMessageRequest)},
-  { 41, 48, sizeof(::pbmsg::FriendNotification)},
-  { 50, 58, sizeof(::pbmsg::MessageNotification)},
-  { 61, 67, sizeof(::pbmsg::WelcomeNotification)},
+  { 41, 48, sizeof(::pbmsg::FriendNotify)},
+  { 50, 58, sizeof(::pbmsg::MessageNotify)},
+  { 61, 67, sizeof(::pbmsg::WelcomeNotify)},
   { 68, 75, sizeof(::pbmsg::Request)},
-  { 77, 87, sizeof(::pbmsg::Response)},
-  { 92, 100, sizeof(::pbmsg::Notification)},
+  { 77, 87, sizeof(::pbmsg::Respond)},
+  { 92, 100, sizeof(::pbmsg::Notify)},
   { 103, 114, sizeof(::pbmsg::Message)},
 };
 
 static ::google::protobuf::Message const * const file_default_instances[] = {
   reinterpret_cast<const ::google::protobuf::Message*>(&::pbmsg::_LoginRequest_default_instance_),
-  reinterpret_cast<const ::google::protobuf::Message*>(&::pbmsg::_LoginResponse_default_instance_),
+  reinterpret_cast<const ::google::protobuf::Message*>(&::pbmsg::_LoginRespond_default_instance_),
   reinterpret_cast<const ::google::protobuf::Message*>(&::pbmsg::_Friend_default_instance_),
-  reinterpret_cast<const ::google::protobuf::Message*>(&::pbmsg::_GetFriendsResponse_default_instance_),
+  reinterpret_cast<const ::google::protobuf::Message*>(&::pbmsg::_GetFriendsRespond_default_instance_),
   reinterpret_cast<const ::google::protobuf::Message*>(&::pbmsg::_SendMessageRequest_default_instance_),
-  reinterpret_cast<const ::google::protobuf::Message*>(&::pbmsg::_FriendNotification_default_instance_),
-  reinterpret_cast<const ::google::protobuf::Message*>(&::pbmsg::_MessageNotification_default_instance_),
-  reinterpret_cast<const ::google::protobuf::Message*>(&::pbmsg::_WelcomeNotification_default_instance_),
+  reinterpret_cast<const ::google::protobuf::Message*>(&::pbmsg::_FriendNotify_default_instance_),
+  reinterpret_cast<const ::google::protobuf::Message*>(&::pbmsg::_MessageNotify_default_instance_),
+  reinterpret_cast<const ::google::protobuf::Message*>(&::pbmsg::_WelcomeNotify_default_instance_),
   reinterpret_cast<const ::google::protobuf::Message*>(&::pbmsg::_Request_default_instance_),
-  reinterpret_cast<const ::google::protobuf::Message*>(&::pbmsg::_Response_default_instance_),
-  reinterpret_cast<const ::google::protobuf::Message*>(&::pbmsg::_Notification_default_instance_),
+  reinterpret_cast<const ::google::protobuf::Message*>(&::pbmsg::_Respond_default_instance_),
+  reinterpret_cast<const ::google::protobuf::Message*>(&::pbmsg::_Notify_default_instance_),
   reinterpret_cast<const ::google::protobuf::Message*>(&::pbmsg::_Message_default_instance_),
 };
 
@@ -466,45 +466,42 @@ void AddDescriptorsImpl() {
   InitDefaults();
   static const char descriptor[] GOOGLE_PROTOBUF_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {
       "\n\rMessage.proto\022\005pbmsg\"2\n\014LoginRequest\022\020"
-      "\n\010username\030\001 \002(\014\022\020\n\010password\030\002 \001(\t\"\034\n\rLo"
-      "ginResponse\022\013\n\003ttl\030\001 \002(\007\"&\n\006Friend\022\014\n\004na"
-      "me\030\001 \002(\014\022\016\n\006online\030\002 \001(\010\"4\n\022GetFriendsRe"
-      "sponse\022\036\n\007friends\030\001 \003(\0132\r.pbmsg.Friend\"4"
-      "\n\022SendMessageRequest\022\020\n\010receiver\030\001 \001(\014\022\014"
-      "\n\004text\030\002 \002(\014\"2\n\022FriendNotification\022\014\n\004na"
-      "me\030\001 \002(\014\022\016\n\006online\030\002 \001(\010\"F\n\023MessageNotif"
-      "ication\022\016\n\006sender\030\001 \002(\014\022\014\n\004text\030\002 \002(\014\022\021\n"
-      "\ttimestamp\030\003 \002(\t\"#\n\023WelcomeNotification\022"
-      "\014\n\004text\030\001 \002(\014\"^\n\007Request\022\"\n\005login\030\001 \001(\0132"
-      "\023.pbmsg.LoginRequest\022/\n\014send_message\030\002 \001"
-      "(\0132\031.pbmsg.SendMessageRequest\"\236\001\n\010Respon"
-      "se\022\016\n\006result\030\001 \002(\010\022\025\n\rlast_response\030\002 \002("
-      "\010\022\026\n\016error_describe\030\003 \001(\014\022#\n\005login\030\004 \001(\013"
-      "2\024.pbmsg.LoginResponse\022.\n\013get_friends\030\005 "
-      "\001(\0132\031.pbmsg.GetFriendsResponse\"\217\001\n\014Notif"
-      "ication\022)\n\006friend\030\001 \001(\0132\031.pbmsg.FriendNo"
-      "tification\022\'\n\003msg\030\002 \001(\0132\032.pbmsg.MessageN"
-      "otification\022+\n\007welcome\030\003 \001(\0132\032.pbmsg.Wel"
-      "comeNotification\"\274\001\n\007Message\022\034\n\010msg_type"
-      "\030\001 \002(\0162\n.pbmsg.MSG\022\020\n\010sequence\030\002 \002(\007\022\022\n\n"
-      "session_id\030\003 \001(\007\022\037\n\007request\030\004 \001(\0132\016.pbms"
-      "g.Request\022!\n\010response\030\005 \001(\0132\017.pbmsg.Resp"
-      "onse\022)\n\014notification\030\006 \001(\0132\023.pbmsg.Notif"
-      "ication*\311\002\n\003MSG\022\022\n\rLogin_Request\020\221N\022\023\n\016L"
-      "ogin_Response\020\222N\022\023\n\016Logout_Request\020\223N\022\024\n"
-      "\017Logout_Response\020\224N\022\026\n\021Keepalive_Request"
-      "\020\225N\022\027\n\022Keepalive_Response\020\226N\022\030\n\023Get_Frie"
-      "nds_Request\020\227N\022\031\n\024Get_Friends_Response\020\230"
-      "N\022\031\n\024Send_Message_Request\020\231N\022\032\n\025Send_Mes"
-      "sage_Response\020\232N\022\031\n\023Friend_Notification\020"
-      "\241\234\001\022\032\n\024Message_Notification\020\242\234\001\022\032\n\024Welco"
-      "me_Notification\020\243\234\001*p\n\010ERR_CODE\022\027\n\021CLIEN"
-      "T_ERR_REFUSE\020\241\215\006\022\027\n\021CLIENT_ERR_ACCEPT\020\242\215"
-      "\006\022\026\n\020SERVER1_ERR_STOP\020\301\232\014\022\032\n\024SERVER2_ERR"
-      "_OVERLOAD\020\341\247\022"
+      "\n\010username\030\001 \002(\014\022\020\n\010password\030\002 \001(\t\"\033\n\014Lo"
+      "ginRespond\022\013\n\003ttl\030\001 \002(\007\"&\n\006Friend\022\014\n\004nam"
+      "e\030\001 \002(\014\022\016\n\006online\030\002 \001(\010\"3\n\021GetFriendsRes"
+      "pond\022\036\n\007friends\030\001 \003(\0132\r.pbmsg.Friend\"4\n\022"
+      "SendMessageRequest\022\020\n\010receiver\030\001 \001(\014\022\014\n\004"
+      "text\030\002 \002(\014\",\n\014FriendNotify\022\014\n\004name\030\001 \002(\014"
+      "\022\016\n\006online\030\002 \001(\010\"@\n\rMessageNotify\022\016\n\006sen"
+      "der\030\001 \002(\014\022\014\n\004text\030\002 \002(\014\022\021\n\ttimestamp\030\003 \002"
+      "(\t\"\035\n\rWelcomeNotify\022\014\n\004text\030\001 \002(\014\"]\n\007Req"
+      "uest\022\"\n\005login\030\001 \001(\0132\023.pbmsg.LoginRequest"
+      "\022.\n\013sendMessage\030\002 \001(\0132\031.pbmsg.SendMessag"
+      "eRequest\"\224\001\n\007Respond\022\016\n\006result\030\001 \002(\010\022\023\n\013"
+      "lastRespond\030\002 \002(\010\022\025\n\rerrorDescribe\030\003 \001(\014"
+      "\022\"\n\005login\030\004 \001(\0132\023.pbmsg.LoginRespond\022)\n\007"
+      "friends\030\005 \001(\0132\030.pbmsg.GetFriendsRespond\""
+      "w\n\006Notify\022#\n\006friend\030\001 \001(\0132\023.pbmsg.Friend"
+      "Notify\022!\n\003msg\030\002 \001(\0132\024.pbmsg.MessageNotif"
+      "y\022%\n\007welcome\030\003 \001(\0132\024.pbmsg.WelcomeNotify"
+      "\"\254\001\n\007Message\022\033\n\007msgType\030\001 \002(\0162\n.pbmsg.MS"
+      "G\022\020\n\010sequence\030\002 \002(\007\022\021\n\tsessionId\030\003 \001(\007\022\037"
+      "\n\007request\030\004 \001(\0132\016.pbmsg.Request\022\037\n\007respo"
+      "nd\030\005 \001(\0132\016.pbmsg.Respond\022\035\n\006notify\030\006 \001(\013"
+      "2\r.pbmsg.Notify*\256\002\n\003MSG\022\022\n\rELoginRequest"
+      "\020\221N\022\022\n\rELoginRespond\020\222N\022\023\n\016ELogoutReques"
+      "t\020\223N\022\023\n\016ELogoutRespond\020\224N\022\026\n\021EKeepaliveR"
+      "equest\020\225N\022\026\n\021EKeepaliveRespond\020\226N\022\027\n\022EGe"
+      "tFriendsRequest\020\227N\022\027\n\022EGetFriendsRespond"
+      "\020\230N\022\030\n\023ESendMessageRequest\020\231N\022\030\n\023ESendMe"
+      "ssageRespond\020\232N\022\023\n\rEFriendNotify\020\241\234\001\022\024\n\016"
+      "EMessageNotify\020\242\234\001\022\024\n\016EWelcomeNotify\020\243\234\001"
+      "*p\n\010ERR_CODE\022\027\n\021CLIENT_ERR_REFUSE\020\241\215\006\022\027\n"
+      "\021CLIENT_ERR_ACCEPT\020\242\215\006\022\026\n\020SERVER1_ERR_ST"
+      "OP\020\301\232\014\022\032\n\024SERVER2_ERR_OVERLOAD\020\341\247\022"
   };
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-      descriptor, 1453);
+      descriptor, 1354);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "Message.proto", &protobuf_RegisterTypes);
 }
@@ -868,56 +865,56 @@ void LoginRequest::InternalSwap(LoginRequest* other) {
 
 // ===================================================================
 
-void LoginResponse::InitAsDefaultInstance() {
+void LoginRespond::InitAsDefaultInstance() {
 }
 #if !defined(_MSC_VER) || _MSC_VER >= 1900
-const int LoginResponse::kTtlFieldNumber;
+const int LoginRespond::kTtlFieldNumber;
 #endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
 
-LoginResponse::LoginResponse()
+LoginRespond::LoginRespond()
   : ::google::protobuf::Message(), _internal_metadata_(NULL) {
   ::google::protobuf::internal::InitSCC(
-      &protobuf_Message_2eproto::scc_info_LoginResponse.base);
+      &protobuf_Message_2eproto::scc_info_LoginRespond.base);
   SharedCtor();
-  // @@protoc_insertion_point(constructor:pbmsg.LoginResponse)
+  // @@protoc_insertion_point(constructor:pbmsg.LoginRespond)
 }
-LoginResponse::LoginResponse(const LoginResponse& from)
+LoginRespond::LoginRespond(const LoginRespond& from)
   : ::google::protobuf::Message(),
       _internal_metadata_(NULL),
       _has_bits_(from._has_bits_) {
   _internal_metadata_.MergeFrom(from._internal_metadata_);
   ttl_ = from.ttl_;
-  // @@protoc_insertion_point(copy_constructor:pbmsg.LoginResponse)
+  // @@protoc_insertion_point(copy_constructor:pbmsg.LoginRespond)
 }
 
-void LoginResponse::SharedCtor() {
+void LoginRespond::SharedCtor() {
   ttl_ = 0u;
 }
 
-LoginResponse::~LoginResponse() {
-  // @@protoc_insertion_point(destructor:pbmsg.LoginResponse)
+LoginRespond::~LoginRespond() {
+  // @@protoc_insertion_point(destructor:pbmsg.LoginRespond)
   SharedDtor();
 }
 
-void LoginResponse::SharedDtor() {
+void LoginRespond::SharedDtor() {
 }
 
-void LoginResponse::SetCachedSize(int size) const {
+void LoginRespond::SetCachedSize(int size) const {
   _cached_size_.Set(size);
 }
-const ::google::protobuf::Descriptor* LoginResponse::descriptor() {
+const ::google::protobuf::Descriptor* LoginRespond::descriptor() {
   ::protobuf_Message_2eproto::protobuf_AssignDescriptorsOnce();
   return ::protobuf_Message_2eproto::file_level_metadata[kIndexInFileMessages].descriptor;
 }
 
-const LoginResponse& LoginResponse::default_instance() {
-  ::google::protobuf::internal::InitSCC(&protobuf_Message_2eproto::scc_info_LoginResponse.base);
+const LoginRespond& LoginRespond::default_instance() {
+  ::google::protobuf::internal::InitSCC(&protobuf_Message_2eproto::scc_info_LoginRespond.base);
   return *internal_default_instance();
 }
 
 
-void LoginResponse::Clear() {
-// @@protoc_insertion_point(message_clear_start:pbmsg.LoginResponse)
+void LoginRespond::Clear() {
+// @@protoc_insertion_point(message_clear_start:pbmsg.LoginRespond)
   ::google::protobuf::uint32 cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
@@ -927,11 +924,11 @@ void LoginResponse::Clear() {
   _internal_metadata_.Clear();
 }
 
-bool LoginResponse::MergePartialFromCodedStream(
+bool LoginRespond::MergePartialFromCodedStream(
     ::google::protobuf::io::CodedInputStream* input) {
 #define DO_(EXPRESSION) if (!GOOGLE_PREDICT_TRUE(EXPRESSION)) goto failure
   ::google::protobuf::uint32 tag;
-  // @@protoc_insertion_point(parse_start:pbmsg.LoginResponse)
+  // @@protoc_insertion_point(parse_start:pbmsg.LoginRespond)
   for (;;) {
     ::std::pair<::google::protobuf::uint32, bool> p = input->ReadTagWithCutoffNoLastTag(127u);
     tag = p.first;
@@ -963,17 +960,17 @@ bool LoginResponse::MergePartialFromCodedStream(
     }
   }
 success:
-  // @@protoc_insertion_point(parse_success:pbmsg.LoginResponse)
+  // @@protoc_insertion_point(parse_success:pbmsg.LoginRespond)
   return true;
 failure:
-  // @@protoc_insertion_point(parse_failure:pbmsg.LoginResponse)
+  // @@protoc_insertion_point(parse_failure:pbmsg.LoginRespond)
   return false;
 #undef DO_
 }
 
-void LoginResponse::SerializeWithCachedSizes(
+void LoginRespond::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
-  // @@protoc_insertion_point(serialize_start:pbmsg.LoginResponse)
+  // @@protoc_insertion_point(serialize_start:pbmsg.LoginRespond)
   ::google::protobuf::uint32 cached_has_bits = 0;
   (void) cached_has_bits;
 
@@ -987,13 +984,13 @@ void LoginResponse::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
         _internal_metadata_.unknown_fields(), output);
   }
-  // @@protoc_insertion_point(serialize_end:pbmsg.LoginResponse)
+  // @@protoc_insertion_point(serialize_end:pbmsg.LoginRespond)
 }
 
-::google::protobuf::uint8* LoginResponse::InternalSerializeWithCachedSizesToArray(
+::google::protobuf::uint8* LoginRespond::InternalSerializeWithCachedSizesToArray(
     bool deterministic, ::google::protobuf::uint8* target) const {
   (void)deterministic; // Unused
-  // @@protoc_insertion_point(serialize_to_array_start:pbmsg.LoginResponse)
+  // @@protoc_insertion_point(serialize_to_array_start:pbmsg.LoginRespond)
   ::google::protobuf::uint32 cached_has_bits = 0;
   (void) cached_has_bits;
 
@@ -1007,12 +1004,12 @@ void LoginResponse::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
         _internal_metadata_.unknown_fields(), target);
   }
-  // @@protoc_insertion_point(serialize_to_array_end:pbmsg.LoginResponse)
+  // @@protoc_insertion_point(serialize_to_array_end:pbmsg.LoginRespond)
   return target;
 }
 
-size_t LoginResponse::ByteSizeLong() const {
-// @@protoc_insertion_point(message_byte_size_start:pbmsg.LoginResponse)
+size_t LoginRespond::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:pbmsg.LoginRespond)
   size_t total_size = 0;
 
   if (_internal_metadata_.have_unknown_fields()) {
@@ -1029,23 +1026,23 @@ size_t LoginResponse::ByteSizeLong() const {
   return total_size;
 }
 
-void LoginResponse::MergeFrom(const ::google::protobuf::Message& from) {
-// @@protoc_insertion_point(generalized_merge_from_start:pbmsg.LoginResponse)
+void LoginRespond::MergeFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_merge_from_start:pbmsg.LoginRespond)
   GOOGLE_DCHECK_NE(&from, this);
-  const LoginResponse* source =
-      ::google::protobuf::internal::DynamicCastToGenerated<const LoginResponse>(
+  const LoginRespond* source =
+      ::google::protobuf::internal::DynamicCastToGenerated<const LoginRespond>(
           &from);
   if (source == NULL) {
-  // @@protoc_insertion_point(generalized_merge_from_cast_fail:pbmsg.LoginResponse)
+  // @@protoc_insertion_point(generalized_merge_from_cast_fail:pbmsg.LoginRespond)
     ::google::protobuf::internal::ReflectionOps::Merge(from, this);
   } else {
-  // @@protoc_insertion_point(generalized_merge_from_cast_success:pbmsg.LoginResponse)
+  // @@protoc_insertion_point(generalized_merge_from_cast_success:pbmsg.LoginRespond)
     MergeFrom(*source);
   }
 }
 
-void LoginResponse::MergeFrom(const LoginResponse& from) {
-// @@protoc_insertion_point(class_specific_merge_from_start:pbmsg.LoginResponse)
+void LoginRespond::MergeFrom(const LoginRespond& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:pbmsg.LoginRespond)
   GOOGLE_DCHECK_NE(&from, this);
   _internal_metadata_.MergeFrom(from._internal_metadata_);
   ::google::protobuf::uint32 cached_has_bits = 0;
@@ -1056,37 +1053,37 @@ void LoginResponse::MergeFrom(const LoginResponse& from) {
   }
 }
 
-void LoginResponse::CopyFrom(const ::google::protobuf::Message& from) {
-// @@protoc_insertion_point(generalized_copy_from_start:pbmsg.LoginResponse)
+void LoginRespond::CopyFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_copy_from_start:pbmsg.LoginRespond)
   if (&from == this) return;
   Clear();
   MergeFrom(from);
 }
 
-void LoginResponse::CopyFrom(const LoginResponse& from) {
-// @@protoc_insertion_point(class_specific_copy_from_start:pbmsg.LoginResponse)
+void LoginRespond::CopyFrom(const LoginRespond& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:pbmsg.LoginRespond)
   if (&from == this) return;
   Clear();
   MergeFrom(from);
 }
 
-bool LoginResponse::IsInitialized() const {
+bool LoginRespond::IsInitialized() const {
   if ((_has_bits_[0] & 0x00000001) != 0x00000001) return false;
   return true;
 }
 
-void LoginResponse::Swap(LoginResponse* other) {
+void LoginRespond::Swap(LoginRespond* other) {
   if (other == this) return;
   InternalSwap(other);
 }
-void LoginResponse::InternalSwap(LoginResponse* other) {
+void LoginRespond::InternalSwap(LoginRespond* other) {
   using std::swap;
   swap(ttl_, other->ttl_);
   swap(_has_bits_[0], other->_has_bits_[0]);
   _internal_metadata_.Swap(&other->_internal_metadata_);
 }
 
-::google::protobuf::Metadata LoginResponse::GetMetadata() const {
+::google::protobuf::Metadata LoginRespond::GetMetadata() const {
   protobuf_Message_2eproto::protobuf_AssignDescriptorsOnce();
   return ::protobuf_Message_2eproto::file_level_metadata[kIndexInFileMessages];
 }
@@ -1373,55 +1370,55 @@ void Friend::InternalSwap(Friend* other) {
 
 // ===================================================================
 
-void GetFriendsResponse::InitAsDefaultInstance() {
+void GetFriendsRespond::InitAsDefaultInstance() {
 }
 #if !defined(_MSC_VER) || _MSC_VER >= 1900
-const int GetFriendsResponse::kFriendsFieldNumber;
+const int GetFriendsRespond::kFriendsFieldNumber;
 #endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
 
-GetFriendsResponse::GetFriendsResponse()
+GetFriendsRespond::GetFriendsRespond()
   : ::google::protobuf::Message(), _internal_metadata_(NULL) {
   ::google::protobuf::internal::InitSCC(
-      &protobuf_Message_2eproto::scc_info_GetFriendsResponse.base);
+      &protobuf_Message_2eproto::scc_info_GetFriendsRespond.base);
   SharedCtor();
-  // @@protoc_insertion_point(constructor:pbmsg.GetFriendsResponse)
+  // @@protoc_insertion_point(constructor:pbmsg.GetFriendsRespond)
 }
-GetFriendsResponse::GetFriendsResponse(const GetFriendsResponse& from)
+GetFriendsRespond::GetFriendsRespond(const GetFriendsRespond& from)
   : ::google::protobuf::Message(),
       _internal_metadata_(NULL),
       _has_bits_(from._has_bits_),
       friends_(from.friends_) {
   _internal_metadata_.MergeFrom(from._internal_metadata_);
-  // @@protoc_insertion_point(copy_constructor:pbmsg.GetFriendsResponse)
+  // @@protoc_insertion_point(copy_constructor:pbmsg.GetFriendsRespond)
 }
 
-void GetFriendsResponse::SharedCtor() {
+void GetFriendsRespond::SharedCtor() {
 }
 
-GetFriendsResponse::~GetFriendsResponse() {
-  // @@protoc_insertion_point(destructor:pbmsg.GetFriendsResponse)
+GetFriendsRespond::~GetFriendsRespond() {
+  // @@protoc_insertion_point(destructor:pbmsg.GetFriendsRespond)
   SharedDtor();
 }
 
-void GetFriendsResponse::SharedDtor() {
+void GetFriendsRespond::SharedDtor() {
 }
 
-void GetFriendsResponse::SetCachedSize(int size) const {
+void GetFriendsRespond::SetCachedSize(int size) const {
   _cached_size_.Set(size);
 }
-const ::google::protobuf::Descriptor* GetFriendsResponse::descriptor() {
+const ::google::protobuf::Descriptor* GetFriendsRespond::descriptor() {
   ::protobuf_Message_2eproto::protobuf_AssignDescriptorsOnce();
   return ::protobuf_Message_2eproto::file_level_metadata[kIndexInFileMessages].descriptor;
 }
 
-const GetFriendsResponse& GetFriendsResponse::default_instance() {
-  ::google::protobuf::internal::InitSCC(&protobuf_Message_2eproto::scc_info_GetFriendsResponse.base);
+const GetFriendsRespond& GetFriendsRespond::default_instance() {
+  ::google::protobuf::internal::InitSCC(&protobuf_Message_2eproto::scc_info_GetFriendsRespond.base);
   return *internal_default_instance();
 }
 
 
-void GetFriendsResponse::Clear() {
-// @@protoc_insertion_point(message_clear_start:pbmsg.GetFriendsResponse)
+void GetFriendsRespond::Clear() {
+// @@protoc_insertion_point(message_clear_start:pbmsg.GetFriendsRespond)
   ::google::protobuf::uint32 cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
@@ -1431,11 +1428,11 @@ void GetFriendsResponse::Clear() {
   _internal_metadata_.Clear();
 }
 
-bool GetFriendsResponse::MergePartialFromCodedStream(
+bool GetFriendsRespond::MergePartialFromCodedStream(
     ::google::protobuf::io::CodedInputStream* input) {
 #define DO_(EXPRESSION) if (!GOOGLE_PREDICT_TRUE(EXPRESSION)) goto failure
   ::google::protobuf::uint32 tag;
-  // @@protoc_insertion_point(parse_start:pbmsg.GetFriendsResponse)
+  // @@protoc_insertion_point(parse_start:pbmsg.GetFriendsRespond)
   for (;;) {
     ::std::pair<::google::protobuf::uint32, bool> p = input->ReadTagWithCutoffNoLastTag(127u);
     tag = p.first;
@@ -1465,17 +1462,17 @@ bool GetFriendsResponse::MergePartialFromCodedStream(
     }
   }
 success:
-  // @@protoc_insertion_point(parse_success:pbmsg.GetFriendsResponse)
+  // @@protoc_insertion_point(parse_success:pbmsg.GetFriendsRespond)
   return true;
 failure:
-  // @@protoc_insertion_point(parse_failure:pbmsg.GetFriendsResponse)
+  // @@protoc_insertion_point(parse_failure:pbmsg.GetFriendsRespond)
   return false;
 #undef DO_
 }
 
-void GetFriendsResponse::SerializeWithCachedSizes(
+void GetFriendsRespond::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
-  // @@protoc_insertion_point(serialize_start:pbmsg.GetFriendsResponse)
+  // @@protoc_insertion_point(serialize_start:pbmsg.GetFriendsRespond)
   ::google::protobuf::uint32 cached_has_bits = 0;
   (void) cached_has_bits;
 
@@ -1492,13 +1489,13 @@ void GetFriendsResponse::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
         _internal_metadata_.unknown_fields(), output);
   }
-  // @@protoc_insertion_point(serialize_end:pbmsg.GetFriendsResponse)
+  // @@protoc_insertion_point(serialize_end:pbmsg.GetFriendsRespond)
 }
 
-::google::protobuf::uint8* GetFriendsResponse::InternalSerializeWithCachedSizesToArray(
+::google::protobuf::uint8* GetFriendsRespond::InternalSerializeWithCachedSizesToArray(
     bool deterministic, ::google::protobuf::uint8* target) const {
   (void)deterministic; // Unused
-  // @@protoc_insertion_point(serialize_to_array_start:pbmsg.GetFriendsResponse)
+  // @@protoc_insertion_point(serialize_to_array_start:pbmsg.GetFriendsRespond)
   ::google::protobuf::uint32 cached_has_bits = 0;
   (void) cached_has_bits;
 
@@ -1514,12 +1511,12 @@ void GetFriendsResponse::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
         _internal_metadata_.unknown_fields(), target);
   }
-  // @@protoc_insertion_point(serialize_to_array_end:pbmsg.GetFriendsResponse)
+  // @@protoc_insertion_point(serialize_to_array_end:pbmsg.GetFriendsRespond)
   return target;
 }
 
-size_t GetFriendsResponse::ByteSizeLong() const {
-// @@protoc_insertion_point(message_byte_size_start:pbmsg.GetFriendsResponse)
+size_t GetFriendsRespond::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:pbmsg.GetFriendsRespond)
   size_t total_size = 0;
 
   if (_internal_metadata_.have_unknown_fields()) {
@@ -1543,23 +1540,23 @@ size_t GetFriendsResponse::ByteSizeLong() const {
   return total_size;
 }
 
-void GetFriendsResponse::MergeFrom(const ::google::protobuf::Message& from) {
-// @@protoc_insertion_point(generalized_merge_from_start:pbmsg.GetFriendsResponse)
+void GetFriendsRespond::MergeFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_merge_from_start:pbmsg.GetFriendsRespond)
   GOOGLE_DCHECK_NE(&from, this);
-  const GetFriendsResponse* source =
-      ::google::protobuf::internal::DynamicCastToGenerated<const GetFriendsResponse>(
+  const GetFriendsRespond* source =
+      ::google::protobuf::internal::DynamicCastToGenerated<const GetFriendsRespond>(
           &from);
   if (source == NULL) {
-  // @@protoc_insertion_point(generalized_merge_from_cast_fail:pbmsg.GetFriendsResponse)
+  // @@protoc_insertion_point(generalized_merge_from_cast_fail:pbmsg.GetFriendsRespond)
     ::google::protobuf::internal::ReflectionOps::Merge(from, this);
   } else {
-  // @@protoc_insertion_point(generalized_merge_from_cast_success:pbmsg.GetFriendsResponse)
+  // @@protoc_insertion_point(generalized_merge_from_cast_success:pbmsg.GetFriendsRespond)
     MergeFrom(*source);
   }
 }
 
-void GetFriendsResponse::MergeFrom(const GetFriendsResponse& from) {
-// @@protoc_insertion_point(class_specific_merge_from_start:pbmsg.GetFriendsResponse)
+void GetFriendsRespond::MergeFrom(const GetFriendsRespond& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:pbmsg.GetFriendsRespond)
   GOOGLE_DCHECK_NE(&from, this);
   _internal_metadata_.MergeFrom(from._internal_metadata_);
   ::google::protobuf::uint32 cached_has_bits = 0;
@@ -1568,37 +1565,37 @@ void GetFriendsResponse::MergeFrom(const GetFriendsResponse& from) {
   friends_.MergeFrom(from.friends_);
 }
 
-void GetFriendsResponse::CopyFrom(const ::google::protobuf::Message& from) {
-// @@protoc_insertion_point(generalized_copy_from_start:pbmsg.GetFriendsResponse)
+void GetFriendsRespond::CopyFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_copy_from_start:pbmsg.GetFriendsRespond)
   if (&from == this) return;
   Clear();
   MergeFrom(from);
 }
 
-void GetFriendsResponse::CopyFrom(const GetFriendsResponse& from) {
-// @@protoc_insertion_point(class_specific_copy_from_start:pbmsg.GetFriendsResponse)
+void GetFriendsRespond::CopyFrom(const GetFriendsRespond& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:pbmsg.GetFriendsRespond)
   if (&from == this) return;
   Clear();
   MergeFrom(from);
 }
 
-bool GetFriendsResponse::IsInitialized() const {
+bool GetFriendsRespond::IsInitialized() const {
   if (!::google::protobuf::internal::AllAreInitialized(this->friends())) return false;
   return true;
 }
 
-void GetFriendsResponse::Swap(GetFriendsResponse* other) {
+void GetFriendsRespond::Swap(GetFriendsRespond* other) {
   if (other == this) return;
   InternalSwap(other);
 }
-void GetFriendsResponse::InternalSwap(GetFriendsResponse* other) {
+void GetFriendsRespond::InternalSwap(GetFriendsRespond* other) {
   using std::swap;
   CastToBase(&friends_)->InternalSwap(CastToBase(&other->friends_));
   swap(_has_bits_[0], other->_has_bits_[0]);
   _internal_metadata_.Swap(&other->_internal_metadata_);
 }
 
-::google::protobuf::Metadata GetFriendsResponse::GetMetadata() const {
+::google::protobuf::Metadata GetFriendsRespond::GetMetadata() const {
   protobuf_Message_2eproto::protobuf_AssignDescriptorsOnce();
   return ::protobuf_Message_2eproto::file_level_metadata[kIndexInFileMessages];
 }
@@ -1897,21 +1894,21 @@ void SendMessageRequest::InternalSwap(SendMessageRequest* other) {
 
 // ===================================================================
 
-void FriendNotification::InitAsDefaultInstance() {
+void FriendNotify::InitAsDefaultInstance() {
 }
 #if !defined(_MSC_VER) || _MSC_VER >= 1900
-const int FriendNotification::kNameFieldNumber;
-const int FriendNotification::kOnlineFieldNumber;
+const int FriendNotify::kNameFieldNumber;
+const int FriendNotify::kOnlineFieldNumber;
 #endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
 
-FriendNotification::FriendNotification()
+FriendNotify::FriendNotify()
   : ::google::protobuf::Message(), _internal_metadata_(NULL) {
   ::google::protobuf::internal::InitSCC(
-      &protobuf_Message_2eproto::scc_info_FriendNotification.base);
+      &protobuf_Message_2eproto::scc_info_FriendNotify.base);
   SharedCtor();
-  // @@protoc_insertion_point(constructor:pbmsg.FriendNotification)
+  // @@protoc_insertion_point(constructor:pbmsg.FriendNotify)
 }
-FriendNotification::FriendNotification(const FriendNotification& from)
+FriendNotify::FriendNotify(const FriendNotify& from)
   : ::google::protobuf::Message(),
       _internal_metadata_(NULL),
       _has_bits_(from._has_bits_) {
@@ -1921,39 +1918,39 @@ FriendNotification::FriendNotification(const FriendNotification& from)
     name_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.name_);
   }
   online_ = from.online_;
-  // @@protoc_insertion_point(copy_constructor:pbmsg.FriendNotification)
+  // @@protoc_insertion_point(copy_constructor:pbmsg.FriendNotify)
 }
 
-void FriendNotification::SharedCtor() {
+void FriendNotify::SharedCtor() {
   name_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   online_ = false;
 }
 
-FriendNotification::~FriendNotification() {
-  // @@protoc_insertion_point(destructor:pbmsg.FriendNotification)
+FriendNotify::~FriendNotify() {
+  // @@protoc_insertion_point(destructor:pbmsg.FriendNotify)
   SharedDtor();
 }
 
-void FriendNotification::SharedDtor() {
+void FriendNotify::SharedDtor() {
   name_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
 
-void FriendNotification::SetCachedSize(int size) const {
+void FriendNotify::SetCachedSize(int size) const {
   _cached_size_.Set(size);
 }
-const ::google::protobuf::Descriptor* FriendNotification::descriptor() {
+const ::google::protobuf::Descriptor* FriendNotify::descriptor() {
   ::protobuf_Message_2eproto::protobuf_AssignDescriptorsOnce();
   return ::protobuf_Message_2eproto::file_level_metadata[kIndexInFileMessages].descriptor;
 }
 
-const FriendNotification& FriendNotification::default_instance() {
-  ::google::protobuf::internal::InitSCC(&protobuf_Message_2eproto::scc_info_FriendNotification.base);
+const FriendNotify& FriendNotify::default_instance() {
+  ::google::protobuf::internal::InitSCC(&protobuf_Message_2eproto::scc_info_FriendNotify.base);
   return *internal_default_instance();
 }
 
 
-void FriendNotification::Clear() {
-// @@protoc_insertion_point(message_clear_start:pbmsg.FriendNotification)
+void FriendNotify::Clear() {
+// @@protoc_insertion_point(message_clear_start:pbmsg.FriendNotify)
   ::google::protobuf::uint32 cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
@@ -1967,11 +1964,11 @@ void FriendNotification::Clear() {
   _internal_metadata_.Clear();
 }
 
-bool FriendNotification::MergePartialFromCodedStream(
+bool FriendNotify::MergePartialFromCodedStream(
     ::google::protobuf::io::CodedInputStream* input) {
 #define DO_(EXPRESSION) if (!GOOGLE_PREDICT_TRUE(EXPRESSION)) goto failure
   ::google::protobuf::uint32 tag;
-  // @@protoc_insertion_point(parse_start:pbmsg.FriendNotification)
+  // @@protoc_insertion_point(parse_start:pbmsg.FriendNotify)
   for (;;) {
     ::std::pair<::google::protobuf::uint32, bool> p = input->ReadTagWithCutoffNoLastTag(127u);
     tag = p.first;
@@ -2015,17 +2012,17 @@ bool FriendNotification::MergePartialFromCodedStream(
     }
   }
 success:
-  // @@protoc_insertion_point(parse_success:pbmsg.FriendNotification)
+  // @@protoc_insertion_point(parse_success:pbmsg.FriendNotify)
   return true;
 failure:
-  // @@protoc_insertion_point(parse_failure:pbmsg.FriendNotification)
+  // @@protoc_insertion_point(parse_failure:pbmsg.FriendNotify)
   return false;
 #undef DO_
 }
 
-void FriendNotification::SerializeWithCachedSizes(
+void FriendNotify::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
-  // @@protoc_insertion_point(serialize_start:pbmsg.FriendNotification)
+  // @@protoc_insertion_point(serialize_start:pbmsg.FriendNotify)
   ::google::protobuf::uint32 cached_has_bits = 0;
   (void) cached_has_bits;
 
@@ -2045,13 +2042,13 @@ void FriendNotification::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
         _internal_metadata_.unknown_fields(), output);
   }
-  // @@protoc_insertion_point(serialize_end:pbmsg.FriendNotification)
+  // @@protoc_insertion_point(serialize_end:pbmsg.FriendNotify)
 }
 
-::google::protobuf::uint8* FriendNotification::InternalSerializeWithCachedSizesToArray(
+::google::protobuf::uint8* FriendNotify::InternalSerializeWithCachedSizesToArray(
     bool deterministic, ::google::protobuf::uint8* target) const {
   (void)deterministic; // Unused
-  // @@protoc_insertion_point(serialize_to_array_start:pbmsg.FriendNotification)
+  // @@protoc_insertion_point(serialize_to_array_start:pbmsg.FriendNotify)
   ::google::protobuf::uint32 cached_has_bits = 0;
   (void) cached_has_bits;
 
@@ -2072,12 +2069,12 @@ void FriendNotification::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
         _internal_metadata_.unknown_fields(), target);
   }
-  // @@protoc_insertion_point(serialize_to_array_end:pbmsg.FriendNotification)
+  // @@protoc_insertion_point(serialize_to_array_end:pbmsg.FriendNotify)
   return target;
 }
 
-size_t FriendNotification::ByteSizeLong() const {
-// @@protoc_insertion_point(message_byte_size_start:pbmsg.FriendNotification)
+size_t FriendNotify::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:pbmsg.FriendNotify)
   size_t total_size = 0;
 
   if (_internal_metadata_.have_unknown_fields()) {
@@ -2101,23 +2098,23 @@ size_t FriendNotification::ByteSizeLong() const {
   return total_size;
 }
 
-void FriendNotification::MergeFrom(const ::google::protobuf::Message& from) {
-// @@protoc_insertion_point(generalized_merge_from_start:pbmsg.FriendNotification)
+void FriendNotify::MergeFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_merge_from_start:pbmsg.FriendNotify)
   GOOGLE_DCHECK_NE(&from, this);
-  const FriendNotification* source =
-      ::google::protobuf::internal::DynamicCastToGenerated<const FriendNotification>(
+  const FriendNotify* source =
+      ::google::protobuf::internal::DynamicCastToGenerated<const FriendNotify>(
           &from);
   if (source == NULL) {
-  // @@protoc_insertion_point(generalized_merge_from_cast_fail:pbmsg.FriendNotification)
+  // @@protoc_insertion_point(generalized_merge_from_cast_fail:pbmsg.FriendNotify)
     ::google::protobuf::internal::ReflectionOps::Merge(from, this);
   } else {
-  // @@protoc_insertion_point(generalized_merge_from_cast_success:pbmsg.FriendNotification)
+  // @@protoc_insertion_point(generalized_merge_from_cast_success:pbmsg.FriendNotify)
     MergeFrom(*source);
   }
 }
 
-void FriendNotification::MergeFrom(const FriendNotification& from) {
-// @@protoc_insertion_point(class_specific_merge_from_start:pbmsg.FriendNotification)
+void FriendNotify::MergeFrom(const FriendNotify& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:pbmsg.FriendNotify)
   GOOGLE_DCHECK_NE(&from, this);
   _internal_metadata_.MergeFrom(from._internal_metadata_);
   ::google::protobuf::uint32 cached_has_bits = 0;
@@ -2136,30 +2133,30 @@ void FriendNotification::MergeFrom(const FriendNotification& from) {
   }
 }
 
-void FriendNotification::CopyFrom(const ::google::protobuf::Message& from) {
-// @@protoc_insertion_point(generalized_copy_from_start:pbmsg.FriendNotification)
+void FriendNotify::CopyFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_copy_from_start:pbmsg.FriendNotify)
   if (&from == this) return;
   Clear();
   MergeFrom(from);
 }
 
-void FriendNotification::CopyFrom(const FriendNotification& from) {
-// @@protoc_insertion_point(class_specific_copy_from_start:pbmsg.FriendNotification)
+void FriendNotify::CopyFrom(const FriendNotify& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:pbmsg.FriendNotify)
   if (&from == this) return;
   Clear();
   MergeFrom(from);
 }
 
-bool FriendNotification::IsInitialized() const {
+bool FriendNotify::IsInitialized() const {
   if ((_has_bits_[0] & 0x00000001) != 0x00000001) return false;
   return true;
 }
 
-void FriendNotification::Swap(FriendNotification* other) {
+void FriendNotify::Swap(FriendNotify* other) {
   if (other == this) return;
   InternalSwap(other);
 }
-void FriendNotification::InternalSwap(FriendNotification* other) {
+void FriendNotify::InternalSwap(FriendNotify* other) {
   using std::swap;
   name_.Swap(&other->name_, &::google::protobuf::internal::GetEmptyStringAlreadyInited(),
     GetArenaNoVirtual());
@@ -2168,7 +2165,7 @@ void FriendNotification::InternalSwap(FriendNotification* other) {
   _internal_metadata_.Swap(&other->_internal_metadata_);
 }
 
-::google::protobuf::Metadata FriendNotification::GetMetadata() const {
+::google::protobuf::Metadata FriendNotify::GetMetadata() const {
   protobuf_Message_2eproto::protobuf_AssignDescriptorsOnce();
   return ::protobuf_Message_2eproto::file_level_metadata[kIndexInFileMessages];
 }
@@ -2176,22 +2173,22 @@ void FriendNotification::InternalSwap(FriendNotification* other) {
 
 // ===================================================================
 
-void MessageNotification::InitAsDefaultInstance() {
+void MessageNotify::InitAsDefaultInstance() {
 }
 #if !defined(_MSC_VER) || _MSC_VER >= 1900
-const int MessageNotification::kSenderFieldNumber;
-const int MessageNotification::kTextFieldNumber;
-const int MessageNotification::kTimestampFieldNumber;
+const int MessageNotify::kSenderFieldNumber;
+const int MessageNotify::kTextFieldNumber;
+const int MessageNotify::kTimestampFieldNumber;
 #endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
 
-MessageNotification::MessageNotification()
+MessageNotify::MessageNotify()
   : ::google::protobuf::Message(), _internal_metadata_(NULL) {
   ::google::protobuf::internal::InitSCC(
-      &protobuf_Message_2eproto::scc_info_MessageNotification.base);
+      &protobuf_Message_2eproto::scc_info_MessageNotify.base);
   SharedCtor();
-  // @@protoc_insertion_point(constructor:pbmsg.MessageNotification)
+  // @@protoc_insertion_point(constructor:pbmsg.MessageNotify)
 }
-MessageNotification::MessageNotification(const MessageNotification& from)
+MessageNotify::MessageNotify(const MessageNotify& from)
   : ::google::protobuf::Message(),
       _internal_metadata_(NULL),
       _has_bits_(from._has_bits_) {
@@ -2208,42 +2205,42 @@ MessageNotification::MessageNotification(const MessageNotification& from)
   if (from.has_timestamp()) {
     timestamp_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.timestamp_);
   }
-  // @@protoc_insertion_point(copy_constructor:pbmsg.MessageNotification)
+  // @@protoc_insertion_point(copy_constructor:pbmsg.MessageNotify)
 }
 
-void MessageNotification::SharedCtor() {
+void MessageNotify::SharedCtor() {
   sender_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   text_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   timestamp_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
 
-MessageNotification::~MessageNotification() {
-  // @@protoc_insertion_point(destructor:pbmsg.MessageNotification)
+MessageNotify::~MessageNotify() {
+  // @@protoc_insertion_point(destructor:pbmsg.MessageNotify)
   SharedDtor();
 }
 
-void MessageNotification::SharedDtor() {
+void MessageNotify::SharedDtor() {
   sender_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   text_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   timestamp_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
 
-void MessageNotification::SetCachedSize(int size) const {
+void MessageNotify::SetCachedSize(int size) const {
   _cached_size_.Set(size);
 }
-const ::google::protobuf::Descriptor* MessageNotification::descriptor() {
+const ::google::protobuf::Descriptor* MessageNotify::descriptor() {
   ::protobuf_Message_2eproto::protobuf_AssignDescriptorsOnce();
   return ::protobuf_Message_2eproto::file_level_metadata[kIndexInFileMessages].descriptor;
 }
 
-const MessageNotification& MessageNotification::default_instance() {
-  ::google::protobuf::internal::InitSCC(&protobuf_Message_2eproto::scc_info_MessageNotification.base);
+const MessageNotify& MessageNotify::default_instance() {
+  ::google::protobuf::internal::InitSCC(&protobuf_Message_2eproto::scc_info_MessageNotify.base);
   return *internal_default_instance();
 }
 
 
-void MessageNotification::Clear() {
-// @@protoc_insertion_point(message_clear_start:pbmsg.MessageNotification)
+void MessageNotify::Clear() {
+// @@protoc_insertion_point(message_clear_start:pbmsg.MessageNotify)
   ::google::protobuf::uint32 cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
@@ -2264,11 +2261,11 @@ void MessageNotification::Clear() {
   _internal_metadata_.Clear();
 }
 
-bool MessageNotification::MergePartialFromCodedStream(
+bool MessageNotify::MergePartialFromCodedStream(
     ::google::protobuf::io::CodedInputStream* input) {
 #define DO_(EXPRESSION) if (!GOOGLE_PREDICT_TRUE(EXPRESSION)) goto failure
   ::google::protobuf::uint32 tag;
-  // @@protoc_insertion_point(parse_start:pbmsg.MessageNotification)
+  // @@protoc_insertion_point(parse_start:pbmsg.MessageNotify)
   for (;;) {
     ::std::pair<::google::protobuf::uint32, bool> p = input->ReadTagWithCutoffNoLastTag(127u);
     tag = p.first;
@@ -2307,7 +2304,7 @@ bool MessageNotification::MergePartialFromCodedStream(
           ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
             this->timestamp().data(), static_cast<int>(this->timestamp().length()),
             ::google::protobuf::internal::WireFormat::PARSE,
-            "pbmsg.MessageNotification.timestamp");
+            "pbmsg.MessageNotify.timestamp");
         } else {
           goto handle_unusual;
         }
@@ -2326,17 +2323,17 @@ bool MessageNotification::MergePartialFromCodedStream(
     }
   }
 success:
-  // @@protoc_insertion_point(parse_success:pbmsg.MessageNotification)
+  // @@protoc_insertion_point(parse_success:pbmsg.MessageNotify)
   return true;
 failure:
-  // @@protoc_insertion_point(parse_failure:pbmsg.MessageNotification)
+  // @@protoc_insertion_point(parse_failure:pbmsg.MessageNotify)
   return false;
 #undef DO_
 }
 
-void MessageNotification::SerializeWithCachedSizes(
+void MessageNotify::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
-  // @@protoc_insertion_point(serialize_start:pbmsg.MessageNotification)
+  // @@protoc_insertion_point(serialize_start:pbmsg.MessageNotify)
   ::google::protobuf::uint32 cached_has_bits = 0;
   (void) cached_has_bits;
 
@@ -2358,7 +2355,7 @@ void MessageNotification::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
       this->timestamp().data(), static_cast<int>(this->timestamp().length()),
       ::google::protobuf::internal::WireFormat::SERIALIZE,
-      "pbmsg.MessageNotification.timestamp");
+      "pbmsg.MessageNotify.timestamp");
     ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
       3, this->timestamp(), output);
   }
@@ -2367,13 +2364,13 @@ void MessageNotification::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
         _internal_metadata_.unknown_fields(), output);
   }
-  // @@protoc_insertion_point(serialize_end:pbmsg.MessageNotification)
+  // @@protoc_insertion_point(serialize_end:pbmsg.MessageNotify)
 }
 
-::google::protobuf::uint8* MessageNotification::InternalSerializeWithCachedSizesToArray(
+::google::protobuf::uint8* MessageNotify::InternalSerializeWithCachedSizesToArray(
     bool deterministic, ::google::protobuf::uint8* target) const {
   (void)deterministic; // Unused
-  // @@protoc_insertion_point(serialize_to_array_start:pbmsg.MessageNotification)
+  // @@protoc_insertion_point(serialize_to_array_start:pbmsg.MessageNotify)
   ::google::protobuf::uint32 cached_has_bits = 0;
   (void) cached_has_bits;
 
@@ -2397,7 +2394,7 @@ void MessageNotification::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
       this->timestamp().data(), static_cast<int>(this->timestamp().length()),
       ::google::protobuf::internal::WireFormat::SERIALIZE,
-      "pbmsg.MessageNotification.timestamp");
+      "pbmsg.MessageNotify.timestamp");
     target =
       ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
         3, this->timestamp(), target);
@@ -2407,12 +2404,12 @@ void MessageNotification::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
         _internal_metadata_.unknown_fields(), target);
   }
-  // @@protoc_insertion_point(serialize_to_array_end:pbmsg.MessageNotification)
+  // @@protoc_insertion_point(serialize_to_array_end:pbmsg.MessageNotify)
   return target;
 }
 
-size_t MessageNotification::RequiredFieldsByteSizeFallback() const {
-// @@protoc_insertion_point(required_fields_byte_size_fallback_start:pbmsg.MessageNotification)
+size_t MessageNotify::RequiredFieldsByteSizeFallback() const {
+// @@protoc_insertion_point(required_fields_byte_size_fallback_start:pbmsg.MessageNotify)
   size_t total_size = 0;
 
   if (has_sender()) {
@@ -2438,8 +2435,8 @@ size_t MessageNotification::RequiredFieldsByteSizeFallback() const {
 
   return total_size;
 }
-size_t MessageNotification::ByteSizeLong() const {
-// @@protoc_insertion_point(message_byte_size_start:pbmsg.MessageNotification)
+size_t MessageNotify::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:pbmsg.MessageNotify)
   size_t total_size = 0;
 
   if (_internal_metadata_.have_unknown_fields()) {
@@ -2471,23 +2468,23 @@ size_t MessageNotification::ByteSizeLong() const {
   return total_size;
 }
 
-void MessageNotification::MergeFrom(const ::google::protobuf::Message& from) {
-// @@protoc_insertion_point(generalized_merge_from_start:pbmsg.MessageNotification)
+void MessageNotify::MergeFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_merge_from_start:pbmsg.MessageNotify)
   GOOGLE_DCHECK_NE(&from, this);
-  const MessageNotification* source =
-      ::google::protobuf::internal::DynamicCastToGenerated<const MessageNotification>(
+  const MessageNotify* source =
+      ::google::protobuf::internal::DynamicCastToGenerated<const MessageNotify>(
           &from);
   if (source == NULL) {
-  // @@protoc_insertion_point(generalized_merge_from_cast_fail:pbmsg.MessageNotification)
+  // @@protoc_insertion_point(generalized_merge_from_cast_fail:pbmsg.MessageNotify)
     ::google::protobuf::internal::ReflectionOps::Merge(from, this);
   } else {
-  // @@protoc_insertion_point(generalized_merge_from_cast_success:pbmsg.MessageNotification)
+  // @@protoc_insertion_point(generalized_merge_from_cast_success:pbmsg.MessageNotify)
     MergeFrom(*source);
   }
 }
 
-void MessageNotification::MergeFrom(const MessageNotification& from) {
-// @@protoc_insertion_point(class_specific_merge_from_start:pbmsg.MessageNotification)
+void MessageNotify::MergeFrom(const MessageNotify& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:pbmsg.MessageNotify)
   GOOGLE_DCHECK_NE(&from, this);
   _internal_metadata_.MergeFrom(from._internal_metadata_);
   ::google::protobuf::uint32 cached_has_bits = 0;
@@ -2510,30 +2507,30 @@ void MessageNotification::MergeFrom(const MessageNotification& from) {
   }
 }
 
-void MessageNotification::CopyFrom(const ::google::protobuf::Message& from) {
-// @@protoc_insertion_point(generalized_copy_from_start:pbmsg.MessageNotification)
+void MessageNotify::CopyFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_copy_from_start:pbmsg.MessageNotify)
   if (&from == this) return;
   Clear();
   MergeFrom(from);
 }
 
-void MessageNotification::CopyFrom(const MessageNotification& from) {
-// @@protoc_insertion_point(class_specific_copy_from_start:pbmsg.MessageNotification)
+void MessageNotify::CopyFrom(const MessageNotify& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:pbmsg.MessageNotify)
   if (&from == this) return;
   Clear();
   MergeFrom(from);
 }
 
-bool MessageNotification::IsInitialized() const {
+bool MessageNotify::IsInitialized() const {
   if ((_has_bits_[0] & 0x00000007) != 0x00000007) return false;
   return true;
 }
 
-void MessageNotification::Swap(MessageNotification* other) {
+void MessageNotify::Swap(MessageNotify* other) {
   if (other == this) return;
   InternalSwap(other);
 }
-void MessageNotification::InternalSwap(MessageNotification* other) {
+void MessageNotify::InternalSwap(MessageNotify* other) {
   using std::swap;
   sender_.Swap(&other->sender_, &::google::protobuf::internal::GetEmptyStringAlreadyInited(),
     GetArenaNoVirtual());
@@ -2545,7 +2542,7 @@ void MessageNotification::InternalSwap(MessageNotification* other) {
   _internal_metadata_.Swap(&other->_internal_metadata_);
 }
 
-::google::protobuf::Metadata MessageNotification::GetMetadata() const {
+::google::protobuf::Metadata MessageNotify::GetMetadata() const {
   protobuf_Message_2eproto::protobuf_AssignDescriptorsOnce();
   return ::protobuf_Message_2eproto::file_level_metadata[kIndexInFileMessages];
 }
@@ -2553,20 +2550,20 @@ void MessageNotification::InternalSwap(MessageNotification* other) {
 
 // ===================================================================
 
-void WelcomeNotification::InitAsDefaultInstance() {
+void WelcomeNotify::InitAsDefaultInstance() {
 }
 #if !defined(_MSC_VER) || _MSC_VER >= 1900
-const int WelcomeNotification::kTextFieldNumber;
+const int WelcomeNotify::kTextFieldNumber;
 #endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
 
-WelcomeNotification::WelcomeNotification()
+WelcomeNotify::WelcomeNotify()
   : ::google::protobuf::Message(), _internal_metadata_(NULL) {
   ::google::protobuf::internal::InitSCC(
-      &protobuf_Message_2eproto::scc_info_WelcomeNotification.base);
+      &protobuf_Message_2eproto::scc_info_WelcomeNotify.base);
   SharedCtor();
-  // @@protoc_insertion_point(constructor:pbmsg.WelcomeNotification)
+  // @@protoc_insertion_point(constructor:pbmsg.WelcomeNotify)
 }
-WelcomeNotification::WelcomeNotification(const WelcomeNotification& from)
+WelcomeNotify::WelcomeNotify(const WelcomeNotify& from)
   : ::google::protobuf::Message(),
       _internal_metadata_(NULL),
       _has_bits_(from._has_bits_) {
@@ -2575,38 +2572,38 @@ WelcomeNotification::WelcomeNotification(const WelcomeNotification& from)
   if (from.has_text()) {
     text_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.text_);
   }
-  // @@protoc_insertion_point(copy_constructor:pbmsg.WelcomeNotification)
+  // @@protoc_insertion_point(copy_constructor:pbmsg.WelcomeNotify)
 }
 
-void WelcomeNotification::SharedCtor() {
+void WelcomeNotify::SharedCtor() {
   text_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
 
-WelcomeNotification::~WelcomeNotification() {
-  // @@protoc_insertion_point(destructor:pbmsg.WelcomeNotification)
+WelcomeNotify::~WelcomeNotify() {
+  // @@protoc_insertion_point(destructor:pbmsg.WelcomeNotify)
   SharedDtor();
 }
 
-void WelcomeNotification::SharedDtor() {
+void WelcomeNotify::SharedDtor() {
   text_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
 
-void WelcomeNotification::SetCachedSize(int size) const {
+void WelcomeNotify::SetCachedSize(int size) const {
   _cached_size_.Set(size);
 }
-const ::google::protobuf::Descriptor* WelcomeNotification::descriptor() {
+const ::google::protobuf::Descriptor* WelcomeNotify::descriptor() {
   ::protobuf_Message_2eproto::protobuf_AssignDescriptorsOnce();
   return ::protobuf_Message_2eproto::file_level_metadata[kIndexInFileMessages].descriptor;
 }
 
-const WelcomeNotification& WelcomeNotification::default_instance() {
-  ::google::protobuf::internal::InitSCC(&protobuf_Message_2eproto::scc_info_WelcomeNotification.base);
+const WelcomeNotify& WelcomeNotify::default_instance() {
+  ::google::protobuf::internal::InitSCC(&protobuf_Message_2eproto::scc_info_WelcomeNotify.base);
   return *internal_default_instance();
 }
 
 
-void WelcomeNotification::Clear() {
-// @@protoc_insertion_point(message_clear_start:pbmsg.WelcomeNotification)
+void WelcomeNotify::Clear() {
+// @@protoc_insertion_point(message_clear_start:pbmsg.WelcomeNotify)
   ::google::protobuf::uint32 cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
@@ -2619,11 +2616,11 @@ void WelcomeNotification::Clear() {
   _internal_metadata_.Clear();
 }
 
-bool WelcomeNotification::MergePartialFromCodedStream(
+bool WelcomeNotify::MergePartialFromCodedStream(
     ::google::protobuf::io::CodedInputStream* input) {
 #define DO_(EXPRESSION) if (!GOOGLE_PREDICT_TRUE(EXPRESSION)) goto failure
   ::google::protobuf::uint32 tag;
-  // @@protoc_insertion_point(parse_start:pbmsg.WelcomeNotification)
+  // @@protoc_insertion_point(parse_start:pbmsg.WelcomeNotify)
   for (;;) {
     ::std::pair<::google::protobuf::uint32, bool> p = input->ReadTagWithCutoffNoLastTag(127u);
     tag = p.first;
@@ -2653,17 +2650,17 @@ bool WelcomeNotification::MergePartialFromCodedStream(
     }
   }
 success:
-  // @@protoc_insertion_point(parse_success:pbmsg.WelcomeNotification)
+  // @@protoc_insertion_point(parse_success:pbmsg.WelcomeNotify)
   return true;
 failure:
-  // @@protoc_insertion_point(parse_failure:pbmsg.WelcomeNotification)
+  // @@protoc_insertion_point(parse_failure:pbmsg.WelcomeNotify)
   return false;
 #undef DO_
 }
 
-void WelcomeNotification::SerializeWithCachedSizes(
+void WelcomeNotify::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
-  // @@protoc_insertion_point(serialize_start:pbmsg.WelcomeNotification)
+  // @@protoc_insertion_point(serialize_start:pbmsg.WelcomeNotify)
   ::google::protobuf::uint32 cached_has_bits = 0;
   (void) cached_has_bits;
 
@@ -2678,13 +2675,13 @@ void WelcomeNotification::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
         _internal_metadata_.unknown_fields(), output);
   }
-  // @@protoc_insertion_point(serialize_end:pbmsg.WelcomeNotification)
+  // @@protoc_insertion_point(serialize_end:pbmsg.WelcomeNotify)
 }
 
-::google::protobuf::uint8* WelcomeNotification::InternalSerializeWithCachedSizesToArray(
+::google::protobuf::uint8* WelcomeNotify::InternalSerializeWithCachedSizesToArray(
     bool deterministic, ::google::protobuf::uint8* target) const {
   (void)deterministic; // Unused
-  // @@protoc_insertion_point(serialize_to_array_start:pbmsg.WelcomeNotification)
+  // @@protoc_insertion_point(serialize_to_array_start:pbmsg.WelcomeNotify)
   ::google::protobuf::uint32 cached_has_bits = 0;
   (void) cached_has_bits;
 
@@ -2700,12 +2697,12 @@ void WelcomeNotification::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
         _internal_metadata_.unknown_fields(), target);
   }
-  // @@protoc_insertion_point(serialize_to_array_end:pbmsg.WelcomeNotification)
+  // @@protoc_insertion_point(serialize_to_array_end:pbmsg.WelcomeNotify)
   return target;
 }
 
-size_t WelcomeNotification::ByteSizeLong() const {
-// @@protoc_insertion_point(message_byte_size_start:pbmsg.WelcomeNotification)
+size_t WelcomeNotify::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:pbmsg.WelcomeNotify)
   size_t total_size = 0;
 
   if (_internal_metadata_.have_unknown_fields()) {
@@ -2724,23 +2721,23 @@ size_t WelcomeNotification::ByteSizeLong() const {
   return total_size;
 }
 
-void WelcomeNotification::MergeFrom(const ::google::protobuf::Message& from) {
-// @@protoc_insertion_point(generalized_merge_from_start:pbmsg.WelcomeNotification)
+void WelcomeNotify::MergeFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_merge_from_start:pbmsg.WelcomeNotify)
   GOOGLE_DCHECK_NE(&from, this);
-  const WelcomeNotification* source =
-      ::google::protobuf::internal::DynamicCastToGenerated<const WelcomeNotification>(
+  const WelcomeNotify* source =
+      ::google::protobuf::internal::DynamicCastToGenerated<const WelcomeNotify>(
           &from);
   if (source == NULL) {
-  // @@protoc_insertion_point(generalized_merge_from_cast_fail:pbmsg.WelcomeNotification)
+  // @@protoc_insertion_point(generalized_merge_from_cast_fail:pbmsg.WelcomeNotify)
     ::google::protobuf::internal::ReflectionOps::Merge(from, this);
   } else {
-  // @@protoc_insertion_point(generalized_merge_from_cast_success:pbmsg.WelcomeNotification)
+  // @@protoc_insertion_point(generalized_merge_from_cast_success:pbmsg.WelcomeNotify)
     MergeFrom(*source);
   }
 }
 
-void WelcomeNotification::MergeFrom(const WelcomeNotification& from) {
-// @@protoc_insertion_point(class_specific_merge_from_start:pbmsg.WelcomeNotification)
+void WelcomeNotify::MergeFrom(const WelcomeNotify& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:pbmsg.WelcomeNotify)
   GOOGLE_DCHECK_NE(&from, this);
   _internal_metadata_.MergeFrom(from._internal_metadata_);
   ::google::protobuf::uint32 cached_has_bits = 0;
@@ -2752,30 +2749,30 @@ void WelcomeNotification::MergeFrom(const WelcomeNotification& from) {
   }
 }
 
-void WelcomeNotification::CopyFrom(const ::google::protobuf::Message& from) {
-// @@protoc_insertion_point(generalized_copy_from_start:pbmsg.WelcomeNotification)
+void WelcomeNotify::CopyFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_copy_from_start:pbmsg.WelcomeNotify)
   if (&from == this) return;
   Clear();
   MergeFrom(from);
 }
 
-void WelcomeNotification::CopyFrom(const WelcomeNotification& from) {
-// @@protoc_insertion_point(class_specific_copy_from_start:pbmsg.WelcomeNotification)
+void WelcomeNotify::CopyFrom(const WelcomeNotify& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:pbmsg.WelcomeNotify)
   if (&from == this) return;
   Clear();
   MergeFrom(from);
 }
 
-bool WelcomeNotification::IsInitialized() const {
+bool WelcomeNotify::IsInitialized() const {
   if ((_has_bits_[0] & 0x00000001) != 0x00000001) return false;
   return true;
 }
 
-void WelcomeNotification::Swap(WelcomeNotification* other) {
+void WelcomeNotify::Swap(WelcomeNotify* other) {
   if (other == this) return;
   InternalSwap(other);
 }
-void WelcomeNotification::InternalSwap(WelcomeNotification* other) {
+void WelcomeNotify::InternalSwap(WelcomeNotify* other) {
   using std::swap;
   text_.Swap(&other->text_, &::google::protobuf::internal::GetEmptyStringAlreadyInited(),
     GetArenaNoVirtual());
@@ -2783,7 +2780,7 @@ void WelcomeNotification::InternalSwap(WelcomeNotification* other) {
   _internal_metadata_.Swap(&other->_internal_metadata_);
 }
 
-::google::protobuf::Metadata WelcomeNotification::GetMetadata() const {
+::google::protobuf::Metadata WelcomeNotify::GetMetadata() const {
   protobuf_Message_2eproto::protobuf_AssignDescriptorsOnce();
   return ::protobuf_Message_2eproto::file_level_metadata[kIndexInFileMessages];
 }
@@ -2794,7 +2791,7 @@ void WelcomeNotification::InternalSwap(WelcomeNotification* other) {
 void Request::InitAsDefaultInstance() {
   ::pbmsg::_Request_default_instance_._instance.get_mutable()->login_ = const_cast< ::pbmsg::LoginRequest*>(
       ::pbmsg::LoginRequest::internal_default_instance());
-  ::pbmsg::_Request_default_instance_._instance.get_mutable()->send_message_ = const_cast< ::pbmsg::SendMessageRequest*>(
+  ::pbmsg::_Request_default_instance_._instance.get_mutable()->sendmessage_ = const_cast< ::pbmsg::SendMessageRequest*>(
       ::pbmsg::SendMessageRequest::internal_default_instance());
 }
 #if !defined(_MSC_VER) || _MSC_VER >= 1900
@@ -2819,18 +2816,18 @@ Request::Request(const Request& from)
   } else {
     login_ = NULL;
   }
-  if (from.has_send_message()) {
-    send_message_ = new ::pbmsg::SendMessageRequest(*from.send_message_);
+  if (from.has_sendmessage()) {
+    sendmessage_ = new ::pbmsg::SendMessageRequest(*from.sendmessage_);
   } else {
-    send_message_ = NULL;
+    sendmessage_ = NULL;
   }
   // @@protoc_insertion_point(copy_constructor:pbmsg.Request)
 }
 
 void Request::SharedCtor() {
   ::memset(&login_, 0, static_cast<size_t>(
-      reinterpret_cast<char*>(&send_message_) -
-      reinterpret_cast<char*>(&login_)) + sizeof(send_message_));
+      reinterpret_cast<char*>(&sendmessage_) -
+      reinterpret_cast<char*>(&login_)) + sizeof(sendmessage_));
 }
 
 Request::~Request() {
@@ -2840,7 +2837,7 @@ Request::~Request() {
 
 void Request::SharedDtor() {
   if (this != internal_default_instance()) delete login_;
-  if (this != internal_default_instance()) delete send_message_;
+  if (this != internal_default_instance()) delete sendmessage_;
 }
 
 void Request::SetCachedSize(int size) const {
@@ -2870,8 +2867,8 @@ void Request::Clear() {
       login_->Clear();
     }
     if (cached_has_bits & 0x00000002u) {
-      GOOGLE_DCHECK(send_message_ != NULL);
-      send_message_->Clear();
+      GOOGLE_DCHECK(sendmessage_ != NULL);
+      sendmessage_->Clear();
     }
   }
   _has_bits_.Clear();
@@ -2900,12 +2897,12 @@ bool Request::MergePartialFromCodedStream(
         break;
       }
 
-      // optional .pbmsg.SendMessageRequest send_message = 2;
+      // optional .pbmsg.SendMessageRequest sendMessage = 2;
       case 2: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
             static_cast< ::google::protobuf::uint8>(18u /* 18 & 0xFF */)) {
           DO_(::google::protobuf::internal::WireFormatLite::ReadMessage(
-               input, mutable_send_message()));
+               input, mutable_sendmessage()));
         } else {
           goto handle_unusual;
         }
@@ -2945,10 +2942,10 @@ void Request::SerializeWithCachedSizes(
       1, this->_internal_login(), output);
   }
 
-  // optional .pbmsg.SendMessageRequest send_message = 2;
+  // optional .pbmsg.SendMessageRequest sendMessage = 2;
   if (cached_has_bits & 0x00000002u) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
-      2, this->_internal_send_message(), output);
+      2, this->_internal_sendmessage(), output);
   }
 
   if (_internal_metadata_.have_unknown_fields()) {
@@ -2973,11 +2970,11 @@ void Request::SerializeWithCachedSizes(
         1, this->_internal_login(), deterministic, target);
   }
 
-  // optional .pbmsg.SendMessageRequest send_message = 2;
+  // optional .pbmsg.SendMessageRequest sendMessage = 2;
   if (cached_has_bits & 0x00000002u) {
     target = ::google::protobuf::internal::WireFormatLite::
       InternalWriteMessageToArray(
-        2, this->_internal_send_message(), deterministic, target);
+        2, this->_internal_sendmessage(), deterministic, target);
   }
 
   if (_internal_metadata_.have_unknown_fields()) {
@@ -3005,11 +3002,11 @@ size_t Request::ByteSizeLong() const {
           *login_);
     }
 
-    // optional .pbmsg.SendMessageRequest send_message = 2;
-    if (has_send_message()) {
+    // optional .pbmsg.SendMessageRequest sendMessage = 2;
+    if (has_sendmessage()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::MessageSize(
-          *send_message_);
+          *sendmessage_);
     }
 
   }
@@ -3046,7 +3043,7 @@ void Request::MergeFrom(const Request& from) {
       mutable_login()->::pbmsg::LoginRequest::MergeFrom(from.login());
     }
     if (cached_has_bits & 0x00000002u) {
-      mutable_send_message()->::pbmsg::SendMessageRequest::MergeFrom(from.send_message());
+      mutable_sendmessage()->::pbmsg::SendMessageRequest::MergeFrom(from.sendmessage());
     }
   }
 }
@@ -3069,8 +3066,8 @@ bool Request::IsInitialized() const {
   if (has_login()) {
     if (!this->login_->IsInitialized()) return false;
   }
-  if (has_send_message()) {
-    if (!this->send_message_->IsInitialized()) return false;
+  if (has_sendmessage()) {
+    if (!this->sendmessage_->IsInitialized()) return false;
   }
   return true;
 }
@@ -3082,7 +3079,7 @@ void Request::Swap(Request* other) {
 void Request::InternalSwap(Request* other) {
   using std::swap;
   swap(login_, other->login_);
-  swap(send_message_, other->send_message_);
+  swap(sendmessage_, other->sendmessage_);
   swap(_has_bits_[0], other->_has_bits_[0]);
   _internal_metadata_.Swap(&other->_internal_metadata_);
 }
@@ -3095,86 +3092,86 @@ void Request::InternalSwap(Request* other) {
 
 // ===================================================================
 
-void Response::InitAsDefaultInstance() {
-  ::pbmsg::_Response_default_instance_._instance.get_mutable()->login_ = const_cast< ::pbmsg::LoginResponse*>(
-      ::pbmsg::LoginResponse::internal_default_instance());
-  ::pbmsg::_Response_default_instance_._instance.get_mutable()->get_friends_ = const_cast< ::pbmsg::GetFriendsResponse*>(
-      ::pbmsg::GetFriendsResponse::internal_default_instance());
+void Respond::InitAsDefaultInstance() {
+  ::pbmsg::_Respond_default_instance_._instance.get_mutable()->login_ = const_cast< ::pbmsg::LoginRespond*>(
+      ::pbmsg::LoginRespond::internal_default_instance());
+  ::pbmsg::_Respond_default_instance_._instance.get_mutable()->friends_ = const_cast< ::pbmsg::GetFriendsRespond*>(
+      ::pbmsg::GetFriendsRespond::internal_default_instance());
 }
 #if !defined(_MSC_VER) || _MSC_VER >= 1900
-const int Response::kResultFieldNumber;
-const int Response::kLastResponseFieldNumber;
-const int Response::kErrorDescribeFieldNumber;
-const int Response::kLoginFieldNumber;
-const int Response::kGetFriendsFieldNumber;
+const int Respond::kResultFieldNumber;
+const int Respond::kLastRespondFieldNumber;
+const int Respond::kErrorDescribeFieldNumber;
+const int Respond::kLoginFieldNumber;
+const int Respond::kFriendsFieldNumber;
 #endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
 
-Response::Response()
+Respond::Respond()
   : ::google::protobuf::Message(), _internal_metadata_(NULL) {
   ::google::protobuf::internal::InitSCC(
-      &protobuf_Message_2eproto::scc_info_Response.base);
+      &protobuf_Message_2eproto::scc_info_Respond.base);
   SharedCtor();
-  // @@protoc_insertion_point(constructor:pbmsg.Response)
+  // @@protoc_insertion_point(constructor:pbmsg.Respond)
 }
-Response::Response(const Response& from)
+Respond::Respond(const Respond& from)
   : ::google::protobuf::Message(),
       _internal_metadata_(NULL),
       _has_bits_(from._has_bits_) {
   _internal_metadata_.MergeFrom(from._internal_metadata_);
-  error_describe_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  if (from.has_error_describe()) {
-    error_describe_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.error_describe_);
+  errordescribe_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  if (from.has_errordescribe()) {
+    errordescribe_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.errordescribe_);
   }
   if (from.has_login()) {
-    login_ = new ::pbmsg::LoginResponse(*from.login_);
+    login_ = new ::pbmsg::LoginRespond(*from.login_);
   } else {
     login_ = NULL;
   }
-  if (from.has_get_friends()) {
-    get_friends_ = new ::pbmsg::GetFriendsResponse(*from.get_friends_);
+  if (from.has_friends()) {
+    friends_ = new ::pbmsg::GetFriendsRespond(*from.friends_);
   } else {
-    get_friends_ = NULL;
+    friends_ = NULL;
   }
   ::memcpy(&result_, &from.result_,
-    static_cast<size_t>(reinterpret_cast<char*>(&last_response_) -
-    reinterpret_cast<char*>(&result_)) + sizeof(last_response_));
-  // @@protoc_insertion_point(copy_constructor:pbmsg.Response)
+    static_cast<size_t>(reinterpret_cast<char*>(&lastrespond_) -
+    reinterpret_cast<char*>(&result_)) + sizeof(lastrespond_));
+  // @@protoc_insertion_point(copy_constructor:pbmsg.Respond)
 }
 
-void Response::SharedCtor() {
-  error_describe_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+void Respond::SharedCtor() {
+  errordescribe_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   ::memset(&login_, 0, static_cast<size_t>(
-      reinterpret_cast<char*>(&last_response_) -
-      reinterpret_cast<char*>(&login_)) + sizeof(last_response_));
+      reinterpret_cast<char*>(&lastrespond_) -
+      reinterpret_cast<char*>(&login_)) + sizeof(lastrespond_));
 }
 
-Response::~Response() {
-  // @@protoc_insertion_point(destructor:pbmsg.Response)
+Respond::~Respond() {
+  // @@protoc_insertion_point(destructor:pbmsg.Respond)
   SharedDtor();
 }
 
-void Response::SharedDtor() {
-  error_describe_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+void Respond::SharedDtor() {
+  errordescribe_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   if (this != internal_default_instance()) delete login_;
-  if (this != internal_default_instance()) delete get_friends_;
+  if (this != internal_default_instance()) delete friends_;
 }
 
-void Response::SetCachedSize(int size) const {
+void Respond::SetCachedSize(int size) const {
   _cached_size_.Set(size);
 }
-const ::google::protobuf::Descriptor* Response::descriptor() {
+const ::google::protobuf::Descriptor* Respond::descriptor() {
   ::protobuf_Message_2eproto::protobuf_AssignDescriptorsOnce();
   return ::protobuf_Message_2eproto::file_level_metadata[kIndexInFileMessages].descriptor;
 }
 
-const Response& Response::default_instance() {
-  ::google::protobuf::internal::InitSCC(&protobuf_Message_2eproto::scc_info_Response.base);
+const Respond& Respond::default_instance() {
+  ::google::protobuf::internal::InitSCC(&protobuf_Message_2eproto::scc_info_Respond.base);
   return *internal_default_instance();
 }
 
 
-void Response::Clear() {
-// @@protoc_insertion_point(message_clear_start:pbmsg.Response)
+void Respond::Clear() {
+// @@protoc_insertion_point(message_clear_start:pbmsg.Respond)
   ::google::protobuf::uint32 cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
@@ -3182,29 +3179,29 @@ void Response::Clear() {
   cached_has_bits = _has_bits_[0];
   if (cached_has_bits & 7u) {
     if (cached_has_bits & 0x00000001u) {
-      error_describe_.ClearNonDefaultToEmptyNoArena();
+      errordescribe_.ClearNonDefaultToEmptyNoArena();
     }
     if (cached_has_bits & 0x00000002u) {
       GOOGLE_DCHECK(login_ != NULL);
       login_->Clear();
     }
     if (cached_has_bits & 0x00000004u) {
-      GOOGLE_DCHECK(get_friends_ != NULL);
-      get_friends_->Clear();
+      GOOGLE_DCHECK(friends_ != NULL);
+      friends_->Clear();
     }
   }
   ::memset(&result_, 0, static_cast<size_t>(
-      reinterpret_cast<char*>(&last_response_) -
-      reinterpret_cast<char*>(&result_)) + sizeof(last_response_));
+      reinterpret_cast<char*>(&lastrespond_) -
+      reinterpret_cast<char*>(&result_)) + sizeof(lastrespond_));
   _has_bits_.Clear();
   _internal_metadata_.Clear();
 }
 
-bool Response::MergePartialFromCodedStream(
+bool Respond::MergePartialFromCodedStream(
     ::google::protobuf::io::CodedInputStream* input) {
 #define DO_(EXPRESSION) if (!GOOGLE_PREDICT_TRUE(EXPRESSION)) goto failure
   ::google::protobuf::uint32 tag;
-  // @@protoc_insertion_point(parse_start:pbmsg.Response)
+  // @@protoc_insertion_point(parse_start:pbmsg.Respond)
   for (;;) {
     ::std::pair<::google::protobuf::uint32, bool> p = input->ReadTagWithCutoffNoLastTag(127u);
     tag = p.first;
@@ -3224,33 +3221,33 @@ bool Response::MergePartialFromCodedStream(
         break;
       }
 
-      // required bool last_response = 2;
+      // required bool lastRespond = 2;
       case 2: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
             static_cast< ::google::protobuf::uint8>(16u /* 16 & 0xFF */)) {
-          set_has_last_response();
+          set_has_lastrespond();
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    bool, ::google::protobuf::internal::WireFormatLite::TYPE_BOOL>(
-                 input, &last_response_)));
+                 input, &lastrespond_)));
         } else {
           goto handle_unusual;
         }
         break;
       }
 
-      // optional bytes error_describe = 3;
+      // optional bytes errorDescribe = 3;
       case 3: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
             static_cast< ::google::protobuf::uint8>(26u /* 26 & 0xFF */)) {
           DO_(::google::protobuf::internal::WireFormatLite::ReadBytes(
-                input, this->mutable_error_describe()));
+                input, this->mutable_errordescribe()));
         } else {
           goto handle_unusual;
         }
         break;
       }
 
-      // optional .pbmsg.LoginResponse login = 4;
+      // optional .pbmsg.LoginRespond login = 4;
       case 4: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
             static_cast< ::google::protobuf::uint8>(34u /* 34 & 0xFF */)) {
@@ -3262,12 +3259,12 @@ bool Response::MergePartialFromCodedStream(
         break;
       }
 
-      // optional .pbmsg.GetFriendsResponse get_friends = 5;
+      // optional .pbmsg.GetFriendsRespond friends = 5;
       case 5: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
             static_cast< ::google::protobuf::uint8>(42u /* 42 & 0xFF */)) {
           DO_(::google::protobuf::internal::WireFormatLite::ReadMessage(
-               input, mutable_get_friends()));
+               input, mutable_friends()));
         } else {
           goto handle_unusual;
         }
@@ -3286,17 +3283,17 @@ bool Response::MergePartialFromCodedStream(
     }
   }
 success:
-  // @@protoc_insertion_point(parse_success:pbmsg.Response)
+  // @@protoc_insertion_point(parse_success:pbmsg.Respond)
   return true;
 failure:
-  // @@protoc_insertion_point(parse_failure:pbmsg.Response)
+  // @@protoc_insertion_point(parse_failure:pbmsg.Respond)
   return false;
 #undef DO_
 }
 
-void Response::SerializeWithCachedSizes(
+void Respond::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
-  // @@protoc_insertion_point(serialize_start:pbmsg.Response)
+  // @@protoc_insertion_point(serialize_start:pbmsg.Respond)
   ::google::protobuf::uint32 cached_has_bits = 0;
   (void) cached_has_bits;
 
@@ -3306,40 +3303,40 @@ void Response::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteBool(1, this->result(), output);
   }
 
-  // required bool last_response = 2;
+  // required bool lastRespond = 2;
   if (cached_has_bits & 0x00000010u) {
-    ::google::protobuf::internal::WireFormatLite::WriteBool(2, this->last_response(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteBool(2, this->lastrespond(), output);
   }
 
-  // optional bytes error_describe = 3;
+  // optional bytes errorDescribe = 3;
   if (cached_has_bits & 0x00000001u) {
     ::google::protobuf::internal::WireFormatLite::WriteBytesMaybeAliased(
-      3, this->error_describe(), output);
+      3, this->errordescribe(), output);
   }
 
-  // optional .pbmsg.LoginResponse login = 4;
+  // optional .pbmsg.LoginRespond login = 4;
   if (cached_has_bits & 0x00000002u) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
       4, this->_internal_login(), output);
   }
 
-  // optional .pbmsg.GetFriendsResponse get_friends = 5;
+  // optional .pbmsg.GetFriendsRespond friends = 5;
   if (cached_has_bits & 0x00000004u) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
-      5, this->_internal_get_friends(), output);
+      5, this->_internal_friends(), output);
   }
 
   if (_internal_metadata_.have_unknown_fields()) {
     ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
         _internal_metadata_.unknown_fields(), output);
   }
-  // @@protoc_insertion_point(serialize_end:pbmsg.Response)
+  // @@protoc_insertion_point(serialize_end:pbmsg.Respond)
 }
 
-::google::protobuf::uint8* Response::InternalSerializeWithCachedSizesToArray(
+::google::protobuf::uint8* Respond::InternalSerializeWithCachedSizesToArray(
     bool deterministic, ::google::protobuf::uint8* target) const {
   (void)deterministic; // Unused
-  // @@protoc_insertion_point(serialize_to_array_start:pbmsg.Response)
+  // @@protoc_insertion_point(serialize_to_array_start:pbmsg.Respond)
   ::google::protobuf::uint32 cached_has_bits = 0;
   (void) cached_has_bits;
 
@@ -3349,42 +3346,42 @@ void Response::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormatLite::WriteBoolToArray(1, this->result(), target);
   }
 
-  // required bool last_response = 2;
+  // required bool lastRespond = 2;
   if (cached_has_bits & 0x00000010u) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteBoolToArray(2, this->last_response(), target);
+    target = ::google::protobuf::internal::WireFormatLite::WriteBoolToArray(2, this->lastrespond(), target);
   }
 
-  // optional bytes error_describe = 3;
+  // optional bytes errorDescribe = 3;
   if (cached_has_bits & 0x00000001u) {
     target =
       ::google::protobuf::internal::WireFormatLite::WriteBytesToArray(
-        3, this->error_describe(), target);
+        3, this->errordescribe(), target);
   }
 
-  // optional .pbmsg.LoginResponse login = 4;
+  // optional .pbmsg.LoginRespond login = 4;
   if (cached_has_bits & 0x00000002u) {
     target = ::google::protobuf::internal::WireFormatLite::
       InternalWriteMessageToArray(
         4, this->_internal_login(), deterministic, target);
   }
 
-  // optional .pbmsg.GetFriendsResponse get_friends = 5;
+  // optional .pbmsg.GetFriendsRespond friends = 5;
   if (cached_has_bits & 0x00000004u) {
     target = ::google::protobuf::internal::WireFormatLite::
       InternalWriteMessageToArray(
-        5, this->_internal_get_friends(), deterministic, target);
+        5, this->_internal_friends(), deterministic, target);
   }
 
   if (_internal_metadata_.have_unknown_fields()) {
     target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
         _internal_metadata_.unknown_fields(), target);
   }
-  // @@protoc_insertion_point(serialize_to_array_end:pbmsg.Response)
+  // @@protoc_insertion_point(serialize_to_array_end:pbmsg.Respond)
   return target;
 }
 
-size_t Response::RequiredFieldsByteSizeFallback() const {
-// @@protoc_insertion_point(required_fields_byte_size_fallback_start:pbmsg.Response)
+size_t Respond::RequiredFieldsByteSizeFallback() const {
+// @@protoc_insertion_point(required_fields_byte_size_fallback_start:pbmsg.Respond)
   size_t total_size = 0;
 
   if (has_result()) {
@@ -3392,15 +3389,15 @@ size_t Response::RequiredFieldsByteSizeFallback() const {
     total_size += 1 + 1;
   }
 
-  if (has_last_response()) {
-    // required bool last_response = 2;
+  if (has_lastrespond()) {
+    // required bool lastRespond = 2;
     total_size += 1 + 1;
   }
 
   return total_size;
 }
-size_t Response::ByteSizeLong() const {
-// @@protoc_insertion_point(message_byte_size_start:pbmsg.Response)
+size_t Respond::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:pbmsg.Respond)
   size_t total_size = 0;
 
   if (_internal_metadata_.have_unknown_fields()) {
@@ -3412,32 +3409,32 @@ size_t Response::ByteSizeLong() const {
     // required bool result = 1;
     total_size += 1 + 1;
 
-    // required bool last_response = 2;
+    // required bool lastRespond = 2;
     total_size += 1 + 1;
 
   } else {
     total_size += RequiredFieldsByteSizeFallback();
   }
   if (_has_bits_[0 / 32] & 7u) {
-    // optional bytes error_describe = 3;
-    if (has_error_describe()) {
+    // optional bytes errorDescribe = 3;
+    if (has_errordescribe()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::BytesSize(
-          this->error_describe());
+          this->errordescribe());
     }
 
-    // optional .pbmsg.LoginResponse login = 4;
+    // optional .pbmsg.LoginRespond login = 4;
     if (has_login()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::MessageSize(
           *login_);
     }
 
-    // optional .pbmsg.GetFriendsResponse get_friends = 5;
-    if (has_get_friends()) {
+    // optional .pbmsg.GetFriendsRespond friends = 5;
+    if (has_friends()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::MessageSize(
-          *get_friends_);
+          *friends_);
     }
 
   }
@@ -3446,23 +3443,23 @@ size_t Response::ByteSizeLong() const {
   return total_size;
 }
 
-void Response::MergeFrom(const ::google::protobuf::Message& from) {
-// @@protoc_insertion_point(generalized_merge_from_start:pbmsg.Response)
+void Respond::MergeFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_merge_from_start:pbmsg.Respond)
   GOOGLE_DCHECK_NE(&from, this);
-  const Response* source =
-      ::google::protobuf::internal::DynamicCastToGenerated<const Response>(
+  const Respond* source =
+      ::google::protobuf::internal::DynamicCastToGenerated<const Respond>(
           &from);
   if (source == NULL) {
-  // @@protoc_insertion_point(generalized_merge_from_cast_fail:pbmsg.Response)
+  // @@protoc_insertion_point(generalized_merge_from_cast_fail:pbmsg.Respond)
     ::google::protobuf::internal::ReflectionOps::Merge(from, this);
   } else {
-  // @@protoc_insertion_point(generalized_merge_from_cast_success:pbmsg.Response)
+  // @@protoc_insertion_point(generalized_merge_from_cast_success:pbmsg.Respond)
     MergeFrom(*source);
   }
 }
 
-void Response::MergeFrom(const Response& from) {
-// @@protoc_insertion_point(class_specific_merge_from_start:pbmsg.Response)
+void Respond::MergeFrom(const Respond& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:pbmsg.Respond)
   GOOGLE_DCHECK_NE(&from, this);
   _internal_metadata_.MergeFrom(from._internal_metadata_);
   ::google::protobuf::uint32 cached_has_bits = 0;
@@ -3471,67 +3468,67 @@ void Response::MergeFrom(const Response& from) {
   cached_has_bits = from._has_bits_[0];
   if (cached_has_bits & 31u) {
     if (cached_has_bits & 0x00000001u) {
-      set_has_error_describe();
-      error_describe_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.error_describe_);
+      set_has_errordescribe();
+      errordescribe_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.errordescribe_);
     }
     if (cached_has_bits & 0x00000002u) {
-      mutable_login()->::pbmsg::LoginResponse::MergeFrom(from.login());
+      mutable_login()->::pbmsg::LoginRespond::MergeFrom(from.login());
     }
     if (cached_has_bits & 0x00000004u) {
-      mutable_get_friends()->::pbmsg::GetFriendsResponse::MergeFrom(from.get_friends());
+      mutable_friends()->::pbmsg::GetFriendsRespond::MergeFrom(from.friends());
     }
     if (cached_has_bits & 0x00000008u) {
       result_ = from.result_;
     }
     if (cached_has_bits & 0x00000010u) {
-      last_response_ = from.last_response_;
+      lastrespond_ = from.lastrespond_;
     }
     _has_bits_[0] |= cached_has_bits;
   }
 }
 
-void Response::CopyFrom(const ::google::protobuf::Message& from) {
-// @@protoc_insertion_point(generalized_copy_from_start:pbmsg.Response)
+void Respond::CopyFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_copy_from_start:pbmsg.Respond)
   if (&from == this) return;
   Clear();
   MergeFrom(from);
 }
 
-void Response::CopyFrom(const Response& from) {
-// @@protoc_insertion_point(class_specific_copy_from_start:pbmsg.Response)
+void Respond::CopyFrom(const Respond& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:pbmsg.Respond)
   if (&from == this) return;
   Clear();
   MergeFrom(from);
 }
 
-bool Response::IsInitialized() const {
+bool Respond::IsInitialized() const {
   if ((_has_bits_[0] & 0x00000018) != 0x00000018) return false;
   if (has_login()) {
     if (!this->login_->IsInitialized()) return false;
   }
-  if (has_get_friends()) {
-    if (!this->get_friends_->IsInitialized()) return false;
+  if (has_friends()) {
+    if (!this->friends_->IsInitialized()) return false;
   }
   return true;
 }
 
-void Response::Swap(Response* other) {
+void Respond::Swap(Respond* other) {
   if (other == this) return;
   InternalSwap(other);
 }
-void Response::InternalSwap(Response* other) {
+void Respond::InternalSwap(Respond* other) {
   using std::swap;
-  error_describe_.Swap(&other->error_describe_, &::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+  errordescribe_.Swap(&other->errordescribe_, &::google::protobuf::internal::GetEmptyStringAlreadyInited(),
     GetArenaNoVirtual());
   swap(login_, other->login_);
-  swap(get_friends_, other->get_friends_);
+  swap(friends_, other->friends_);
   swap(result_, other->result_);
-  swap(last_response_, other->last_response_);
+  swap(lastrespond_, other->lastrespond_);
   swap(_has_bits_[0], other->_has_bits_[0]);
   _internal_metadata_.Swap(&other->_internal_metadata_);
 }
 
-::google::protobuf::Metadata Response::GetMetadata() const {
+::google::protobuf::Metadata Respond::GetMetadata() const {
   protobuf_Message_2eproto::protobuf_AssignDescriptorsOnce();
   return ::protobuf_Message_2eproto::file_level_metadata[kIndexInFileMessages];
 }
@@ -3539,83 +3536,83 @@ void Response::InternalSwap(Response* other) {
 
 // ===================================================================
 
-void Notification::InitAsDefaultInstance() {
-  ::pbmsg::_Notification_default_instance_._instance.get_mutable()->friend__ = const_cast< ::pbmsg::FriendNotification*>(
-      ::pbmsg::FriendNotification::internal_default_instance());
-  ::pbmsg::_Notification_default_instance_._instance.get_mutable()->msg_ = const_cast< ::pbmsg::MessageNotification*>(
-      ::pbmsg::MessageNotification::internal_default_instance());
-  ::pbmsg::_Notification_default_instance_._instance.get_mutable()->welcome_ = const_cast< ::pbmsg::WelcomeNotification*>(
-      ::pbmsg::WelcomeNotification::internal_default_instance());
+void Notify::InitAsDefaultInstance() {
+  ::pbmsg::_Notify_default_instance_._instance.get_mutable()->friend__ = const_cast< ::pbmsg::FriendNotify*>(
+      ::pbmsg::FriendNotify::internal_default_instance());
+  ::pbmsg::_Notify_default_instance_._instance.get_mutable()->msg_ = const_cast< ::pbmsg::MessageNotify*>(
+      ::pbmsg::MessageNotify::internal_default_instance());
+  ::pbmsg::_Notify_default_instance_._instance.get_mutable()->welcome_ = const_cast< ::pbmsg::WelcomeNotify*>(
+      ::pbmsg::WelcomeNotify::internal_default_instance());
 }
 #if !defined(_MSC_VER) || _MSC_VER >= 1900
-const int Notification::kFriendFieldNumber;
-const int Notification::kMsgFieldNumber;
-const int Notification::kWelcomeFieldNumber;
+const int Notify::kFriendFieldNumber;
+const int Notify::kMsgFieldNumber;
+const int Notify::kWelcomeFieldNumber;
 #endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
 
-Notification::Notification()
+Notify::Notify()
   : ::google::protobuf::Message(), _internal_metadata_(NULL) {
   ::google::protobuf::internal::InitSCC(
-      &protobuf_Message_2eproto::scc_info_Notification.base);
+      &protobuf_Message_2eproto::scc_info_Notify.base);
   SharedCtor();
-  // @@protoc_insertion_point(constructor:pbmsg.Notification)
+  // @@protoc_insertion_point(constructor:pbmsg.Notify)
 }
-Notification::Notification(const Notification& from)
+Notify::Notify(const Notify& from)
   : ::google::protobuf::Message(),
       _internal_metadata_(NULL),
       _has_bits_(from._has_bits_) {
   _internal_metadata_.MergeFrom(from._internal_metadata_);
   if (from.has_friend_()) {
-    friend__ = new ::pbmsg::FriendNotification(*from.friend__);
+    friend__ = new ::pbmsg::FriendNotify(*from.friend__);
   } else {
     friend__ = NULL;
   }
   if (from.has_msg()) {
-    msg_ = new ::pbmsg::MessageNotification(*from.msg_);
+    msg_ = new ::pbmsg::MessageNotify(*from.msg_);
   } else {
     msg_ = NULL;
   }
   if (from.has_welcome()) {
-    welcome_ = new ::pbmsg::WelcomeNotification(*from.welcome_);
+    welcome_ = new ::pbmsg::WelcomeNotify(*from.welcome_);
   } else {
     welcome_ = NULL;
   }
-  // @@protoc_insertion_point(copy_constructor:pbmsg.Notification)
+  // @@protoc_insertion_point(copy_constructor:pbmsg.Notify)
 }
 
-void Notification::SharedCtor() {
+void Notify::SharedCtor() {
   ::memset(&friend__, 0, static_cast<size_t>(
       reinterpret_cast<char*>(&welcome_) -
       reinterpret_cast<char*>(&friend__)) + sizeof(welcome_));
 }
 
-Notification::~Notification() {
-  // @@protoc_insertion_point(destructor:pbmsg.Notification)
+Notify::~Notify() {
+  // @@protoc_insertion_point(destructor:pbmsg.Notify)
   SharedDtor();
 }
 
-void Notification::SharedDtor() {
+void Notify::SharedDtor() {
   if (this != internal_default_instance()) delete friend__;
   if (this != internal_default_instance()) delete msg_;
   if (this != internal_default_instance()) delete welcome_;
 }
 
-void Notification::SetCachedSize(int size) const {
+void Notify::SetCachedSize(int size) const {
   _cached_size_.Set(size);
 }
-const ::google::protobuf::Descriptor* Notification::descriptor() {
+const ::google::protobuf::Descriptor* Notify::descriptor() {
   ::protobuf_Message_2eproto::protobuf_AssignDescriptorsOnce();
   return ::protobuf_Message_2eproto::file_level_metadata[kIndexInFileMessages].descriptor;
 }
 
-const Notification& Notification::default_instance() {
-  ::google::protobuf::internal::InitSCC(&protobuf_Message_2eproto::scc_info_Notification.base);
+const Notify& Notify::default_instance() {
+  ::google::protobuf::internal::InitSCC(&protobuf_Message_2eproto::scc_info_Notify.base);
   return *internal_default_instance();
 }
 
 
-void Notification::Clear() {
-// @@protoc_insertion_point(message_clear_start:pbmsg.Notification)
+void Notify::Clear() {
+// @@protoc_insertion_point(message_clear_start:pbmsg.Notify)
   ::google::protobuf::uint32 cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
@@ -3639,17 +3636,17 @@ void Notification::Clear() {
   _internal_metadata_.Clear();
 }
 
-bool Notification::MergePartialFromCodedStream(
+bool Notify::MergePartialFromCodedStream(
     ::google::protobuf::io::CodedInputStream* input) {
 #define DO_(EXPRESSION) if (!GOOGLE_PREDICT_TRUE(EXPRESSION)) goto failure
   ::google::protobuf::uint32 tag;
-  // @@protoc_insertion_point(parse_start:pbmsg.Notification)
+  // @@protoc_insertion_point(parse_start:pbmsg.Notify)
   for (;;) {
     ::std::pair<::google::protobuf::uint32, bool> p = input->ReadTagWithCutoffNoLastTag(127u);
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // optional .pbmsg.FriendNotification friend = 1;
+      // optional .pbmsg.FriendNotify friend = 1;
       case 1: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
             static_cast< ::google::protobuf::uint8>(10u /* 10 & 0xFF */)) {
@@ -3661,7 +3658,7 @@ bool Notification::MergePartialFromCodedStream(
         break;
       }
 
-      // optional .pbmsg.MessageNotification msg = 2;
+      // optional .pbmsg.MessageNotify msg = 2;
       case 2: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
             static_cast< ::google::protobuf::uint8>(18u /* 18 & 0xFF */)) {
@@ -3673,7 +3670,7 @@ bool Notification::MergePartialFromCodedStream(
         break;
       }
 
-      // optional .pbmsg.WelcomeNotification welcome = 3;
+      // optional .pbmsg.WelcomeNotify welcome = 3;
       case 3: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
             static_cast< ::google::protobuf::uint8>(26u /* 26 & 0xFF */)) {
@@ -3697,34 +3694,34 @@ bool Notification::MergePartialFromCodedStream(
     }
   }
 success:
-  // @@protoc_insertion_point(parse_success:pbmsg.Notification)
+  // @@protoc_insertion_point(parse_success:pbmsg.Notify)
   return true;
 failure:
-  // @@protoc_insertion_point(parse_failure:pbmsg.Notification)
+  // @@protoc_insertion_point(parse_failure:pbmsg.Notify)
   return false;
 #undef DO_
 }
 
-void Notification::SerializeWithCachedSizes(
+void Notify::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
-  // @@protoc_insertion_point(serialize_start:pbmsg.Notification)
+  // @@protoc_insertion_point(serialize_start:pbmsg.Notify)
   ::google::protobuf::uint32 cached_has_bits = 0;
   (void) cached_has_bits;
 
   cached_has_bits = _has_bits_[0];
-  // optional .pbmsg.FriendNotification friend = 1;
+  // optional .pbmsg.FriendNotify friend = 1;
   if (cached_has_bits & 0x00000001u) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
       1, this->_internal_friend_(), output);
   }
 
-  // optional .pbmsg.MessageNotification msg = 2;
+  // optional .pbmsg.MessageNotify msg = 2;
   if (cached_has_bits & 0x00000002u) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
       2, this->_internal_msg(), output);
   }
 
-  // optional .pbmsg.WelcomeNotification welcome = 3;
+  // optional .pbmsg.WelcomeNotify welcome = 3;
   if (cached_has_bits & 0x00000004u) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
       3, this->_internal_welcome(), output);
@@ -3734,32 +3731,32 @@ void Notification::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
         _internal_metadata_.unknown_fields(), output);
   }
-  // @@protoc_insertion_point(serialize_end:pbmsg.Notification)
+  // @@protoc_insertion_point(serialize_end:pbmsg.Notify)
 }
 
-::google::protobuf::uint8* Notification::InternalSerializeWithCachedSizesToArray(
+::google::protobuf::uint8* Notify::InternalSerializeWithCachedSizesToArray(
     bool deterministic, ::google::protobuf::uint8* target) const {
   (void)deterministic; // Unused
-  // @@protoc_insertion_point(serialize_to_array_start:pbmsg.Notification)
+  // @@protoc_insertion_point(serialize_to_array_start:pbmsg.Notify)
   ::google::protobuf::uint32 cached_has_bits = 0;
   (void) cached_has_bits;
 
   cached_has_bits = _has_bits_[0];
-  // optional .pbmsg.FriendNotification friend = 1;
+  // optional .pbmsg.FriendNotify friend = 1;
   if (cached_has_bits & 0x00000001u) {
     target = ::google::protobuf::internal::WireFormatLite::
       InternalWriteMessageToArray(
         1, this->_internal_friend_(), deterministic, target);
   }
 
-  // optional .pbmsg.MessageNotification msg = 2;
+  // optional .pbmsg.MessageNotify msg = 2;
   if (cached_has_bits & 0x00000002u) {
     target = ::google::protobuf::internal::WireFormatLite::
       InternalWriteMessageToArray(
         2, this->_internal_msg(), deterministic, target);
   }
 
-  // optional .pbmsg.WelcomeNotification welcome = 3;
+  // optional .pbmsg.WelcomeNotify welcome = 3;
   if (cached_has_bits & 0x00000004u) {
     target = ::google::protobuf::internal::WireFormatLite::
       InternalWriteMessageToArray(
@@ -3770,12 +3767,12 @@ void Notification::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
         _internal_metadata_.unknown_fields(), target);
   }
-  // @@protoc_insertion_point(serialize_to_array_end:pbmsg.Notification)
+  // @@protoc_insertion_point(serialize_to_array_end:pbmsg.Notify)
   return target;
 }
 
-size_t Notification::ByteSizeLong() const {
-// @@protoc_insertion_point(message_byte_size_start:pbmsg.Notification)
+size_t Notify::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:pbmsg.Notify)
   size_t total_size = 0;
 
   if (_internal_metadata_.have_unknown_fields()) {
@@ -3784,21 +3781,21 @@ size_t Notification::ByteSizeLong() const {
         _internal_metadata_.unknown_fields());
   }
   if (_has_bits_[0 / 32] & 7u) {
-    // optional .pbmsg.FriendNotification friend = 1;
+    // optional .pbmsg.FriendNotify friend = 1;
     if (has_friend_()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::MessageSize(
           *friend__);
     }
 
-    // optional .pbmsg.MessageNotification msg = 2;
+    // optional .pbmsg.MessageNotify msg = 2;
     if (has_msg()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::MessageSize(
           *msg_);
     }
 
-    // optional .pbmsg.WelcomeNotification welcome = 3;
+    // optional .pbmsg.WelcomeNotify welcome = 3;
     if (has_welcome()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::MessageSize(
@@ -3811,23 +3808,23 @@ size_t Notification::ByteSizeLong() const {
   return total_size;
 }
 
-void Notification::MergeFrom(const ::google::protobuf::Message& from) {
-// @@protoc_insertion_point(generalized_merge_from_start:pbmsg.Notification)
+void Notify::MergeFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_merge_from_start:pbmsg.Notify)
   GOOGLE_DCHECK_NE(&from, this);
-  const Notification* source =
-      ::google::protobuf::internal::DynamicCastToGenerated<const Notification>(
+  const Notify* source =
+      ::google::protobuf::internal::DynamicCastToGenerated<const Notify>(
           &from);
   if (source == NULL) {
-  // @@protoc_insertion_point(generalized_merge_from_cast_fail:pbmsg.Notification)
+  // @@protoc_insertion_point(generalized_merge_from_cast_fail:pbmsg.Notify)
     ::google::protobuf::internal::ReflectionOps::Merge(from, this);
   } else {
-  // @@protoc_insertion_point(generalized_merge_from_cast_success:pbmsg.Notification)
+  // @@protoc_insertion_point(generalized_merge_from_cast_success:pbmsg.Notify)
     MergeFrom(*source);
   }
 }
 
-void Notification::MergeFrom(const Notification& from) {
-// @@protoc_insertion_point(class_specific_merge_from_start:pbmsg.Notification)
+void Notify::MergeFrom(const Notify& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:pbmsg.Notify)
   GOOGLE_DCHECK_NE(&from, this);
   _internal_metadata_.MergeFrom(from._internal_metadata_);
   ::google::protobuf::uint32 cached_has_bits = 0;
@@ -3836,32 +3833,32 @@ void Notification::MergeFrom(const Notification& from) {
   cached_has_bits = from._has_bits_[0];
   if (cached_has_bits & 7u) {
     if (cached_has_bits & 0x00000001u) {
-      mutable_friend_()->::pbmsg::FriendNotification::MergeFrom(from.friend_());
+      mutable_friend_()->::pbmsg::FriendNotify::MergeFrom(from.friend_());
     }
     if (cached_has_bits & 0x00000002u) {
-      mutable_msg()->::pbmsg::MessageNotification::MergeFrom(from.msg());
+      mutable_msg()->::pbmsg::MessageNotify::MergeFrom(from.msg());
     }
     if (cached_has_bits & 0x00000004u) {
-      mutable_welcome()->::pbmsg::WelcomeNotification::MergeFrom(from.welcome());
+      mutable_welcome()->::pbmsg::WelcomeNotify::MergeFrom(from.welcome());
     }
   }
 }
 
-void Notification::CopyFrom(const ::google::protobuf::Message& from) {
-// @@protoc_insertion_point(generalized_copy_from_start:pbmsg.Notification)
+void Notify::CopyFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_copy_from_start:pbmsg.Notify)
   if (&from == this) return;
   Clear();
   MergeFrom(from);
 }
 
-void Notification::CopyFrom(const Notification& from) {
-// @@protoc_insertion_point(class_specific_copy_from_start:pbmsg.Notification)
+void Notify::CopyFrom(const Notify& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:pbmsg.Notify)
   if (&from == this) return;
   Clear();
   MergeFrom(from);
 }
 
-bool Notification::IsInitialized() const {
+bool Notify::IsInitialized() const {
   if (has_friend_()) {
     if (!this->friend__->IsInitialized()) return false;
   }
@@ -3874,11 +3871,11 @@ bool Notification::IsInitialized() const {
   return true;
 }
 
-void Notification::Swap(Notification* other) {
+void Notify::Swap(Notify* other) {
   if (other == this) return;
   InternalSwap(other);
 }
-void Notification::InternalSwap(Notification* other) {
+void Notify::InternalSwap(Notify* other) {
   using std::swap;
   swap(friend__, other->friend__);
   swap(msg_, other->msg_);
@@ -3887,7 +3884,7 @@ void Notification::InternalSwap(Notification* other) {
   _internal_metadata_.Swap(&other->_internal_metadata_);
 }
 
-::google::protobuf::Metadata Notification::GetMetadata() const {
+::google::protobuf::Metadata Notify::GetMetadata() const {
   protobuf_Message_2eproto::protobuf_AssignDescriptorsOnce();
   return ::protobuf_Message_2eproto::file_level_metadata[kIndexInFileMessages];
 }
@@ -3898,18 +3895,18 @@ void Notification::InternalSwap(Notification* other) {
 void Message::InitAsDefaultInstance() {
   ::pbmsg::_Message_default_instance_._instance.get_mutable()->request_ = const_cast< ::pbmsg::Request*>(
       ::pbmsg::Request::internal_default_instance());
-  ::pbmsg::_Message_default_instance_._instance.get_mutable()->response_ = const_cast< ::pbmsg::Response*>(
-      ::pbmsg::Response::internal_default_instance());
-  ::pbmsg::_Message_default_instance_._instance.get_mutable()->notification_ = const_cast< ::pbmsg::Notification*>(
-      ::pbmsg::Notification::internal_default_instance());
+  ::pbmsg::_Message_default_instance_._instance.get_mutable()->respond_ = const_cast< ::pbmsg::Respond*>(
+      ::pbmsg::Respond::internal_default_instance());
+  ::pbmsg::_Message_default_instance_._instance.get_mutable()->notify_ = const_cast< ::pbmsg::Notify*>(
+      ::pbmsg::Notify::internal_default_instance());
 }
 #if !defined(_MSC_VER) || _MSC_VER >= 1900
 const int Message::kMsgTypeFieldNumber;
 const int Message::kSequenceFieldNumber;
 const int Message::kSessionIdFieldNumber;
 const int Message::kRequestFieldNumber;
-const int Message::kResponseFieldNumber;
-const int Message::kNotificationFieldNumber;
+const int Message::kRespondFieldNumber;
+const int Message::kNotifyFieldNumber;
 #endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
 
 Message::Message()
@@ -3929,27 +3926,27 @@ Message::Message(const Message& from)
   } else {
     request_ = NULL;
   }
-  if (from.has_response()) {
-    response_ = new ::pbmsg::Response(*from.response_);
+  if (from.has_respond()) {
+    respond_ = new ::pbmsg::Respond(*from.respond_);
   } else {
-    response_ = NULL;
+    respond_ = NULL;
   }
-  if (from.has_notification()) {
-    notification_ = new ::pbmsg::Notification(*from.notification_);
+  if (from.has_notify()) {
+    notify_ = new ::pbmsg::Notify(*from.notify_);
   } else {
-    notification_ = NULL;
+    notify_ = NULL;
   }
   ::memcpy(&sequence_, &from.sequence_,
-    static_cast<size_t>(reinterpret_cast<char*>(&msg_type_) -
-    reinterpret_cast<char*>(&sequence_)) + sizeof(msg_type_));
+    static_cast<size_t>(reinterpret_cast<char*>(&msgtype_) -
+    reinterpret_cast<char*>(&sequence_)) + sizeof(msgtype_));
   // @@protoc_insertion_point(copy_constructor:pbmsg.Message)
 }
 
 void Message::SharedCtor() {
   ::memset(&request_, 0, static_cast<size_t>(
-      reinterpret_cast<char*>(&session_id_) -
-      reinterpret_cast<char*>(&request_)) + sizeof(session_id_));
-  msg_type_ = 10001;
+      reinterpret_cast<char*>(&sessionid_) -
+      reinterpret_cast<char*>(&request_)) + sizeof(sessionid_));
+  msgtype_ = 10001;
 }
 
 Message::~Message() {
@@ -3959,8 +3956,8 @@ Message::~Message() {
 
 void Message::SharedDtor() {
   if (this != internal_default_instance()) delete request_;
-  if (this != internal_default_instance()) delete response_;
-  if (this != internal_default_instance()) delete notification_;
+  if (this != internal_default_instance()) delete respond_;
+  if (this != internal_default_instance()) delete notify_;
 }
 
 void Message::SetCachedSize(int size) const {
@@ -3990,19 +3987,19 @@ void Message::Clear() {
       request_->Clear();
     }
     if (cached_has_bits & 0x00000002u) {
-      GOOGLE_DCHECK(response_ != NULL);
-      response_->Clear();
+      GOOGLE_DCHECK(respond_ != NULL);
+      respond_->Clear();
     }
     if (cached_has_bits & 0x00000004u) {
-      GOOGLE_DCHECK(notification_ != NULL);
-      notification_->Clear();
+      GOOGLE_DCHECK(notify_ != NULL);
+      notify_->Clear();
     }
   }
   if (cached_has_bits & 56u) {
     ::memset(&sequence_, 0, static_cast<size_t>(
-        reinterpret_cast<char*>(&session_id_) -
-        reinterpret_cast<char*>(&sequence_)) + sizeof(session_id_));
-    msg_type_ = 10001;
+        reinterpret_cast<char*>(&sessionid_) -
+        reinterpret_cast<char*>(&sequence_)) + sizeof(sessionid_));
+    msgtype_ = 10001;
   }
   _has_bits_.Clear();
   _internal_metadata_.Clear();
@@ -4018,7 +4015,7 @@ bool Message::MergePartialFromCodedStream(
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // required .pbmsg.MSG msg_type = 1;
+      // required .pbmsg.MSG msgType = 1;
       case 1: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
             static_cast< ::google::protobuf::uint8>(8u /* 8 & 0xFF */)) {
@@ -4027,7 +4024,7 @@ bool Message::MergePartialFromCodedStream(
                    int, ::google::protobuf::internal::WireFormatLite::TYPE_ENUM>(
                  input, &value)));
           if (::pbmsg::MSG_IsValid(value)) {
-            set_msg_type(static_cast< ::pbmsg::MSG >(value));
+            set_msgtype(static_cast< ::pbmsg::MSG >(value));
           } else {
             mutable_unknown_fields()->AddVarint(
                 1, static_cast< ::google::protobuf::uint64>(value));
@@ -4052,14 +4049,14 @@ bool Message::MergePartialFromCodedStream(
         break;
       }
 
-      // optional fixed32 session_id = 3;
+      // optional fixed32 sessionId = 3;
       case 3: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
             static_cast< ::google::protobuf::uint8>(29u /* 29 & 0xFF */)) {
-          set_has_session_id();
+          set_has_sessionid();
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_FIXED32>(
-                 input, &session_id_)));
+                 input, &sessionid_)));
         } else {
           goto handle_unusual;
         }
@@ -4078,24 +4075,24 @@ bool Message::MergePartialFromCodedStream(
         break;
       }
 
-      // optional .pbmsg.Response response = 5;
+      // optional .pbmsg.Respond respond = 5;
       case 5: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
             static_cast< ::google::protobuf::uint8>(42u /* 42 & 0xFF */)) {
           DO_(::google::protobuf::internal::WireFormatLite::ReadMessage(
-               input, mutable_response()));
+               input, mutable_respond()));
         } else {
           goto handle_unusual;
         }
         break;
       }
 
-      // optional .pbmsg.Notification notification = 6;
+      // optional .pbmsg.Notify notify = 6;
       case 6: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
             static_cast< ::google::protobuf::uint8>(50u /* 50 & 0xFF */)) {
           DO_(::google::protobuf::internal::WireFormatLite::ReadMessage(
-               input, mutable_notification()));
+               input, mutable_notify()));
         } else {
           goto handle_unusual;
         }
@@ -4129,10 +4126,10 @@ void Message::SerializeWithCachedSizes(
   (void) cached_has_bits;
 
   cached_has_bits = _has_bits_[0];
-  // required .pbmsg.MSG msg_type = 1;
+  // required .pbmsg.MSG msgType = 1;
   if (cached_has_bits & 0x00000020u) {
     ::google::protobuf::internal::WireFormatLite::WriteEnum(
-      1, this->msg_type(), output);
+      1, this->msgtype(), output);
   }
 
   // required fixed32 sequence = 2;
@@ -4140,9 +4137,9 @@ void Message::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteFixed32(2, this->sequence(), output);
   }
 
-  // optional fixed32 session_id = 3;
+  // optional fixed32 sessionId = 3;
   if (cached_has_bits & 0x00000010u) {
-    ::google::protobuf::internal::WireFormatLite::WriteFixed32(3, this->session_id(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteFixed32(3, this->sessionid(), output);
   }
 
   // optional .pbmsg.Request request = 4;
@@ -4151,16 +4148,16 @@ void Message::SerializeWithCachedSizes(
       4, this->_internal_request(), output);
   }
 
-  // optional .pbmsg.Response response = 5;
+  // optional .pbmsg.Respond respond = 5;
   if (cached_has_bits & 0x00000002u) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
-      5, this->_internal_response(), output);
+      5, this->_internal_respond(), output);
   }
 
-  // optional .pbmsg.Notification notification = 6;
+  // optional .pbmsg.Notify notify = 6;
   if (cached_has_bits & 0x00000004u) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
-      6, this->_internal_notification(), output);
+      6, this->_internal_notify(), output);
   }
 
   if (_internal_metadata_.have_unknown_fields()) {
@@ -4178,10 +4175,10 @@ void Message::SerializeWithCachedSizes(
   (void) cached_has_bits;
 
   cached_has_bits = _has_bits_[0];
-  // required .pbmsg.MSG msg_type = 1;
+  // required .pbmsg.MSG msgType = 1;
   if (cached_has_bits & 0x00000020u) {
     target = ::google::protobuf::internal::WireFormatLite::WriteEnumToArray(
-      1, this->msg_type(), target);
+      1, this->msgtype(), target);
   }
 
   // required fixed32 sequence = 2;
@@ -4189,9 +4186,9 @@ void Message::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormatLite::WriteFixed32ToArray(2, this->sequence(), target);
   }
 
-  // optional fixed32 session_id = 3;
+  // optional fixed32 sessionId = 3;
   if (cached_has_bits & 0x00000010u) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteFixed32ToArray(3, this->session_id(), target);
+    target = ::google::protobuf::internal::WireFormatLite::WriteFixed32ToArray(3, this->sessionid(), target);
   }
 
   // optional .pbmsg.Request request = 4;
@@ -4201,18 +4198,18 @@ void Message::SerializeWithCachedSizes(
         4, this->_internal_request(), deterministic, target);
   }
 
-  // optional .pbmsg.Response response = 5;
+  // optional .pbmsg.Respond respond = 5;
   if (cached_has_bits & 0x00000002u) {
     target = ::google::protobuf::internal::WireFormatLite::
       InternalWriteMessageToArray(
-        5, this->_internal_response(), deterministic, target);
+        5, this->_internal_respond(), deterministic, target);
   }
 
-  // optional .pbmsg.Notification notification = 6;
+  // optional .pbmsg.Notify notify = 6;
   if (cached_has_bits & 0x00000004u) {
     target = ::google::protobuf::internal::WireFormatLite::
       InternalWriteMessageToArray(
-        6, this->_internal_notification(), deterministic, target);
+        6, this->_internal_notify(), deterministic, target);
   }
 
   if (_internal_metadata_.have_unknown_fields()) {
@@ -4232,10 +4229,10 @@ size_t Message::RequiredFieldsByteSizeFallback() const {
     total_size += 1 + 4;
   }
 
-  if (has_msg_type()) {
-    // required .pbmsg.MSG msg_type = 1;
+  if (has_msgtype()) {
+    // required .pbmsg.MSG msgType = 1;
     total_size += 1 +
-      ::google::protobuf::internal::WireFormatLite::EnumSize(this->msg_type());
+      ::google::protobuf::internal::WireFormatLite::EnumSize(this->msgtype());
   }
 
   return total_size;
@@ -4253,9 +4250,9 @@ size_t Message::ByteSizeLong() const {
     // required fixed32 sequence = 2;
     total_size += 1 + 4;
 
-    // required .pbmsg.MSG msg_type = 1;
+    // required .pbmsg.MSG msgType = 1;
     total_size += 1 +
-      ::google::protobuf::internal::WireFormatLite::EnumSize(this->msg_type());
+      ::google::protobuf::internal::WireFormatLite::EnumSize(this->msgtype());
 
   } else {
     total_size += RequiredFieldsByteSizeFallback();
@@ -4268,23 +4265,23 @@ size_t Message::ByteSizeLong() const {
           *request_);
     }
 
-    // optional .pbmsg.Response response = 5;
-    if (has_response()) {
+    // optional .pbmsg.Respond respond = 5;
+    if (has_respond()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::MessageSize(
-          *response_);
+          *respond_);
     }
 
-    // optional .pbmsg.Notification notification = 6;
-    if (has_notification()) {
+    // optional .pbmsg.Notify notify = 6;
+    if (has_notify()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::MessageSize(
-          *notification_);
+          *notify_);
     }
 
   }
-  // optional fixed32 session_id = 3;
-  if (has_session_id()) {
+  // optional fixed32 sessionId = 3;
+  if (has_sessionid()) {
     total_size += 1 + 4;
   }
 
@@ -4321,19 +4318,19 @@ void Message::MergeFrom(const Message& from) {
       mutable_request()->::pbmsg::Request::MergeFrom(from.request());
     }
     if (cached_has_bits & 0x00000002u) {
-      mutable_response()->::pbmsg::Response::MergeFrom(from.response());
+      mutable_respond()->::pbmsg::Respond::MergeFrom(from.respond());
     }
     if (cached_has_bits & 0x00000004u) {
-      mutable_notification()->::pbmsg::Notification::MergeFrom(from.notification());
+      mutable_notify()->::pbmsg::Notify::MergeFrom(from.notify());
     }
     if (cached_has_bits & 0x00000008u) {
       sequence_ = from.sequence_;
     }
     if (cached_has_bits & 0x00000010u) {
-      session_id_ = from.session_id_;
+      sessionid_ = from.sessionid_;
     }
     if (cached_has_bits & 0x00000020u) {
-      msg_type_ = from.msg_type_;
+      msgtype_ = from.msgtype_;
     }
     _has_bits_[0] |= cached_has_bits;
   }
@@ -4358,11 +4355,11 @@ bool Message::IsInitialized() const {
   if (has_request()) {
     if (!this->request_->IsInitialized()) return false;
   }
-  if (has_response()) {
-    if (!this->response_->IsInitialized()) return false;
+  if (has_respond()) {
+    if (!this->respond_->IsInitialized()) return false;
   }
-  if (has_notification()) {
-    if (!this->notification_->IsInitialized()) return false;
+  if (has_notify()) {
+    if (!this->notify_->IsInitialized()) return false;
   }
   return true;
 }
@@ -4374,11 +4371,11 @@ void Message::Swap(Message* other) {
 void Message::InternalSwap(Message* other) {
   using std::swap;
   swap(request_, other->request_);
-  swap(response_, other->response_);
-  swap(notification_, other->notification_);
+  swap(respond_, other->respond_);
+  swap(notify_, other->notify_);
   swap(sequence_, other->sequence_);
-  swap(session_id_, other->session_id_);
-  swap(msg_type_, other->msg_type_);
+  swap(sessionid_, other->sessionid_);
+  swap(msgtype_, other->msgtype_);
   swap(_has_bits_[0], other->_has_bits_[0]);
   _internal_metadata_.Swap(&other->_internal_metadata_);
 }
@@ -4396,35 +4393,35 @@ namespace protobuf {
 template<> GOOGLE_PROTOBUF_ATTRIBUTE_NOINLINE ::pbmsg::LoginRequest* Arena::CreateMaybeMessage< ::pbmsg::LoginRequest >(Arena* arena) {
   return Arena::CreateInternal< ::pbmsg::LoginRequest >(arena);
 }
-template<> GOOGLE_PROTOBUF_ATTRIBUTE_NOINLINE ::pbmsg::LoginResponse* Arena::CreateMaybeMessage< ::pbmsg::LoginResponse >(Arena* arena) {
-  return Arena::CreateInternal< ::pbmsg::LoginResponse >(arena);
+template<> GOOGLE_PROTOBUF_ATTRIBUTE_NOINLINE ::pbmsg::LoginRespond* Arena::CreateMaybeMessage< ::pbmsg::LoginRespond >(Arena* arena) {
+  return Arena::CreateInternal< ::pbmsg::LoginRespond >(arena);
 }
 template<> GOOGLE_PROTOBUF_ATTRIBUTE_NOINLINE ::pbmsg::Friend* Arena::CreateMaybeMessage< ::pbmsg::Friend >(Arena* arena) {
   return Arena::CreateInternal< ::pbmsg::Friend >(arena);
 }
-template<> GOOGLE_PROTOBUF_ATTRIBUTE_NOINLINE ::pbmsg::GetFriendsResponse* Arena::CreateMaybeMessage< ::pbmsg::GetFriendsResponse >(Arena* arena) {
-  return Arena::CreateInternal< ::pbmsg::GetFriendsResponse >(arena);
+template<> GOOGLE_PROTOBUF_ATTRIBUTE_NOINLINE ::pbmsg::GetFriendsRespond* Arena::CreateMaybeMessage< ::pbmsg::GetFriendsRespond >(Arena* arena) {
+  return Arena::CreateInternal< ::pbmsg::GetFriendsRespond >(arena);
 }
 template<> GOOGLE_PROTOBUF_ATTRIBUTE_NOINLINE ::pbmsg::SendMessageRequest* Arena::CreateMaybeMessage< ::pbmsg::SendMessageRequest >(Arena* arena) {
   return Arena::CreateInternal< ::pbmsg::SendMessageRequest >(arena);
 }
-template<> GOOGLE_PROTOBUF_ATTRIBUTE_NOINLINE ::pbmsg::FriendNotification* Arena::CreateMaybeMessage< ::pbmsg::FriendNotification >(Arena* arena) {
-  return Arena::CreateInternal< ::pbmsg::FriendNotification >(arena);
+template<> GOOGLE_PROTOBUF_ATTRIBUTE_NOINLINE ::pbmsg::FriendNotify* Arena::CreateMaybeMessage< ::pbmsg::FriendNotify >(Arena* arena) {
+  return Arena::CreateInternal< ::pbmsg::FriendNotify >(arena);
 }
-template<> GOOGLE_PROTOBUF_ATTRIBUTE_NOINLINE ::pbmsg::MessageNotification* Arena::CreateMaybeMessage< ::pbmsg::MessageNotification >(Arena* arena) {
-  return Arena::CreateInternal< ::pbmsg::MessageNotification >(arena);
+template<> GOOGLE_PROTOBUF_ATTRIBUTE_NOINLINE ::pbmsg::MessageNotify* Arena::CreateMaybeMessage< ::pbmsg::MessageNotify >(Arena* arena) {
+  return Arena::CreateInternal< ::pbmsg::MessageNotify >(arena);
 }
-template<> GOOGLE_PROTOBUF_ATTRIBUTE_NOINLINE ::pbmsg::WelcomeNotification* Arena::CreateMaybeMessage< ::pbmsg::WelcomeNotification >(Arena* arena) {
-  return Arena::CreateInternal< ::pbmsg::WelcomeNotification >(arena);
+template<> GOOGLE_PROTOBUF_ATTRIBUTE_NOINLINE ::pbmsg::WelcomeNotify* Arena::CreateMaybeMessage< ::pbmsg::WelcomeNotify >(Arena* arena) {
+  return Arena::CreateInternal< ::pbmsg::WelcomeNotify >(arena);
 }
 template<> GOOGLE_PROTOBUF_ATTRIBUTE_NOINLINE ::pbmsg::Request* Arena::CreateMaybeMessage< ::pbmsg::Request >(Arena* arena) {
   return Arena::CreateInternal< ::pbmsg::Request >(arena);
 }
-template<> GOOGLE_PROTOBUF_ATTRIBUTE_NOINLINE ::pbmsg::Response* Arena::CreateMaybeMessage< ::pbmsg::Response >(Arena* arena) {
-  return Arena::CreateInternal< ::pbmsg::Response >(arena);
+template<> GOOGLE_PROTOBUF_ATTRIBUTE_NOINLINE ::pbmsg::Respond* Arena::CreateMaybeMessage< ::pbmsg::Respond >(Arena* arena) {
+  return Arena::CreateInternal< ::pbmsg::Respond >(arena);
 }
-template<> GOOGLE_PROTOBUF_ATTRIBUTE_NOINLINE ::pbmsg::Notification* Arena::CreateMaybeMessage< ::pbmsg::Notification >(Arena* arena) {
-  return Arena::CreateInternal< ::pbmsg::Notification >(arena);
+template<> GOOGLE_PROTOBUF_ATTRIBUTE_NOINLINE ::pbmsg::Notify* Arena::CreateMaybeMessage< ::pbmsg::Notify >(Arena* arena) {
+  return Arena::CreateInternal< ::pbmsg::Notify >(arena);
 }
 template<> GOOGLE_PROTOBUF_ATTRIBUTE_NOINLINE ::pbmsg::Message* Arena::CreateMaybeMessage< ::pbmsg::Message >(Arena* arena) {
   return Arena::CreateInternal< ::pbmsg::Message >(arena);

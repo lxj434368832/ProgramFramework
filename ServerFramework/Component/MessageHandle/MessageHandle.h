@@ -1,16 +1,16 @@
 #pragma once
 
 #include <set>
-#include "IMessageBusiness.h"
+#include "IMessageHandle.h"
 
 class ProtobufMsgFactory;
-class IMessageHandle;
+class IMessageColleague;
 
-class MessageBusiness : public IMessageBusiness
+class MessageHandle : public IMessageHandle
 {
 public:
-	MessageBusiness(IMainServer *srv = nullptr);
-	~MessageBusiness();
+	MessageHandle(IMainServer *srv = nullptr);
+	~MessageHandle();
 	ProtobufMsgFactory* GetProtobufMsgFactory() override;
 	bool Start() override;
 	void Stop() override;
@@ -22,8 +22,8 @@ private:
 	void LoadMessageHandleModule();
 
 private:
-	ProtobufMsgFactory			*m_pProtoMsgFtry;
-	std::set<IMessageHandle*>	m_setMessageHandle;
+	ProtobufMsgFactory				*m_pProtoMsgFtry;
+	std::set<IMessageColleague*>	m_setMessageHandle;
 
 };
 

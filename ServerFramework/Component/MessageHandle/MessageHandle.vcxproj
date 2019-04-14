@@ -121,17 +121,21 @@
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="LoginMessageHandle.cpp" />
+    <ClCompile Include="HandleNotifyMessage.cpp" />
+    <ClCompile Include="HandleRequestMessage.cpp" />
+    <ClCompile Include="HandleRespondMessage.cpp" />
     <ClCompile Include="Message.pb.cc" />
-    <ClCompile Include="MessageBusiness.cpp" />
+    <ClCompile Include="MessageHandle.cpp" />
     <ClCompile Include="ProtobufMsgFactory.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="IMessageBusiness.h" />
+    <ClInclude Include="HandleRespondMessage.h" />
     <ClInclude Include="IMessageHandle.h" />
-    <ClInclude Include="LoginMessageHandle.h" />
+    <ClInclude Include="IMessageColleague.h" />
+    <ClInclude Include="HandleNotifyMessage.h" />
+    <ClInclude Include="HandleRequestMessage.h" />
     <ClInclude Include="Message.pb.h" />
-    <ClInclude Include="MessageBusiness.h" />
+    <ClInclude Include="MessageHandle.h" />
     <ClInclude Include="ProtobufMsgFactory.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

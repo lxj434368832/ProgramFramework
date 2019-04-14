@@ -36,14 +36,14 @@ void LoginMessageHandle::SendLoginMessage(unsigned uUserKey)
 void LoginMessageHandle::HandleLoginResponse(const unsigned uUserKey, const pbmsg::Message *msg, void* ptr)
 {
 	logm() << "收到服务器:" << uUserKey << "发送的登录响应消息！";
-	pbmsg::Response loginrq = msg->response();
-	if (loginrq.result())
+	pbmsg::Response loginRs = msg->response();
+	if (loginRs.result())
 	{
 		logm() << "登录服务端成功！";
 	}
 	else
 	{
-		loge() << QString::fromLocal8Bit("登录服务端失败，错误消息为:%1").arg(loginrq.error_describe().c_str());
+		loge() << QString::fromLocal8Bit("登录服务端失败，错误消息为:%1").arg(loginRs.error_describe().c_str());
 		m_pMsgModule->GetMainClient()->GetTCPCommunication()->GetServerConnect()->Disconnect(uUserKey);
 	}
 }

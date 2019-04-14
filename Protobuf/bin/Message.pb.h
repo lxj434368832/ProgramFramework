@@ -50,76 +50,76 @@ namespace pbmsg {
 class Friend;
 class FriendDefaultTypeInternal;
 extern FriendDefaultTypeInternal _Friend_default_instance_;
-class FriendNotification;
-class FriendNotificationDefaultTypeInternal;
-extern FriendNotificationDefaultTypeInternal _FriendNotification_default_instance_;
-class GetFriendsResponse;
-class GetFriendsResponseDefaultTypeInternal;
-extern GetFriendsResponseDefaultTypeInternal _GetFriendsResponse_default_instance_;
+class FriendNotify;
+class FriendNotifyDefaultTypeInternal;
+extern FriendNotifyDefaultTypeInternal _FriendNotify_default_instance_;
+class GetFriendsRespond;
+class GetFriendsRespondDefaultTypeInternal;
+extern GetFriendsRespondDefaultTypeInternal _GetFriendsRespond_default_instance_;
 class LoginRequest;
 class LoginRequestDefaultTypeInternal;
 extern LoginRequestDefaultTypeInternal _LoginRequest_default_instance_;
-class LoginResponse;
-class LoginResponseDefaultTypeInternal;
-extern LoginResponseDefaultTypeInternal _LoginResponse_default_instance_;
+class LoginRespond;
+class LoginRespondDefaultTypeInternal;
+extern LoginRespondDefaultTypeInternal _LoginRespond_default_instance_;
 class Message;
 class MessageDefaultTypeInternal;
 extern MessageDefaultTypeInternal _Message_default_instance_;
-class MessageNotification;
-class MessageNotificationDefaultTypeInternal;
-extern MessageNotificationDefaultTypeInternal _MessageNotification_default_instance_;
-class Notification;
-class NotificationDefaultTypeInternal;
-extern NotificationDefaultTypeInternal _Notification_default_instance_;
+class MessageNotify;
+class MessageNotifyDefaultTypeInternal;
+extern MessageNotifyDefaultTypeInternal _MessageNotify_default_instance_;
+class Notify;
+class NotifyDefaultTypeInternal;
+extern NotifyDefaultTypeInternal _Notify_default_instance_;
 class Request;
 class RequestDefaultTypeInternal;
 extern RequestDefaultTypeInternal _Request_default_instance_;
-class Response;
-class ResponseDefaultTypeInternal;
-extern ResponseDefaultTypeInternal _Response_default_instance_;
+class Respond;
+class RespondDefaultTypeInternal;
+extern RespondDefaultTypeInternal _Respond_default_instance_;
 class SendMessageRequest;
 class SendMessageRequestDefaultTypeInternal;
 extern SendMessageRequestDefaultTypeInternal _SendMessageRequest_default_instance_;
-class WelcomeNotification;
-class WelcomeNotificationDefaultTypeInternal;
-extern WelcomeNotificationDefaultTypeInternal _WelcomeNotification_default_instance_;
+class WelcomeNotify;
+class WelcomeNotifyDefaultTypeInternal;
+extern WelcomeNotifyDefaultTypeInternal _WelcomeNotify_default_instance_;
 }  // namespace pbmsg
 namespace google {
 namespace protobuf {
 template<> ::pbmsg::Friend* Arena::CreateMaybeMessage<::pbmsg::Friend>(Arena*);
-template<> ::pbmsg::FriendNotification* Arena::CreateMaybeMessage<::pbmsg::FriendNotification>(Arena*);
-template<> ::pbmsg::GetFriendsResponse* Arena::CreateMaybeMessage<::pbmsg::GetFriendsResponse>(Arena*);
+template<> ::pbmsg::FriendNotify* Arena::CreateMaybeMessage<::pbmsg::FriendNotify>(Arena*);
+template<> ::pbmsg::GetFriendsRespond* Arena::CreateMaybeMessage<::pbmsg::GetFriendsRespond>(Arena*);
 template<> ::pbmsg::LoginRequest* Arena::CreateMaybeMessage<::pbmsg::LoginRequest>(Arena*);
-template<> ::pbmsg::LoginResponse* Arena::CreateMaybeMessage<::pbmsg::LoginResponse>(Arena*);
+template<> ::pbmsg::LoginRespond* Arena::CreateMaybeMessage<::pbmsg::LoginRespond>(Arena*);
 template<> ::pbmsg::Message* Arena::CreateMaybeMessage<::pbmsg::Message>(Arena*);
-template<> ::pbmsg::MessageNotification* Arena::CreateMaybeMessage<::pbmsg::MessageNotification>(Arena*);
-template<> ::pbmsg::Notification* Arena::CreateMaybeMessage<::pbmsg::Notification>(Arena*);
+template<> ::pbmsg::MessageNotify* Arena::CreateMaybeMessage<::pbmsg::MessageNotify>(Arena*);
+template<> ::pbmsg::Notify* Arena::CreateMaybeMessage<::pbmsg::Notify>(Arena*);
 template<> ::pbmsg::Request* Arena::CreateMaybeMessage<::pbmsg::Request>(Arena*);
-template<> ::pbmsg::Response* Arena::CreateMaybeMessage<::pbmsg::Response>(Arena*);
+template<> ::pbmsg::Respond* Arena::CreateMaybeMessage<::pbmsg::Respond>(Arena*);
 template<> ::pbmsg::SendMessageRequest* Arena::CreateMaybeMessage<::pbmsg::SendMessageRequest>(Arena*);
-template<> ::pbmsg::WelcomeNotification* Arena::CreateMaybeMessage<::pbmsg::WelcomeNotification>(Arena*);
+template<> ::pbmsg::WelcomeNotify* Arena::CreateMaybeMessage<::pbmsg::WelcomeNotify>(Arena*);
 }  // namespace protobuf
 }  // namespace google
 namespace pbmsg {
 
 enum MSG {
-  Login_Request = 10001,
-  Login_Response = 10002,
-  Logout_Request = 10003,
-  Logout_Response = 10004,
-  Keepalive_Request = 10005,
-  Keepalive_Response = 10006,
-  Get_Friends_Request = 10007,
-  Get_Friends_Response = 10008,
-  Send_Message_Request = 10009,
-  Send_Message_Response = 10010,
-  Friend_Notification = 20001,
-  Message_Notification = 20002,
-  Welcome_Notification = 20003
+  ELoginRequest = 10001,
+  ELoginRespond = 10002,
+  ELogoutRequest = 10003,
+  ELogoutRespond = 10004,
+  EKeepaliveRequest = 10005,
+  EKeepaliveRespond = 10006,
+  EGetFriendsRequest = 10007,
+  EGetFriendsRespond = 10008,
+  ESendMessageRequest = 10009,
+  ESendMessageRespond = 10010,
+  EFriendNotify = 20001,
+  EMessageNotify = 20002,
+  EWelcomeNotify = 20003
 };
 bool MSG_IsValid(int value);
-const MSG MSG_MIN = Login_Request;
-const MSG MSG_MAX = Welcome_Notification;
+const MSG MSG_MIN = ELoginRequest;
+const MSG MSG_MAX = EWelcomeNotify;
 const int MSG_ARRAYSIZE = MSG_MAX + 1;
 
 const ::google::protobuf::EnumDescriptor* MSG_descriptor();
@@ -295,24 +295,24 @@ class LoginRequest : public ::google::protobuf::Message /* @@protoc_insertion_po
 };
 // -------------------------------------------------------------------
 
-class LoginResponse : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:pbmsg.LoginResponse) */ {
+class LoginRespond : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:pbmsg.LoginRespond) */ {
  public:
-  LoginResponse();
-  virtual ~LoginResponse();
+  LoginRespond();
+  virtual ~LoginRespond();
 
-  LoginResponse(const LoginResponse& from);
+  LoginRespond(const LoginRespond& from);
 
-  inline LoginResponse& operator=(const LoginResponse& from) {
+  inline LoginRespond& operator=(const LoginRespond& from) {
     CopyFrom(from);
     return *this;
   }
   #if LANG_CXX11
-  LoginResponse(LoginResponse&& from) noexcept
-    : LoginResponse() {
+  LoginRespond(LoginRespond&& from) noexcept
+    : LoginRespond() {
     *this = ::std::move(from);
   }
 
-  inline LoginResponse& operator=(LoginResponse&& from) noexcept {
+  inline LoginRespond& operator=(LoginRespond&& from) noexcept {
     if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
       if (this != &from) InternalSwap(&from);
     } else {
@@ -329,34 +329,34 @@ class LoginResponse : public ::google::protobuf::Message /* @@protoc_insertion_p
   }
 
   static const ::google::protobuf::Descriptor* descriptor();
-  static const LoginResponse& default_instance();
+  static const LoginRespond& default_instance();
 
   static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
-  static inline const LoginResponse* internal_default_instance() {
-    return reinterpret_cast<const LoginResponse*>(
-               &_LoginResponse_default_instance_);
+  static inline const LoginRespond* internal_default_instance() {
+    return reinterpret_cast<const LoginRespond*>(
+               &_LoginRespond_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
     1;
 
-  void Swap(LoginResponse* other);
-  friend void swap(LoginResponse& a, LoginResponse& b) {
+  void Swap(LoginRespond* other);
+  friend void swap(LoginRespond& a, LoginRespond& b) {
     a.Swap(&b);
   }
 
   // implements Message ----------------------------------------------
 
-  inline LoginResponse* New() const final {
-    return CreateMaybeMessage<LoginResponse>(NULL);
+  inline LoginRespond* New() const final {
+    return CreateMaybeMessage<LoginRespond>(NULL);
   }
 
-  LoginResponse* New(::google::protobuf::Arena* arena) const final {
-    return CreateMaybeMessage<LoginResponse>(arena);
+  LoginRespond* New(::google::protobuf::Arena* arena) const final {
+    return CreateMaybeMessage<LoginRespond>(arena);
   }
   void CopyFrom(const ::google::protobuf::Message& from) final;
   void MergeFrom(const ::google::protobuf::Message& from) final;
-  void CopyFrom(const LoginResponse& from);
-  void MergeFrom(const LoginResponse& from);
+  void CopyFrom(const LoginRespond& from);
+  void MergeFrom(const LoginRespond& from);
   void Clear() final;
   bool IsInitialized() const final;
 
@@ -373,7 +373,7 @@ class LoginResponse : public ::google::protobuf::Message /* @@protoc_insertion_p
   void SharedCtor();
   void SharedDtor();
   void SetCachedSize(int size) const final;
-  void InternalSwap(LoginResponse* other);
+  void InternalSwap(LoginRespond* other);
   private:
   inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
     return NULL;
@@ -396,7 +396,7 @@ class LoginResponse : public ::google::protobuf::Message /* @@protoc_insertion_p
   ::google::protobuf::uint32 ttl() const;
   void set_ttl(::google::protobuf::uint32 value);
 
-  // @@protoc_insertion_point(class_scope:pbmsg.LoginResponse)
+  // @@protoc_insertion_point(class_scope:pbmsg.LoginRespond)
  private:
   void set_has_ttl();
   void clear_has_ttl();
@@ -541,24 +541,24 @@ class Friend : public ::google::protobuf::Message /* @@protoc_insertion_point(cl
 };
 // -------------------------------------------------------------------
 
-class GetFriendsResponse : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:pbmsg.GetFriendsResponse) */ {
+class GetFriendsRespond : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:pbmsg.GetFriendsRespond) */ {
  public:
-  GetFriendsResponse();
-  virtual ~GetFriendsResponse();
+  GetFriendsRespond();
+  virtual ~GetFriendsRespond();
 
-  GetFriendsResponse(const GetFriendsResponse& from);
+  GetFriendsRespond(const GetFriendsRespond& from);
 
-  inline GetFriendsResponse& operator=(const GetFriendsResponse& from) {
+  inline GetFriendsRespond& operator=(const GetFriendsRespond& from) {
     CopyFrom(from);
     return *this;
   }
   #if LANG_CXX11
-  GetFriendsResponse(GetFriendsResponse&& from) noexcept
-    : GetFriendsResponse() {
+  GetFriendsRespond(GetFriendsRespond&& from) noexcept
+    : GetFriendsRespond() {
     *this = ::std::move(from);
   }
 
-  inline GetFriendsResponse& operator=(GetFriendsResponse&& from) noexcept {
+  inline GetFriendsRespond& operator=(GetFriendsRespond&& from) noexcept {
     if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
       if (this != &from) InternalSwap(&from);
     } else {
@@ -575,34 +575,34 @@ class GetFriendsResponse : public ::google::protobuf::Message /* @@protoc_insert
   }
 
   static const ::google::protobuf::Descriptor* descriptor();
-  static const GetFriendsResponse& default_instance();
+  static const GetFriendsRespond& default_instance();
 
   static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
-  static inline const GetFriendsResponse* internal_default_instance() {
-    return reinterpret_cast<const GetFriendsResponse*>(
-               &_GetFriendsResponse_default_instance_);
+  static inline const GetFriendsRespond* internal_default_instance() {
+    return reinterpret_cast<const GetFriendsRespond*>(
+               &_GetFriendsRespond_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
     3;
 
-  void Swap(GetFriendsResponse* other);
-  friend void swap(GetFriendsResponse& a, GetFriendsResponse& b) {
+  void Swap(GetFriendsRespond* other);
+  friend void swap(GetFriendsRespond& a, GetFriendsRespond& b) {
     a.Swap(&b);
   }
 
   // implements Message ----------------------------------------------
 
-  inline GetFriendsResponse* New() const final {
-    return CreateMaybeMessage<GetFriendsResponse>(NULL);
+  inline GetFriendsRespond* New() const final {
+    return CreateMaybeMessage<GetFriendsRespond>(NULL);
   }
 
-  GetFriendsResponse* New(::google::protobuf::Arena* arena) const final {
-    return CreateMaybeMessage<GetFriendsResponse>(arena);
+  GetFriendsRespond* New(::google::protobuf::Arena* arena) const final {
+    return CreateMaybeMessage<GetFriendsRespond>(arena);
   }
   void CopyFrom(const ::google::protobuf::Message& from) final;
   void MergeFrom(const ::google::protobuf::Message& from) final;
-  void CopyFrom(const GetFriendsResponse& from);
-  void MergeFrom(const GetFriendsResponse& from);
+  void CopyFrom(const GetFriendsRespond& from);
+  void MergeFrom(const GetFriendsRespond& from);
   void Clear() final;
   bool IsInitialized() const final;
 
@@ -619,7 +619,7 @@ class GetFriendsResponse : public ::google::protobuf::Message /* @@protoc_insert
   void SharedCtor();
   void SharedDtor();
   void SetCachedSize(int size) const final;
-  void InternalSwap(GetFriendsResponse* other);
+  void InternalSwap(GetFriendsRespond* other);
   private:
   inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
     return NULL;
@@ -647,7 +647,7 @@ class GetFriendsResponse : public ::google::protobuf::Message /* @@protoc_insert
   const ::google::protobuf::RepeatedPtrField< ::pbmsg::Friend >&
       friends() const;
 
-  // @@protoc_insertion_point(class_scope:pbmsg.GetFriendsResponse)
+  // @@protoc_insertion_point(class_scope:pbmsg.GetFriendsRespond)
  private:
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
@@ -798,24 +798,24 @@ class SendMessageRequest : public ::google::protobuf::Message /* @@protoc_insert
 };
 // -------------------------------------------------------------------
 
-class FriendNotification : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:pbmsg.FriendNotification) */ {
+class FriendNotify : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:pbmsg.FriendNotify) */ {
  public:
-  FriendNotification();
-  virtual ~FriendNotification();
+  FriendNotify();
+  virtual ~FriendNotify();
 
-  FriendNotification(const FriendNotification& from);
+  FriendNotify(const FriendNotify& from);
 
-  inline FriendNotification& operator=(const FriendNotification& from) {
+  inline FriendNotify& operator=(const FriendNotify& from) {
     CopyFrom(from);
     return *this;
   }
   #if LANG_CXX11
-  FriendNotification(FriendNotification&& from) noexcept
-    : FriendNotification() {
+  FriendNotify(FriendNotify&& from) noexcept
+    : FriendNotify() {
     *this = ::std::move(from);
   }
 
-  inline FriendNotification& operator=(FriendNotification&& from) noexcept {
+  inline FriendNotify& operator=(FriendNotify&& from) noexcept {
     if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
       if (this != &from) InternalSwap(&from);
     } else {
@@ -832,34 +832,34 @@ class FriendNotification : public ::google::protobuf::Message /* @@protoc_insert
   }
 
   static const ::google::protobuf::Descriptor* descriptor();
-  static const FriendNotification& default_instance();
+  static const FriendNotify& default_instance();
 
   static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
-  static inline const FriendNotification* internal_default_instance() {
-    return reinterpret_cast<const FriendNotification*>(
-               &_FriendNotification_default_instance_);
+  static inline const FriendNotify* internal_default_instance() {
+    return reinterpret_cast<const FriendNotify*>(
+               &_FriendNotify_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
     5;
 
-  void Swap(FriendNotification* other);
-  friend void swap(FriendNotification& a, FriendNotification& b) {
+  void Swap(FriendNotify* other);
+  friend void swap(FriendNotify& a, FriendNotify& b) {
     a.Swap(&b);
   }
 
   // implements Message ----------------------------------------------
 
-  inline FriendNotification* New() const final {
-    return CreateMaybeMessage<FriendNotification>(NULL);
+  inline FriendNotify* New() const final {
+    return CreateMaybeMessage<FriendNotify>(NULL);
   }
 
-  FriendNotification* New(::google::protobuf::Arena* arena) const final {
-    return CreateMaybeMessage<FriendNotification>(arena);
+  FriendNotify* New(::google::protobuf::Arena* arena) const final {
+    return CreateMaybeMessage<FriendNotify>(arena);
   }
   void CopyFrom(const ::google::protobuf::Message& from) final;
   void MergeFrom(const ::google::protobuf::Message& from) final;
-  void CopyFrom(const FriendNotification& from);
-  void MergeFrom(const FriendNotification& from);
+  void CopyFrom(const FriendNotify& from);
+  void MergeFrom(const FriendNotify& from);
   void Clear() final;
   bool IsInitialized() const final;
 
@@ -876,7 +876,7 @@ class FriendNotification : public ::google::protobuf::Message /* @@protoc_insert
   void SharedCtor();
   void SharedDtor();
   void SetCachedSize(int size) const final;
-  void InternalSwap(FriendNotification* other);
+  void InternalSwap(FriendNotify* other);
   private:
   inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
     return NULL;
@@ -914,7 +914,7 @@ class FriendNotification : public ::google::protobuf::Message /* @@protoc_insert
   bool online() const;
   void set_online(bool value);
 
-  // @@protoc_insertion_point(class_scope:pbmsg.FriendNotification)
+  // @@protoc_insertion_point(class_scope:pbmsg.FriendNotify)
  private:
   void set_has_name();
   void clear_has_name();
@@ -930,24 +930,24 @@ class FriendNotification : public ::google::protobuf::Message /* @@protoc_insert
 };
 // -------------------------------------------------------------------
 
-class MessageNotification : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:pbmsg.MessageNotification) */ {
+class MessageNotify : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:pbmsg.MessageNotify) */ {
  public:
-  MessageNotification();
-  virtual ~MessageNotification();
+  MessageNotify();
+  virtual ~MessageNotify();
 
-  MessageNotification(const MessageNotification& from);
+  MessageNotify(const MessageNotify& from);
 
-  inline MessageNotification& operator=(const MessageNotification& from) {
+  inline MessageNotify& operator=(const MessageNotify& from) {
     CopyFrom(from);
     return *this;
   }
   #if LANG_CXX11
-  MessageNotification(MessageNotification&& from) noexcept
-    : MessageNotification() {
+  MessageNotify(MessageNotify&& from) noexcept
+    : MessageNotify() {
     *this = ::std::move(from);
   }
 
-  inline MessageNotification& operator=(MessageNotification&& from) noexcept {
+  inline MessageNotify& operator=(MessageNotify&& from) noexcept {
     if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
       if (this != &from) InternalSwap(&from);
     } else {
@@ -964,34 +964,34 @@ class MessageNotification : public ::google::protobuf::Message /* @@protoc_inser
   }
 
   static const ::google::protobuf::Descriptor* descriptor();
-  static const MessageNotification& default_instance();
+  static const MessageNotify& default_instance();
 
   static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
-  static inline const MessageNotification* internal_default_instance() {
-    return reinterpret_cast<const MessageNotification*>(
-               &_MessageNotification_default_instance_);
+  static inline const MessageNotify* internal_default_instance() {
+    return reinterpret_cast<const MessageNotify*>(
+               &_MessageNotify_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
     6;
 
-  void Swap(MessageNotification* other);
-  friend void swap(MessageNotification& a, MessageNotification& b) {
+  void Swap(MessageNotify* other);
+  friend void swap(MessageNotify& a, MessageNotify& b) {
     a.Swap(&b);
   }
 
   // implements Message ----------------------------------------------
 
-  inline MessageNotification* New() const final {
-    return CreateMaybeMessage<MessageNotification>(NULL);
+  inline MessageNotify* New() const final {
+    return CreateMaybeMessage<MessageNotify>(NULL);
   }
 
-  MessageNotification* New(::google::protobuf::Arena* arena) const final {
-    return CreateMaybeMessage<MessageNotification>(arena);
+  MessageNotify* New(::google::protobuf::Arena* arena) const final {
+    return CreateMaybeMessage<MessageNotify>(arena);
   }
   void CopyFrom(const ::google::protobuf::Message& from) final;
   void MergeFrom(const ::google::protobuf::Message& from) final;
-  void CopyFrom(const MessageNotification& from);
-  void MergeFrom(const MessageNotification& from);
+  void CopyFrom(const MessageNotify& from);
+  void MergeFrom(const MessageNotify& from);
   void Clear() final;
   bool IsInitialized() const final;
 
@@ -1008,7 +1008,7 @@ class MessageNotification : public ::google::protobuf::Message /* @@protoc_inser
   void SharedCtor();
   void SharedDtor();
   void SetCachedSize(int size) const final;
-  void InternalSwap(MessageNotification* other);
+  void InternalSwap(MessageNotify* other);
   private:
   inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
     return NULL;
@@ -1069,7 +1069,7 @@ class MessageNotification : public ::google::protobuf::Message /* @@protoc_inser
   ::std::string* release_timestamp();
   void set_allocated_timestamp(::std::string* timestamp);
 
-  // @@protoc_insertion_point(class_scope:pbmsg.MessageNotification)
+  // @@protoc_insertion_point(class_scope:pbmsg.MessageNotify)
  private:
   void set_has_sender();
   void clear_has_sender();
@@ -1091,24 +1091,24 @@ class MessageNotification : public ::google::protobuf::Message /* @@protoc_inser
 };
 // -------------------------------------------------------------------
 
-class WelcomeNotification : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:pbmsg.WelcomeNotification) */ {
+class WelcomeNotify : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:pbmsg.WelcomeNotify) */ {
  public:
-  WelcomeNotification();
-  virtual ~WelcomeNotification();
+  WelcomeNotify();
+  virtual ~WelcomeNotify();
 
-  WelcomeNotification(const WelcomeNotification& from);
+  WelcomeNotify(const WelcomeNotify& from);
 
-  inline WelcomeNotification& operator=(const WelcomeNotification& from) {
+  inline WelcomeNotify& operator=(const WelcomeNotify& from) {
     CopyFrom(from);
     return *this;
   }
   #if LANG_CXX11
-  WelcomeNotification(WelcomeNotification&& from) noexcept
-    : WelcomeNotification() {
+  WelcomeNotify(WelcomeNotify&& from) noexcept
+    : WelcomeNotify() {
     *this = ::std::move(from);
   }
 
-  inline WelcomeNotification& operator=(WelcomeNotification&& from) noexcept {
+  inline WelcomeNotify& operator=(WelcomeNotify&& from) noexcept {
     if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
       if (this != &from) InternalSwap(&from);
     } else {
@@ -1125,34 +1125,34 @@ class WelcomeNotification : public ::google::protobuf::Message /* @@protoc_inser
   }
 
   static const ::google::protobuf::Descriptor* descriptor();
-  static const WelcomeNotification& default_instance();
+  static const WelcomeNotify& default_instance();
 
   static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
-  static inline const WelcomeNotification* internal_default_instance() {
-    return reinterpret_cast<const WelcomeNotification*>(
-               &_WelcomeNotification_default_instance_);
+  static inline const WelcomeNotify* internal_default_instance() {
+    return reinterpret_cast<const WelcomeNotify*>(
+               &_WelcomeNotify_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
     7;
 
-  void Swap(WelcomeNotification* other);
-  friend void swap(WelcomeNotification& a, WelcomeNotification& b) {
+  void Swap(WelcomeNotify* other);
+  friend void swap(WelcomeNotify& a, WelcomeNotify& b) {
     a.Swap(&b);
   }
 
   // implements Message ----------------------------------------------
 
-  inline WelcomeNotification* New() const final {
-    return CreateMaybeMessage<WelcomeNotification>(NULL);
+  inline WelcomeNotify* New() const final {
+    return CreateMaybeMessage<WelcomeNotify>(NULL);
   }
 
-  WelcomeNotification* New(::google::protobuf::Arena* arena) const final {
-    return CreateMaybeMessage<WelcomeNotification>(arena);
+  WelcomeNotify* New(::google::protobuf::Arena* arena) const final {
+    return CreateMaybeMessage<WelcomeNotify>(arena);
   }
   void CopyFrom(const ::google::protobuf::Message& from) final;
   void MergeFrom(const ::google::protobuf::Message& from) final;
-  void CopyFrom(const WelcomeNotification& from);
-  void MergeFrom(const WelcomeNotification& from);
+  void CopyFrom(const WelcomeNotify& from);
+  void MergeFrom(const WelcomeNotify& from);
   void Clear() final;
   bool IsInitialized() const final;
 
@@ -1169,7 +1169,7 @@ class WelcomeNotification : public ::google::protobuf::Message /* @@protoc_inser
   void SharedCtor();
   void SharedDtor();
   void SetCachedSize(int size) const final;
-  void InternalSwap(WelcomeNotification* other);
+  void InternalSwap(WelcomeNotify* other);
   private:
   inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
     return NULL;
@@ -1200,7 +1200,7 @@ class WelcomeNotification : public ::google::protobuf::Message /* @@protoc_inser
   ::std::string* release_text();
   void set_allocated_text(::std::string* text);
 
-  // @@protoc_insertion_point(class_scope:pbmsg.WelcomeNotification)
+  // @@protoc_insertion_point(class_scope:pbmsg.WelcomeNotify)
  private:
   void set_has_text();
   void clear_has_text();
@@ -1319,52 +1319,52 @@ class Request : public ::google::protobuf::Message /* @@protoc_insertion_point(c
   ::pbmsg::LoginRequest* mutable_login();
   void set_allocated_login(::pbmsg::LoginRequest* login);
 
-  // optional .pbmsg.SendMessageRequest send_message = 2;
-  bool has_send_message() const;
-  void clear_send_message();
+  // optional .pbmsg.SendMessageRequest sendMessage = 2;
+  bool has_sendmessage() const;
+  void clear_sendmessage();
   static const int kSendMessageFieldNumber = 2;
   private:
-  const ::pbmsg::SendMessageRequest& _internal_send_message() const;
+  const ::pbmsg::SendMessageRequest& _internal_sendmessage() const;
   public:
-  const ::pbmsg::SendMessageRequest& send_message() const;
-  ::pbmsg::SendMessageRequest* release_send_message();
-  ::pbmsg::SendMessageRequest* mutable_send_message();
-  void set_allocated_send_message(::pbmsg::SendMessageRequest* send_message);
+  const ::pbmsg::SendMessageRequest& sendmessage() const;
+  ::pbmsg::SendMessageRequest* release_sendmessage();
+  ::pbmsg::SendMessageRequest* mutable_sendmessage();
+  void set_allocated_sendmessage(::pbmsg::SendMessageRequest* sendmessage);
 
   // @@protoc_insertion_point(class_scope:pbmsg.Request)
  private:
   void set_has_login();
   void clear_has_login();
-  void set_has_send_message();
-  void clear_has_send_message();
+  void set_has_sendmessage();
+  void clear_has_sendmessage();
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
   ::google::protobuf::internal::HasBits<1> _has_bits_;
   mutable ::google::protobuf::internal::CachedSize _cached_size_;
   ::pbmsg::LoginRequest* login_;
-  ::pbmsg::SendMessageRequest* send_message_;
+  ::pbmsg::SendMessageRequest* sendmessage_;
   friend struct ::protobuf_Message_2eproto::TableStruct;
 };
 // -------------------------------------------------------------------
 
-class Response : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:pbmsg.Response) */ {
+class Respond : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:pbmsg.Respond) */ {
  public:
-  Response();
-  virtual ~Response();
+  Respond();
+  virtual ~Respond();
 
-  Response(const Response& from);
+  Respond(const Respond& from);
 
-  inline Response& operator=(const Response& from) {
+  inline Respond& operator=(const Respond& from) {
     CopyFrom(from);
     return *this;
   }
   #if LANG_CXX11
-  Response(Response&& from) noexcept
-    : Response() {
+  Respond(Respond&& from) noexcept
+    : Respond() {
     *this = ::std::move(from);
   }
 
-  inline Response& operator=(Response&& from) noexcept {
+  inline Respond& operator=(Respond&& from) noexcept {
     if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
       if (this != &from) InternalSwap(&from);
     } else {
@@ -1381,34 +1381,34 @@ class Response : public ::google::protobuf::Message /* @@protoc_insertion_point(
   }
 
   static const ::google::protobuf::Descriptor* descriptor();
-  static const Response& default_instance();
+  static const Respond& default_instance();
 
   static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
-  static inline const Response* internal_default_instance() {
-    return reinterpret_cast<const Response*>(
-               &_Response_default_instance_);
+  static inline const Respond* internal_default_instance() {
+    return reinterpret_cast<const Respond*>(
+               &_Respond_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
     9;
 
-  void Swap(Response* other);
-  friend void swap(Response& a, Response& b) {
+  void Swap(Respond* other);
+  friend void swap(Respond& a, Respond& b) {
     a.Swap(&b);
   }
 
   // implements Message ----------------------------------------------
 
-  inline Response* New() const final {
-    return CreateMaybeMessage<Response>(NULL);
+  inline Respond* New() const final {
+    return CreateMaybeMessage<Respond>(NULL);
   }
 
-  Response* New(::google::protobuf::Arena* arena) const final {
-    return CreateMaybeMessage<Response>(arena);
+  Respond* New(::google::protobuf::Arena* arena) const final {
+    return CreateMaybeMessage<Respond>(arena);
   }
   void CopyFrom(const ::google::protobuf::Message& from) final;
   void MergeFrom(const ::google::protobuf::Message& from) final;
-  void CopyFrom(const Response& from);
-  void MergeFrom(const Response& from);
+  void CopyFrom(const Respond& from);
+  void MergeFrom(const Respond& from);
   void Clear() final;
   bool IsInitialized() const final;
 
@@ -1425,7 +1425,7 @@ class Response : public ::google::protobuf::Message /* @@protoc_insertion_point(
   void SharedCtor();
   void SharedDtor();
   void SetCachedSize(int size) const final;
-  void InternalSwap(Response* other);
+  void InternalSwap(Respond* other);
   private:
   inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
     return NULL;
@@ -1441,44 +1441,44 @@ class Response : public ::google::protobuf::Message /* @@protoc_insertion_point(
 
   // accessors -------------------------------------------------------
 
-  // optional bytes error_describe = 3;
-  bool has_error_describe() const;
-  void clear_error_describe();
+  // optional bytes errorDescribe = 3;
+  bool has_errordescribe() const;
+  void clear_errordescribe();
   static const int kErrorDescribeFieldNumber = 3;
-  const ::std::string& error_describe() const;
-  void set_error_describe(const ::std::string& value);
+  const ::std::string& errordescribe() const;
+  void set_errordescribe(const ::std::string& value);
   #if LANG_CXX11
-  void set_error_describe(::std::string&& value);
+  void set_errordescribe(::std::string&& value);
   #endif
-  void set_error_describe(const char* value);
-  void set_error_describe(const void* value, size_t size);
-  ::std::string* mutable_error_describe();
-  ::std::string* release_error_describe();
-  void set_allocated_error_describe(::std::string* error_describe);
+  void set_errordescribe(const char* value);
+  void set_errordescribe(const void* value, size_t size);
+  ::std::string* mutable_errordescribe();
+  ::std::string* release_errordescribe();
+  void set_allocated_errordescribe(::std::string* errordescribe);
 
-  // optional .pbmsg.LoginResponse login = 4;
+  // optional .pbmsg.LoginRespond login = 4;
   bool has_login() const;
   void clear_login();
   static const int kLoginFieldNumber = 4;
   private:
-  const ::pbmsg::LoginResponse& _internal_login() const;
+  const ::pbmsg::LoginRespond& _internal_login() const;
   public:
-  const ::pbmsg::LoginResponse& login() const;
-  ::pbmsg::LoginResponse* release_login();
-  ::pbmsg::LoginResponse* mutable_login();
-  void set_allocated_login(::pbmsg::LoginResponse* login);
+  const ::pbmsg::LoginRespond& login() const;
+  ::pbmsg::LoginRespond* release_login();
+  ::pbmsg::LoginRespond* mutable_login();
+  void set_allocated_login(::pbmsg::LoginRespond* login);
 
-  // optional .pbmsg.GetFriendsResponse get_friends = 5;
-  bool has_get_friends() const;
-  void clear_get_friends();
-  static const int kGetFriendsFieldNumber = 5;
+  // optional .pbmsg.GetFriendsRespond friends = 5;
+  bool has_friends() const;
+  void clear_friends();
+  static const int kFriendsFieldNumber = 5;
   private:
-  const ::pbmsg::GetFriendsResponse& _internal_get_friends() const;
+  const ::pbmsg::GetFriendsRespond& _internal_friends() const;
   public:
-  const ::pbmsg::GetFriendsResponse& get_friends() const;
-  ::pbmsg::GetFriendsResponse* release_get_friends();
-  ::pbmsg::GetFriendsResponse* mutable_get_friends();
-  void set_allocated_get_friends(::pbmsg::GetFriendsResponse* get_friends);
+  const ::pbmsg::GetFriendsRespond& friends() const;
+  ::pbmsg::GetFriendsRespond* release_friends();
+  ::pbmsg::GetFriendsRespond* mutable_friends();
+  void set_allocated_friends(::pbmsg::GetFriendsRespond* friends);
 
   // required bool result = 1;
   bool has_result() const;
@@ -1487,25 +1487,25 @@ class Response : public ::google::protobuf::Message /* @@protoc_insertion_point(
   bool result() const;
   void set_result(bool value);
 
-  // required bool last_response = 2;
-  bool has_last_response() const;
-  void clear_last_response();
-  static const int kLastResponseFieldNumber = 2;
-  bool last_response() const;
-  void set_last_response(bool value);
+  // required bool lastRespond = 2;
+  bool has_lastrespond() const;
+  void clear_lastrespond();
+  static const int kLastRespondFieldNumber = 2;
+  bool lastrespond() const;
+  void set_lastrespond(bool value);
 
-  // @@protoc_insertion_point(class_scope:pbmsg.Response)
+  // @@protoc_insertion_point(class_scope:pbmsg.Respond)
  private:
   void set_has_result();
   void clear_has_result();
-  void set_has_last_response();
-  void clear_has_last_response();
-  void set_has_error_describe();
-  void clear_has_error_describe();
+  void set_has_lastrespond();
+  void clear_has_lastrespond();
+  void set_has_errordescribe();
+  void clear_has_errordescribe();
   void set_has_login();
   void clear_has_login();
-  void set_has_get_friends();
-  void clear_has_get_friends();
+  void set_has_friends();
+  void clear_has_friends();
 
   // helper for ByteSizeLong()
   size_t RequiredFieldsByteSizeFallback() const;
@@ -1513,33 +1513,33 @@ class Response : public ::google::protobuf::Message /* @@protoc_insertion_point(
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
   ::google::protobuf::internal::HasBits<1> _has_bits_;
   mutable ::google::protobuf::internal::CachedSize _cached_size_;
-  ::google::protobuf::internal::ArenaStringPtr error_describe_;
-  ::pbmsg::LoginResponse* login_;
-  ::pbmsg::GetFriendsResponse* get_friends_;
+  ::google::protobuf::internal::ArenaStringPtr errordescribe_;
+  ::pbmsg::LoginRespond* login_;
+  ::pbmsg::GetFriendsRespond* friends_;
   bool result_;
-  bool last_response_;
+  bool lastrespond_;
   friend struct ::protobuf_Message_2eproto::TableStruct;
 };
 // -------------------------------------------------------------------
 
-class Notification : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:pbmsg.Notification) */ {
+class Notify : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:pbmsg.Notify) */ {
  public:
-  Notification();
-  virtual ~Notification();
+  Notify();
+  virtual ~Notify();
 
-  Notification(const Notification& from);
+  Notify(const Notify& from);
 
-  inline Notification& operator=(const Notification& from) {
+  inline Notify& operator=(const Notify& from) {
     CopyFrom(from);
     return *this;
   }
   #if LANG_CXX11
-  Notification(Notification&& from) noexcept
-    : Notification() {
+  Notify(Notify&& from) noexcept
+    : Notify() {
     *this = ::std::move(from);
   }
 
-  inline Notification& operator=(Notification&& from) noexcept {
+  inline Notify& operator=(Notify&& from) noexcept {
     if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
       if (this != &from) InternalSwap(&from);
     } else {
@@ -1556,34 +1556,34 @@ class Notification : public ::google::protobuf::Message /* @@protoc_insertion_po
   }
 
   static const ::google::protobuf::Descriptor* descriptor();
-  static const Notification& default_instance();
+  static const Notify& default_instance();
 
   static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
-  static inline const Notification* internal_default_instance() {
-    return reinterpret_cast<const Notification*>(
-               &_Notification_default_instance_);
+  static inline const Notify* internal_default_instance() {
+    return reinterpret_cast<const Notify*>(
+               &_Notify_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
     10;
 
-  void Swap(Notification* other);
-  friend void swap(Notification& a, Notification& b) {
+  void Swap(Notify* other);
+  friend void swap(Notify& a, Notify& b) {
     a.Swap(&b);
   }
 
   // implements Message ----------------------------------------------
 
-  inline Notification* New() const final {
-    return CreateMaybeMessage<Notification>(NULL);
+  inline Notify* New() const final {
+    return CreateMaybeMessage<Notify>(NULL);
   }
 
-  Notification* New(::google::protobuf::Arena* arena) const final {
-    return CreateMaybeMessage<Notification>(arena);
+  Notify* New(::google::protobuf::Arena* arena) const final {
+    return CreateMaybeMessage<Notify>(arena);
   }
   void CopyFrom(const ::google::protobuf::Message& from) final;
   void MergeFrom(const ::google::protobuf::Message& from) final;
-  void CopyFrom(const Notification& from);
-  void MergeFrom(const Notification& from);
+  void CopyFrom(const Notify& from);
+  void MergeFrom(const Notify& from);
   void Clear() final;
   bool IsInitialized() const final;
 
@@ -1600,7 +1600,7 @@ class Notification : public ::google::protobuf::Message /* @@protoc_insertion_po
   void SharedCtor();
   void SharedDtor();
   void SetCachedSize(int size) const final;
-  void InternalSwap(Notification* other);
+  void InternalSwap(Notify* other);
   private:
   inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
     return NULL;
@@ -1616,43 +1616,43 @@ class Notification : public ::google::protobuf::Message /* @@protoc_insertion_po
 
   // accessors -------------------------------------------------------
 
-  // optional .pbmsg.FriendNotification friend = 1;
+  // optional .pbmsg.FriendNotify friend = 1;
   bool has_friend_() const;
   void clear_friend_();
   static const int kFriendFieldNumber = 1;
   private:
-  const ::pbmsg::FriendNotification& _internal_friend_() const;
+  const ::pbmsg::FriendNotify& _internal_friend_() const;
   public:
-  const ::pbmsg::FriendNotification& friend_() const;
-  ::pbmsg::FriendNotification* release_friend_();
-  ::pbmsg::FriendNotification* mutable_friend_();
-  void set_allocated_friend_(::pbmsg::FriendNotification* friend_);
+  const ::pbmsg::FriendNotify& friend_() const;
+  ::pbmsg::FriendNotify* release_friend_();
+  ::pbmsg::FriendNotify* mutable_friend_();
+  void set_allocated_friend_(::pbmsg::FriendNotify* friend_);
 
-  // optional .pbmsg.MessageNotification msg = 2;
+  // optional .pbmsg.MessageNotify msg = 2;
   bool has_msg() const;
   void clear_msg();
   static const int kMsgFieldNumber = 2;
   private:
-  const ::pbmsg::MessageNotification& _internal_msg() const;
+  const ::pbmsg::MessageNotify& _internal_msg() const;
   public:
-  const ::pbmsg::MessageNotification& msg() const;
-  ::pbmsg::MessageNotification* release_msg();
-  ::pbmsg::MessageNotification* mutable_msg();
-  void set_allocated_msg(::pbmsg::MessageNotification* msg);
+  const ::pbmsg::MessageNotify& msg() const;
+  ::pbmsg::MessageNotify* release_msg();
+  ::pbmsg::MessageNotify* mutable_msg();
+  void set_allocated_msg(::pbmsg::MessageNotify* msg);
 
-  // optional .pbmsg.WelcomeNotification welcome = 3;
+  // optional .pbmsg.WelcomeNotify welcome = 3;
   bool has_welcome() const;
   void clear_welcome();
   static const int kWelcomeFieldNumber = 3;
   private:
-  const ::pbmsg::WelcomeNotification& _internal_welcome() const;
+  const ::pbmsg::WelcomeNotify& _internal_welcome() const;
   public:
-  const ::pbmsg::WelcomeNotification& welcome() const;
-  ::pbmsg::WelcomeNotification* release_welcome();
-  ::pbmsg::WelcomeNotification* mutable_welcome();
-  void set_allocated_welcome(::pbmsg::WelcomeNotification* welcome);
+  const ::pbmsg::WelcomeNotify& welcome() const;
+  ::pbmsg::WelcomeNotify* release_welcome();
+  ::pbmsg::WelcomeNotify* mutable_welcome();
+  void set_allocated_welcome(::pbmsg::WelcomeNotify* welcome);
 
-  // @@protoc_insertion_point(class_scope:pbmsg.Notification)
+  // @@protoc_insertion_point(class_scope:pbmsg.Notify)
  private:
   void set_has_friend_();
   void clear_has_friend_();
@@ -1664,9 +1664,9 @@ class Notification : public ::google::protobuf::Message /* @@protoc_insertion_po
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
   ::google::protobuf::internal::HasBits<1> _has_bits_;
   mutable ::google::protobuf::internal::CachedSize _cached_size_;
-  ::pbmsg::FriendNotification* friend__;
-  ::pbmsg::MessageNotification* msg_;
-  ::pbmsg::WelcomeNotification* welcome_;
+  ::pbmsg::FriendNotify* friend__;
+  ::pbmsg::MessageNotify* msg_;
+  ::pbmsg::WelcomeNotify* welcome_;
   friend struct ::protobuf_Message_2eproto::TableStruct;
 };
 // -------------------------------------------------------------------
@@ -1777,29 +1777,29 @@ class Message : public ::google::protobuf::Message /* @@protoc_insertion_point(c
   ::pbmsg::Request* mutable_request();
   void set_allocated_request(::pbmsg::Request* request);
 
-  // optional .pbmsg.Response response = 5;
-  bool has_response() const;
-  void clear_response();
-  static const int kResponseFieldNumber = 5;
+  // optional .pbmsg.Respond respond = 5;
+  bool has_respond() const;
+  void clear_respond();
+  static const int kRespondFieldNumber = 5;
   private:
-  const ::pbmsg::Response& _internal_response() const;
+  const ::pbmsg::Respond& _internal_respond() const;
   public:
-  const ::pbmsg::Response& response() const;
-  ::pbmsg::Response* release_response();
-  ::pbmsg::Response* mutable_response();
-  void set_allocated_response(::pbmsg::Response* response);
+  const ::pbmsg::Respond& respond() const;
+  ::pbmsg::Respond* release_respond();
+  ::pbmsg::Respond* mutable_respond();
+  void set_allocated_respond(::pbmsg::Respond* respond);
 
-  // optional .pbmsg.Notification notification = 6;
-  bool has_notification() const;
-  void clear_notification();
-  static const int kNotificationFieldNumber = 6;
+  // optional .pbmsg.Notify notify = 6;
+  bool has_notify() const;
+  void clear_notify();
+  static const int kNotifyFieldNumber = 6;
   private:
-  const ::pbmsg::Notification& _internal_notification() const;
+  const ::pbmsg::Notify& _internal_notify() const;
   public:
-  const ::pbmsg::Notification& notification() const;
-  ::pbmsg::Notification* release_notification();
-  ::pbmsg::Notification* mutable_notification();
-  void set_allocated_notification(::pbmsg::Notification* notification);
+  const ::pbmsg::Notify& notify() const;
+  ::pbmsg::Notify* release_notify();
+  ::pbmsg::Notify* mutable_notify();
+  void set_allocated_notify(::pbmsg::Notify* notify);
 
   // required fixed32 sequence = 2;
   bool has_sequence() const;
@@ -1808,34 +1808,34 @@ class Message : public ::google::protobuf::Message /* @@protoc_insertion_point(c
   ::google::protobuf::uint32 sequence() const;
   void set_sequence(::google::protobuf::uint32 value);
 
-  // optional fixed32 session_id = 3;
-  bool has_session_id() const;
-  void clear_session_id();
+  // optional fixed32 sessionId = 3;
+  bool has_sessionid() const;
+  void clear_sessionid();
   static const int kSessionIdFieldNumber = 3;
-  ::google::protobuf::uint32 session_id() const;
-  void set_session_id(::google::protobuf::uint32 value);
+  ::google::protobuf::uint32 sessionid() const;
+  void set_sessionid(::google::protobuf::uint32 value);
 
-  // required .pbmsg.MSG msg_type = 1;
-  bool has_msg_type() const;
-  void clear_msg_type();
+  // required .pbmsg.MSG msgType = 1;
+  bool has_msgtype() const;
+  void clear_msgtype();
   static const int kMsgTypeFieldNumber = 1;
-  ::pbmsg::MSG msg_type() const;
-  void set_msg_type(::pbmsg::MSG value);
+  ::pbmsg::MSG msgtype() const;
+  void set_msgtype(::pbmsg::MSG value);
 
   // @@protoc_insertion_point(class_scope:pbmsg.Message)
  private:
-  void set_has_msg_type();
-  void clear_has_msg_type();
+  void set_has_msgtype();
+  void clear_has_msgtype();
   void set_has_sequence();
   void clear_has_sequence();
-  void set_has_session_id();
-  void clear_has_session_id();
+  void set_has_sessionid();
+  void clear_has_sessionid();
   void set_has_request();
   void clear_has_request();
-  void set_has_response();
-  void clear_has_response();
-  void set_has_notification();
-  void clear_has_notification();
+  void set_has_respond();
+  void clear_has_respond();
+  void set_has_notify();
+  void clear_has_notify();
 
   // helper for ByteSizeLong()
   size_t RequiredFieldsByteSizeFallback() const;
@@ -1844,11 +1844,11 @@ class Message : public ::google::protobuf::Message /* @@protoc_insertion_point(c
   ::google::protobuf::internal::HasBits<1> _has_bits_;
   mutable ::google::protobuf::internal::CachedSize _cached_size_;
   ::pbmsg::Request* request_;
-  ::pbmsg::Response* response_;
-  ::pbmsg::Notification* notification_;
+  ::pbmsg::Respond* respond_;
+  ::pbmsg::Notify* notify_;
   ::google::protobuf::uint32 sequence_;
-  ::google::protobuf::uint32 session_id_;
-  int msg_type_;
+  ::google::protobuf::uint32 sessionid_;
+  int msgtype_;
   friend struct ::protobuf_Message_2eproto::TableStruct;
 };
 // ===================================================================
@@ -1996,30 +1996,30 @@ inline void LoginRequest::set_allocated_password(::std::string* password) {
 
 // -------------------------------------------------------------------
 
-// LoginResponse
+// LoginRespond
 
 // required fixed32 ttl = 1;
-inline bool LoginResponse::has_ttl() const {
+inline bool LoginRespond::has_ttl() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
-inline void LoginResponse::set_has_ttl() {
+inline void LoginRespond::set_has_ttl() {
   _has_bits_[0] |= 0x00000001u;
 }
-inline void LoginResponse::clear_has_ttl() {
+inline void LoginRespond::clear_has_ttl() {
   _has_bits_[0] &= ~0x00000001u;
 }
-inline void LoginResponse::clear_ttl() {
+inline void LoginRespond::clear_ttl() {
   ttl_ = 0u;
   clear_has_ttl();
 }
-inline ::google::protobuf::uint32 LoginResponse::ttl() const {
-  // @@protoc_insertion_point(field_get:pbmsg.LoginResponse.ttl)
+inline ::google::protobuf::uint32 LoginRespond::ttl() const {
+  // @@protoc_insertion_point(field_get:pbmsg.LoginRespond.ttl)
   return ttl_;
 }
-inline void LoginResponse::set_ttl(::google::protobuf::uint32 value) {
+inline void LoginRespond::set_ttl(::google::protobuf::uint32 value) {
   set_has_ttl();
   ttl_ = value;
-  // @@protoc_insertion_point(field_set:pbmsg.LoginResponse.ttl)
+  // @@protoc_insertion_point(field_set:pbmsg.LoginRespond.ttl)
 }
 
 // -------------------------------------------------------------------
@@ -2118,35 +2118,35 @@ inline void Friend::set_online(bool value) {
 
 // -------------------------------------------------------------------
 
-// GetFriendsResponse
+// GetFriendsRespond
 
 // repeated .pbmsg.Friend friends = 1;
-inline int GetFriendsResponse::friends_size() const {
+inline int GetFriendsRespond::friends_size() const {
   return friends_.size();
 }
-inline void GetFriendsResponse::clear_friends() {
+inline void GetFriendsRespond::clear_friends() {
   friends_.Clear();
 }
-inline ::pbmsg::Friend* GetFriendsResponse::mutable_friends(int index) {
-  // @@protoc_insertion_point(field_mutable:pbmsg.GetFriendsResponse.friends)
+inline ::pbmsg::Friend* GetFriendsRespond::mutable_friends(int index) {
+  // @@protoc_insertion_point(field_mutable:pbmsg.GetFriendsRespond.friends)
   return friends_.Mutable(index);
 }
 inline ::google::protobuf::RepeatedPtrField< ::pbmsg::Friend >*
-GetFriendsResponse::mutable_friends() {
-  // @@protoc_insertion_point(field_mutable_list:pbmsg.GetFriendsResponse.friends)
+GetFriendsRespond::mutable_friends() {
+  // @@protoc_insertion_point(field_mutable_list:pbmsg.GetFriendsRespond.friends)
   return &friends_;
 }
-inline const ::pbmsg::Friend& GetFriendsResponse::friends(int index) const {
-  // @@protoc_insertion_point(field_get:pbmsg.GetFriendsResponse.friends)
+inline const ::pbmsg::Friend& GetFriendsRespond::friends(int index) const {
+  // @@protoc_insertion_point(field_get:pbmsg.GetFriendsRespond.friends)
   return friends_.Get(index);
 }
-inline ::pbmsg::Friend* GetFriendsResponse::add_friends() {
-  // @@protoc_insertion_point(field_add:pbmsg.GetFriendsResponse.friends)
+inline ::pbmsg::Friend* GetFriendsRespond::add_friends() {
+  // @@protoc_insertion_point(field_add:pbmsg.GetFriendsRespond.friends)
   return friends_.Add();
 }
 inline const ::google::protobuf::RepeatedPtrField< ::pbmsg::Friend >&
-GetFriendsResponse::friends() const {
-  // @@protoc_insertion_point(field_list:pbmsg.GetFriendsResponse.friends)
+GetFriendsRespond::friends() const {
+  // @@protoc_insertion_point(field_list:pbmsg.GetFriendsRespond.friends)
   return friends_;
 }
 
@@ -2288,368 +2288,368 @@ inline void SendMessageRequest::set_allocated_text(::std::string* text) {
 
 // -------------------------------------------------------------------
 
-// FriendNotification
+// FriendNotify
 
 // required bytes name = 1;
-inline bool FriendNotification::has_name() const {
+inline bool FriendNotify::has_name() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
-inline void FriendNotification::set_has_name() {
+inline void FriendNotify::set_has_name() {
   _has_bits_[0] |= 0x00000001u;
 }
-inline void FriendNotification::clear_has_name() {
+inline void FriendNotify::clear_has_name() {
   _has_bits_[0] &= ~0x00000001u;
 }
-inline void FriendNotification::clear_name() {
+inline void FriendNotify::clear_name() {
   name_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   clear_has_name();
 }
-inline const ::std::string& FriendNotification::name() const {
-  // @@protoc_insertion_point(field_get:pbmsg.FriendNotification.name)
+inline const ::std::string& FriendNotify::name() const {
+  // @@protoc_insertion_point(field_get:pbmsg.FriendNotify.name)
   return name_.GetNoArena();
 }
-inline void FriendNotification::set_name(const ::std::string& value) {
+inline void FriendNotify::set_name(const ::std::string& value) {
   set_has_name();
   name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
-  // @@protoc_insertion_point(field_set:pbmsg.FriendNotification.name)
+  // @@protoc_insertion_point(field_set:pbmsg.FriendNotify.name)
 }
 #if LANG_CXX11
-inline void FriendNotification::set_name(::std::string&& value) {
+inline void FriendNotify::set_name(::std::string&& value) {
   set_has_name();
   name_.SetNoArena(
     &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
-  // @@protoc_insertion_point(field_set_rvalue:pbmsg.FriendNotification.name)
+  // @@protoc_insertion_point(field_set_rvalue:pbmsg.FriendNotify.name)
 }
 #endif
-inline void FriendNotification::set_name(const char* value) {
+inline void FriendNotify::set_name(const char* value) {
   GOOGLE_DCHECK(value != NULL);
   set_has_name();
   name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:pbmsg.FriendNotification.name)
+  // @@protoc_insertion_point(field_set_char:pbmsg.FriendNotify.name)
 }
-inline void FriendNotification::set_name(const void* value, size_t size) {
+inline void FriendNotify::set_name(const void* value, size_t size) {
   set_has_name();
   name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:pbmsg.FriendNotification.name)
+  // @@protoc_insertion_point(field_set_pointer:pbmsg.FriendNotify.name)
 }
-inline ::std::string* FriendNotification::mutable_name() {
+inline ::std::string* FriendNotify::mutable_name() {
   set_has_name();
-  // @@protoc_insertion_point(field_mutable:pbmsg.FriendNotification.name)
+  // @@protoc_insertion_point(field_mutable:pbmsg.FriendNotify.name)
   return name_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline ::std::string* FriendNotification::release_name() {
-  // @@protoc_insertion_point(field_release:pbmsg.FriendNotification.name)
+inline ::std::string* FriendNotify::release_name() {
+  // @@protoc_insertion_point(field_release:pbmsg.FriendNotify.name)
   if (!has_name()) {
     return NULL;
   }
   clear_has_name();
   return name_.ReleaseNonDefaultNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline void FriendNotification::set_allocated_name(::std::string* name) {
+inline void FriendNotify::set_allocated_name(::std::string* name) {
   if (name != NULL) {
     set_has_name();
   } else {
     clear_has_name();
   }
   name_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), name);
-  // @@protoc_insertion_point(field_set_allocated:pbmsg.FriendNotification.name)
+  // @@protoc_insertion_point(field_set_allocated:pbmsg.FriendNotify.name)
 }
 
 // optional bool online = 2;
-inline bool FriendNotification::has_online() const {
+inline bool FriendNotify::has_online() const {
   return (_has_bits_[0] & 0x00000002u) != 0;
 }
-inline void FriendNotification::set_has_online() {
+inline void FriendNotify::set_has_online() {
   _has_bits_[0] |= 0x00000002u;
 }
-inline void FriendNotification::clear_has_online() {
+inline void FriendNotify::clear_has_online() {
   _has_bits_[0] &= ~0x00000002u;
 }
-inline void FriendNotification::clear_online() {
+inline void FriendNotify::clear_online() {
   online_ = false;
   clear_has_online();
 }
-inline bool FriendNotification::online() const {
-  // @@protoc_insertion_point(field_get:pbmsg.FriendNotification.online)
+inline bool FriendNotify::online() const {
+  // @@protoc_insertion_point(field_get:pbmsg.FriendNotify.online)
   return online_;
 }
-inline void FriendNotification::set_online(bool value) {
+inline void FriendNotify::set_online(bool value) {
   set_has_online();
   online_ = value;
-  // @@protoc_insertion_point(field_set:pbmsg.FriendNotification.online)
+  // @@protoc_insertion_point(field_set:pbmsg.FriendNotify.online)
 }
 
 // -------------------------------------------------------------------
 
-// MessageNotification
+// MessageNotify
 
 // required bytes sender = 1;
-inline bool MessageNotification::has_sender() const {
+inline bool MessageNotify::has_sender() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
-inline void MessageNotification::set_has_sender() {
+inline void MessageNotify::set_has_sender() {
   _has_bits_[0] |= 0x00000001u;
 }
-inline void MessageNotification::clear_has_sender() {
+inline void MessageNotify::clear_has_sender() {
   _has_bits_[0] &= ~0x00000001u;
 }
-inline void MessageNotification::clear_sender() {
+inline void MessageNotify::clear_sender() {
   sender_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   clear_has_sender();
 }
-inline const ::std::string& MessageNotification::sender() const {
-  // @@protoc_insertion_point(field_get:pbmsg.MessageNotification.sender)
+inline const ::std::string& MessageNotify::sender() const {
+  // @@protoc_insertion_point(field_get:pbmsg.MessageNotify.sender)
   return sender_.GetNoArena();
 }
-inline void MessageNotification::set_sender(const ::std::string& value) {
+inline void MessageNotify::set_sender(const ::std::string& value) {
   set_has_sender();
   sender_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
-  // @@protoc_insertion_point(field_set:pbmsg.MessageNotification.sender)
+  // @@protoc_insertion_point(field_set:pbmsg.MessageNotify.sender)
 }
 #if LANG_CXX11
-inline void MessageNotification::set_sender(::std::string&& value) {
+inline void MessageNotify::set_sender(::std::string&& value) {
   set_has_sender();
   sender_.SetNoArena(
     &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
-  // @@protoc_insertion_point(field_set_rvalue:pbmsg.MessageNotification.sender)
+  // @@protoc_insertion_point(field_set_rvalue:pbmsg.MessageNotify.sender)
 }
 #endif
-inline void MessageNotification::set_sender(const char* value) {
+inline void MessageNotify::set_sender(const char* value) {
   GOOGLE_DCHECK(value != NULL);
   set_has_sender();
   sender_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:pbmsg.MessageNotification.sender)
+  // @@protoc_insertion_point(field_set_char:pbmsg.MessageNotify.sender)
 }
-inline void MessageNotification::set_sender(const void* value, size_t size) {
+inline void MessageNotify::set_sender(const void* value, size_t size) {
   set_has_sender();
   sender_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:pbmsg.MessageNotification.sender)
+  // @@protoc_insertion_point(field_set_pointer:pbmsg.MessageNotify.sender)
 }
-inline ::std::string* MessageNotification::mutable_sender() {
+inline ::std::string* MessageNotify::mutable_sender() {
   set_has_sender();
-  // @@protoc_insertion_point(field_mutable:pbmsg.MessageNotification.sender)
+  // @@protoc_insertion_point(field_mutable:pbmsg.MessageNotify.sender)
   return sender_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline ::std::string* MessageNotification::release_sender() {
-  // @@protoc_insertion_point(field_release:pbmsg.MessageNotification.sender)
+inline ::std::string* MessageNotify::release_sender() {
+  // @@protoc_insertion_point(field_release:pbmsg.MessageNotify.sender)
   if (!has_sender()) {
     return NULL;
   }
   clear_has_sender();
   return sender_.ReleaseNonDefaultNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline void MessageNotification::set_allocated_sender(::std::string* sender) {
+inline void MessageNotify::set_allocated_sender(::std::string* sender) {
   if (sender != NULL) {
     set_has_sender();
   } else {
     clear_has_sender();
   }
   sender_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), sender);
-  // @@protoc_insertion_point(field_set_allocated:pbmsg.MessageNotification.sender)
+  // @@protoc_insertion_point(field_set_allocated:pbmsg.MessageNotify.sender)
 }
 
 // required bytes text = 2;
-inline bool MessageNotification::has_text() const {
+inline bool MessageNotify::has_text() const {
   return (_has_bits_[0] & 0x00000002u) != 0;
 }
-inline void MessageNotification::set_has_text() {
+inline void MessageNotify::set_has_text() {
   _has_bits_[0] |= 0x00000002u;
 }
-inline void MessageNotification::clear_has_text() {
+inline void MessageNotify::clear_has_text() {
   _has_bits_[0] &= ~0x00000002u;
 }
-inline void MessageNotification::clear_text() {
+inline void MessageNotify::clear_text() {
   text_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   clear_has_text();
 }
-inline const ::std::string& MessageNotification::text() const {
-  // @@protoc_insertion_point(field_get:pbmsg.MessageNotification.text)
+inline const ::std::string& MessageNotify::text() const {
+  // @@protoc_insertion_point(field_get:pbmsg.MessageNotify.text)
   return text_.GetNoArena();
 }
-inline void MessageNotification::set_text(const ::std::string& value) {
+inline void MessageNotify::set_text(const ::std::string& value) {
   set_has_text();
   text_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
-  // @@protoc_insertion_point(field_set:pbmsg.MessageNotification.text)
+  // @@protoc_insertion_point(field_set:pbmsg.MessageNotify.text)
 }
 #if LANG_CXX11
-inline void MessageNotification::set_text(::std::string&& value) {
+inline void MessageNotify::set_text(::std::string&& value) {
   set_has_text();
   text_.SetNoArena(
     &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
-  // @@protoc_insertion_point(field_set_rvalue:pbmsg.MessageNotification.text)
+  // @@protoc_insertion_point(field_set_rvalue:pbmsg.MessageNotify.text)
 }
 #endif
-inline void MessageNotification::set_text(const char* value) {
+inline void MessageNotify::set_text(const char* value) {
   GOOGLE_DCHECK(value != NULL);
   set_has_text();
   text_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:pbmsg.MessageNotification.text)
+  // @@protoc_insertion_point(field_set_char:pbmsg.MessageNotify.text)
 }
-inline void MessageNotification::set_text(const void* value, size_t size) {
+inline void MessageNotify::set_text(const void* value, size_t size) {
   set_has_text();
   text_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:pbmsg.MessageNotification.text)
+  // @@protoc_insertion_point(field_set_pointer:pbmsg.MessageNotify.text)
 }
-inline ::std::string* MessageNotification::mutable_text() {
+inline ::std::string* MessageNotify::mutable_text() {
   set_has_text();
-  // @@protoc_insertion_point(field_mutable:pbmsg.MessageNotification.text)
+  // @@protoc_insertion_point(field_mutable:pbmsg.MessageNotify.text)
   return text_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline ::std::string* MessageNotification::release_text() {
-  // @@protoc_insertion_point(field_release:pbmsg.MessageNotification.text)
+inline ::std::string* MessageNotify::release_text() {
+  // @@protoc_insertion_point(field_release:pbmsg.MessageNotify.text)
   if (!has_text()) {
     return NULL;
   }
   clear_has_text();
   return text_.ReleaseNonDefaultNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline void MessageNotification::set_allocated_text(::std::string* text) {
+inline void MessageNotify::set_allocated_text(::std::string* text) {
   if (text != NULL) {
     set_has_text();
   } else {
     clear_has_text();
   }
   text_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), text);
-  // @@protoc_insertion_point(field_set_allocated:pbmsg.MessageNotification.text)
+  // @@protoc_insertion_point(field_set_allocated:pbmsg.MessageNotify.text)
 }
 
 // required string timestamp = 3;
-inline bool MessageNotification::has_timestamp() const {
+inline bool MessageNotify::has_timestamp() const {
   return (_has_bits_[0] & 0x00000004u) != 0;
 }
-inline void MessageNotification::set_has_timestamp() {
+inline void MessageNotify::set_has_timestamp() {
   _has_bits_[0] |= 0x00000004u;
 }
-inline void MessageNotification::clear_has_timestamp() {
+inline void MessageNotify::clear_has_timestamp() {
   _has_bits_[0] &= ~0x00000004u;
 }
-inline void MessageNotification::clear_timestamp() {
+inline void MessageNotify::clear_timestamp() {
   timestamp_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   clear_has_timestamp();
 }
-inline const ::std::string& MessageNotification::timestamp() const {
-  // @@protoc_insertion_point(field_get:pbmsg.MessageNotification.timestamp)
+inline const ::std::string& MessageNotify::timestamp() const {
+  // @@protoc_insertion_point(field_get:pbmsg.MessageNotify.timestamp)
   return timestamp_.GetNoArena();
 }
-inline void MessageNotification::set_timestamp(const ::std::string& value) {
+inline void MessageNotify::set_timestamp(const ::std::string& value) {
   set_has_timestamp();
   timestamp_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
-  // @@protoc_insertion_point(field_set:pbmsg.MessageNotification.timestamp)
+  // @@protoc_insertion_point(field_set:pbmsg.MessageNotify.timestamp)
 }
 #if LANG_CXX11
-inline void MessageNotification::set_timestamp(::std::string&& value) {
+inline void MessageNotify::set_timestamp(::std::string&& value) {
   set_has_timestamp();
   timestamp_.SetNoArena(
     &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
-  // @@protoc_insertion_point(field_set_rvalue:pbmsg.MessageNotification.timestamp)
+  // @@protoc_insertion_point(field_set_rvalue:pbmsg.MessageNotify.timestamp)
 }
 #endif
-inline void MessageNotification::set_timestamp(const char* value) {
+inline void MessageNotify::set_timestamp(const char* value) {
   GOOGLE_DCHECK(value != NULL);
   set_has_timestamp();
   timestamp_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:pbmsg.MessageNotification.timestamp)
+  // @@protoc_insertion_point(field_set_char:pbmsg.MessageNotify.timestamp)
 }
-inline void MessageNotification::set_timestamp(const char* value, size_t size) {
+inline void MessageNotify::set_timestamp(const char* value, size_t size) {
   set_has_timestamp();
   timestamp_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:pbmsg.MessageNotification.timestamp)
+  // @@protoc_insertion_point(field_set_pointer:pbmsg.MessageNotify.timestamp)
 }
-inline ::std::string* MessageNotification::mutable_timestamp() {
+inline ::std::string* MessageNotify::mutable_timestamp() {
   set_has_timestamp();
-  // @@protoc_insertion_point(field_mutable:pbmsg.MessageNotification.timestamp)
+  // @@protoc_insertion_point(field_mutable:pbmsg.MessageNotify.timestamp)
   return timestamp_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline ::std::string* MessageNotification::release_timestamp() {
-  // @@protoc_insertion_point(field_release:pbmsg.MessageNotification.timestamp)
+inline ::std::string* MessageNotify::release_timestamp() {
+  // @@protoc_insertion_point(field_release:pbmsg.MessageNotify.timestamp)
   if (!has_timestamp()) {
     return NULL;
   }
   clear_has_timestamp();
   return timestamp_.ReleaseNonDefaultNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline void MessageNotification::set_allocated_timestamp(::std::string* timestamp) {
+inline void MessageNotify::set_allocated_timestamp(::std::string* timestamp) {
   if (timestamp != NULL) {
     set_has_timestamp();
   } else {
     clear_has_timestamp();
   }
   timestamp_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), timestamp);
-  // @@protoc_insertion_point(field_set_allocated:pbmsg.MessageNotification.timestamp)
+  // @@protoc_insertion_point(field_set_allocated:pbmsg.MessageNotify.timestamp)
 }
 
 // -------------------------------------------------------------------
 
-// WelcomeNotification
+// WelcomeNotify
 
 // required bytes text = 1;
-inline bool WelcomeNotification::has_text() const {
+inline bool WelcomeNotify::has_text() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
-inline void WelcomeNotification::set_has_text() {
+inline void WelcomeNotify::set_has_text() {
   _has_bits_[0] |= 0x00000001u;
 }
-inline void WelcomeNotification::clear_has_text() {
+inline void WelcomeNotify::clear_has_text() {
   _has_bits_[0] &= ~0x00000001u;
 }
-inline void WelcomeNotification::clear_text() {
+inline void WelcomeNotify::clear_text() {
   text_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   clear_has_text();
 }
-inline const ::std::string& WelcomeNotification::text() const {
-  // @@protoc_insertion_point(field_get:pbmsg.WelcomeNotification.text)
+inline const ::std::string& WelcomeNotify::text() const {
+  // @@protoc_insertion_point(field_get:pbmsg.WelcomeNotify.text)
   return text_.GetNoArena();
 }
-inline void WelcomeNotification::set_text(const ::std::string& value) {
+inline void WelcomeNotify::set_text(const ::std::string& value) {
   set_has_text();
   text_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
-  // @@protoc_insertion_point(field_set:pbmsg.WelcomeNotification.text)
+  // @@protoc_insertion_point(field_set:pbmsg.WelcomeNotify.text)
 }
 #if LANG_CXX11
-inline void WelcomeNotification::set_text(::std::string&& value) {
+inline void WelcomeNotify::set_text(::std::string&& value) {
   set_has_text();
   text_.SetNoArena(
     &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
-  // @@protoc_insertion_point(field_set_rvalue:pbmsg.WelcomeNotification.text)
+  // @@protoc_insertion_point(field_set_rvalue:pbmsg.WelcomeNotify.text)
 }
 #endif
-inline void WelcomeNotification::set_text(const char* value) {
+inline void WelcomeNotify::set_text(const char* value) {
   GOOGLE_DCHECK(value != NULL);
   set_has_text();
   text_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:pbmsg.WelcomeNotification.text)
+  // @@protoc_insertion_point(field_set_char:pbmsg.WelcomeNotify.text)
 }
-inline void WelcomeNotification::set_text(const void* value, size_t size) {
+inline void WelcomeNotify::set_text(const void* value, size_t size) {
   set_has_text();
   text_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:pbmsg.WelcomeNotification.text)
+  // @@protoc_insertion_point(field_set_pointer:pbmsg.WelcomeNotify.text)
 }
-inline ::std::string* WelcomeNotification::mutable_text() {
+inline ::std::string* WelcomeNotify::mutable_text() {
   set_has_text();
-  // @@protoc_insertion_point(field_mutable:pbmsg.WelcomeNotification.text)
+  // @@protoc_insertion_point(field_mutable:pbmsg.WelcomeNotify.text)
   return text_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline ::std::string* WelcomeNotification::release_text() {
-  // @@protoc_insertion_point(field_release:pbmsg.WelcomeNotification.text)
+inline ::std::string* WelcomeNotify::release_text() {
+  // @@protoc_insertion_point(field_release:pbmsg.WelcomeNotify.text)
   if (!has_text()) {
     return NULL;
   }
   clear_has_text();
   return text_.ReleaseNonDefaultNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline void WelcomeNotification::set_allocated_text(::std::string* text) {
+inline void WelcomeNotify::set_allocated_text(::std::string* text) {
   if (text != NULL) {
     set_has_text();
   } else {
     clear_has_text();
   }
   text_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), text);
-  // @@protoc_insertion_point(field_set_allocated:pbmsg.WelcomeNotification.text)
+  // @@protoc_insertion_point(field_set_allocated:pbmsg.WelcomeNotify.text)
 }
 
 // -------------------------------------------------------------------
@@ -2714,222 +2714,222 @@ inline void Request::set_allocated_login(::pbmsg::LoginRequest* login) {
   // @@protoc_insertion_point(field_set_allocated:pbmsg.Request.login)
 }
 
-// optional .pbmsg.SendMessageRequest send_message = 2;
-inline bool Request::has_send_message() const {
+// optional .pbmsg.SendMessageRequest sendMessage = 2;
+inline bool Request::has_sendmessage() const {
   return (_has_bits_[0] & 0x00000002u) != 0;
 }
-inline void Request::set_has_send_message() {
+inline void Request::set_has_sendmessage() {
   _has_bits_[0] |= 0x00000002u;
 }
-inline void Request::clear_has_send_message() {
+inline void Request::clear_has_sendmessage() {
   _has_bits_[0] &= ~0x00000002u;
 }
-inline void Request::clear_send_message() {
-  if (send_message_ != NULL) send_message_->Clear();
-  clear_has_send_message();
+inline void Request::clear_sendmessage() {
+  if (sendmessage_ != NULL) sendmessage_->Clear();
+  clear_has_sendmessage();
 }
-inline const ::pbmsg::SendMessageRequest& Request::_internal_send_message() const {
-  return *send_message_;
+inline const ::pbmsg::SendMessageRequest& Request::_internal_sendmessage() const {
+  return *sendmessage_;
 }
-inline const ::pbmsg::SendMessageRequest& Request::send_message() const {
-  const ::pbmsg::SendMessageRequest* p = send_message_;
-  // @@protoc_insertion_point(field_get:pbmsg.Request.send_message)
+inline const ::pbmsg::SendMessageRequest& Request::sendmessage() const {
+  const ::pbmsg::SendMessageRequest* p = sendmessage_;
+  // @@protoc_insertion_point(field_get:pbmsg.Request.sendMessage)
   return p != NULL ? *p : *reinterpret_cast<const ::pbmsg::SendMessageRequest*>(
       &::pbmsg::_SendMessageRequest_default_instance_);
 }
-inline ::pbmsg::SendMessageRequest* Request::release_send_message() {
-  // @@protoc_insertion_point(field_release:pbmsg.Request.send_message)
-  clear_has_send_message();
-  ::pbmsg::SendMessageRequest* temp = send_message_;
-  send_message_ = NULL;
+inline ::pbmsg::SendMessageRequest* Request::release_sendmessage() {
+  // @@protoc_insertion_point(field_release:pbmsg.Request.sendMessage)
+  clear_has_sendmessage();
+  ::pbmsg::SendMessageRequest* temp = sendmessage_;
+  sendmessage_ = NULL;
   return temp;
 }
-inline ::pbmsg::SendMessageRequest* Request::mutable_send_message() {
-  set_has_send_message();
-  if (send_message_ == NULL) {
+inline ::pbmsg::SendMessageRequest* Request::mutable_sendmessage() {
+  set_has_sendmessage();
+  if (sendmessage_ == NULL) {
     auto* p = CreateMaybeMessage<::pbmsg::SendMessageRequest>(GetArenaNoVirtual());
-    send_message_ = p;
+    sendmessage_ = p;
   }
-  // @@protoc_insertion_point(field_mutable:pbmsg.Request.send_message)
-  return send_message_;
+  // @@protoc_insertion_point(field_mutable:pbmsg.Request.sendMessage)
+  return sendmessage_;
 }
-inline void Request::set_allocated_send_message(::pbmsg::SendMessageRequest* send_message) {
+inline void Request::set_allocated_sendmessage(::pbmsg::SendMessageRequest* sendmessage) {
   ::google::protobuf::Arena* message_arena = GetArenaNoVirtual();
   if (message_arena == NULL) {
-    delete send_message_;
+    delete sendmessage_;
   }
-  if (send_message) {
+  if (sendmessage) {
     ::google::protobuf::Arena* submessage_arena = NULL;
     if (message_arena != submessage_arena) {
-      send_message = ::google::protobuf::internal::GetOwnedMessage(
-          message_arena, send_message, submessage_arena);
+      sendmessage = ::google::protobuf::internal::GetOwnedMessage(
+          message_arena, sendmessage, submessage_arena);
     }
-    set_has_send_message();
+    set_has_sendmessage();
   } else {
-    clear_has_send_message();
+    clear_has_sendmessage();
   }
-  send_message_ = send_message;
-  // @@protoc_insertion_point(field_set_allocated:pbmsg.Request.send_message)
+  sendmessage_ = sendmessage;
+  // @@protoc_insertion_point(field_set_allocated:pbmsg.Request.sendMessage)
 }
 
 // -------------------------------------------------------------------
 
-// Response
+// Respond
 
 // required bool result = 1;
-inline bool Response::has_result() const {
+inline bool Respond::has_result() const {
   return (_has_bits_[0] & 0x00000008u) != 0;
 }
-inline void Response::set_has_result() {
+inline void Respond::set_has_result() {
   _has_bits_[0] |= 0x00000008u;
 }
-inline void Response::clear_has_result() {
+inline void Respond::clear_has_result() {
   _has_bits_[0] &= ~0x00000008u;
 }
-inline void Response::clear_result() {
+inline void Respond::clear_result() {
   result_ = false;
   clear_has_result();
 }
-inline bool Response::result() const {
-  // @@protoc_insertion_point(field_get:pbmsg.Response.result)
+inline bool Respond::result() const {
+  // @@protoc_insertion_point(field_get:pbmsg.Respond.result)
   return result_;
 }
-inline void Response::set_result(bool value) {
+inline void Respond::set_result(bool value) {
   set_has_result();
   result_ = value;
-  // @@protoc_insertion_point(field_set:pbmsg.Response.result)
+  // @@protoc_insertion_point(field_set:pbmsg.Respond.result)
 }
 
-// required bool last_response = 2;
-inline bool Response::has_last_response() const {
+// required bool lastRespond = 2;
+inline bool Respond::has_lastrespond() const {
   return (_has_bits_[0] & 0x00000010u) != 0;
 }
-inline void Response::set_has_last_response() {
+inline void Respond::set_has_lastrespond() {
   _has_bits_[0] |= 0x00000010u;
 }
-inline void Response::clear_has_last_response() {
+inline void Respond::clear_has_lastrespond() {
   _has_bits_[0] &= ~0x00000010u;
 }
-inline void Response::clear_last_response() {
-  last_response_ = false;
-  clear_has_last_response();
+inline void Respond::clear_lastrespond() {
+  lastrespond_ = false;
+  clear_has_lastrespond();
 }
-inline bool Response::last_response() const {
-  // @@protoc_insertion_point(field_get:pbmsg.Response.last_response)
-  return last_response_;
+inline bool Respond::lastrespond() const {
+  // @@protoc_insertion_point(field_get:pbmsg.Respond.lastRespond)
+  return lastrespond_;
 }
-inline void Response::set_last_response(bool value) {
-  set_has_last_response();
-  last_response_ = value;
-  // @@protoc_insertion_point(field_set:pbmsg.Response.last_response)
+inline void Respond::set_lastrespond(bool value) {
+  set_has_lastrespond();
+  lastrespond_ = value;
+  // @@protoc_insertion_point(field_set:pbmsg.Respond.lastRespond)
 }
 
-// optional bytes error_describe = 3;
-inline bool Response::has_error_describe() const {
+// optional bytes errorDescribe = 3;
+inline bool Respond::has_errordescribe() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
-inline void Response::set_has_error_describe() {
+inline void Respond::set_has_errordescribe() {
   _has_bits_[0] |= 0x00000001u;
 }
-inline void Response::clear_has_error_describe() {
+inline void Respond::clear_has_errordescribe() {
   _has_bits_[0] &= ~0x00000001u;
 }
-inline void Response::clear_error_describe() {
-  error_describe_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  clear_has_error_describe();
+inline void Respond::clear_errordescribe() {
+  errordescribe_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  clear_has_errordescribe();
 }
-inline const ::std::string& Response::error_describe() const {
-  // @@protoc_insertion_point(field_get:pbmsg.Response.error_describe)
-  return error_describe_.GetNoArena();
+inline const ::std::string& Respond::errordescribe() const {
+  // @@protoc_insertion_point(field_get:pbmsg.Respond.errorDescribe)
+  return errordescribe_.GetNoArena();
 }
-inline void Response::set_error_describe(const ::std::string& value) {
-  set_has_error_describe();
-  error_describe_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
-  // @@protoc_insertion_point(field_set:pbmsg.Response.error_describe)
+inline void Respond::set_errordescribe(const ::std::string& value) {
+  set_has_errordescribe();
+  errordescribe_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:pbmsg.Respond.errorDescribe)
 }
 #if LANG_CXX11
-inline void Response::set_error_describe(::std::string&& value) {
-  set_has_error_describe();
-  error_describe_.SetNoArena(
+inline void Respond::set_errordescribe(::std::string&& value) {
+  set_has_errordescribe();
+  errordescribe_.SetNoArena(
     &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
-  // @@protoc_insertion_point(field_set_rvalue:pbmsg.Response.error_describe)
+  // @@protoc_insertion_point(field_set_rvalue:pbmsg.Respond.errorDescribe)
 }
 #endif
-inline void Response::set_error_describe(const char* value) {
+inline void Respond::set_errordescribe(const char* value) {
   GOOGLE_DCHECK(value != NULL);
-  set_has_error_describe();
-  error_describe_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:pbmsg.Response.error_describe)
+  set_has_errordescribe();
+  errordescribe_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:pbmsg.Respond.errorDescribe)
 }
-inline void Response::set_error_describe(const void* value, size_t size) {
-  set_has_error_describe();
-  error_describe_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+inline void Respond::set_errordescribe(const void* value, size_t size) {
+  set_has_errordescribe();
+  errordescribe_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:pbmsg.Response.error_describe)
+  // @@protoc_insertion_point(field_set_pointer:pbmsg.Respond.errorDescribe)
 }
-inline ::std::string* Response::mutable_error_describe() {
-  set_has_error_describe();
-  // @@protoc_insertion_point(field_mutable:pbmsg.Response.error_describe)
-  return error_describe_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+inline ::std::string* Respond::mutable_errordescribe() {
+  set_has_errordescribe();
+  // @@protoc_insertion_point(field_mutable:pbmsg.Respond.errorDescribe)
+  return errordescribe_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline ::std::string* Response::release_error_describe() {
-  // @@protoc_insertion_point(field_release:pbmsg.Response.error_describe)
-  if (!has_error_describe()) {
+inline ::std::string* Respond::release_errordescribe() {
+  // @@protoc_insertion_point(field_release:pbmsg.Respond.errorDescribe)
+  if (!has_errordescribe()) {
     return NULL;
   }
-  clear_has_error_describe();
-  return error_describe_.ReleaseNonDefaultNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  clear_has_errordescribe();
+  return errordescribe_.ReleaseNonDefaultNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline void Response::set_allocated_error_describe(::std::string* error_describe) {
-  if (error_describe != NULL) {
-    set_has_error_describe();
+inline void Respond::set_allocated_errordescribe(::std::string* errordescribe) {
+  if (errordescribe != NULL) {
+    set_has_errordescribe();
   } else {
-    clear_has_error_describe();
+    clear_has_errordescribe();
   }
-  error_describe_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), error_describe);
-  // @@protoc_insertion_point(field_set_allocated:pbmsg.Response.error_describe)
+  errordescribe_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), errordescribe);
+  // @@protoc_insertion_point(field_set_allocated:pbmsg.Respond.errorDescribe)
 }
 
-// optional .pbmsg.LoginResponse login = 4;
-inline bool Response::has_login() const {
+// optional .pbmsg.LoginRespond login = 4;
+inline bool Respond::has_login() const {
   return (_has_bits_[0] & 0x00000002u) != 0;
 }
-inline void Response::set_has_login() {
+inline void Respond::set_has_login() {
   _has_bits_[0] |= 0x00000002u;
 }
-inline void Response::clear_has_login() {
+inline void Respond::clear_has_login() {
   _has_bits_[0] &= ~0x00000002u;
 }
-inline void Response::clear_login() {
+inline void Respond::clear_login() {
   if (login_ != NULL) login_->Clear();
   clear_has_login();
 }
-inline const ::pbmsg::LoginResponse& Response::_internal_login() const {
+inline const ::pbmsg::LoginRespond& Respond::_internal_login() const {
   return *login_;
 }
-inline const ::pbmsg::LoginResponse& Response::login() const {
-  const ::pbmsg::LoginResponse* p = login_;
-  // @@protoc_insertion_point(field_get:pbmsg.Response.login)
-  return p != NULL ? *p : *reinterpret_cast<const ::pbmsg::LoginResponse*>(
-      &::pbmsg::_LoginResponse_default_instance_);
+inline const ::pbmsg::LoginRespond& Respond::login() const {
+  const ::pbmsg::LoginRespond* p = login_;
+  // @@protoc_insertion_point(field_get:pbmsg.Respond.login)
+  return p != NULL ? *p : *reinterpret_cast<const ::pbmsg::LoginRespond*>(
+      &::pbmsg::_LoginRespond_default_instance_);
 }
-inline ::pbmsg::LoginResponse* Response::release_login() {
-  // @@protoc_insertion_point(field_release:pbmsg.Response.login)
+inline ::pbmsg::LoginRespond* Respond::release_login() {
+  // @@protoc_insertion_point(field_release:pbmsg.Respond.login)
   clear_has_login();
-  ::pbmsg::LoginResponse* temp = login_;
+  ::pbmsg::LoginRespond* temp = login_;
   login_ = NULL;
   return temp;
 }
-inline ::pbmsg::LoginResponse* Response::mutable_login() {
+inline ::pbmsg::LoginRespond* Respond::mutable_login() {
   set_has_login();
   if (login_ == NULL) {
-    auto* p = CreateMaybeMessage<::pbmsg::LoginResponse>(GetArenaNoVirtual());
+    auto* p = CreateMaybeMessage<::pbmsg::LoginRespond>(GetArenaNoVirtual());
     login_ = p;
   }
-  // @@protoc_insertion_point(field_mutable:pbmsg.Response.login)
+  // @@protoc_insertion_point(field_mutable:pbmsg.Respond.login)
   return login_;
 }
-inline void Response::set_allocated_login(::pbmsg::LoginResponse* login) {
+inline void Respond::set_allocated_login(::pbmsg::LoginRespond* login) {
   ::google::protobuf::Arena* message_arena = GetArenaNoVirtual();
   if (message_arena == NULL) {
     delete login_;
@@ -2945,111 +2945,111 @@ inline void Response::set_allocated_login(::pbmsg::LoginResponse* login) {
     clear_has_login();
   }
   login_ = login;
-  // @@protoc_insertion_point(field_set_allocated:pbmsg.Response.login)
+  // @@protoc_insertion_point(field_set_allocated:pbmsg.Respond.login)
 }
 
-// optional .pbmsg.GetFriendsResponse get_friends = 5;
-inline bool Response::has_get_friends() const {
+// optional .pbmsg.GetFriendsRespond friends = 5;
+inline bool Respond::has_friends() const {
   return (_has_bits_[0] & 0x00000004u) != 0;
 }
-inline void Response::set_has_get_friends() {
+inline void Respond::set_has_friends() {
   _has_bits_[0] |= 0x00000004u;
 }
-inline void Response::clear_has_get_friends() {
+inline void Respond::clear_has_friends() {
   _has_bits_[0] &= ~0x00000004u;
 }
-inline void Response::clear_get_friends() {
-  if (get_friends_ != NULL) get_friends_->Clear();
-  clear_has_get_friends();
+inline void Respond::clear_friends() {
+  if (friends_ != NULL) friends_->Clear();
+  clear_has_friends();
 }
-inline const ::pbmsg::GetFriendsResponse& Response::_internal_get_friends() const {
-  return *get_friends_;
+inline const ::pbmsg::GetFriendsRespond& Respond::_internal_friends() const {
+  return *friends_;
 }
-inline const ::pbmsg::GetFriendsResponse& Response::get_friends() const {
-  const ::pbmsg::GetFriendsResponse* p = get_friends_;
-  // @@protoc_insertion_point(field_get:pbmsg.Response.get_friends)
-  return p != NULL ? *p : *reinterpret_cast<const ::pbmsg::GetFriendsResponse*>(
-      &::pbmsg::_GetFriendsResponse_default_instance_);
+inline const ::pbmsg::GetFriendsRespond& Respond::friends() const {
+  const ::pbmsg::GetFriendsRespond* p = friends_;
+  // @@protoc_insertion_point(field_get:pbmsg.Respond.friends)
+  return p != NULL ? *p : *reinterpret_cast<const ::pbmsg::GetFriendsRespond*>(
+      &::pbmsg::_GetFriendsRespond_default_instance_);
 }
-inline ::pbmsg::GetFriendsResponse* Response::release_get_friends() {
-  // @@protoc_insertion_point(field_release:pbmsg.Response.get_friends)
-  clear_has_get_friends();
-  ::pbmsg::GetFriendsResponse* temp = get_friends_;
-  get_friends_ = NULL;
+inline ::pbmsg::GetFriendsRespond* Respond::release_friends() {
+  // @@protoc_insertion_point(field_release:pbmsg.Respond.friends)
+  clear_has_friends();
+  ::pbmsg::GetFriendsRespond* temp = friends_;
+  friends_ = NULL;
   return temp;
 }
-inline ::pbmsg::GetFriendsResponse* Response::mutable_get_friends() {
-  set_has_get_friends();
-  if (get_friends_ == NULL) {
-    auto* p = CreateMaybeMessage<::pbmsg::GetFriendsResponse>(GetArenaNoVirtual());
-    get_friends_ = p;
+inline ::pbmsg::GetFriendsRespond* Respond::mutable_friends() {
+  set_has_friends();
+  if (friends_ == NULL) {
+    auto* p = CreateMaybeMessage<::pbmsg::GetFriendsRespond>(GetArenaNoVirtual());
+    friends_ = p;
   }
-  // @@protoc_insertion_point(field_mutable:pbmsg.Response.get_friends)
-  return get_friends_;
+  // @@protoc_insertion_point(field_mutable:pbmsg.Respond.friends)
+  return friends_;
 }
-inline void Response::set_allocated_get_friends(::pbmsg::GetFriendsResponse* get_friends) {
+inline void Respond::set_allocated_friends(::pbmsg::GetFriendsRespond* friends) {
   ::google::protobuf::Arena* message_arena = GetArenaNoVirtual();
   if (message_arena == NULL) {
-    delete get_friends_;
+    delete friends_;
   }
-  if (get_friends) {
+  if (friends) {
     ::google::protobuf::Arena* submessage_arena = NULL;
     if (message_arena != submessage_arena) {
-      get_friends = ::google::protobuf::internal::GetOwnedMessage(
-          message_arena, get_friends, submessage_arena);
+      friends = ::google::protobuf::internal::GetOwnedMessage(
+          message_arena, friends, submessage_arena);
     }
-    set_has_get_friends();
+    set_has_friends();
   } else {
-    clear_has_get_friends();
+    clear_has_friends();
   }
-  get_friends_ = get_friends;
-  // @@protoc_insertion_point(field_set_allocated:pbmsg.Response.get_friends)
+  friends_ = friends;
+  // @@protoc_insertion_point(field_set_allocated:pbmsg.Respond.friends)
 }
 
 // -------------------------------------------------------------------
 
-// Notification
+// Notify
 
-// optional .pbmsg.FriendNotification friend = 1;
-inline bool Notification::has_friend_() const {
+// optional .pbmsg.FriendNotify friend = 1;
+inline bool Notify::has_friend_() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
-inline void Notification::set_has_friend_() {
+inline void Notify::set_has_friend_() {
   _has_bits_[0] |= 0x00000001u;
 }
-inline void Notification::clear_has_friend_() {
+inline void Notify::clear_has_friend_() {
   _has_bits_[0] &= ~0x00000001u;
 }
-inline void Notification::clear_friend_() {
+inline void Notify::clear_friend_() {
   if (friend__ != NULL) friend__->Clear();
   clear_has_friend_();
 }
-inline const ::pbmsg::FriendNotification& Notification::_internal_friend_() const {
+inline const ::pbmsg::FriendNotify& Notify::_internal_friend_() const {
   return *friend__;
 }
-inline const ::pbmsg::FriendNotification& Notification::friend_() const {
-  const ::pbmsg::FriendNotification* p = friend__;
-  // @@protoc_insertion_point(field_get:pbmsg.Notification.friend)
-  return p != NULL ? *p : *reinterpret_cast<const ::pbmsg::FriendNotification*>(
-      &::pbmsg::_FriendNotification_default_instance_);
+inline const ::pbmsg::FriendNotify& Notify::friend_() const {
+  const ::pbmsg::FriendNotify* p = friend__;
+  // @@protoc_insertion_point(field_get:pbmsg.Notify.friend)
+  return p != NULL ? *p : *reinterpret_cast<const ::pbmsg::FriendNotify*>(
+      &::pbmsg::_FriendNotify_default_instance_);
 }
-inline ::pbmsg::FriendNotification* Notification::release_friend_() {
-  // @@protoc_insertion_point(field_release:pbmsg.Notification.friend)
+inline ::pbmsg::FriendNotify* Notify::release_friend_() {
+  // @@protoc_insertion_point(field_release:pbmsg.Notify.friend)
   clear_has_friend_();
-  ::pbmsg::FriendNotification* temp = friend__;
+  ::pbmsg::FriendNotify* temp = friend__;
   friend__ = NULL;
   return temp;
 }
-inline ::pbmsg::FriendNotification* Notification::mutable_friend_() {
+inline ::pbmsg::FriendNotify* Notify::mutable_friend_() {
   set_has_friend_();
   if (friend__ == NULL) {
-    auto* p = CreateMaybeMessage<::pbmsg::FriendNotification>(GetArenaNoVirtual());
+    auto* p = CreateMaybeMessage<::pbmsg::FriendNotify>(GetArenaNoVirtual());
     friend__ = p;
   }
-  // @@protoc_insertion_point(field_mutable:pbmsg.Notification.friend)
+  // @@protoc_insertion_point(field_mutable:pbmsg.Notify.friend)
   return friend__;
 }
-inline void Notification::set_allocated_friend_(::pbmsg::FriendNotification* friend_) {
+inline void Notify::set_allocated_friend_(::pbmsg::FriendNotify* friend_) {
   ::google::protobuf::Arena* message_arena = GetArenaNoVirtual();
   if (message_arena == NULL) {
     delete friend__;
@@ -3065,49 +3065,49 @@ inline void Notification::set_allocated_friend_(::pbmsg::FriendNotification* fri
     clear_has_friend_();
   }
   friend__ = friend_;
-  // @@protoc_insertion_point(field_set_allocated:pbmsg.Notification.friend)
+  // @@protoc_insertion_point(field_set_allocated:pbmsg.Notify.friend)
 }
 
-// optional .pbmsg.MessageNotification msg = 2;
-inline bool Notification::has_msg() const {
+// optional .pbmsg.MessageNotify msg = 2;
+inline bool Notify::has_msg() const {
   return (_has_bits_[0] & 0x00000002u) != 0;
 }
-inline void Notification::set_has_msg() {
+inline void Notify::set_has_msg() {
   _has_bits_[0] |= 0x00000002u;
 }
-inline void Notification::clear_has_msg() {
+inline void Notify::clear_has_msg() {
   _has_bits_[0] &= ~0x00000002u;
 }
-inline void Notification::clear_msg() {
+inline void Notify::clear_msg() {
   if (msg_ != NULL) msg_->Clear();
   clear_has_msg();
 }
-inline const ::pbmsg::MessageNotification& Notification::_internal_msg() const {
+inline const ::pbmsg::MessageNotify& Notify::_internal_msg() const {
   return *msg_;
 }
-inline const ::pbmsg::MessageNotification& Notification::msg() const {
-  const ::pbmsg::MessageNotification* p = msg_;
-  // @@protoc_insertion_point(field_get:pbmsg.Notification.msg)
-  return p != NULL ? *p : *reinterpret_cast<const ::pbmsg::MessageNotification*>(
-      &::pbmsg::_MessageNotification_default_instance_);
+inline const ::pbmsg::MessageNotify& Notify::msg() const {
+  const ::pbmsg::MessageNotify* p = msg_;
+  // @@protoc_insertion_point(field_get:pbmsg.Notify.msg)
+  return p != NULL ? *p : *reinterpret_cast<const ::pbmsg::MessageNotify*>(
+      &::pbmsg::_MessageNotify_default_instance_);
 }
-inline ::pbmsg::MessageNotification* Notification::release_msg() {
-  // @@protoc_insertion_point(field_release:pbmsg.Notification.msg)
+inline ::pbmsg::MessageNotify* Notify::release_msg() {
+  // @@protoc_insertion_point(field_release:pbmsg.Notify.msg)
   clear_has_msg();
-  ::pbmsg::MessageNotification* temp = msg_;
+  ::pbmsg::MessageNotify* temp = msg_;
   msg_ = NULL;
   return temp;
 }
-inline ::pbmsg::MessageNotification* Notification::mutable_msg() {
+inline ::pbmsg::MessageNotify* Notify::mutable_msg() {
   set_has_msg();
   if (msg_ == NULL) {
-    auto* p = CreateMaybeMessage<::pbmsg::MessageNotification>(GetArenaNoVirtual());
+    auto* p = CreateMaybeMessage<::pbmsg::MessageNotify>(GetArenaNoVirtual());
     msg_ = p;
   }
-  // @@protoc_insertion_point(field_mutable:pbmsg.Notification.msg)
+  // @@protoc_insertion_point(field_mutable:pbmsg.Notify.msg)
   return msg_;
 }
-inline void Notification::set_allocated_msg(::pbmsg::MessageNotification* msg) {
+inline void Notify::set_allocated_msg(::pbmsg::MessageNotify* msg) {
   ::google::protobuf::Arena* message_arena = GetArenaNoVirtual();
   if (message_arena == NULL) {
     delete msg_;
@@ -3123,49 +3123,49 @@ inline void Notification::set_allocated_msg(::pbmsg::MessageNotification* msg) {
     clear_has_msg();
   }
   msg_ = msg;
-  // @@protoc_insertion_point(field_set_allocated:pbmsg.Notification.msg)
+  // @@protoc_insertion_point(field_set_allocated:pbmsg.Notify.msg)
 }
 
-// optional .pbmsg.WelcomeNotification welcome = 3;
-inline bool Notification::has_welcome() const {
+// optional .pbmsg.WelcomeNotify welcome = 3;
+inline bool Notify::has_welcome() const {
   return (_has_bits_[0] & 0x00000004u) != 0;
 }
-inline void Notification::set_has_welcome() {
+inline void Notify::set_has_welcome() {
   _has_bits_[0] |= 0x00000004u;
 }
-inline void Notification::clear_has_welcome() {
+inline void Notify::clear_has_welcome() {
   _has_bits_[0] &= ~0x00000004u;
 }
-inline void Notification::clear_welcome() {
+inline void Notify::clear_welcome() {
   if (welcome_ != NULL) welcome_->Clear();
   clear_has_welcome();
 }
-inline const ::pbmsg::WelcomeNotification& Notification::_internal_welcome() const {
+inline const ::pbmsg::WelcomeNotify& Notify::_internal_welcome() const {
   return *welcome_;
 }
-inline const ::pbmsg::WelcomeNotification& Notification::welcome() const {
-  const ::pbmsg::WelcomeNotification* p = welcome_;
-  // @@protoc_insertion_point(field_get:pbmsg.Notification.welcome)
-  return p != NULL ? *p : *reinterpret_cast<const ::pbmsg::WelcomeNotification*>(
-      &::pbmsg::_WelcomeNotification_default_instance_);
+inline const ::pbmsg::WelcomeNotify& Notify::welcome() const {
+  const ::pbmsg::WelcomeNotify* p = welcome_;
+  // @@protoc_insertion_point(field_get:pbmsg.Notify.welcome)
+  return p != NULL ? *p : *reinterpret_cast<const ::pbmsg::WelcomeNotify*>(
+      &::pbmsg::_WelcomeNotify_default_instance_);
 }
-inline ::pbmsg::WelcomeNotification* Notification::release_welcome() {
-  // @@protoc_insertion_point(field_release:pbmsg.Notification.welcome)
+inline ::pbmsg::WelcomeNotify* Notify::release_welcome() {
+  // @@protoc_insertion_point(field_release:pbmsg.Notify.welcome)
   clear_has_welcome();
-  ::pbmsg::WelcomeNotification* temp = welcome_;
+  ::pbmsg::WelcomeNotify* temp = welcome_;
   welcome_ = NULL;
   return temp;
 }
-inline ::pbmsg::WelcomeNotification* Notification::mutable_welcome() {
+inline ::pbmsg::WelcomeNotify* Notify::mutable_welcome() {
   set_has_welcome();
   if (welcome_ == NULL) {
-    auto* p = CreateMaybeMessage<::pbmsg::WelcomeNotification>(GetArenaNoVirtual());
+    auto* p = CreateMaybeMessage<::pbmsg::WelcomeNotify>(GetArenaNoVirtual());
     welcome_ = p;
   }
-  // @@protoc_insertion_point(field_mutable:pbmsg.Notification.welcome)
+  // @@protoc_insertion_point(field_mutable:pbmsg.Notify.welcome)
   return welcome_;
 }
-inline void Notification::set_allocated_welcome(::pbmsg::WelcomeNotification* welcome) {
+inline void Notify::set_allocated_welcome(::pbmsg::WelcomeNotify* welcome) {
   ::google::protobuf::Arena* message_arena = GetArenaNoVirtual();
   if (message_arena == NULL) {
     delete welcome_;
@@ -3181,36 +3181,36 @@ inline void Notification::set_allocated_welcome(::pbmsg::WelcomeNotification* we
     clear_has_welcome();
   }
   welcome_ = welcome;
-  // @@protoc_insertion_point(field_set_allocated:pbmsg.Notification.welcome)
+  // @@protoc_insertion_point(field_set_allocated:pbmsg.Notify.welcome)
 }
 
 // -------------------------------------------------------------------
 
 // Message
 
-// required .pbmsg.MSG msg_type = 1;
-inline bool Message::has_msg_type() const {
+// required .pbmsg.MSG msgType = 1;
+inline bool Message::has_msgtype() const {
   return (_has_bits_[0] & 0x00000020u) != 0;
 }
-inline void Message::set_has_msg_type() {
+inline void Message::set_has_msgtype() {
   _has_bits_[0] |= 0x00000020u;
 }
-inline void Message::clear_has_msg_type() {
+inline void Message::clear_has_msgtype() {
   _has_bits_[0] &= ~0x00000020u;
 }
-inline void Message::clear_msg_type() {
-  msg_type_ = 10001;
-  clear_has_msg_type();
+inline void Message::clear_msgtype() {
+  msgtype_ = 10001;
+  clear_has_msgtype();
 }
-inline ::pbmsg::MSG Message::msg_type() const {
-  // @@protoc_insertion_point(field_get:pbmsg.Message.msg_type)
-  return static_cast< ::pbmsg::MSG >(msg_type_);
+inline ::pbmsg::MSG Message::msgtype() const {
+  // @@protoc_insertion_point(field_get:pbmsg.Message.msgType)
+  return static_cast< ::pbmsg::MSG >(msgtype_);
 }
-inline void Message::set_msg_type(::pbmsg::MSG value) {
+inline void Message::set_msgtype(::pbmsg::MSG value) {
   assert(::pbmsg::MSG_IsValid(value));
-  set_has_msg_type();
-  msg_type_ = value;
-  // @@protoc_insertion_point(field_set:pbmsg.Message.msg_type)
+  set_has_msgtype();
+  msgtype_ = value;
+  // @@protoc_insertion_point(field_set:pbmsg.Message.msgType)
 }
 
 // required fixed32 sequence = 2;
@@ -3237,28 +3237,28 @@ inline void Message::set_sequence(::google::protobuf::uint32 value) {
   // @@protoc_insertion_point(field_set:pbmsg.Message.sequence)
 }
 
-// optional fixed32 session_id = 3;
-inline bool Message::has_session_id() const {
+// optional fixed32 sessionId = 3;
+inline bool Message::has_sessionid() const {
   return (_has_bits_[0] & 0x00000010u) != 0;
 }
-inline void Message::set_has_session_id() {
+inline void Message::set_has_sessionid() {
   _has_bits_[0] |= 0x00000010u;
 }
-inline void Message::clear_has_session_id() {
+inline void Message::clear_has_sessionid() {
   _has_bits_[0] &= ~0x00000010u;
 }
-inline void Message::clear_session_id() {
-  session_id_ = 0u;
-  clear_has_session_id();
+inline void Message::clear_sessionid() {
+  sessionid_ = 0u;
+  clear_has_sessionid();
 }
-inline ::google::protobuf::uint32 Message::session_id() const {
-  // @@protoc_insertion_point(field_get:pbmsg.Message.session_id)
-  return session_id_;
+inline ::google::protobuf::uint32 Message::sessionid() const {
+  // @@protoc_insertion_point(field_get:pbmsg.Message.sessionId)
+  return sessionid_;
 }
-inline void Message::set_session_id(::google::protobuf::uint32 value) {
-  set_has_session_id();
-  session_id_ = value;
-  // @@protoc_insertion_point(field_set:pbmsg.Message.session_id)
+inline void Message::set_sessionid(::google::protobuf::uint32 value) {
+  set_has_sessionid();
+  sessionid_ = value;
+  // @@protoc_insertion_point(field_set:pbmsg.Message.sessionId)
 }
 
 // optional .pbmsg.Request request = 4;
@@ -3319,120 +3319,120 @@ inline void Message::set_allocated_request(::pbmsg::Request* request) {
   // @@protoc_insertion_point(field_set_allocated:pbmsg.Message.request)
 }
 
-// optional .pbmsg.Response response = 5;
-inline bool Message::has_response() const {
+// optional .pbmsg.Respond respond = 5;
+inline bool Message::has_respond() const {
   return (_has_bits_[0] & 0x00000002u) != 0;
 }
-inline void Message::set_has_response() {
+inline void Message::set_has_respond() {
   _has_bits_[0] |= 0x00000002u;
 }
-inline void Message::clear_has_response() {
+inline void Message::clear_has_respond() {
   _has_bits_[0] &= ~0x00000002u;
 }
-inline void Message::clear_response() {
-  if (response_ != NULL) response_->Clear();
-  clear_has_response();
+inline void Message::clear_respond() {
+  if (respond_ != NULL) respond_->Clear();
+  clear_has_respond();
 }
-inline const ::pbmsg::Response& Message::_internal_response() const {
-  return *response_;
+inline const ::pbmsg::Respond& Message::_internal_respond() const {
+  return *respond_;
 }
-inline const ::pbmsg::Response& Message::response() const {
-  const ::pbmsg::Response* p = response_;
-  // @@protoc_insertion_point(field_get:pbmsg.Message.response)
-  return p != NULL ? *p : *reinterpret_cast<const ::pbmsg::Response*>(
-      &::pbmsg::_Response_default_instance_);
+inline const ::pbmsg::Respond& Message::respond() const {
+  const ::pbmsg::Respond* p = respond_;
+  // @@protoc_insertion_point(field_get:pbmsg.Message.respond)
+  return p != NULL ? *p : *reinterpret_cast<const ::pbmsg::Respond*>(
+      &::pbmsg::_Respond_default_instance_);
 }
-inline ::pbmsg::Response* Message::release_response() {
-  // @@protoc_insertion_point(field_release:pbmsg.Message.response)
-  clear_has_response();
-  ::pbmsg::Response* temp = response_;
-  response_ = NULL;
+inline ::pbmsg::Respond* Message::release_respond() {
+  // @@protoc_insertion_point(field_release:pbmsg.Message.respond)
+  clear_has_respond();
+  ::pbmsg::Respond* temp = respond_;
+  respond_ = NULL;
   return temp;
 }
-inline ::pbmsg::Response* Message::mutable_response() {
-  set_has_response();
-  if (response_ == NULL) {
-    auto* p = CreateMaybeMessage<::pbmsg::Response>(GetArenaNoVirtual());
-    response_ = p;
+inline ::pbmsg::Respond* Message::mutable_respond() {
+  set_has_respond();
+  if (respond_ == NULL) {
+    auto* p = CreateMaybeMessage<::pbmsg::Respond>(GetArenaNoVirtual());
+    respond_ = p;
   }
-  // @@protoc_insertion_point(field_mutable:pbmsg.Message.response)
-  return response_;
+  // @@protoc_insertion_point(field_mutable:pbmsg.Message.respond)
+  return respond_;
 }
-inline void Message::set_allocated_response(::pbmsg::Response* response) {
+inline void Message::set_allocated_respond(::pbmsg::Respond* respond) {
   ::google::protobuf::Arena* message_arena = GetArenaNoVirtual();
   if (message_arena == NULL) {
-    delete response_;
+    delete respond_;
   }
-  if (response) {
+  if (respond) {
     ::google::protobuf::Arena* submessage_arena = NULL;
     if (message_arena != submessage_arena) {
-      response = ::google::protobuf::internal::GetOwnedMessage(
-          message_arena, response, submessage_arena);
+      respond = ::google::protobuf::internal::GetOwnedMessage(
+          message_arena, respond, submessage_arena);
     }
-    set_has_response();
+    set_has_respond();
   } else {
-    clear_has_response();
+    clear_has_respond();
   }
-  response_ = response;
-  // @@protoc_insertion_point(field_set_allocated:pbmsg.Message.response)
+  respond_ = respond;
+  // @@protoc_insertion_point(field_set_allocated:pbmsg.Message.respond)
 }
 
-// optional .pbmsg.Notification notification = 6;
-inline bool Message::has_notification() const {
+// optional .pbmsg.Notify notify = 6;
+inline bool Message::has_notify() const {
   return (_has_bits_[0] & 0x00000004u) != 0;
 }
-inline void Message::set_has_notification() {
+inline void Message::set_has_notify() {
   _has_bits_[0] |= 0x00000004u;
 }
-inline void Message::clear_has_notification() {
+inline void Message::clear_has_notify() {
   _has_bits_[0] &= ~0x00000004u;
 }
-inline void Message::clear_notification() {
-  if (notification_ != NULL) notification_->Clear();
-  clear_has_notification();
+inline void Message::clear_notify() {
+  if (notify_ != NULL) notify_->Clear();
+  clear_has_notify();
 }
-inline const ::pbmsg::Notification& Message::_internal_notification() const {
-  return *notification_;
+inline const ::pbmsg::Notify& Message::_internal_notify() const {
+  return *notify_;
 }
-inline const ::pbmsg::Notification& Message::notification() const {
-  const ::pbmsg::Notification* p = notification_;
-  // @@protoc_insertion_point(field_get:pbmsg.Message.notification)
-  return p != NULL ? *p : *reinterpret_cast<const ::pbmsg::Notification*>(
-      &::pbmsg::_Notification_default_instance_);
+inline const ::pbmsg::Notify& Message::notify() const {
+  const ::pbmsg::Notify* p = notify_;
+  // @@protoc_insertion_point(field_get:pbmsg.Message.notify)
+  return p != NULL ? *p : *reinterpret_cast<const ::pbmsg::Notify*>(
+      &::pbmsg::_Notify_default_instance_);
 }
-inline ::pbmsg::Notification* Message::release_notification() {
-  // @@protoc_insertion_point(field_release:pbmsg.Message.notification)
-  clear_has_notification();
-  ::pbmsg::Notification* temp = notification_;
-  notification_ = NULL;
+inline ::pbmsg::Notify* Message::release_notify() {
+  // @@protoc_insertion_point(field_release:pbmsg.Message.notify)
+  clear_has_notify();
+  ::pbmsg::Notify* temp = notify_;
+  notify_ = NULL;
   return temp;
 }
-inline ::pbmsg::Notification* Message::mutable_notification() {
-  set_has_notification();
-  if (notification_ == NULL) {
-    auto* p = CreateMaybeMessage<::pbmsg::Notification>(GetArenaNoVirtual());
-    notification_ = p;
+inline ::pbmsg::Notify* Message::mutable_notify() {
+  set_has_notify();
+  if (notify_ == NULL) {
+    auto* p = CreateMaybeMessage<::pbmsg::Notify>(GetArenaNoVirtual());
+    notify_ = p;
   }
-  // @@protoc_insertion_point(field_mutable:pbmsg.Message.notification)
-  return notification_;
+  // @@protoc_insertion_point(field_mutable:pbmsg.Message.notify)
+  return notify_;
 }
-inline void Message::set_allocated_notification(::pbmsg::Notification* notification) {
+inline void Message::set_allocated_notify(::pbmsg::Notify* notify) {
   ::google::protobuf::Arena* message_arena = GetArenaNoVirtual();
   if (message_arena == NULL) {
-    delete notification_;
+    delete notify_;
   }
-  if (notification) {
+  if (notify) {
     ::google::protobuf::Arena* submessage_arena = NULL;
     if (message_arena != submessage_arena) {
-      notification = ::google::protobuf::internal::GetOwnedMessage(
-          message_arena, notification, submessage_arena);
+      notify = ::google::protobuf::internal::GetOwnedMessage(
+          message_arena, notify, submessage_arena);
     }
-    set_has_notification();
+    set_has_notify();
   } else {
-    clear_has_notification();
+    clear_has_notify();
   }
-  notification_ = notification;
-  // @@protoc_insertion_point(field_set_allocated:pbmsg.Message.notification)
+  notify_ = notify;
+  // @@protoc_insertion_point(field_set_allocated:pbmsg.Message.notify)
 }
 
 #ifdef __GNUC__

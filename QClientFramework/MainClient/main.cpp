@@ -19,9 +19,10 @@ int main(int argc, char *argv[])
     if (false == pMain->Start())
     {
         loge() << QStringLiteral("服务开启失败，请查看日志！");
+		system("pause");
     }
-
-    a.exec();
+	else
+		a.exec();
     pMain->Stop();
     RELEASE(pMain);
 	return 0;

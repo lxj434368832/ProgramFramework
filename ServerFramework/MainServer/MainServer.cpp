@@ -5,7 +5,7 @@
 #include "../../Framework/include/cfg_reg_reader.h"
 #include "../../Framework/include/Utils.h"
 #include "../CommonFile//CommonDefine.h"
-#include "../Component/MessageHandle/MessageBusiness.h"
+#include "../Component/MessageHandle/MessageHandle.h"
 #include "../Model/ModelManage/ModelManage.h"
 #include "../Component/TCPServer/CommunicationBusiness.h"
 
@@ -18,27 +18,27 @@ MainServer::MainServer()
 	logger->reconfiguration(tmp_cfg);
 #endif
 
-	m_pMessage = new MessageBusiness(this);
+	m_pMessage = new MessageHandle(this);
 	m_pCommunication = new CommunicationBusiness(this);
-	m_pManage = new ModelManage(this);
+	m_pModel = new ModelManage(this);
 }
 
 MainServer::~MainServer()
 {
 	RELEASE(m_pCommunication);
-	RELEASE(m_pManage);
+	RELEASE(m_pModel);
 	RELEASE(m_pMessage);
 	zxl::zx_logger::delete_instance();
 }
 
-IMessageBusiness* MainServer::GetMessageBusiness()
+IMessageHandle* MainServer::GetMessageBusiness()
 {
 	return m_pMessage;
 }
 
 IModelManage* MainServer::GetManageBusiness()
 {
-	return m_pManage;
+	return m_pModel;
 }
 
 ICommunication * MainServer::GetCommunication()
@@ -55,7 +55,7 @@ bool MainServer::Start()
 {
 	if (false == ReadConfigFile()) return false;
 	if (false == m_pMessage->Start()) return false;
-	if (false == m_pManage->Start()) return false;
+	if (false == m_pModel->Start()) return false;
 	if (false == m_pCommunication->Start()) return false;
 	return true;
 }
@@ -63,7 +63,7 @@ bool MainServer::Start()
 void MainServer::Stop()
 {
 	m_pCommunication->Stop();
-	m_pManage->Stop();
+	m_pModel->Stop();
 	m_pMessage->Stop();
 }
 
