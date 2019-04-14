@@ -73,6 +73,12 @@
     <OutDir>$(SolutionDir)$(Platform)\$(Configuration)\</OutDir>
     <IntDir>$(Configuration)\</IntDir>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <IntDir>$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <IntDir>$(Configuration)\</IntDir>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -119,11 +125,13 @@
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="CommunicationBusiness.cpp" />
+    <ClCompile Include="TCPCommunication.cpp" />
+    <ClCompile Include="TCPServer.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="CommunicationBusiness.h" />
-    <ClInclude Include="ICommunication.h" />
+    <ClInclude Include="TCPCommunication.h" />
+    <ClInclude Include="ITCPCommunication.h" />
+    <ClInclude Include="TCPServer.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

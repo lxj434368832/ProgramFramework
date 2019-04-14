@@ -4,14 +4,18 @@
 #include "IMessageHandle.h"
 
 class ProtobufMsgFactory;
-class IMessageColleague;
 
 class MessageHandle : public IMessageHandle
 {
 public:
-	MessageHandle(IMainServer *srv = nullptr);
+	MessageHandle(IMainServer *pMain = nullptr);
 	~MessageHandle();
 	ProtobufMsgFactory* GetProtobufMsgFactory() override;
+	HandleRequestMessage* GetHandleRequestMessage() override;
+	HandleRespondMessage* GetHandleRespondMessage() override;
+	HandleNotifyMessage* GetHandleNotifyMessage() override;
+
+
 	bool Start() override;
 	void Stop() override;
 
@@ -19,11 +23,9 @@ public:
 	void HandleProtobufMessage(unsigned uUserKey, const char* data, unsigned length) override;
 
 private:
-	void LoadMessageHandleModule();
-
-private:
 	ProtobufMsgFactory				*m_pProtoMsgFtry;
-	std::set<IMessageColleague*>	m_setMessageHandle;
-
+	HandleRequestMessage			*m_pHandleRqMsg;
+	HandleRespondMessage			*m_pHandleRsMsg;
+	HandleNotifyMessage				*m_pHandleNtMsg;
 };
 

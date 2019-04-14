@@ -28,5 +28,5 @@ bool ControllerManage::Start()
 
 void ControllerManage::Stop()
 {
-    m_mainController->Stop();
+	m_mainController->Stop();
 }

@@ -14,7 +14,8 @@ class ControllerManage : public IControllerManage
 {
 public:
     ControllerManage(IMainServer *_main = nullptr);
-    ~ControllerManage() override;
+	~ControllerManage() override;
+
     MainController* GetMainController() override;
 
 	bool Start() override;

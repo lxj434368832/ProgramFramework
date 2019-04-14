@@ -6,17 +6,21 @@
 * company:
 *************************************************************************/
 
+#include "..\..\CommonFile\TypeDefine.h"
+
 class IMainServer;
 
-class ICommunication
+class ITCPCommunication
 {
 public:
-	ICommunication(IMainServer *srv = nullptr):m_srv(srv){};
-	virtual ~ICommunication() { m_srv = nullptr; };
+	ITCPCommunication(IMainServer *pMain = nullptr):m_pMain(pMain){};
+	virtual ~ITCPCommunication() { m_pMain = nullptr; };
+	inline IMainServer* GetMainServer() { return m_pMain; }
 
 	virtual bool Start() = 0;
 	virtual void Stop() = 0;
+	virtual void SendData(UserKey uUserKey, const char* data, unsigned uLength) = 0;
 
 protected:
-	IMainServer *m_srv;
+	IMainServer *m_pMain;
 };

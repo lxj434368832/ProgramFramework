@@ -7,7 +7,8 @@ class IControllerManage
 {
 public:
     IControllerManage(IMainServer *_main = nullptr):m_main(_main){}
-    virtual ~IControllerManage() { m_main = nullptr; }
+	virtual ~IControllerManage() { m_main = nullptr; }
+
     virtual MainController* GetMainController() = 0;
 
     virtual bool Start() = 0;

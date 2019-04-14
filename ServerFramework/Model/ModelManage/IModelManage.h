@@ -11,9 +11,9 @@ class UserInfoManage;
 class IModelManage
 {
 public:
-	IModelManage(IMainServer* srv = nullptr):m_pSrv(srv){}
-	virtual ~IModelManage() { m_pSrv = nullptr; }
-	virtual IMainServer* GetMainServer() { return m_pSrv; }
+	IModelManage(IMainServer* pMain = nullptr):m_pMain(pMain){}
+	virtual ~IModelManage() { m_pMain = nullptr; }
+	virtual IMainServer* GetMainServer() { return m_pMain; }
 
 	virtual UserInfoManage* GetUserInfoManage() = 0;
 
@@ -21,6 +21,6 @@ public:
 	virtual void Stop() = 0;
 
 protected:
-	IMainServer*	m_pSrv;
+	IMainServer*	m_pMain;
 
 };

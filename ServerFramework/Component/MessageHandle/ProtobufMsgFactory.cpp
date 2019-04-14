@@ -4,10 +4,10 @@
 #include <thread>
 
 
-ProtobufMsgFactory::ProtobufMsgFactory(void * srv)
+ProtobufMsgFactory::ProtobufMsgFactory(void * pMain)
 	:m_rscMessage(MESSAGE_RESOURCE_COUNT)
 {
-	m_pSrv = srv;
+	m_pMain = pMain;
 	m_bStart = false;
 }
 
@@ -48,7 +48,7 @@ bool ProtobufMsgFactory::Start(unsigned uThreadCount)
 
 void ProtobufMsgFactory::Stop()
 {
-	m_pSrv = nullptr;
+	m_pMain = nullptr;
 	if (false == m_bStart) return;
 	m_bStart = false;
 
@@ -77,9 +77,8 @@ void ProtobufMsgFactory::AddMessageData(unsigned uUserKey, const char* data, uns
 
 	m_mutexMsgList.lock();
 	m_msgList.push(msgData);
-	m_mutexMsgList.unlock();
-
 	m_cvConsumer.notify_one();
+	m_mutexMsgList.unlock();
 }
 
 void ProtobufMsgFactory::MessageHandleThread()
@@ -99,14 +98,14 @@ void ProtobufMsgFactory::MessageHandleThread()
 			m_msgList.pop();
 		}
 
-		auto it = m_mapMsgHandle.find(msgData->m_msg.msg_type());
+		auto it = m_mapMsgHandle.find(msgData->m_msg.msgtype());
 		if (it != m_mapMsgHandle.end())
 		{
 			(it->second)(msgData->m_uUserKey, msgData->m_msg, nullptr);
 		}
 		else
 		{
-			loge() << "消息 " << msgData->m_msg.msg_type() << " 没有对应的处理方法。";
+			loge() << "消息 " << msgData->m_msg.msgtype() << " 没有对应的处理方法。";
 		}
 
 		m_rscMessage.put(msgData);

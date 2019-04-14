@@ -5,15 +5,13 @@
 * datetime：2017-12-14
 * company:  
 *************************************************************************/
-#include "../../../IOCPCommunication/INetInterface.h"
 #include "../../../Framework/include/ResourceManage.h"
 #include "../../CommonFile/TypeDefine.h"
 #include "../../CommonFile/EnumDefine.h"
 
 class IModelManage;
-class IMessageHandle;
 
-class UserInfoManage : public INetInterface
+class UserInfoManage
 {
 public:
 	UserInfoManage(IModelManage* pMgr);
@@ -22,15 +20,11 @@ public:
 	bool Start();
 	void Stop();
 
-	/*************************************************************************
-	* function： 发送数据
-	* param key: 用户id
-	* param data:需要发送的数据
-	* return:	 无
-	*************************************************************************/
-	void SendData(UserKey uUserKey, const char* data, unsigned uLength);
+	//新服务用户成功连接通知
+	void AddUser(UserKey uUserKey);
 
-	void Disconnect(UserKey uUserKey);
+	//通讯层回调删除用户
+	void DeleteUser(UserKey uUserKey);
 
 	/*************************************************************************
 	* function：获取客户端用户信息通过UserKey
@@ -63,18 +57,14 @@ public:
 	MLock*	GetClientUserLock(UserKey uUserKey);
 
 private:
-	//实现INetInterface接口
-	//新服务用户成功连接通知
-	void AddUser(UserKey uUserKey) override;
-	//处理服务数据
-	void HandData(UserKey uUserKey, unsigned uMsgType, const char* data, unsigned length) override;
-	// 如果成功删除用户返回删除的地址,如果用户不存在则返回NULL
-	void DeleteUser(UserKey uUserKey) override;
-
-private:
 	IModelManage*	m_pMgr;
-	IMessageHandle* m_pMsgHandle;
 
 	mqw::ResourceManage<ClientUserInfo>	m_rscUser;
 	MLock				m_UserShareLock[USER_SHARE_LOCK_COUNT];
+
+	std::map<UserId, UserKey>		m_mapIdKey;			//用户id和key的映射关系
+	MLock							m_lckIdKey;			//用户id和key的映射关系锁
+	std::map<UserKey, UserInfo*>	m_mapUserList;		//用户key和UserInfo的映射
+	MLock							m_lckUserList;		//用户列表锁
+
 };

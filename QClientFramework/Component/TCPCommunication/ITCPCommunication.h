@@ -9,7 +9,6 @@
 #include "../../../IOCPCommunication/INetInterface.h"
 
 class IMainClient;
-class ServerConnect;
 
 class ITCPCommunication
 {
@@ -17,7 +16,6 @@ public:
     ITCPCommunication(IMainClient *main = nullptr):m_main(main){}
     virtual ~ITCPCommunication() { m_main = nullptr; }
 	inline IMainClient* GetMainClient(){ return m_main; }
-	virtual ServerConnect* GetServerConnect() = 0;
 
 	virtual bool Start() = 0;
 	virtual void Stop() = 0;

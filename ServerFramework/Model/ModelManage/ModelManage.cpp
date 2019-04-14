@@ -3,8 +3,8 @@
 #include "UserInfoManage.h"
 #include "..\..\CommonFile\CommonDefine.h"
 
-ModelManage::ModelManage(IMainServer* srv)
-	:IModelManage(srv)
+ModelManage::ModelManage(IMainServer* pMain)
+	:IModelManage(pMain)
 {
 	m_pUserInfo = new UserInfoManage(this);
 }

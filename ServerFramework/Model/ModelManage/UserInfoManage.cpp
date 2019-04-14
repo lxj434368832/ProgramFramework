@@ -1,14 +1,11 @@
 #include "UserInfoManage.h"
 #include "IModelManage.h"
-#include "..\..\MainServer\IMainServer.h"
-#include "..\..\Component\MessageHandle\IMessageHandle.h"
 #include "..\..\CommonFile\CommonDefine.h"
 
 UserInfoManage::UserInfoManage(IModelManage* pMgr)
 	:m_rscUser(USER_RESOURCE_COUNT)
 {
 	m_pMgr = pMgr;
-	m_pMsgHandle = nullptr;
 }
 
 UserInfoManage::~UserInfoManage()
@@ -23,33 +20,13 @@ bool UserInfoManage::Start()
 		loge() << "m_pMgr 为空";
 		return false;
 	}
-	if (nullptr == m_pMgr->GetMainServer())
-	{
-		loge() << "IMainServer 为空";
-		return false;
-	}
-	if (nullptr == m_pMgr->GetMainServer()->GetMessageBusiness())
-	{
-		loge() << "IMessageBusiness 为空";
-		return false;
-	}
-
-	m_pMsgHandle = m_pMgr->GetMainServer()->GetMessageBusiness();
-
-	if (nullptr == m_pMsgHandle)
-	{
-		loge() << "IProtobufMsgFactory 为空";
-		return false;
-	}
 
 	return true;
 }
 
 void UserInfoManage::Stop()
 {
-	m_pMsgHandle = nullptr;			//不再处理消息
-	m_funSendData = nullptr;		//发送数据回调
-	m_fuDisconnect = nullptr;		//主动断开连接回调
+
 	//m_mapIdKey.clear();				//用户id和key的映射关系
 	//m_mapUserList.clear();			//用户key和UserInfo的映射
 }
@@ -74,15 +51,6 @@ void UserInfoManage::AddUser(UserKey uUserKey)
 	logm() << "新连接到达userKey:" << uUserKey;
 }
 
-void UserInfoManage::HandData(UserKey uUserKey, unsigned uMsgType, const char* data, unsigned length)
-{
-	uMsgType;
-	if (m_pMsgHandle)
-	{
-		m_pMsgHandle->HandleProtobufMessage(uUserKey, data, length);
-	}
-}
-
 void UserInfoManage::DeleteUser(UserKey uUserKey)
 {
 	ClientUserInfo *pUser = nullptr;
@@ -103,20 +71,6 @@ void UserInfoManage::DeleteUser(UserKey uUserKey)
 
 		m_rscUser.put(pUser);
 		logm() << "连接断开userKey:" << uUserKey;
-	}
-}
-
-void UserInfoManage::SendData(UserKey uUserKey, const char * data, unsigned uLength)
-{
-	if (m_funSendData)
-		m_funSendData(uUserKey, 0, data, uLength);
-}
-
-void UserInfoManage::Disconnect(UserKey uUserKey)
-{
-	if (m_fuDisconnect)
-	{
-		m_fuDisconnect(uUserKey);
 	}
 }
 

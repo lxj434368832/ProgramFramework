@@ -5,7 +5,7 @@
 class ModelManage : public IModelManage
 {
 public:
-	ModelManage(IMainServer* srv = nullptr);
+	ModelManage(IMainServer* pMain = nullptr);
 	~ModelManage();
 	UserInfoManage* GetUserInfoManage() override;
 

@@ -52,5 +52,8 @@ private:
 
 	mqw::ResourceManage<UserInfo>	m_rscUser;
 	//MLock				m_shareLock[CONNECT_SHARE_LOCK_COUNT];
+
+	std::map<UserKey, UserInfo*>	m_mapUserList;		//用户key和UserInfo的映射
+	MLock							m_lckUserList;		//用户列表锁
 };
 

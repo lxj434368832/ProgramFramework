@@ -11,3 +11,15 @@ void ClientUserInfo::Reset()
 	m_strFamilyAddress.clear();
 	m_strCompanyAddress.clear();
 }
+
+bool ServerConfig::CheckValid()
+{
+	if (usListenPort == 0
+		|| uInitAcceptCount == 0
+		|| uServerThreadCount == 0
+		|| uHeartbeatTime == 0)
+	{
+		return false;
+	}
+	return true;
+}
