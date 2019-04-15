@@ -42,7 +42,7 @@ IControllerManage* MainServer::GetControllerManage()
 	return m_pController;
 }
 
-IMessageHandle* MainServer::GetMessageBusiness()
+IMessageHandle* MainServer::GetMessageHandle()
 {
 	return m_pMessage;
 }

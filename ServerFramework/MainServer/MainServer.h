@@ -11,7 +11,7 @@ public:
 	ServerConfig* GetServerConfig() override;
 	IModelManage* GetModelManage() override;
 	IControllerManage* GetControllerManage() override;
-	IMessageHandle* GetMessageBusiness() override;
+	IMessageHandle* GetMessageHandle() override;
 	ITCPCommunication* GetCommunication() override;
 
 	bool Start();

@@ -3,3 +3,4 @@
 /Release/
 /.vs/
 /Win32/
+*.user

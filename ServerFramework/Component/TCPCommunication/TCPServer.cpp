@@ -25,7 +25,7 @@ TCPServer::~TCPServer()
 
 bool TCPServer::Start()
 {
-	m_pMsgHandle = m_pMain->GetControllerManage()->GetMessageBusiness();
+	m_pMsgHandle = m_pMain->GetMessageHandle();
 	if (nullptr == m_pMsgHandle)
 	{
 		loge() << "获取消息处理失败！";

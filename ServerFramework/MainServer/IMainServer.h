@@ -13,7 +13,7 @@ public:
 	virtual ServerConfig* GetServerConfig() = 0;
 	virtual IModelManage* GetModelManage() = 0;
 	virtual IControllerManage* GetControllerManage() = 0;
-	virtual IMessageHandle* GetMessageBusiness() = 0;
+	virtual IMessageHandle* GetMessageHandle() = 0;
 	virtual ITCPCommunication* GetCommunication() = 0;
 
 	virtual bool Start() = 0;

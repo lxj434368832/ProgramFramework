@@ -23,6 +23,7 @@ int main(int argc, char *argv[])
     }
 	else
 		a.exec();
+
     pMain->Stop();
     RELEASE(pMain);
 	return 0;
