@@ -1,6 +1,6 @@
 // Protocol Buffers - Google's data interchange format
 // Copyright 2008 Google Inc.  All rights reserved.
-// https://developers.google.com/protocol-buffers/
+// http://code.google.com/p/protobuf/
 //
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions are
@@ -67,7 +67,7 @@ class LIBPROTOBUF_EXPORT ReflectionOps {
   // the front of each name.
   static void FindInitializationErrors(const Message& message,
                                        const string& prefix,
-                                       std::vector<string>* errors);
+                                       vector<string>* errors);
 
  private:
   // All methods are static.  No need to construct.

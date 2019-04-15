@@ -1,6 +1,6 @@
 // Protocol Buffers - Google's data interchange format
 // Copyright 2008 Google Inc.  All rights reserved.
-// https://developers.google.com/protocol-buffers/
+// http://code.google.com/p/protobuf/
 //
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions are
@@ -121,12 +121,6 @@ class LIBPROTOBUF_EXPORT SourceTreeDescriptorDatabase : public DescriptorDatabas
                   ErrorLocation location,
                   const string& message);
 
-    virtual void AddWarning(const string& filename,
-                            const string& element_name,
-                            const Message* descriptor,
-                            ErrorLocation location,
-                            const string& message);
-
    private:
     SourceTreeDescriptorDatabase* owner_;
   };
@@ -172,10 +166,6 @@ class LIBPROTOBUF_EXPORT Importer {
     return &pool_;
   }
 
-  void AddUnusedImportTrackFile(const string& file_name);
-  void ClearUnusedImportTrackFiles();
-
-
  private:
   SourceTreeDescriptorDatabase database_;
   DescriptorPool pool_;
@@ -195,9 +185,6 @@ class LIBPROTOBUF_EXPORT MultiFileErrorCollector {
   virtual void AddError(const string& filename, int line, int column,
                         const string& message) = 0;
 
-  virtual void AddWarning(const string& filename, int line, int column,
-                          const string& message) {}
-
  private:
   GOOGLE_DISALLOW_EVIL_CONSTRUCTORS(MultiFileErrorCollector);
 };
@@ -216,13 +203,6 @@ class LIBPROTOBUF_EXPORT SourceTree {
   // must be a path relative to the root of the source tree and must not
   // contain "." or ".." components.
   virtual io::ZeroCopyInputStream* Open(const string& filename) = 0;
-
-  // If Open() returns NULL, calling this method immediately will return an
-  // description of the error.
-  // Subclasses should implement this method and return a meaningful value for
-  // better error reporting.
-  // TODO(xiaofeng): change this to a pure virtual function.
-  virtual string GetLastErrorMessage();
 
  private:
   GOOGLE_DISALLOW_EVIL_CONSTRUCTORS(SourceTree);
@@ -293,9 +273,7 @@ class LIBPROTOBUF_EXPORT DiskSourceTree : public SourceTree {
   bool VirtualFileToDiskFile(const string& virtual_file, string* disk_file);
 
   // implements SourceTree -------------------------------------------
-  virtual io::ZeroCopyInputStream* Open(const string& filename);
-
-  virtual string GetLastErrorMessage();
+  io::ZeroCopyInputStream* Open(const string& filename);
 
  private:
   struct Mapping {
@@ -306,8 +284,7 @@ class LIBPROTOBUF_EXPORT DiskSourceTree : public SourceTree {
                    const string& disk_path_param)
       : virtual_path(virtual_path_param), disk_path(disk_path_param) {}
   };
-  std::vector<Mapping> mappings_;
-  string last_error_message_;
+  vector<Mapping> mappings_;
 
   // Like Open(), but returns the on-disk path in disk_file if disk_file is
   // non-NULL and the file could be successfully opened.

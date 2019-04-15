@@ -146,6 +146,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="IMainClient.h" />
+    <ClInclude Include="ImportLibrary.h" />
     <ClInclude Include="MainClient.h" />
   </ItemGroup>
   <ItemGroup>

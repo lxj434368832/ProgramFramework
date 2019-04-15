@@ -54,6 +54,9 @@
     <ClInclude Include="MainClient.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="ImportLibrary.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Resource\CloseIcon.png">

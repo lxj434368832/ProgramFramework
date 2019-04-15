@@ -1,6 +1,6 @@
 // Protocol Buffers - Google's data interchange format
 // Copyright 2008 Google Inc.  All rights reserved.
-// https://developers.google.com/protocol-buffers/
+// http://code.google.com/p/protobuf/
 //
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions are
@@ -50,9 +50,6 @@ namespace io { class ZeroCopyOutputStream; }
 class FileDescriptor;
 
 namespace compiler {
-class AccessInfoMap;
-
-class Version;
 
 // Defined in this file.
 class CodeGenerator;
@@ -69,11 +66,11 @@ class LIBPROTOC_EXPORT CodeGenerator {
   // Generates code for the given proto file, generating one or more files in
   // the given output directory.
   //
-  // A parameter to be passed to the generator can be specified on the command
-  // line. This is intended to be used to pass generator specific parameters.
-  // It is empty if no parameter was given. ParseGeneratorParameter (below),
-  // can be used to accept multiple parameters within the single parameter
-  // command line flag.
+  // A parameter to be passed to the generator can be specified on the
+  // command line.  This is intended to be used by Java and similar languages
+  // to specify which specific class from the proto file is to be generated,
+  // though it could have other uses as well.  It is empty if no parameter was
+  // given.
   //
   // Returns true if successful.  Otherwise, sets *error to a description of
   // the problem (e.g. "invalid parameter") and returns false.
@@ -81,28 +78,6 @@ class LIBPROTOC_EXPORT CodeGenerator {
                         const string& parameter,
                         GeneratorContext* generator_context,
                         string* error) const = 0;
-
-  // Generates code for all given proto files.
-  //
-  // WARNING: The canonical code generator design produces one or two output
-  // files per input .proto file, and we do not wish to encourage alternate
-  // designs.
-  //
-  // A parameter is given as passed on the command line, as in |Generate()|
-  // above.
-  //
-  // Returns true if successful.  Otherwise, sets *error to a description of
-  // the problem (e.g. "invalid parameter") and returns false.
-  virtual bool GenerateAll(const std::vector<const FileDescriptor*>& files,
-                           const string& parameter,
-                           GeneratorContext* generator_context,
-                           string* error) const;
-
-  // This is no longer used, but this class is part of the opensource protobuf
-  // library, so it has to remain to keep vtables the same for the current
-  // version of the library. When protobufs does a api breaking change, the
-  // method can be removed.
-  virtual bool HasGenerateAll() const { return true; }
 
  private:
   GOOGLE_DISALLOW_EVIL_CONSTRUCTORS(CodeGenerator);
@@ -114,8 +89,7 @@ class LIBPROTOC_EXPORT CodeGenerator {
 // runs.
 class LIBPROTOC_EXPORT GeneratorContext {
  public:
-  inline GeneratorContext() {
-  }
+  inline GeneratorContext() {}
   virtual ~GeneratorContext();
 
   // Opens the given file, truncating it if it exists, and returns a
@@ -130,9 +104,6 @@ class LIBPROTOC_EXPORT GeneratorContext {
   // contain "." or ".." components.
   virtual io::ZeroCopyOutputStream* Open(const string& filename) = 0;
 
-  // Similar to Open() but the output will be appended to the file if exists
-  virtual io::ZeroCopyOutputStream* OpenForAppend(const string& filename);
-
   // Creates a ZeroCopyOutputStream which will insert code into the given file
   // at the given insertion point.  See plugin.proto (plugin.pb.h) for more
   // information on insertion points.  The default implementation
@@ -145,12 +116,7 @@ class LIBPROTOC_EXPORT GeneratorContext {
   // Returns a vector of FileDescriptors for all the files being compiled
   // in this run.  Useful for languages, such as Go, that treat files
   // differently when compiled as a set rather than individually.
-  virtual void ListParsedFiles(std::vector<const FileDescriptor*>* output);
-
-  // Retrieves the version number of the protocol compiler associated with
-  // this GeneratorContext.
-  virtual void GetCompilerVersion(Version* version) const;
-
+  virtual void ListParsedFiles(vector<const FileDescriptor*>* output);
 
  private:
   GOOGLE_DISALLOW_EVIL_CONSTRUCTORS(GeneratorContext);
@@ -166,8 +132,8 @@ typedef GeneratorContext OutputDirectory;
 //   "foo=bar,baz,qux=corge"
 // parses to the pairs:
 //   ("foo", "bar"), ("baz", ""), ("qux", "corge")
-LIBPROTOC_EXPORT void ParseGeneratorParameter(
-    const string&, std::vector<std::pair<string, string> >*);
+extern void ParseGeneratorParameter(const string&,
+            vector<pair<string, string> >*);
 
 }  // namespace compiler
 }  // namespace protobuf

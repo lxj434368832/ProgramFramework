@@ -59,7 +59,7 @@ FormStatistic::FormStatistic(ViewMediator *mdt, QWidget *parent) :
             this, SLOT(slotStatisticResultNotify(QList<QStringList>)));
 
     m_iStatisticCount = ui->sbTatisticPeriod->value();
-    m_vctStatisticRank = {0,0,1,1,1,1,1,1,0,0};
+    //m_vctStatisticRank = {0,0,1,1,1,1,1,1,0,0};
     m_iStatisticFigure = 6;
 }
 
