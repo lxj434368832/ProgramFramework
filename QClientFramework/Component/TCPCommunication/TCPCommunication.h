@@ -12,6 +12,8 @@ public:
 
 	bool Start() override;
 	void Stop() override;
+
+	//此处userKey其实是服务器类型
     void SendData(UserKey uUserKey, const char* data, unsigned uLength);
 
 private:

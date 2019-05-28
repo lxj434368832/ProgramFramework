@@ -143,15 +143,20 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="IMessage.h" />
+    <ClInclude Include="HandleNotifyMessage.h" />
+    <ClInclude Include="HandleRequestMessage.h" />
+    <ClInclude Include="HandleRespondMessage.h" />
+    <ClInclude Include="IMessageColleague.h" />
     <ClInclude Include="IMessageHandle.h" />
-    <ClInclude Include="LoginMessageHandle.h" />
     <ClInclude Include="Message.pb.h" />
     <ClInclude Include="MessageHandle.h" />
     <ClInclude Include="ProtobufMsgFactory.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="LoginMessageHandle.cpp" />
+    <ClCompile Include="HandleNotifyMessage.cpp" />
+    <ClCompile Include="HandleRequestMessage.cpp" />
+    <ClCompile Include="HandleRespondMessage.cpp" />
+    <ClCompile Include="IMessageColleague.cpp" />
     <ClCompile Include="Message.pb.cc" />
     <ClCompile Include="MessageHandle.cpp" />
     <ClCompile Include="ProtobufMsgFactory.cpp" />

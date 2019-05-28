@@ -15,3 +15,9 @@ struct ClientConfig
 	// 需要判断读取出来的配置是否正确
     bool CheckValid();
 };
+
+struct SUserInfo
+{
+	unsigned	m_uUserKey;
+	unsigned	m_uUserId;
+};

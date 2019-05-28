@@ -1,22 +1,6 @@
 #pragma once
 
-#include <QtDebug>
-
-#define logd    qDebug
-#define logm   qInfo
-#define logw   qWarning
-#define loge    qCritical
-#define logf     qFatal
-
-#ifndef LOGS
-#define LOGS
-#define MLOG(format, ...)  do{  \
-    printf("[%s:%d]",__FUNCTION__,__LINE__);  \
-    printf(format, ##__VA_ARGS__); printf("\n"); }while(0)
-
-#define MAssert(express) {if(!express){char a[1];a[-0xffff];} }
-
-#endif // !LOGS
+#include "..\3rdParty\Framework\include\LogFile.h"
 
 //  Õ∑≈÷∏’Î∫Í
 #ifndef RELEASE

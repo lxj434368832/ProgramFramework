@@ -5,14 +5,12 @@
 * datetime：2017-12-14
 * company:  
 *************************************************************************/
-#include "../../../IOCPCommunication/INetInterface.h"
-#include "../../../Framework/include/ResourceManage.h"
-#include "..\..\CommonFile\EnumDefine.h"
+#include "../../3rdParty/IOCPCommunication/include/INetInterface.h"
 
 class MessageHandle;
 class IOCPClient;
 class ITCPCommunication;
-class IMessage;
+class IMessageHandle;
 
 //#define CONNECT_SHARE_LOCK_COUNT 16
 
@@ -32,28 +30,28 @@ public:
 	*************************************************************************/
 	void Send(UserKey uUserKey, const char* data, unsigned uLength);
 
+	/*************************************************************************
+	* function： 断开连接，底层会回调DeleteUser函数
+	* param key: 用户id
+	* return:	 无
+	*************************************************************************/
 	void Disconnect(UserKey uUserKey);
 
 private:
 	//实现INetInterface接口
 	//新服务用户成功连接通知
-	virtual void AddUser(UserKey uUserKey) override;
+	void AddUser(UserKey uUserKey) override;
 
 	//处理服务数据
-	virtual void HandData(UserKey uUserKey, unsigned uMsgType, const char* data, unsigned length) override;
+	void HandData(UserKey uUserKey, unsigned uMsgType, const char* data, unsigned length) override;
 
 	// 删除用户
-	virtual void DeleteUser(UserKey uUserKey) override;
+	void DeleteUser(UserKey uUserKey) override;
 
 private:
 	ITCPCommunication*	m_pCommunication;
-	IMessage*			m_pMsgModule;
+	IMessageHandle*		m_pMsgModule;
 	IOCPClient			*m_pIOCPClient;	//IOCP 客户端
 
-	mqw::ResourceManage<UserInfo>	m_rscUser;
-	//MLock				m_shareLock[CONNECT_SHARE_LOCK_COUNT];
-
-	std::map<UserKey, UserInfo*>	m_mapUserList;		//用户key和UserInfo的映射
-	MLock							m_lckUserList;		//用户列表锁
 };
 

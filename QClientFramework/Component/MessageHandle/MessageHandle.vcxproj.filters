@@ -15,13 +15,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="IMessage.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="IMessageHandle.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="LoginMessageHandle.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="Message.pb.h">
@@ -33,11 +27,20 @@
     <ClInclude Include="MessageHandle.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="HandleNotifyMessage.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="HandleRequestMessage.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="HandleRespondMessage.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="IMessageColleague.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="LoginMessageHandle.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
     <ClCompile Include="Message.pb.cc">
       <Filter>源文件</Filter>
     </ClCompile>
@@ -45,6 +48,18 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="MessageHandle.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="HandleNotifyMessage.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="HandleRequestMessage.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="HandleRespondMessage.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="IMessageColleague.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

@@ -1,35 +1,31 @@
 #pragma once
 
-#include <map>
-#include "IMessage.h"
+#include <set>
+#include "IMessageHandle.h"
 
 class ProtobufMsgFactory;
-class IMessageHandle;
 
-class MessageHandle : public IMessage
+class MessageHandle : public IMessageHandle
 {
 public:
-	MessageHandle(IMainClient *main = nullptr);
+	MessageHandle(IMainClient *pMain = nullptr);
 	~MessageHandle();
 	ProtobufMsgFactory* GetProtobufMsgFactory() override;
-	LoginMessageHandle* GetLoginMessageHandle() override;
+	HandleRequestMessage* GetHandleRequestMessage() override;
+	HandleRespondMessage* GetHandleRespondMessage() override;
+	HandleNotifyMessage* GetHandleNotifyMessage() override;
+
+
 	bool Start() override;
 	void Stop() override;
-	//处protobuf数据
+
+	//处理protobuf数据，供通讯模块调用
 	void HandleProtobufMessage(unsigned uUserKey, const char* data, unsigned length) override;
 
 private:
-	void LoadMessageHandleModule();
-
-private:
-	enum EMessageHandleModule
-	{
-		EMHM_UNKNOWN,
-		EMHM_LOGIN
-	};
-
-	ProtobufMsgFactory			*m_pProtoMsgFtry;
-	std::map<EMessageHandleModule,IMessageHandle*>	m_mapMessageHandle;
-
+	ProtobufMsgFactory				*m_pProtoMsgFtry;
+	HandleRequestMessage			*m_pHandleRqMsg;
+	HandleRespondMessage			*m_pHandleRsMsg;
+	HandleNotifyMessage				*m_pHandleNtMsg;
 };
 

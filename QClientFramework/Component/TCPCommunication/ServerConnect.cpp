@@ -1,15 +1,14 @@
-#include "..\..\..\IOCPCommunication\IOCPClient.h"
+#include "../../3rdParty/IOCPCommunication/include/IOCPClient.h"
 #include "ServerConnect.h"
 #include "ITCPCommunication.h"
 #include "..\..\MainClient\IMainClient.h"
-#include "..\MessageHandle\IMessage.h"
+#include "..\MessageHandle\IMessageHandle.h"
 #include "..\..\CommonFile\TypeDefine.h"
-#include "..\MessageHandle\LoginMessageHandle.h"
 #include "..\..\CommonFile\CommonDefine.h"
+#include "..\..\CommonFile\EnumDefine.h"
 
 ServerConnect::ServerConnect(ITCPCommunication *pCmmnt)
-	:INetInterface(),
-	m_rscUser(EST_SERVER_COUNT)
+	:INetInterface()
 {
 	m_pCommunication = pCmmnt;
 	m_pIOCPClient = new IOCPClient(this);
@@ -26,7 +25,7 @@ bool ServerConnect::Start()
 	m_pMsgModule = m_pCommunication->GetMainClient()->GetMessageHandle();
 	if (nullptr == m_pMsgModule)
 	{
-		loge() << QString::fromLocal8Bit("获取消息处理模块失败！");
+		loge() << "获取消息处理模块失败！";
 		return false;
 	}
 
@@ -37,12 +36,11 @@ bool ServerConnect::Start()
 	{
 		if (false == m_pIOCPClient->AddConnect(i, cfg.strServerIP, cfg.usServerPort, 1))
 		{
-			loge() << QString::fromLocal8Bit("添加对命令服务器的连接失败！");
+			loge() << "添加对命令服务器的连接失败！";
 			return false;
 		}
 	}
 	return true;
-
 }
 
 void ServerConnect::Stop()
@@ -66,23 +64,7 @@ void ServerConnect::Disconnect(UserKey uUserKey)
 
 void ServerConnect::AddUser(UserKey uUserKey)
 {
-	m_lckUserList.lock();
-	auto iter = m_mapUserList.find(uUserKey);
-	if (iter != m_mapUserList.end() && iter->second)
-	{
-		m_lckUserList.unlock();
-		loge() << QString::fromLocal8Bit("已经存在当前用户key:%1 id:%2 无需添加").arg(uUserKey).arg(iter->second->m_uUserId);
-		return;
-	}
-
-	UserInfo *pUser = m_rscUser.get();
-	pUser->m_uUserKey = uUserKey;
-	pUser->m_uUserId = 0;
-	m_mapUserList[uUserKey] = pUser;
-	m_lckUserList.unlock();
-
-	logm() << QString::fromLocal8Bit("连接服务:%1成功！").arg(uUserKey);
-	m_pMsgModule->GetLoginMessageHandle()->SendLoginMessage(uUserKey);
+	emit m_pCommunication->signalTcpConnectNotify(uUserKey);
 }
 
 void ServerConnect::HandData(UserKey uUserKey, unsigned uMsgType, const char* data, unsigned length)
@@ -97,19 +79,5 @@ void ServerConnect::HandData(UserKey uUserKey, unsigned uMsgType, const char* da
 
 void ServerConnect::DeleteUser(UserKey uUserKey)
 {
-	UserInfo *pUser = nullptr;
-	m_lckUserList.lock();
-	auto iter = m_mapUserList.find(uUserKey);
-	if (m_mapUserList.end() != iter)
-	{
-		pUser = iter->second;
-	}
-	m_mapUserList.erase(uUserKey);
-	m_lckUserList.unlock();
-
-	if (pUser)
-	{
-		m_rscUser.put(pUser);
-		logm() << QString::fromLocal8Bit("连接断开userKey:%1").arg(uUserKey);
-	}
+	emit m_pCommunication->signalTcpDisconnectNotify(uUserKey);
 }

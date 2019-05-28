@@ -6,13 +6,15 @@
 * company:
 *************************************************************************/
 
-#include "../../../IOCPCommunication/INetInterface.h"
+#include <QObject>
+#include "..\..\CommonFile\TypeDefine.h"
 
 class IMainClient;
 class ServerConnect;
 
-class ITCPCommunication
+class ITCPCommunication : public QObject
 {
+	Q_OBJECT
 public:
     ITCPCommunication(IMainClient *main = nullptr):m_main(main){}
     virtual ~ITCPCommunication() { m_main = nullptr; }
@@ -29,6 +31,10 @@ public:
 	* return:	 нч
 	*************************************************************************/
 	virtual void SendData(UserKey uUserKey, const char* data, unsigned uLength) = 0;
+
+signals:
+	void signalTcpConnectNotify(unsigned uServerType, bool bSuccess = true);
+	void signalTcpDisconnectNotify(unsigned uServerType);
 
 protected:
 	IMainClient *m_main;

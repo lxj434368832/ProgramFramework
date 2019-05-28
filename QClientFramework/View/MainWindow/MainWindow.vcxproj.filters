@@ -47,9 +47,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="FormStatistic.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="MMainWindow.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -65,28 +62,37 @@
     <ClCompile Include="Release\moc_MMainWindow.cpp">
       <Filter>Generated Files\Release</Filter>
     </ClCompile>
+    <ClCompile Include="Debug\moc_LoginDialog.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="Release\moc_LoginDialog.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="LoginDialog.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <CustomBuild Include="FormStatistic.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
     <CustomBuild Include="MMainWindow.h">
       <Filter>Header Files</Filter>
     </CustomBuild>
-  </ItemGroup>
-  <ItemGroup>
-    <CustomBuild Include="FormStatistic.ui">
+    <CustomBuild Include="LoginDialog.ui">
       <Filter>Form Files</Filter>
     </CustomBuild>
+    <CustomBuild Include="LoginDialog.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
     <CustomBuild Include="MMainWindow.ui">
       <Filter>Form Files</Filter>
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="GeneratedFiles\ui_FormStatistic.h">
+    <ClInclude Include="GeneratedFiles\ui_MMainWindow.h">
       <Filter>Generated Files</Filter>
     </ClInclude>
-    <ClInclude Include="GeneratedFiles\ui_MMainWindow.h">
+    <ClInclude Include="GeneratedFiles\ui_LoginDialog.h">
       <Filter>Generated Files</Filter>
     </ClInclude>
   </ItemGroup>

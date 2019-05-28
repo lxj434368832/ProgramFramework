@@ -53,7 +53,7 @@ ITCPCommunication * MainClient::GetTCPCommunication()
 	return m_pTCPCommunication;
 }
 
-IMessage * MainClient::GetMessageHandle()
+IMessageHandle * MainClient::GetMessageHandle()
 {
 	return m_pMessage;
 }
@@ -80,7 +80,7 @@ void MainClient::Stop()
 
 bool MainClient::ReadConfigFile()
 {
-	MConfigManage config(QApplication::applicationDirPath() + "\\config\\ClientConfig.ini");
+	MConfigManage config(QApplication::applicationDirPath() + "/ClientConfig.ini");
 	m_clConfig.uMessageThreadCount = config.value("Client", "MessageThreadCount", "0").toUInt();
 	m_clConfig.uIOCPThreadCount = config.value("Client", "IOCPThreadCount", "0").toUInt();
 	m_clConfig.uHeartbeatTime = config.value("Client", "HeartbeatTime", "0").toUInt();
@@ -89,7 +89,7 @@ bool MainClient::ReadConfigFile()
 
 	if (false == m_clConfig.CheckValid())
 	{
-		loge() << QStringLiteral("读取配置文件发生错误，请检查配置文件！");
+		loge() << "读取配置文件发生错误，请检查配置文件！";
 		//return false;
 	}
 

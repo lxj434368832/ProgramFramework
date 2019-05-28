@@ -14,9 +14,9 @@ public:
     ~ViewColleague();
 
 protected:
-    ViewMediator        *m_mediator;
-    IMainClient             *m_mainClient;
-    IControllerManage	*m_controller;
+    ViewMediator        *m_pMdt;
+    IMainClient             *m_pMain;
+    IControllerManage	*m_pCtrlMng;
 };
 
 #endif // VIEWCOLLEAGUE_H

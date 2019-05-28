@@ -9,18 +9,26 @@
 
 #include <QObject>
 
-class IMainClient;
-class IControllerManage;
+class HandleRequestMessage;
+class HandleRespondMessage;
+class HandleNotifyMessage;
+class ITCPCommunication;
 class IModelManage;
+class ControllerManage;
+class IMainClient;
 
 class ControllerColleague : public QObject
 {
 public:
-    ControllerColleague(IMainClient*, QObject *parent = nullptr);
+    ControllerColleague(ControllerManage*, QObject *parent = nullptr);
     virtual ~ControllerColleague();
 
 protected:
-    IMainClient             *m_main = nullptr;
-    IControllerManage *m_controller = nullptr;
-    IModelManage        *m_model = nullptr;
+    IMainClient             *m_pMain = nullptr;
+	ControllerManage		*m_pCtrlMng = nullptr;
+	IModelManage			*m_pModel = nullptr; 
+	ITCPCommunication		*m_pTcpCmmnt = nullptr;
+	HandleRequestMessage	*m_pHandleRqMsg = nullptr;
+	HandleRespondMessage	*m_pHandleRsMsg = nullptr;
+	HandleNotifyMessage		*m_pHandleNtMsg = nullptr;
 };

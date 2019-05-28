@@ -4,15 +4,15 @@
 #include "../../Controller/ControllerManage/IControllerManage.h"
 
 ViewColleague::ViewColleague(ViewMediator* mdt){
-    m_mediator = mdt;
-    m_mainClient = mdt->GetMainClient();
-    m_controller = m_mainClient->GetControllerInterface();
+    m_pMdt = mdt;
+    m_pMain = mdt->GetMainClient();
+    m_pCtrlMng = m_pMain->GetControllerInterface();
 }
 
 ViewColleague::~ViewColleague()
 {
-    m_mediator = nullptr;
-    m_mainClient = nullptr;
-	m_controller = nullptr;
+    m_pMdt = nullptr;
+    m_pMain = nullptr;
+	m_pCtrlMng = nullptr;
 }
 

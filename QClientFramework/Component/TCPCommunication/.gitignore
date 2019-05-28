@@ -3,3 +3,4 @@
 *.vcxproj.user
 /x64/
 /Win32/
+/GeneratedFiles/

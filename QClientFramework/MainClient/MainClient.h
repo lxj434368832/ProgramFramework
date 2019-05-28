@@ -14,7 +14,7 @@ public:
 	virtual IModelManage* GetModelInterface() override;
 
     virtual ITCPCommunication* GetTCPCommunication() override;
-	virtual IMessage*	GetMessageHandle() override;
+	virtual IMessageHandle*	GetMessageHandle() override;
 
 	bool Start() override;
 	void Stop() override;
@@ -26,9 +26,9 @@ private:
 	ClientConfig		m_clConfig;	//øÕªß∂À≈‰÷√œÓ
 	IViewManage*		m_pView;
     IControllerManage*	m_pController;
-	IModelManage*	m_pModel;
+	IModelManage*		m_pModel;
 
     ITCPCommunication*		m_pTCPCommunication;
-    IMessage*               m_pMessage;
+    IMessageHandle*         m_pMessage;
 };
 

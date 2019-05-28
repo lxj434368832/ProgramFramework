@@ -16,18 +16,22 @@ class MainController : public ControllerColleague
 {
     Q_OBJECT
 public:
-    explicit MainController(IMainClient*);
+    explicit MainController(ControllerManage*);
     ~MainController() override;
 
     bool Start();
-    void Stop();
+	void Stop();
+
+	void UserLoginResult(unsigned uUserKey, bool bRet, std::string strMsg);
 
 signals:
 
-public slots:
+private slots :
+	void slotTcpConnectNotify(unsigned uServerType, bool bSuccess);
+	void slotTcpDisconnectNotify(unsigned uServerType);
 
 private:
-    MainModel   *m_mainModel;
+    MainModel   *m_pMainModel;
     QThread       m_thread;                   //“Ï≤Ωœﬂ≥Ã
 };
 

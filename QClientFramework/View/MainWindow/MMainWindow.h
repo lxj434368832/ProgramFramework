@@ -18,21 +18,15 @@ public:
     ~MMainWindow();
 
 private slots:
-    void on_btnClose_clicked();
+	void on_btnClose_clicked();
 
-    void on_btnImportData_clicked();
+	void on_btnMinimum_clicked();
 
-    void on_btnAddData_clicked();
-
-    void on_btnAddStatistic_clicked();
+	void on_btnMaximum_clicked();
 
     void on_tabStatistic_tabBarDoubleClicked(int index);
 
     void slotBackToTab(QWidget *, QString);
-
-    void on_btnMinimum_clicked();
-
-    void on_btnMaximum_clicked();
 
 private:
     Ui::MMainWindow *ui;

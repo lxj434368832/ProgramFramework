@@ -5,7 +5,7 @@ class IControllerManage;
 class IViewManage;
 class IModelManage;
 class ITCPCommunication;
-class IMessage;
+class IMessageHandle;
 
 class IMainClient
 {
@@ -17,7 +17,7 @@ public:
 	virtual IModelManage* GetModelInterface() = 0;
 
 	virtual ITCPCommunication* GetTCPCommunication() = 0;
-	virtual IMessage*	GetMessageHandle() = 0;
+	virtual IMessageHandle*	GetMessageHandle() = 0;
 
 	virtual bool Start() = 0;
 	virtual void Stop() = 0;

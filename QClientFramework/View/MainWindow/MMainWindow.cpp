@@ -1,8 +1,6 @@
 #include "MMainWindow.h"
 #include "ui_MMainWindow.h"
-#include "FormStatistic.h"
 #include "..\..\Controller\ControllerManage\ControllerManage.h"
-#include "..\..\Controller\ControllerManage\StatisticController.h"
 #include "..\..\CommonFile\CommonDefine.h"
 #include <QFileDialog>
 #include <QElapsedTimer>
@@ -14,7 +12,6 @@ MMainWindow::MMainWindow(ViewMediator *mdt, QWidget *parent) :
 {
     ui->setupUi(this);
     ui->frameStatusBar->setVisible(false);
-    on_btnAddStatistic_clicked();
 }
 
 MMainWindow::~MMainWindow()
@@ -25,39 +22,6 @@ MMainWindow::~MMainWindow()
 void MMainWindow::on_btnClose_clicked()
 {
     close();
-}
-
-void MMainWindow::on_btnImportData_clicked()
-{
-    QString qstrFilePath = QFileDialog::getOpenFileName(nullptr, QString::fromLocal8Bit("请选择要导入的Excel文件"),
-		"", QString::fromLocal8Bit("Excel 工作薄(*.xlsx *.xls)"));
-
-	if (qstrFilePath.isEmpty()) return;
-	if (false == QFile::exists(qstrFilePath)) return;
-    emit StatisticCtrl->signalImportData(QDir::toNativeSeparators(qstrFilePath));
-}
-
-void MMainWindow::on_btnAddData_clicked()
-{
-	QString qstrPeriod;
-    QString qstrNum;
-    const QMap<QString, QString> lotteryList = StatisticCtrl->GetNumberList();
-	if (false == lotteryList.isEmpty())
-	{
-		qstrPeriod = lotteryList.lastKey();
-    }
-
-    StatisticCtrl->AddData(qstrPeriod, qstrNum);
-}
-
-void MMainWindow::on_btnAddStatistic_clicked()
-{
-    int iItemCount = ui->tabStatistic->count();
-    FormStatistic *form = new FormStatistic(m_mediator);
-    connect(form, SIGNAL(signalBackToTab(QWidget*, QString)), this, SLOT(slotBackToTab(QWidget*, QString)));
-
-    ui->tabStatistic->addTab(form, QString::fromLocal8Bit("统计项%1").arg(iItemCount + 1));
-    ui->tabStatistic->setCurrentIndex(iItemCount);
 }
 
 void MMainWindow::on_tabStatistic_tabBarDoubleClicked(int index)

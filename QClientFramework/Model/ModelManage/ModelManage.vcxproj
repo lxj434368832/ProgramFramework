@@ -129,13 +129,11 @@
   <ItemGroup>
     <ClCompile Include="MainModel.cpp" />
     <ClCompile Include="ModelManage.cpp" />
-    <ClCompile Include="StatisticModel.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="IModelManage.h" />
     <ClInclude Include="MainModel.h" />
     <ClInclude Include="ModelManage.h" />
-    <ClInclude Include="StatisticModel.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets" />

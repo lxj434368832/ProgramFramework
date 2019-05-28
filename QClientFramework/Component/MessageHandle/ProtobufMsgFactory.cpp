@@ -1,27 +1,33 @@
 #include "ProtobufMsgFactory.h"
-#include "..\..\CommonFile\CommonDefine.h"
-#include "..\..\CommonFile\EnumDefine.h"
-#include <thread>
-#include <QString>
+#include "../../CommonFile/CommonDefine.h"
+#include "../../CommonFile/EnumDefine.h"
+#include "Message.pb.h"
+
+struct SMessageData
+{
+	unsigned		m_uUserKey;
+	pbmsg::Message	m_msg;
+};
 
 
-ProtobufMsgFactory::ProtobufMsgFactory(void * srv)
+ProtobufMsgFactory::ProtobufMsgFactory(void * pMain)
 	:m_rscMessage(MESSAGE_RESOURCE_COUNT)
 {
-	m_pSrv = srv;
+	m_pMain = pMain;
 	m_bStart = false;
 }
 
 ProtobufMsgFactory::~ProtobufMsgFactory()
 {
+	google::protobuf::ShutdownProtobufLibrary();
 }
 
-void ProtobufMsgFactory::RegisterMessageFunction(pbmsg::MSG msg_type, funMessageHandle handle)
+void ProtobufMsgFactory::RegisterMessageFunction(unsigned msgType, funMessageHandle handle)
 {
-	m_mapMsgHandle[msg_type] = handle;
+	m_mapMsgHandle[msgType] = handle;
 }
 
-void ProtobufMsgFactory::RemoveMessageFunction(pbmsg::MSG msgType)
+void ProtobufMsgFactory::RemoveMessageFunction(unsigned msgType)
 {
 	auto iter = m_mapMsgHandle.find(msgType);
 	if (iter != m_mapMsgHandle.end())
@@ -40,7 +46,7 @@ bool ProtobufMsgFactory::Start(unsigned uThreadCount)
 	// 处理用户数据的线程
 	for (unsigned i = 0; i < uThreadCount; i++)
 	{
-		m_threadList.push_back(new std::thread(std::bind(&ProtobufMsgFactory::MessageHandleThread, this)));
+		m_threadList.push_back(new std::thread(&ProtobufMsgFactory::MessageHandleThread, this));
 	}
 
 	return true;
@@ -48,7 +54,7 @@ bool ProtobufMsgFactory::Start(unsigned uThreadCount)
 
 void ProtobufMsgFactory::Stop()
 {
-	m_pSrv = nullptr;
+	m_pMain = nullptr;
 	if (false == m_bStart) return;
 	m_bStart = false;
 
@@ -69,18 +75,21 @@ void ProtobufMsgFactory::AddMessageData(unsigned uUserKey, const char* data, uns
 	if (false == m_bStart) return;
 	SMessageData *msgData = m_rscMessage.get();
 	msgData->m_uUserKey = uUserKey;
-	msgData->m_msg.ParseFromArray(data, length);
+	if (false == msgData->m_msg.ParseFromArray(data, length))
+	{
+		m_rscMessage.put(msgData);//消息解析失败，直接返回
+		return;
+	}
 
 	m_mutexMsgList.lock();
 	m_msgList.push(msgData);
-	m_mutexMsgList.unlock();
-
 	m_cvConsumer.notify_one();
+	m_mutexMsgList.unlock();
 }
 
 void ProtobufMsgFactory::MessageHandleThread()
 {
-	//logm() << QString("MessageHandleThread start.ThreadID:%1").arg( (int)std::this_thread::get_id());
+	logm() << "MessageHandleThread start.ThreadID:" << std::this_thread::get_id();
 	while (m_bStart)
 	{
 		SMessageData *msgData = nullptr;
@@ -98,15 +107,15 @@ void ProtobufMsgFactory::MessageHandleThread()
 		auto it = m_mapMsgHandle.find(msgData->m_msg.msgtype());
 		if (it != m_mapMsgHandle.end())
 		{
-			(it->second)(msgData->m_uUserKey, &msgData->m_msg, nullptr);
+			(it->second)(msgData->m_uUserKey, &msgData->m_msg);
 		}
 		else
 		{
-			loge() << "消息 " << msgData->m_msg.msgtype() << " 没有对应的处理方法。";
+			LOGE("消息:%d没有对应的处理方法。", msgData->m_msg.msgtype());
 		}
 
 		m_rscMessage.put(msgData);
 	}
 
-	//logm() << QString("ThreadID:%1 exit.").arg(std::this_thread::get_id());
+	logm() << "ThreadID:" << std::this_thread::get_id()<< "退出";
 }
