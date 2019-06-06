@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "INetInterface.h"
+#include "..\Framework\include\MLock.h"
 
 
 INetInterface::INetInterface()

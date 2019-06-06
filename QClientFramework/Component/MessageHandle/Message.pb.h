@@ -3,7 +3,7 @@
 
 #ifndef PROTOBUF_Message_2eproto__INCLUDED
 #define PROTOBUF_Message_2eproto__INCLUDED
-
+#include "..\..\..\Framework\include\CommonDefine.h"
 #include <string>
 
 #include <google/protobuf/stubs/common.h>
