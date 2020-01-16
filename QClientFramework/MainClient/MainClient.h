@@ -7,14 +7,15 @@ class MainClient : public IMainClient
 {
 public:
 	MainClient();
-    ~MainClient() override;
-	virtual ClientConfig* GetClientConfig() override;
-	virtual IViewManage* GetViewInterface() override;
-	virtual IControllerManage* GetControllerInterface() override;
-	virtual IModelManage* GetModelInterface() override;
+    ~MainClient();
+	ClientConfig* GetClientConfig() override;
+	MConfigManage* GetConfigManage() override;
+	IViewManage* GetViewManage() override;
+	IControllerManage* GetControllerManage() override;
+	IModelManage* GetModelManage() override;
 
-    virtual ITCPCommunication* GetTCPCommunication() override;
-	virtual IMessageHandle*	GetMessageHandle() override;
+    ITCPCommunication* GetTCPCommunication() override;
+	IMessageHandle*	GetMessageHandle() override;
 
 	bool Start() override;
 	void Stop() override;
@@ -24,6 +25,7 @@ private:
 
 private:
 	ClientConfig		m_clConfig;	//客户端配置项
+	MConfigManage*		m_pCfgMng;	//配置管理
 	IViewManage*		m_pView;
     IControllerManage*	m_pController;
 	IModelManage*		m_pModel;

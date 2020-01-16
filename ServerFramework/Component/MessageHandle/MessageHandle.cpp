@@ -12,14 +12,17 @@ MessageHandle::MessageHandle(IMainServer *pMain)
 {
 	m_pProtoMsgFtry = new ProtobufMsgFactory;
 
-	m_pHandleRqMsg = nullptr;
-	m_pHandleRsMsg = nullptr;
-	m_pHandleNtMsg = nullptr;
+	m_pHandleRqMsg = new HandleRequestMessage(this);
+	m_pHandleRsMsg = new HandleRespondMessage(this);
+	m_pHandleNtMsg = new HandleNotifyMessage(this);
 }
 
 MessageHandle::~MessageHandle()
 {
 	RELEASE(m_pHandleNtMsg);
+	RELEASE(m_pHandleRsMsg);
+	RELEASE(m_pHandleRqMsg);
+	RELEASE(m_pProtoMsgFtry);
 }
 
 HandleRequestMessage * MessageHandle::GetHandleRequestMessage()
@@ -44,19 +47,20 @@ ProtobufMsgFactory* MessageHandle::GetProtobufMsgFactory()
 
 bool MessageHandle::Start()
 {
-	m_pHandleRqMsg = new HandleRequestMessage(this);
-	m_pHandleRsMsg = new HandleRespondMessage(this);
-	m_pHandleNtMsg = new HandleNotifyMessage(this);
-
-	return m_pProtoMsgFtry->Start(m_pMain->GetServerConfig()->uMessageThreadCount);
+	logm() << "************开始消息处理的初始化************";
+	if (false == m_pProtoMsgFtry->Start(m_pMain->GetServerConfig()->uMessageThreadCount)) return false;
+	if (false == m_pHandleRqMsg->Start()) return false;
+	if (false == m_pHandleNtMsg->Start())	return false;
+	if (false == m_pHandleRsMsg->Start())	return false;
+	return true;
 }
 
 void MessageHandle::Stop()
 {
 	m_pProtoMsgFtry->Stop();
-	RELEASE(m_pHandleRsMsg);
-	RELEASE(m_pHandleRqMsg);
-	RELEASE(m_pProtoMsgFtry);
+	m_pHandleRqMsg->Stop();
+	m_pHandleRsMsg->Stop();
+	m_pHandleNtMsg->Stop();
 }
 
 void MessageHandle::HandleProtobufMessage(unsigned uUserKey, const char * data, unsigned length)

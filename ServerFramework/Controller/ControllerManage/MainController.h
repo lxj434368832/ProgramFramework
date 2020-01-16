@@ -8,19 +8,21 @@
 /************************************************************************/
 
 #include "ControllerColleague.h"
+#include "../../CommonFile/TypeDefine.h"
 
-class MainModel;
+class UserInfoManage;
 
 class MainController : public ControllerColleague
 {
 public:
-    explicit MainController(IMainServer*);
+    explicit MainController(IControllerManage*);
     ~MainController() override;
 
     bool Start();
     void Stop();
 
+	void UserLogin(ClientUserInfo &userInfo);
 private:
-    MainModel   *m_mainModel;
+	UserInfoManage   *m_pUserMng;
 };
 

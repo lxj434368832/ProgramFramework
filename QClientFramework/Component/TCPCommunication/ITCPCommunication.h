@@ -16,13 +16,14 @@ class ITCPCommunication : public QObject
 {
 	Q_OBJECT
 public:
-    ITCPCommunication(IMainClient *main = nullptr):m_main(main){}
-    virtual ~ITCPCommunication() { m_main = nullptr; }
-	inline IMainClient* GetMainClient() { return m_main; }
-	virtual ServerConnect* GetServerConnect() = 0;
+    ITCPCommunication(IMainClient *main = nullptr):m_pMain(main){}
+    virtual ~ITCPCommunication() { m_pMain = nullptr; }
+	inline IMainClient* GetMainClient() { return m_pMain; }
 
 	virtual bool Start() = 0;
 	virtual void Stop() = 0;
+
+	virtual bool ConnectServer() = 0;
 
 	/*************************************************************************
 	* function£º ·¢ËÍÊý¾Ý
@@ -37,5 +38,5 @@ signals:
 	void signalTcpDisconnectNotify(unsigned uServerType);
 
 protected:
-	IMainClient *m_main;
+	IMainClient *m_pMain;
 };

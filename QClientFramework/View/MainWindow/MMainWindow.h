@@ -24,7 +24,7 @@ private slots:
 
 	void on_btnMaximum_clicked();
 
-    void on_tabStatistic_tabBarDoubleClicked(int index);
+    void on_tabBusiness_tabBarDoubleClicked(int index);
 
     void slotBackToTab(QWidget *, QString);
 

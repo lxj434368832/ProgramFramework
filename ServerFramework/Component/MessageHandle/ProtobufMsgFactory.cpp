@@ -1,8 +1,15 @@
 #include "ProtobufMsgFactory.h"
 #include "../../CommonFile/CommonDefine.h"
 #include "../../CommonFile/EnumDefine.h"
+#include "Message.pb.h"
 #include <thread>
 
+
+struct SMessageData
+{
+	unsigned		m_uUserKey;
+	pbmsg::Message	m_msg;
+};
 
 ProtobufMsgFactory::ProtobufMsgFactory(void * pMain)
 	:m_rscMessage(MESSAGE_RESOURCE_COUNT)
@@ -16,12 +23,12 @@ ProtobufMsgFactory::~ProtobufMsgFactory()
 	google::protobuf::ShutdownProtobufLibrary();
 }
 
-void ProtobufMsgFactory::RegisterMessageFunction(pbmsg::MSG msg_type, funMessageHandle handle)
+void ProtobufMsgFactory::RegisterMessageFunction(unsigned msgType, funMessageHandle handle)
 {
-	m_mapMsgHandle[msg_type] = handle;
+	m_mapMsgHandle[msgType] = handle;
 }
 
-void ProtobufMsgFactory::RemoveMessageFunction(pbmsg::MSG msgType)
+void ProtobufMsgFactory::RemoveMessageFunction(unsigned msgType)
 {
 	auto iter = m_mapMsgHandle.find(msgType);
 	if (iter != m_mapMsgHandle.end())
@@ -101,7 +108,7 @@ void ProtobufMsgFactory::MessageHandleThread()
 		auto it = m_mapMsgHandle.find(msgData->m_msg.msgtype());
 		if (it != m_mapMsgHandle.end())
 		{
-			(it->second)(msgData->m_uUserKey, msgData->m_msg, nullptr);
+			(it->second)(msgData->m_uUserKey, &msgData->m_msg);
 		}
 		else
 		{

@@ -52,6 +52,12 @@
     <ClCompile Include="GeneratedFiles\Release\moc_ViewMediator.cpp">
       <Filter>Generated Files\Release</Filter>
     </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_ViewManage.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_ViewManage.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="IViewManage.h">
@@ -60,10 +66,12 @@
     <ClInclude Include="ViewColleague.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ViewManage.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <CustomBuild Include="ViewMediator.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="ViewManage.h">
       <Filter>Header Files</Filter>
     </CustomBuild>
   </ItemGroup>

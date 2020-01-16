@@ -20,7 +20,7 @@ public:
 	virtual bool Start() = 0;
 	virtual void Stop() = 0;
 
-	//处protobuf数据
+	//处理protobuf数据
 	virtual void HandleProtobufMessage(unsigned uUserKey, const char* data, unsigned length) = 0;
 
 protected:

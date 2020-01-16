@@ -145,3 +145,19 @@ MLock* UserInfoManage::GetClientUserLock(UserKey uUserKey)
 {
 	return &m_UserShareLock[uUserKey % USER_SHARE_LOCK_COUNT];
 }
+
+void UserInfoManage::SetUserInfo(UserKey uUserKey, ClientUserInfo &info)
+{
+	ClientUserInfo *pUser = GetClientUserInfo(uUserKey);
+	if (nullptr == pUser)
+	{
+		loge() << "不存在当前用户！";
+		return;
+	}
+
+	MAutoLock lck(GetClientUserLock(uUserKey));
+	pUser->m_strName = info.m_strName;
+	pUser->m_strPassword = info.m_strPassword;
+
+
+}

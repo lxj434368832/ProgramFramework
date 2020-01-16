@@ -8,8 +8,6 @@
 
 #include "IOCPBase.h"
 
-class INetInterface;
-
 class IOCPServer : public IOCPBase
 {
 public:

@@ -1,3 +1,4 @@
+#include "IOCPDef.h"
 #include "IOCPServer.h"
 #include "IOCPModule.h"
 #include "INetInterface.h"
@@ -8,6 +9,7 @@ IOCPServer::IOCPServer(INetInterface *pNet) :
 	IOCPBase(pNet)
 {
 	m_bStart = false;
+	m_pListenSocketContext = nullptr;
 }
 
 IOCPServer::~IOCPServer()
@@ -22,62 +24,29 @@ bool IOCPServer::StartServer(USHORT nPort, unsigned dwMaxConnection, unsigned uT
 	if (false == StartServerListen(nPort, dwMaxConnection))
 	{
 		//安全地让线程退出
-		for (unsigned i = 0; i < m_uThreadCount; i++)
+		for (unsigned i = 0; i < d->uThreadCount; i++)
 		{
-			IOCPModule::Instance()->PostQueuedCompletionStatus(m_hIOCompletionPort, 0, NULL, NULL);
+			IOCPModule::Instance()->PostQueuedCompletionStatus(d->hIOCompletionPort, 0, NULL, NULL);
 		}
 
-		::WaitForMultipleObjects(m_uThreadCount, m_aThreadList, TRUE, INFINITE);
-
-		for (unsigned i = 0; i < m_uThreadCount; i++)
+		for (unsigned i = 0; i < d->uThreadCount; i++)
 		{
-			::CloseHandle(m_aThreadList[i]);
+			if (d->aThreadList[i].joinable())
+			{
+				d->aThreadList[i].join();
+			}
 		}
-		delete[] m_aThreadList;
-		m_aThreadList = nullptr;
+		delete[] d->aThreadList;
+		d->aThreadList = nullptr;
 
-		RELEASE_HANDLE(m_hIOCompletionPort);
+		delete[] d->aThreadList;
+		d->aThreadList = nullptr;
+
+		RELEASE_HANDLE(d->hIOCompletionPort);
 		return false;
 	}
 	m_bStart = true;
 	return true;
-}
-
-void IOCPServer::StopServer()
-{
-	if (false == m_bStart) return;
-	m_bStart = false;
-
-	//1、关闭所有socket句柄以清除所有挂起的重叠IO操作
-	m_lckConnectList.lock();
-	auto iter = m_mapConnectList.begin();
-	while (iter != m_mapConnectList.end())
-	{
-		PER_SOCKET_CONTEXT *pSkContext = iter->second;
-		if (INVALID_SOCKET != pSkContext->m_socket)
-		{
-			if (EOP_ACCEPT != pSkContext->m_ReceiveContext.m_oprateType)
-				m_pNetInterface->DeleteUser(pSkContext->m_uUserKey);
-
-			::shutdown(pSkContext->m_socket, SD_BOTH);
-			RELEASE_SOCKET(pSkContext->m_socket);
-		}
-		else
-		{
-			MLOG("连接列表中的资源不正确,不应该存在INVALID_SOCKET！");
-		}
-
-		m_mapConnectList.erase(iter++);
-		m_rscSocketContext.put(pSkContext);
-	}
-	m_lckConnectList.unlock();
-
-	IOCPBase::UninitIOCP();
-}
-
-void IOCPServer::StartHeartbeatCheck()
-{
-
 }
 
 bool IOCPServer::StartServerListen(u_short port, unsigned iMaxConnectCount)
@@ -87,7 +56,7 @@ bool IOCPServer::StartServerListen(u_short port, unsigned iMaxConnectCount)
 	{
 		if (nullptr == m_pListenSocketContext)
 		{
-			m_pListenSocketContext = m_rscSocketContext.get();
+			m_pListenSocketContext = d->rscSocketContext.get();
 		}
 
 		if (INVALID_SOCKET == m_pListenSocketContext->m_socket)
@@ -95,7 +64,7 @@ bool IOCPServer::StartServerListen(u_short port, unsigned iMaxConnectCount)
 			m_pListenSocketContext->m_socket = IOCPModule::Instance()->Socket();
 			if (INVALID_SOCKET == m_pListenSocketContext->m_socket)
 			{
-				MLOG("创建Server监听socket失败，错误码：%d", WSAGetLastError());
+				LOGM("创建Server监听socket失败，错误码：%d", WSAGetLastError());
 				break;
 			}
 		}
@@ -112,7 +81,7 @@ bool IOCPServer::StartServerListen(u_short port, unsigned iMaxConnectCount)
 
 		if (IOCPModule::Instance()->Listen(m_pListenSocketContext->m_socket, SOMAXCONN)) break;
 
-		if (IOCPModule::Instance()->BindIoCompletionPort(m_pListenSocketContext, m_hIOCompletionPort)) break;
+		if (IOCPModule::Instance()->BindIoCompletionPort(m_pListenSocketContext, d->hIOCompletionPort)) break;
 
 		//投递接受操作
 		for (unsigned i = 0; i < iMaxConnectCount; i++)
@@ -128,8 +97,50 @@ bool IOCPServer::StartServerListen(u_short port, unsigned iMaxConnectCount)
 	if (false == bRet)
 	{
 		RELEASE_SOCKET(m_pListenSocketContext->m_socket);
-		m_rscSocketContext.put(m_pListenSocketContext);
+		d->rscSocketContext.put(m_pListenSocketContext);
 		m_pListenSocketContext = nullptr;
 	}
 	return bRet;
+}
+
+void IOCPServer::StopServer()
+{
+	if (false == m_bStart) return;
+	m_bStart = false;
+	//关闭监听		
+	RELEASE_SOCKET(m_pListenSocketContext->m_socket);
+	d->rscSocketContext.put(m_pListenSocketContext);
+	m_pListenSocketContext = nullptr;
+
+	//关闭所有socket句柄以清除所有挂起的重叠IO操作
+	d->lckConnectList.lock();
+	auto iter = d->mapConnectList.begin();
+	while (iter != d->mapConnectList.end())
+	{
+		PER_SOCKET_CONTEXT *pSkContext = iter->second;
+		if (INVALID_SOCKET != pSkContext->m_socket)
+		{
+			if (EOP_ACCEPT == pSkContext->m_ReceiveContext.m_oprateType)
+				;
+			else
+				::shutdown(pSkContext->m_socket, SD_BOTH);
+
+			RELEASE_SOCKET(pSkContext->m_socket);
+		}
+		else
+		{
+			LOGM("连接列表中的资源不正确,不应该存在INVALID_SOCKET！");
+		}
+
+		d->mapConnectList.erase(iter++);
+		d->rscSocketContext.put(pSkContext);
+	}
+	d->lckConnectList.unlock();
+
+	IOCPBase::UninitIOCP();
+}
+
+void IOCPServer::StartHeartbeatCheck()
+{
+
 }

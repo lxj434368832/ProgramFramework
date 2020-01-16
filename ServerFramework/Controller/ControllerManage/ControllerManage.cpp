@@ -6,27 +6,27 @@
 ControllerManage::ControllerManage(IMainServer *_main) :
     IControllerManage(_main)
 {
-    m_mainController = new MainController(m_main);
+    m_pMainCtrl = new MainController(this);
 }
 
 ControllerManage::~ControllerManage()
 {
-    RELEASE(m_mainController);
+    RELEASE(m_pMainCtrl);
 }
 
 MainController *ControllerManage::GetMainController()
 {
-    return m_mainController;
+    return m_pMainCtrl;
 }
 
 bool ControllerManage::Start()
 {
-    if(false == m_mainController->Start()) return false;
+    if(false == m_pMainCtrl->Start()) return false;
 
     return true;
 }
 
 void ControllerManage::Stop()
 {
-	m_mainController->Stop();
+	m_pMainCtrl->Stop();
 }

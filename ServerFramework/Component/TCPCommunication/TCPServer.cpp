@@ -1,4 +1,3 @@
-#include "../../../IOCPCommunication/IOCPServer.h"
 #include "TCPServer.h"
 #include "ITCPCommunication.h"
 #include "../../CommonFile/CommonDefine.h"
@@ -7,6 +6,7 @@
 #include "../../Model/ModelManage/UserInfoManage.h"
 #include "../../Controller/ControllerManage/IControllerManage.h"
 #include "../MessageHandle/IMessageHandle.h"
+#include "../../../IOCPCommunication/IOCPServer.h"
 
 TCPServer::TCPServer(IMainServer *pMain)
 	:INetInterface()

@@ -9,6 +9,7 @@
 
 int main(int argc, char *argv[])
 {
+	LogFile log;
 	IMainServer *pMain = new MainServer;
 	do 
 	{
@@ -18,7 +19,7 @@ int main(int argc, char *argv[])
 		//printf("%s -debug /-d <params>   to run as a console app for debugging\n", SZAPPNAME);
 		printf("%s -start /-s            to startup the service\n", SZAPPNAME);
 		printf("%s -stop /-p             to stop the service\n", SZAPPNAME);
-		printf("%s -quit /-q             to stop the service\n", SZAPPNAME);
+		printf("%s -quit /-q             to quit the service\n", SZAPPNAME);
 
 		printf("This may take several seconds,  Please wait.\n");
 		

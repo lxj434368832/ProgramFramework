@@ -1,5 +1,6 @@
 #pragma once
 
+#include "EnumDefine.h"
 #include <string>
 
 typedef unsigned UserKey;
@@ -18,6 +19,10 @@ struct ClientConfig
 
 struct SUserInfo
 {
-	unsigned	m_uUserKey;
-	unsigned	m_uUserId;
+	unsigned		m_uUserKey;
+	unsigned		m_uUserId;
+	std::string		m_strUserName;
+	std::string		m_strPassword;
+	std::string		m_strUserDesc;
+	std::string		m_strMac;
 };

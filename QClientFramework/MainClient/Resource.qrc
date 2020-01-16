@@ -7,5 +7,7 @@
         <file>Resource/StatusBarBgIcon.png</file>
         <file>Resource/TitleBarBgIcon.png</file>
         <file>Resource/TitleIcon.png</file>
+        <file>Resource/Application.ico</file>
+        <file>Resource/SplashScreen.gif</file>
     </qresource>
 </RCC>

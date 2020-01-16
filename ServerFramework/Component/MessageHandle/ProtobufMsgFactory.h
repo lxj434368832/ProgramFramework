@@ -2,10 +2,13 @@
 
 #include <queue>
 #include <condition_variable>
-#include "Message.pb.h"
-#include "../../../Framework/include/ResourceManage.h"
+#include <thread>
+#include "../../3rdParty/Framework/include/ResourceManage.h"
 
-typedef std::function<void(const unsigned uUserKey, const pbmsg::Message &msg, void* ptr)> funMessageHandle;
+namespace pbmsg{ class Message; }
+struct SMessageData;
+
+typedef std::function<void(const unsigned uUserKey, const pbmsg::Message *msg)> funMessageHandle;
 
 class ProtobufMsgFactory
 {
@@ -13,8 +16,8 @@ public:
 	ProtobufMsgFactory(void * pMain = nullptr);
 	~ProtobufMsgFactory();
 
-	void RegisterMessageFunction(pbmsg::MSG, funMessageHandle);
-	void RemoveMessageFunction(pbmsg::MSG msgType);
+	void RegisterMessageFunction(unsigned, funMessageHandle);
+	void RemoveMessageFunction(unsigned msgType);
 
 	bool Start(unsigned uThreadCount);
 	void Stop();
@@ -26,12 +29,7 @@ private:
 	void MessageHandleThread();
 
 private:
-	struct SMessageData 
-	{
-		unsigned		m_uUserKey;
-		pbmsg::Message	m_msg;
-	};
-	void*						m_pMain;				//传递给消息处理的指针
+	void*						m_pMain;			//传递给消息处理的指针
 	bool						m_bStart;			//是否开始的标识
 	std::vector<std::thread*>	m_threadList;		//线程池列表
 
@@ -40,6 +38,6 @@ private:
 	std::mutex					m_mutexMsgList;
 	std::condition_variable		m_cvConsumer;
 
-	std::map<pbmsg::MSG, funMessageHandle> m_mapMsgHandle;
+	std::map<unsigned, funMessageHandle> m_mapMsgHandle;
 };
 

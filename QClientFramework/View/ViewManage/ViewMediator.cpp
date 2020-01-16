@@ -1,12 +1,12 @@
 #include "ViewMediator.h"
 
-ViewMediator::ViewMediator(IMainClient *mainClient)
+ViewMediator::ViewMediator(IMainClient *pMain)
     : QObject()
 {
-    m_mainClient = mainClient;
+	m_pMain = pMain;
 }
 
 ViewMediator::~ViewMediator()
 {
-    m_mainClient = nullptr;
+    m_pMain = nullptr;
 }

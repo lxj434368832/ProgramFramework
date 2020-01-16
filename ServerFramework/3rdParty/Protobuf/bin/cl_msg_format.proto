@@ -1,0 +1,614 @@
+package cl_msg_format;
+
+// 后缀：_rq表示请求，_rs表示回复，_nt表示通知
+
+enum msg_code
+{
+	e_msg_begin = 0;
+	e_user_login_rq = 1;                // 用户登录
+	e_user_login_rs = 2;                // 用户登录回复
+	e_update_catalog_list_nt = 3;       // 用户列表树节点通知
+	e_update_user_list_nt = 4;          // 用户列表通知
+	e_online_user_list_nt = 5;          // 在线用户列表通知
+	e_user_offline_nt = 7;              // 用户下线通知
+	e_query_connect_rq = 8;             // 连入请求
+	e_query_connect_rs = 9;             // 由被连接方回复
+	e_user_invite_rq = 10;              // 邀请请求
+	e_user_invite_rs = 11;              // 由被邀请方回复
+	e_create_group_nt = 12;             // 创建会话组
+	e_user_join_group_nt = 13;          // 用户加入会话组
+	e_group_user_list_nt = 14;          // 会话组用户列表通知
+	e_user_quit_group_rq = 15;          // 用户退出会话组请求 
+	e_user_quit_group_rs = 16;          // 用户退出会话组请求回复
+	e_user_quit_group_nt = 17;          // 用户退出会话组通知 
+	e_dismiss_group_nt = 20;            // 会话组解散通知 
+	e_cancel_query_nt = 23;             // 取消邀请/连入请求
+	e_answer_query_nt = 24;             // 回复邀请者/连入者是否应允操作
+	e_update_monitor_relation_list_nt = 25;  // 通知监控关系表发生改变
+	e_login_data_server_rq = 27;        // 登录数据服务器请求
+	e_video_data_nt = 28;               // 视频数据
+	e_audio_data_nt = 29;               // 音频数据
+	e_query_video_header_rq = 30;       // 由接收方发起请求数据发送方的视频头
+	e_query_video_header_rs = 31;       // 由服务器回馈给请求方的视频头
+	e_query_audio_header_rq = 32;       // 由接收方发起请求数据发送方的音频头
+	e_query_audio_header_rs = 33;       // 由服务器回馈给请求方的音频头
+	e_video_header_nt = 34;             // 由客户端登陆后主动发送给服务器的视频头
+	e_audio_header_nt = 35;             // 由客户端登陆后主动发送给服务器的音频头
+	e_login_monitor_rq = 36;            // 登陆监控端
+	e_update_meet_list_nt = 37;         // 会议端登陆时，服务器发送会议室列表
+	e_join_meeting_rq = 38;             // 加入会议请求
+	e_join_meeting_rs = 39;             // 加入会议回复
+	e_join_meeting_nt = 40;             // 加入会议通知·
+	e_quit_meeting_nt = 41;             // 暂时未使用，会议退出使用退组消息
+	e_create_meeting_rq = 42;           // 创建会议请求
+	e_create_meeting_rs = 43;           // 创建会议回复
+	e_create_meeting_nt = 44;			// 创建会议通知
+	e_meeting_user_list_nt = 45;        // 会议会话组列表通知
+	e_branch_venue_operate_rq = 46;     // 分会场操作请求
+	e_branch_venue_operate_rs = 47;     // 分会场操作请求回复
+	e_branch_venue_operate_nt = 48;     // 分会场操作通知
+	e_notify_branch_venue_send_data_nt = 49; //通知分会场发送数据
+	e_heart_beat_nt = 50;               // 心跳
+	e_modify_monitor_user_name_nt = 51; // 修改监控用户显示信息
+	e_login_data_server_rs = 52;        // 登陆数据服务器回复
+	e_camera_control_rq = 53;           // 摄像头控制 json
+	e_camera_control_rs = 54;           // 摄像头控制回复json
+	e_video_rq = 55;                    // 录像请求json
+	e_video_rs = 56;                    // 录像请求回复json
+	e_video_screenshot_pos_nt = 57;     // uis截图坐标json
+	e_patient_info_nt = 58;             // uis病人信息json
+	e_modify_meeting_rq = 59;	   		// 修改单个会议室请求
+	e_modify_meeting_rs = 60;	   		// 修改单个会议室回复
+	e_branch_venue_speak_operate = 61;  // 分会场发言操作
+	e_login_monitor_rs = 62;            // 登陆监控端回复 （院内客户端）
+	e_user_logout_rq = 63;              // 用户退出，注销请求 （所有客户端） 2018/4/3新增
+	e_user_logout_rs = 64;              // 用户退出，注销回复 （所有客户端） 2018/4/3新增 仅业务流程需要，例外：客户端正常发送了用户退出、注销请求时,可以不需要等待此回复消息
+	e_whiteboard_nt = 65;		        		// 白板功能的逻辑消息  2018/4/27新增
+	e_whiteboard_image_rq = 66;         // 白板的图片       2018/4/27新增	
+	e_start_check_rq = 68;							// 开始检查请求
+	e_stop_check_rq = 69;								// 停止检查请求
+	e_msg_end = 70;
+}
+
+message client_message
+{
+    required msg_code code = 1;
+    required bytes msg_data = 2;
+}
+
+enum client_type
+{
+	  e_unknown = 0;		//未知
+    e_inner_cl = 1;		//院内客户端
+    e_inner_dcl = 2;	//院内主任端
+    e_remote_cl = 3;	//远程用户
+    e_monitor_cl = 4;	//院内监控端
+    e_meeting_cl = 5;	//会议用户
+}
+
+enum result_code
+{
+    e_success = 1;
+    e_err_normal = 2;           // 普通错误，可能是对方不在线等
+    e_err_timeout = 3;          // 超时
+    e_err_refuse = 4;           // 对方拒绝
+    e_err_full = 5;             // 会话组满
+    e_err_opp_busy = 6;         // 对方忙
+    e_err_self_busy = 7;        // 自己忙
+    e_err_need_psw = 8;         // 需要密码
+    e_err_psw_error = 9;        // 密码错误
+    e_err_sameroom = 10;        // 同一个房间/会话组
+    e_err_no_data_srv = 11;	    // 没有数据服务器
+	e_relogin_success = 12;     // 重登录成功    2018/4/3新增
+}
+
+enum operate_type
+{	
+	eot_unknown = 0;		//未知
+	eot_request = 1;		//请求操作
+	eot_respond = 2;		//响应操作
+	eot_cancel	= 3;		//取消操作
+}
+
+// 1 用户登录
+message user_login_rq
+{
+    required uint64 user_id = 1;               //客户端ID
+    required bytes user_name = 2;              //客户端名字
+    required uint64 account_id = 3;						 //登陆账户ID
+    required bytes account_name = 4;					 //登陆账户名字
+    required client_type cl_type = 5;          //账户类型
+    optional string monitor_ip = 6;            //该用户为质控时对外的监听IP
+    optional uint32 monitor_port = 7;          //该用户为质控时对外的监听端口
+    required bool has_camera = 8;              //是否有摄像头
+    required bool has_microphone = 9;          //是否有麦克风
+		optional bool has_once = 10[default = true];//是否第一次登录
+		optional bytes device_id =11;               //设备唯一ID  2018/4/3新增
+}
+
+// 2 
+message user_login_rs
+{
+    required uint64 user_id = 1;
+    required result_code result = 2;
+}
+
+// 单个树节点
+message catalog_info
+{
+	required int32	update_type = 1; //1=add,2=modify 3=del
+    required uint64 id = 2;
+    required bytes name = 3;
+    required uint64 parent_id = 4;
+}
+
+// 3 通知用户树结构
+message update_catalog_list_nt
+{
+    repeated catalog_info list = 1;
+}
+
+// 用户信息
+message user_info
+{
+		required int32		update_type = 1; //1=add,2=modify 3=del
+    required uint64 user_id = 2;
+    required bytes user_name = 3;
+    required client_type cl_type = 4;
+    required uint64 tree_id = 5;
+}
+
+// 4 所有用户信息列表
+message update_user_list_nt
+{
+    repeated user_info list = 1;
+}
+
+message online_info
+{
+	required int32  update_type = 1; //1=add,2=modify,3=del
+	required uint64 user_id = 2;
+	required uint64 account_id = 3;
+	required bytes  account_name = 4;
+}
+
+// 5 在线用户列表
+message online_user_list_nt
+{
+    repeated online_info list = 1;
+}
+
+// 7 用户下线通知
+message user_offline_nt
+{
+    required uint64 quit_uid = 1;
+}
+
+// 诊室端邀请连入创建组的类型
+enum group_type
+{
+    normal_group = 0;       // 普通组，创建后其他账户可以邀请连入操作
+    group_cannot_op = 1;    // 此类会话组在有会议账户的情况下，不允许做邀请和连入操作
+}
+
+// 8 用户请求连入
+message query_connect_rq
+{
+    required uint64 user_id = 1;
+    required bytes user_name = 2;
+    required uint64 account_id = 3;
+    required bytes account_name = 4;
+    required uint64 target_user_id = 5;
+    required string order_id = 6;
+    required bool is_need_agree = 7;
+    required group_type gtype = 8;
+}
+
+// 9 
+message query_connect_rs
+{
+    required uint64 user_id = 1;          // 发起者
+    required result_code result = 2;
+    required string order_id = 3;
+    required uint64 target_user_id = 4;
+    required group_type gtype = 5;
+}
+
+// 10 用户邀请
+message user_invite_rq
+{
+    required uint64 inviter_id = 1;
+    required bytes inviter_name= 2;
+    required uint64 account_id = 3;
+    required bytes  account_name = 4;
+    required uint64 invitee_id = 5;
+    required string order_id = 6;
+}
+
+// 11 
+message user_invite_rs
+{
+    required uint64 user_id = 1;                // 发起者
+    required result_code result = 2;
+    required string order_id = 3;
+    required uint64 target_user_id = 4;
+}
+
+// 12 创建会话组，由服务器生成这个会话组
+message create_group_nt
+{
+    required uint64 session_id = 1;
+    required string data_srv_ip = 2;
+    required uint32 data_srv_port = 3;
+    required uint64 user_id = 4;                // 非数据源的被添加用户
+    required uint64 creator_id = 5;             // 数据源用户作为创建者
+    required string order_id = 6;
+    optional bytes opp_camera_header = 7;       // 建组双方，对方的小摄像头视频头
+    optional group_type gtype = 8;
+}
+
+// 13 通知用户加入会话组
+message user_join_group_nt
+{
+    required uint64 user_id = 1;
+    required string order_id = 2;
+    required uint64 session_id = 3;
+    required bytes camera_header = 4;
+}
+
+message group_user
+{
+    required uint64 uid = 1;
+    required bytes camera_header = 2;
+}
+
+// 14 通知新加用户会话组列表
+message group_user_list_nt
+{
+    required uint64 session_id = 1;
+    required uint64 creator_id = 2;
+    required string data_srv_ip = 3;
+    required uint32 data_srv_port = 4;
+    repeated group_user g_users = 5;
+    required string order_id = 6;
+}
+
+// 15 用户退出会话组
+message user_quit_group_rq
+{
+    required uint64 user_id = 1;
+    required uint64 session_id = 2;
+}
+
+// 16 退出会话组
+message user_quit_group_rs
+{
+    required uint64 user_id = 1;
+    required uint64 session_id = 2;
+    required result_code result = 3;
+}
+
+// 17 通知会话组其他成员
+message user_quit_group_nt
+{
+    required uint64 quit_user_id = 1;
+    required uint64 session_id = 2;
+}
+
+// 20 通知会话组成员解散会话组
+message dismiss_group_nt
+{
+    required uint64 creator_id = 1;
+    required uint64 group_session = 2;
+}
+
+// 23 发起方（邀请者或者连入者或者服务器替代）发给被动接收方
+message cancel_query_nt
+{
+    required uint64 sender_id = 1;              // 发起方ID
+    required uint64 recver_id = 2;              // 接收方ID
+    required string order_id = 3;               // 邀请/连入的流水号
+}
+// 24 
+message answer_query_nt
+{
+    required string order_id = 1;
+    required result_code result = 2;
+    required uint64 recver_id = 3;
+}
+
+message monitor_relation_info
+{
+    required int32	update_type = 1; //1=add,2=modify 3=del
+    required uint64 uid = 2;
+    required string monitor_ip = 3;
+    required uint32 monitor_port = 4;
+}
+// 25 
+message update_monitor_relation_list_nt
+{
+    repeated monitor_relation_info list = 1;
+}
+
+// 27 由客户端发送给数据服务器的登陆信息
+message login_data_server_rq
+{
+    required uint64 user_id = 1;
+    required bytes user_name = 2;
+    required uint64 session_id = 3;
+    required uint64 source_user_id = 4;
+}
+// 28/29 
+message audio_video_data_nt
+{
+    required uint64 current_user_id = 1;
+    required uint64 session_id = 2;
+    required bytes data = 3;
+    optional bool is_camera = 4;
+    optional uint64 index_num = 5;
+}
+
+enum header_type
+{
+    e_audio_header = 1;
+    e_video_header = 2;
+    e_monitor_header = 3;
+    e_camera_header = 4;
+}
+
+// 30/32 由接收方发起请求数据发送方的音/视频头
+message query_audio_video_header_rq
+{
+    required uint64 uid = 1;
+    required uint64 source_id = 2;
+    required header_type htype = 3;
+}
+
+// 31/33 由服务器回馈给请求方的音/视频头
+message query_audio_video_header_rs
+{
+    required uint64 source_id = 1;
+    required bytes header_data = 2;
+    required header_type htype = 3;
+}
+
+// 34/35 由客户端登陆后主动发送给服务器的音/视频头
+message audio_video_header_nt
+{
+    required uint64 source_uid = 1;
+    required bytes header_data = 2;
+    required header_type htype = 3;
+}
+
+// 36 登陆监控端
+message login_monitor_rq
+{
+		required uint64 uid = 1;
+    required bytes uname = 2;
+    required bytes header_data = 3;
+}
+
+message meeting_room
+{
+    required int32 update_type = 1;
+    required uint64 chairman_id = 2;
+    required uint64 meeting_id = 3;
+    required bytes meeting_name = 4; 
+}
+// 37 会议端登陆时，服务器发送会议室列表给用户
+message update_meet_list_nt
+{
+    repeated meeting_room list = 1;
+}
+
+// 38 用户加入会议请求
+message join_meeting_rq
+{
+    required uint64 uid = 1;
+    required uint64 meeting_item_id = 2;
+    optional bytes meeting_item_psw = 3;
+}
+
+// 39 加入会议回复
+message join_meeting_rs
+{
+    required uint64 uid = 1;
+    required uint64 meeting_item_id = 2;
+    required result_code result = 3;        // 如果需要密码则重新发送加入会议请求，并附加上密码
+    optional string dsrv_ip = 4;
+    optional int32 dsrv_port = 5;
+}
+
+// 40 加入会议通知会议中的其他人
+message join_meeting_nt
+{
+    required uint64 join_uid = 1;           // 新加入会议的用户ID
+    required bytes join_uname = 2;          // 新加入会议的用户名称
+}
+
+// 41 用户退出会议会话组通知，此通知由退出者发送给服务器，服务器转发给其他与会者
+message quit_meeting_nt
+{
+    required uint64 quit_uid = 1;
+    required uint64 quit_item_id = 2;
+}
+
+// 42 用户创建新的会议，服务器收到此消息后，需要发送给web，让web去真正创建，得到会议ID
+message create_meeting_rq
+{
+    required uint64 creator_id = 1;         // 创建者，即会议发起者，即会议主席
+    required bytes meeting_name = 2;
+    optional bytes meeting_psw = 3;
+}
+
+// 43 用户创建会议回复
+message create_meeting_rs
+{
+    required uint64 creator_id = 1;
+    required result_code result = 2;
+    optional uint64 meeting_id = 3;
+    optional bytes meeting_name = 4;
+}
+
+// 44 通知其他会议用户有人创建了新的会议
+message create_meeting_nt
+{
+    required uint64 creator_id = 1;
+    required uint64 meeting_id = 2;
+    required bytes meeting_name = 3;
+}
+
+// 分会场用户名ID
+message branch_venue
+{
+    required uint64 bv_uid = 1;
+    required bytes bv_uname = 2;
+    optional bool is_view = 3;
+    optional bool is_forbid = 4;
+}
+
+// 45 会议会话组用户列表通知
+message meeting_user_list_nt
+{
+    required uint64 self_uid = 1;
+    repeated branch_venue branches = 2;
+}
+
+// 46 查看分会场 、停止观看分会场 、禁言 、放开禁言
+message branch_venue_operate_rq
+{
+    required uint64 chairman_id = 1;        // 主席ID，作为发起者
+    required uint64 bv_uid = 2;             // 被操作的分会场用户ID
+    required uint64 meeting_item_id = 3;    // 被操作的分会场ID
+    required bool is_view = 4;              // 观看为true
+    required bool is_forbid = 5;            // 禁言为true
+}
+
+// 47 
+message branch_venue_operate_rs
+{
+    required uint64 chairman_id = 1;        // 主席ID，作为发起者
+    required uint64 bv_uid = 2;             // 分会场ID
+    required uint64 meeting_item_id = 3;    // 会议ID
+    required bool is_view = 4;              // 观看为true
+    required bool is_forbid = 5;            // 禁言为true
+    required result_code result = 6;        // 操作的反馈
+}
+
+// 48
+message branch_venue_operate_nt
+{
+    required uint64 chairman_id = 1;        // 主席ID，作为发起者
+    required uint64 bv_uid = 2;             // 被操作的分会场用户ID
+    required uint64 meeting_item_id = 3;    // 被操作的分会场ID
+    required bool is_view = 4;              // 观看为true
+    required bool is_forbid = 5;            // 禁言为true
+}
+
+// 49通知分会场发送数据或者停止发送数据
+message notify_branch_venue_send_data_nt
+{
+    required uint64 uid = 1;                // 用户ID
+    required bool is_video = 2;             // true表示视频，false表示音频
+    required bool is_send = 3;              // true表示发送。false表示停止发送
+}
+
+// 50心跳通知
+message heart_beat_nt
+{
+    required uint64 uid = 1;
+}
+
+// 51 修改监控用户名
+message modify_monitor_user_name_nt
+{
+    required uint64 uid = 1;
+    required bytes uname = 2;
+}
+
+// 52  登录数据服务器回复
+message login_data_server_rs
+{
+    required uint64 user_id = 1;
+    required bytes user_name = 2;
+    required uint64 session_id = 3;
+    required uint64 source_user_id = 4;
+    required result_code result = 5;
+}
+
+
+// 61 分会场发言请求
+message branch_venue_speak_operate
+{
+	required operate_type type = 1;		//1请求、2响应、3取消
+	required uint64 meet_id = 2;
+	required uint64 chairman_id = 3;
+	required uint64 bv_uid = 4;
+	optional string order_id = 5;
+	optional result_code result = 6;
+}
+
+// 62 登陆监控端回复
+message login_monitor_rs
+{
+	required uint64 uid = 1;
+    required uint64 monitor_uid = 2;
+	required result_code result = 3;
+}
+
+// 63 用户退出/注销请求 2018/4/3新增
+message user_logout_rq
+{
+	required uint64 user_id = 1;
+}
+
+// 64 用户退出/注销请求回复 2018/4/3新增
+message user_logout_rs
+{
+	required uint64 user_id = 1;
+}
+
+//65 白板功能的逻辑消息
+message whiteboard_nt
+{
+	required uint64 user_id = 1;  //当前用户ID 
+	required bool is_request =2;     //是否请求
+	required bool is_drawing =3;     //是否正在绘图中
+}
+//66 白板的图片
+message whiteboard_image_rq 
+{
+  required uint64 user_id = 1;      //当前用户ID
+	required bytes  image_type = 2;
+	required bytes  image_data = 3;   //图片数据
+}
+
+//68 开始检查请求
+message start_check_rq
+{
+	required uint64		session_id 		= 1;			//会话ID号
+	required uint64 	user_id 			= 2;			//诊室ID
+	required bytes 		user_name 		= 3;			//诊室名字
+	required uint64 	doctor_id 		= 4;			//医生ID
+	required bytes		doctor_name 	= 5;			//医生名字
+	required bytes		check_num 		= 6;			//检查号
+	required bytes 		patient_num 	= 7;			//患者编号
+	required bytes 		patient_name 	= 8;			//患者姓名
+	required bytes		patient_sex 	= 9;			//患者性别
+	required bytes		patient_age 	= 10;			//患者年龄
+	required bytes		check_type 		= 11;			//检查类型
+	required bytes		check_items 	= 12;			//检查项目
+	required bytes		check_parts 	= 13;			//检查部位
+	required bytes		check_clinic 	= 14;	    //检查诊室
+	required bytes		check_device 	= 15;			//检查仪器
+	required uint32		report_id			= 16;			//报告id
+}
+
+//69 停止检查请求
+message stop_check_rq
+{
+	required uint64		session_id 		= 1;			//会话ID号
+	required uint64 	user_id 			= 2;			//诊室ID
+	required bytes 		user_name 		= 3;			//诊室名字
+	required bytes		check_num 		= 4;			//检查号
+}

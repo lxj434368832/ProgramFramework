@@ -5,7 +5,8 @@ class ViewMediator;
 class IMainClient;
 class IControllerManage;
 
-#define StatisticCtrl m_controller->GetStatisticController()
+//#include "../../Controller/ControllerManage/IControllerManage.h"
+#define MainCtrl m_pCtrlMng->GetMainController()        //MainController.h
 
 class ViewColleague
 {

@@ -19,7 +19,10 @@ public:
 	bool Start() override;
 	void Stop() override;
 
+	//登陆成功之后调用这里
+	void ExecuteSystem() override;
+
 private:
-    MainController      *m_mainController = nullptr;
+    MainController      *m_pMainCtrl = nullptr;
 };
 

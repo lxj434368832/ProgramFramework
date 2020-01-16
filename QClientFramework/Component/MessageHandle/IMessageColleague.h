@@ -20,7 +20,7 @@ public:
 	void Stop();
 
 protected:
-	IMessageHandle		*m_pMsgHandle;
-	ITCPCommunication	*m_pTcpCmmnt;
-	MainController		*m_pMainCtrl;
+	IMessageHandle		*m_pMsgHandle = nullptr;
+	ITCPCommunication	*m_pTcpCmmnt = nullptr;
+	MainController		*m_pMainCtrl = nullptr;		//Ö÷¿ØÖÆÆ÷
 };

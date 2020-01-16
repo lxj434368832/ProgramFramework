@@ -26,7 +26,7 @@ bool IMessageColleague::Start()
 			return false;
 	}
 
-	IControllerManage	*pCtrlMng = pMain->GetControllerInterface();
+	IControllerManage	*pCtrlMng = pMain->GetControllerManage();
 	if (nullptr == pCtrlMng) 
 	{
 		loge() << "获取控制管理器失败！";

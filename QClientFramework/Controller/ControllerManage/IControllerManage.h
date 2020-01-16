@@ -9,9 +9,16 @@ public:
     IControllerManage(IMainClient *_main = nullptr):m_pMain(_main){}
 	virtual ~IControllerManage() { m_pMain = nullptr; }
 	IMainClient* GetMainClient() { return m_pMain; }
-    virtual MainController* GetMainController() = 0;
+
+	virtual MainController* GetMainController() = 0;
 
     virtual bool Start() = 0;
+	/*************************************************************************
+	* function:Æô¶¯ÏµÍ³
+	* param :
+	* return:
+	*************************************************************************/
+	virtual void ExecuteSystem() = 0;
     virtual void Stop() = 0;
 
 protected:

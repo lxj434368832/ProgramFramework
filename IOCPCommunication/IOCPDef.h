@@ -137,3 +137,53 @@ struct PER_SOCKET_CONTEXT
 		}
 	}
 };
+
+
+
+#include "..\Framework\include\ResourceManage.h"
+#include "..\Framework\include\MLock.h"
+#include "INetInterface.h"
+#include <thread>
+
+struct IOCPBaseData
+{
+	enum
+	{
+		SOCKET_RESOURCE_COUNT = 5,
+		IO_RESOURCE_COUNT = 5,
+		SOCKET_CONTEXT_LOCK_COUNT = 10
+	};
+
+	HANDLE 							hIOCompletionPort;		//完成端口
+	unsigned						uThreadCount;			//事务线程个数
+	std::thread				 		*aThreadList;			//事务线程池列表
+
+	std::map<unsigned, PER_SOCKET_CONTEXT*>	mapStayConnect; //待连接队列
+	MLock									lckStayConnect;	//待连接队列锁
+	std::map<unsigned, PER_SOCKET_CONTEXT*>	mapConnectList;	//连接列表
+	MLock									lckConnectList;	//连接列表锁
+
+	MLock	aLckSocketContext[SOCKET_CONTEXT_LOCK_COUNT];		//socket上下文锁
+	mqw::ResourceManage<PER_SOCKET_CONTEXT>	rscSocketContext;	//socket资源管理
+	mqw::ResourceManage<PER_IO_CONTEXT>		rscIoContext;		//IO资源管理
+	INetInterface							*pNetInterface;		//网络接口
+	std::thread								*pHeartbeatThread;	//心跳线程
+	HANDLE 									hHeartbeatEvent;	//心跳事件
+
+	IOCPBaseData(INetInterface *pNet) :
+		pNetInterface(pNet),
+		hIOCompletionPort(INVALID_HANDLE_VALUE),
+		rscSocketContext(SOCKET_RESOURCE_COUNT),
+		rscIoContext(IO_RESOURCE_COUNT)
+	{
+		uThreadCount = 0;
+		aThreadList = NULL;
+		pHeartbeatThread = NULL;
+		hHeartbeatEvent = NULL;
+	}
+
+	~IOCPBaseData()
+	{
+		pNetInterface = nullptr;
+	}
+};

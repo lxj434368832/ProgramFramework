@@ -45,21 +45,20 @@ QString NetworkHelp::GetMachineName()
 
 QString NetworkHelp::GetMACAdress()
 {
-    QString	qstrMac;
-    QList<QNetworkInterface>  listNet = QNetworkInterface::allInterfaces();//获取所有网卡信息
+	QString	qstrMac;
+	QList<QNetworkInterface>  listNet = QNetworkInterface::allInterfaces();//获取所有网卡信息
 	for (auto &net : listNet)
-    {
-        QNetworkInterface::InterfaceFlags flags = net.flags();
-        //判断该网卡是否是合法
-        if(net.isValid() &&flags.testFlag(QNetworkInterface::IsUp)
-                && flags.testFlag(QNetworkInterface::IsRunning)
-                &&flags.testFlag(QNetworkInterface::IsLoopBack))
-        {
-            qstrMac = net.hardwareAddress();
-            qstrMac.replace(':', '-');
-            qstrMac.toUpper();
-            break;
-        }
-    }
-    return qstrMac;   //获取该网卡的MAC
+	{
+		QNetworkInterface::InterfaceFlags flags = net.flags();
+		//判断该网卡是否是合法
+		if (net.isValid() && flags.testFlag(QNetworkInterface::IsUp)
+			&& flags.testFlag(QNetworkInterface::IsRunning)
+			&& !flags.testFlag(QNetworkInterface::IsLoopBack))
+		{
+			qstrMac = net.hardwareAddress();
+			//qstrMac.replace(':', '-');
+			break;
+		}
+	}
+	return qstrMac;   //获取该网卡的MAC
 }

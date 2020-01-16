@@ -1,11 +1,11 @@
-#include "../../3rdParty/IOCPCommunication/include/IOCPClient.h"
-#include "ServerConnect.h"
 #include "ITCPCommunication.h"
 #include "..\..\MainClient\IMainClient.h"
 #include "..\MessageHandle\IMessageHandle.h"
 #include "..\..\CommonFile\TypeDefine.h"
 #include "..\..\CommonFile\CommonDefine.h"
 #include "..\..\CommonFile\EnumDefine.h"
+#include "ServerConnect.h"
+#include "../../3rdParty/IOCPCommunication/include/IOCPClient.h"
 
 ServerConnect::ServerConnect(ITCPCommunication *pCmmnt)
 	:INetInterface()
@@ -20,7 +20,7 @@ ServerConnect::~ServerConnect()
 	RELEASE(m_pIOCPClient);
 }
 
-bool ServerConnect::Start()
+bool ServerConnect::Start(unsigned uThreadCount)
 {
 	m_pMsgModule = m_pCommunication->GetMainClient()->GetMessageHandle();
 	if (nullptr == m_pMsgModule)
@@ -29,17 +29,8 @@ bool ServerConnect::Start()
 		return false;
 	}
 
-	ClientConfig &cfg = *m_pCommunication->GetMainClient()->GetClientConfig();
-	if (false == m_pIOCPClient->StartClient(cfg.uIOCPThreadCount)) return false;
+	if (false == m_pIOCPClient->StartClient(uThreadCount)) return false;
 
-	for (int i = EST_CMD_SERVER; i < EST_SERVER_COUNT ; i++)
-	{
-		if (false == m_pIOCPClient->AddConnect(i, cfg.strServerIP, cfg.usServerPort, 1))
-		{
-			loge() << "添加对命令服务器的连接失败！";
-			return false;
-		}
-	}
 	return true;
 }
 
@@ -49,7 +40,16 @@ void ServerConnect::Stop()
 	m_pMsgModule = nullptr;
 }
 
-void ServerConnect::Send(UserKey uUserKey, const char * data, unsigned uLength)
+bool ServerConnect::AddConnect(unsigned uUserKey, std::string ip, ushort port, int iRecnnt)
+{
+	if (false == m_pIOCPClient->AddConnect(uUserKey, ip, port, iRecnnt))
+	{
+		loge() << "添加对命令服务器的连接失败！";
+		return false;
+	}
+}
+
+void ServerConnect::Send(unsigned uUserKey, const char * data, unsigned uLength)
 {
 	if (m_funSendData)
 	{
@@ -57,17 +57,17 @@ void ServerConnect::Send(UserKey uUserKey, const char * data, unsigned uLength)
 	}
 }
 
-void ServerConnect::Disconnect(UserKey uUserKey)
+void ServerConnect::Disconnect(unsigned uUserKey)
 {
 	if (m_fuDisconnect)	m_fuDisconnect(uUserKey);
 }
 
-void ServerConnect::AddUser(UserKey uUserKey)
+void ServerConnect::AddUser(unsigned uUserKey)
 {
 	emit m_pCommunication->signalTcpConnectNotify(uUserKey);
 }
 
-void ServerConnect::HandData(UserKey uUserKey, unsigned uMsgType, const char* data, unsigned length)
+void ServerConnect::HandData(unsigned uUserKey, unsigned uMsgType, const char* data, unsigned length)
 {
 	uMsgType;
 
@@ -77,7 +77,7 @@ void ServerConnect::HandData(UserKey uUserKey, unsigned uMsgType, const char* da
 	}
 }
 
-void ServerConnect::DeleteUser(UserKey uUserKey)
+void ServerConnect::DeleteUser(unsigned uUserKey)
 {
 	emit m_pCommunication->signalTcpDisconnectNotify(uUserKey);
 }

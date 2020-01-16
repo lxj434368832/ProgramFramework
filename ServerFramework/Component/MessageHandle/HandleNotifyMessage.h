@@ -1,7 +1,9 @@
 #pragma once
-#include "Message.pb.h"
+
+#include <string>
 #include "IMessageColleague.h"
 
+namespace pbmsg{class Message;}
 class MessageHandle;
 
 class HandleNotifyMessage : public IMessageColleague
@@ -13,6 +15,6 @@ public:
 	std::string BuildWelcomeNotify(std::string strText);
 
 private:
-	void HandleWelcomeNotify(const unsigned uUserKey, const pbmsg::Message &msg, void* ptr);
+	void HandleWelcomeNotify(const unsigned uUserKey, const pbmsg::Message *msg);
 };
 

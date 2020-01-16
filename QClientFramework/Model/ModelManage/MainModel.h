@@ -19,12 +19,18 @@ public:
 	// 删除用户
 	void DeleteUser(unsigned uUserKey);
 
+	SUserInfo& GetUserInfo();
+
+	void SaveUserInfo(SUserInfo& user);
+
 private:
 	mqw::ResourceManage<SUserInfo>	m_rscUser;
 	//MLock				m_shareLock[CONNECT_SHARE_LOCK_COUNT];
 
 	std::map<UserKey, SUserInfo*>	m_mapUserList;		//用户key和UserInfo的映射
 	MLock							m_lckUserList;		//用户列表锁
+
+	SUserInfo						m_user;
 };
 
 #endif // MAINMODEL_H

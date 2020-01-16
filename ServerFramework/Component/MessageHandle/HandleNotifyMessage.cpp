@@ -1,15 +1,16 @@
 #include "HandleNotifyMessage.h"
 #include "IMessageHandle.h"
 #include "ProtobufMsgFactory.h"
+#include "Message.pb.h"
 #include "../../CommonFile/CommonDefine.h"
 
 
-
 HandleNotifyMessage::HandleNotifyMessage(IMessageHandle *pMsgHandle)
+:IMessageColleague(pMsgHandle)
 {
 	ProtobufMsgFactory *pMsgFctry = pMsgHandle->GetProtobufMsgFactory();
 	pMsgFctry->RegisterMessageFunction(pbmsg::MSG::EWelcomeNotify, std::bind(&HandleNotifyMessage::HandleWelcomeNotify,
-		this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3));
+		this, std::placeholders::_1, std::placeholders::_2));
 }
 
 HandleNotifyMessage::~HandleNotifyMessage()
@@ -27,11 +28,11 @@ std::string HandleNotifyMessage::BuildWelcomeNotify(std::string strText)
 	return msg.SerializeAsString();
 }
 
-void HandleNotifyMessage::HandleWelcomeNotify(const unsigned uUserKey, const pbmsg::Message & msg, void * ptr)
+void HandleNotifyMessage::HandleWelcomeNotify(const unsigned uUserKey, const pbmsg::Message *msg)
 {
-	if (pbmsg::MSG::EWelcomeNotify != msg.msgtype())
+	if (pbmsg::MSG::EWelcomeNotify != msg->msgtype())
 	{
-		loge() << "消息类型:" << msg.msgtype() << "错误！";
+		loge() << "消息类型:" << msg->msgtype() << "错误！";
 	}
-	const pbmsg::WelcomeNotify &msgWel = msg.notify().welcome();
+	const pbmsg::WelcomeNotify &msgWel = msg->notify().welcome();
 }

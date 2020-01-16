@@ -1,14 +1,17 @@
 #include"HandleRequestMessage.h"
 #include "IMessageHandle.h"
 #include "ProtobufMsgFactory.h"
+#include "Message.pb.h"
 #include "../../CommonFile/CommonDefine.h"
+#include "../../CommonFile/TypeDefine.h"
+#include "../../Controller/ControllerManage/MainController.h"
 
 HandleRequestMessage::HandleRequestMessage(IMessageHandle *pMsgHandle)
 	:IMessageColleague(pMsgHandle)
 {
 	ProtobufMsgFactory *pMsgFctry = pMsgHandle->GetProtobufMsgFactory();
 	pMsgFctry->RegisterMessageFunction(pbmsg::MSG::ELoginRequest,std::bind(&HandleRequestMessage::HandleLoginRequest,
-		this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3));
+		this, std::placeholders::_1, std::placeholders::_2));
 }
 
 HandleRequestMessage::~HandleRequestMessage()
@@ -16,29 +19,19 @@ HandleRequestMessage::~HandleRequestMessage()
 
 }
 
-std::string HandleRequestMessage::BuildLoginRequest(std::string strUserName, std::string strPassword)
+void HandleRequestMessage::HandleLoginRequest(const unsigned uUserKey, const pbmsg::Message *msg)
 {
-	pbmsg::Message msg;
-	msg.set_msgtype(pbmsg::ELoginRequest);
-	msg.set_sequence(1);
-
-	pbmsg::Request *msgRq = msg.mutable_request();
-	pbmsg::LoginRequest *loginRq = msgRq->mutable_login();
-	loginRq->set_username(strUserName);
-	loginRq->set_password(strPassword);
-
-	return msg.SerializeAsString();
-}
-
-void HandleRequestMessage::HandleLoginRequest(const unsigned uUserKey, const pbmsg::Message &msg, void* ptr)
-{
-	if (pbmsg::MSG::ELoginRequest != msg.msgtype())
+	if (pbmsg::MSG::ELoginRequest != msg->msgtype())
 	{
-		loge() << "消息类型:" << msg.msgtype() << "错误！";
+		loge() << "消息类型:" << msg->msgtype() << "错误！";
 	}
-	const pbmsg::LoginRequest &login = msg.request().login();
-	logm() << " 用户:" << login.username() << "登录，密码是:" << login.password();
+	const pbmsg::LoginRequest &login = msg->request().login();
+
+	ClientUserInfo	userInfo;
+	userInfo.m_uUserKey = uUserKey;
+	userInfo.m_strName = login.username();
+	userInfo.m_strPassword = login.password();
 
 	//调用控制层处理登录信息
-
+	m_pMainCtrl->UserLogin(userInfo);
 }

@@ -24,11 +24,11 @@ void MMainWindow::on_btnClose_clicked()
     close();
 }
 
-void MMainWindow::on_tabStatistic_tabBarDoubleClicked(int index)
+void MMainWindow::on_tabBusiness_tabBarDoubleClicked(int index)
 {
-    QWidget *widget = ui->tabStatistic->widget(index);
-    widget->setWindowTitle(ui->tabStatistic->tabText(index));
-    ui->tabStatistic->removeTab(index);
+    QWidget *widget = ui->tabBusiness->widget(index);
+    widget->setWindowTitle(ui->tabBusiness->tabText(index));
+    ui->tabBusiness->removeTab(index);
     widget->setWindowFlags(Qt::Window);
     widget->show();
     widget->raise();
@@ -39,7 +39,7 @@ void MMainWindow::on_tabStatistic_tabBarDoubleClicked(int index)
 void MMainWindow::slotBackToTab(QWidget* widget, QString qstrTitle)
 {
     widget->setWindowFlags(Qt::Widget);
-    ui->tabStatistic->addTab(widget, qstrTitle);
+    ui->tabBusiness->addTab(widget, qstrTitle);
 }
 
 void MMainWindow::on_btnMinimum_clicked()

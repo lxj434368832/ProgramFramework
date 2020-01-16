@@ -51,3 +51,13 @@ void MainModel::DeleteUser(unsigned uUserKey)
 		m_rscUser.put(pUser);
 	}
 }
+
+SUserInfo& MainModel::GetUserInfo()
+{
+	return m_user;
+}
+
+void MainModel::SaveUserInfo(SUserInfo& user)
+{
+	m_user = user;
+}

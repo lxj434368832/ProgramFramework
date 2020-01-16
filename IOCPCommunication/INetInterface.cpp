@@ -27,6 +27,11 @@ void INetInterface::AddUser(UserKey uUserKey)
 
 }
 
+void INetInterface::ConnectNotify(UserKey uUserKey, bool bSuccess)
+{
+
+}
+
 void INetInterface::HandData(UserKey uUserKey, unsigned uMsgType, const char* data, unsigned length)
 {
 

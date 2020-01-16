@@ -12,6 +12,7 @@
 
 MainClient::MainClient()
 {
+	m_pCfgMng = new MConfigManage(QApplication::applicationDirPath() + "\\Config\\ClientConfig.ini");
 	m_pTCPCommunication = new TCPCommunication(this);
 	m_pMessage = new MessageHandle(this);
 	m_pModel = new ModelManage(this);
@@ -26,6 +27,7 @@ MainClient::~MainClient()
 	RELEASE(m_pModel);
 	RELEASE(m_pMessage);
 	RELEASE(m_pTCPCommunication);
+	RELEASE(m_pCfgMng);
 }
 
 ClientConfig * MainClient::GetClientConfig()
@@ -33,17 +35,22 @@ ClientConfig * MainClient::GetClientConfig()
 	return &m_clConfig;
 }
 
-IViewManage * MainClient::GetViewInterface()
+MConfigManage* MainClient::GetConfigManage()
+{
+	return m_pCfgMng;
+}
+
+IViewManage * MainClient::GetViewManage()
 {
 	return m_pView;
 }
 
-IControllerManage * MainClient::GetControllerInterface()
+IControllerManage * MainClient::GetControllerManage()
 {
 	return m_pController;
 }
 
-IModelManage * MainClient::GetModelInterface()
+IModelManage * MainClient::GetModelManage()
 {
 	return m_pModel;
 }
@@ -66,6 +73,10 @@ bool MainClient::Start()
 	if (false == m_pModel->Start()) return false;
 	if (false == m_pController->Start()) return false;
 	if (false == m_pView->Start()) return false;
+
+	if (false == m_pView->ExecuteLogin()) return false;
+	m_pController->ExecuteSystem();
+
 	return true;
 }
 
@@ -80,17 +91,16 @@ void MainClient::Stop()
 
 bool MainClient::ReadConfigFile()
 {
-	MConfigManage config(QApplication::applicationDirPath() + "/ClientConfig.ini");
-	m_clConfig.uMessageThreadCount = config.value("Client", "MessageThreadCount", "0").toUInt();
-	m_clConfig.uIOCPThreadCount = config.value("Client", "IOCPThreadCount", "0").toUInt();
-	m_clConfig.uHeartbeatTime = config.value("Client", "HeartbeatTime", "0").toUInt();
-	m_clConfig.strServerIP = config.value("Connect", "ServerIP", "").toString().toLocal8Bit().data();
-	m_clConfig.usServerPort = config.value("Connect", "ServerPort", "0").toUInt();
+	m_clConfig.uMessageThreadCount = m_pCfgMng->value("Client", "MessageThreadCount", "0").toUInt();
+	m_clConfig.uIOCPThreadCount = m_pCfgMng->value("Client", "IOCPThreadCount", "0").toUInt();
+	m_clConfig.uHeartbeatTime = m_pCfgMng->value("Client", "HeartbeatTime", "0").toUInt();
+	m_clConfig.strServerIP = m_pCfgMng->value("Connect", "ServerIP", "").toString().toLocal8Bit().data();
+	m_clConfig.usServerPort = m_pCfgMng->value("Connect", "ServerPort", "0").toUInt();
 
 	if (false == m_clConfig.CheckValid())
 	{
 		loge() << "读取配置文件发生错误，请检查配置文件！";
-		//return false;
+		return false;
 	}
 
 	return true;

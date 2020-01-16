@@ -19,7 +19,7 @@ public:
 	bool Start() override;
 	void Stop() override;
 
-	//处protobuf数据
+	//处理protobuf数据，供通讯模块调用
 	void HandleProtobufMessage(unsigned uUserKey, const char* data, unsigned length) override;
 
 private:

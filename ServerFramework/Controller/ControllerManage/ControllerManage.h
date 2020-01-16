@@ -22,6 +22,6 @@ public:
 	void Stop() override;
 
 private:
-    MainController      *m_mainController = nullptr;
+    MainController      *m_pMainCtrl = nullptr;
 };
 

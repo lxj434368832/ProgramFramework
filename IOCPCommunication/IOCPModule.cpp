@@ -49,7 +49,7 @@ int IOCPModule::Bind(SOCKET s, const LPSOCKADDR name)
 	if (SOCKET_ERROR == ::bind(s, name, sizeof(SOCKADDR)))
 	{
 		iRet = WSAGetLastError();
-		MLOG("bind socket:%d failed, error code:%d ", s, iRet);	//失败可能是端口被占用
+		LOGM("bind socket:%d failed, error code:%d ", s, iRet);	//失败可能是端口被占用
 	}
 	return iRet;
 }
@@ -60,7 +60,7 @@ int IOCPModule::Listen(SOCKET s, int iMaxUserCount)
 	if (SOCKET_ERROR == ::listen(s, iMaxUserCount))
 	{
 		iRet = WSAGetLastError();
-		MLOG("监听socket:%d失败，错误码:%d", s, iRet);
+		LOGM("监听socket:%d失败，错误码:%d", s, iRet);
 	}
 	return iRet;
 }
@@ -76,7 +76,7 @@ int IOCPModule::BindIoCompletionPort(PER_SOCKET_CONTEXT *pSkContext, HANDLE hIOC
 	if (NULL == ::CreateIoCompletionPort((HANDLE)pSkContext->m_socket, hIOCP, (DWORD_PTR)pSkContext, 0))
 	{
 		iRet = ::WSAGetLastError();
-		MLOG("socket:%d绑定到完成端口失败，错误码：%d", pSkContext->m_socket, iRet);
+		LOGM("socket:%d绑定到完成端口失败，错误码：%d", pSkContext->m_socket, iRet);
 	}
 	return iRet;
 }
@@ -97,7 +97,7 @@ int IOCPModule::AcceptEx(SOCKET listenSocket, PER_IO_CONTEXT *pIO)
 		iRet = ::WSAGetLastError();
 		if (WSA_IO_PENDING != iRet)
 		{
-			MLOG("开启AcceptEx失败，错误码:%d", iRet);
+			LOGM("开启AcceptEx失败，错误码:%d", iRet);
 		}
 		else
 			iRet = 0;
@@ -151,7 +151,7 @@ int IOCPModule::ConnectEx(PER_IO_CONTEXT *pIO, const LPSOCKADDR name)
 		bRet = GetLastError();
 		if (WSA_IO_PENDING != bRet)
 		{
-			MLOG("投递ConnectEx失败，错误码：%d", bRet);
+			LOGM("投递ConnectEx失败，错误码：%d", bRet);
 		}
 		else
 			bRet = 0;
@@ -169,7 +169,7 @@ int IOCPModule::DisconnectEx(PER_IO_CONTEXT *pIO)
 		iRet = GetLastError();
 		if (WSA_IO_PENDING != iRet)
 		{
-			MLOG("调用失败，错误码：%d", iRet);
+			LOGM("调用失败，错误码：%d", iRet);
 		}
 		else
 		{
@@ -185,7 +185,7 @@ int IOCPModule::PostQueuedCompletionStatus(HANDLE hCP, DWORD dwTransBytes, ULONG
 	if (false == ::PostQueuedCompletionStatus(hCP, dwTransBytes, dwCompletionKey, lpOL))
 	{
 		iRet = ::GetLastError();
-		MLOG("调用失败，错误码：%d", iRet);
+		LOGM("调用失败，错误码：%d", iRet);
 	}
 	return iRet;
 }
@@ -200,7 +200,7 @@ int IOCPModule::Send(PER_IO_CONTEXT *pIO)
 	{
 		iRet = WSAGetLastError();
 		if (iRet != WSA_IO_PENDING)
-			MLOG("发送数据失败，错误码：%d", iRet);
+			LOGM("发送数据失败，错误码：%d", iRet);
 		else
 			iRet = 0;
 
@@ -217,7 +217,7 @@ int IOCPModule::Receive(PER_IO_CONTEXT *pIO)
 	{
 		iRet = WSAGetLastError();
 		if (WSA_IO_PENDING != iRet)
-			MLOG("接收失败，错误码：%d", iRet);
+			LOGM("接收失败，错误码：%d", iRet);
 		else
 			iRet = 0;
 	}
@@ -231,7 +231,7 @@ bool IOCPModule::SetKeepLiveParam(PER_IO_CONTEXT *pIO)
 		(char*)&bKeepAlive, sizeof(bKeepAlive));
 	if (nRet == SOCKET_ERROR)
 	{
-		MLOG("setsockopt failed: %d/n", WSAGetLastError());
+		LOGM("setsockopt failed: %d/n", WSAGetLastError());
 		return false;
 	}
 
@@ -247,7 +247,7 @@ bool IOCPModule::SetKeepLiveParam(PER_IO_CONTEXT *pIO)
 		nullptr, 0, &ulBytesReturn, &pIO->m_overlapped, NULL);
 	if (nRet == SOCKET_ERROR)
 	{
-		MLOG("WSAIoctl failed: %d/n", WSAGetLastError());
+		LOGM("WSAIoctl failed: %d/n", WSAGetLastError());
 		return false;
 	}
 	return true;
@@ -262,7 +262,7 @@ void IOCPModule::LoadAllWSAFunction()
 	SOCKET socket = Socket();
 	if (INVALID_SOCKET == socket)
 	{
-		MLOG( "创建socket失败,错误码是：%d" ,WSAGetLastError());
+		LOGM( "创建socket失败,错误码是：%d" ,WSAGetLastError());
 		Assert[-0xffff];
 	}
 
@@ -270,28 +270,28 @@ void IOCPModule::LoadAllWSAFunction()
 	if (SOCKET_ERROR == WSAIoctl(socket, SIO_GET_EXTENSION_FUNCTION_POINTER, &guid, sizeof(guid),
 		&m_fnConnectEx, sizeof(m_fnConnectEx), &dwBytes, NULL, NULL))
 	{
-		MLOG("获取函数指针失败，错误码：%d", WSAGetLastError());
+		LOGM("获取函数指针失败，错误码：%d", WSAGetLastError());
 	}
 
 	guid = WSAID_ACCEPTEX;
 	if (SOCKET_ERROR == WSAIoctl(socket, SIO_GET_EXTENSION_FUNCTION_POINTER, &guid, sizeof(guid),
 		&m_fnAcceptEx, sizeof(m_fnAcceptEx), &dwBytes, NULL, NULL))
 	{
-		MLOG("获取函数指针失败，错误码：%d", WSAGetLastError());
+		LOGM("获取函数指针失败，错误码：%d", WSAGetLastError());
 	}
 
 	guid = WSAID_DISCONNECTEX;
 	if (SOCKET_ERROR == WSAIoctl(socket, SIO_GET_EXTENSION_FUNCTION_POINTER, &guid, sizeof(guid),
 		&m_fnDisconnectEx, sizeof(m_fnDisconnectEx), &dwBytes, NULL, NULL))
 	{
-		MLOG("获取函数指针失败，错误码：%d", WSAGetLastError());
+		LOGM("获取函数指针失败，错误码：%d", WSAGetLastError());
 	}
 
 	guid = WSAID_GETACCEPTEXSOCKADDRS;
 	if (SOCKET_ERROR == WSAIoctl(socket, SIO_GET_EXTENSION_FUNCTION_POINTER, &guid, sizeof(guid),
 		&m_fnGetAcceptExSockaddrs, sizeof(m_fnGetAcceptExSockaddrs), &dwBytes, NULL, NULL))
 	{
-		MLOG("获取函数指针失败，错误码：%d", WSAGetLastError());
+		LOGM("获取函数指针失败，错误码：%d", WSAGetLastError());
 	}
 
 	::closesocket(socket);

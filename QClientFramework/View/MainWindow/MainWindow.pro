@@ -15,13 +15,16 @@ CONFIG(debug, debug|release) {
 
 HEADERS += \
    MMainWindow.h \
-    FormStatistic.h
+    FormStatistic.h \
+    LoginDialog.h
 
 SOURCES += \
     MMainWindow.cpp \
-    FormStatistic.cpp
+    FormStatistic.cpp \
+    LoginDialog.cpp
 
 FORMS += \
     MMainWindow.ui \
-    FormStatistic.ui
+    FormStatistic.ui \
+    LoginDialog.ui
 

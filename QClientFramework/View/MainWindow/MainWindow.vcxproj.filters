@@ -50,12 +50,6 @@
     <ClCompile Include="MMainWindow.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Debug\moc_FormStatistic.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="Release\moc_FormStatistic.cpp">
-      <Filter>Generated Files\Release</Filter>
-    </ClCompile>
     <ClCompile Include="Debug\moc_MMainWindow.cpp">
       <Filter>Generated Files\Debug</Filter>
     </ClCompile>

@@ -5,10 +5,10 @@
 * datetime：2017-12-14
 * company:  
 *************************************************************************/
-#include "../../../Framework/include/ResourceManage.h"
+#include "../../3rdParty/Framework/include/ResourceManage.h"
+#include "../../3rdParty/Framework/include/MLock.h"
 #include "../../CommonFile/TypeDefine.h"
 #include "../../CommonFile/EnumDefine.h"
-
 class IModelManage;
 
 class UserInfoManage
@@ -56,6 +56,8 @@ public:
 	*************************************************************************/
 	MLock*	GetClientUserLock(UserKey uUserKey);
 
+	void SetUserInfo(UserKey uUserKey, ClientUserInfo &info);
+
 private:
 	IModelManage*	m_pMgr;
 
@@ -64,7 +66,7 @@ private:
 
 	std::map<UserId, UserKey>		m_mapIdKey;			//用户id和key的映射关系
 	MLock							m_lckIdKey;			//用户id和key的映射关系锁
-	std::map<UserKey, UserInfo*>	m_mapUserList;		//用户key和UserInfo的映射
+	std::map<UserKey, ClientUserInfo*>	m_mapUserList;	//用户key和UserInfo的映射
 	MLock							m_lckUserList;		//用户列表锁
 
 };

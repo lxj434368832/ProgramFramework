@@ -9,7 +9,7 @@ ControllerColleague::ControllerColleague(ControllerManage *pCtrlMng, QObject *pa
 {
     m_pMain = pCtrlMng->GetMainClient();
 	m_pCtrlMng = pCtrlMng;
-    m_pModel = m_pMain->GetModelInterface();
+    m_pModel = m_pMain->GetModelManage();
 	m_pTcpCmmnt = m_pMain->GetTCPCommunication();
 
 	IMessageHandle	*pMsgHandle = m_pMain->GetMessageHandle();

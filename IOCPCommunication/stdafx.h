@@ -5,23 +5,11 @@
 #pragma once
 
 // TODO:  在此处引用程序需要的其他头文件
-#include "../Framework/include/Log/logging.h"	//此头文件包含了windows.h
+#include "../Framework/include/LogFile.h"	
 
-#ifndef LOGS
-#define LOGS
-#define MLOG(format, ...)  do{  \
-	printf("[%s:%d]",__FUNCTION__,__LINE__);  \
-	printf(format, ##__VA_ARGS__); printf("\n"); }while(0)
-
-#define MAssert(express) {if(!express){char a[1];a[-0xffff];} }
-
-//#define Mcout std::cout<<"["<<__FUNCTION__<<":"<<__LINE__<<"]"
-//#define Mcerr std::cerr<<"["<<__FUNCTION__<<":"<<__LINE__<<"]"
-#endif // !LOGS
-
-#ifndef ZX_LOGGING_H_
+#ifndef Log
 static HANDLE consolehwnd = ::GetStdHandle(STD_OUTPUT_HANDLE);
-#define logm() ::SetConsoleTextAttribute(consolehwnd, 7);std::cout<<"[O]:"
+#define logm() ::SetConsoleTextAttribute(consolehwnd, 7);std::cout<<"[M]:"
 #define loge() ::SetConsoleTextAttribute(consolehwnd, 7);std::cout<<"[E]:"
 #define logd() ::SetConsoleTextAttribute(consolehwnd, 7);std::cout<<"[D]:"
 #define logt() ::SetConsoleTextAttribute(consolehwnd, 4);std::cout<<"[T]:"<<::GetTickCount64()

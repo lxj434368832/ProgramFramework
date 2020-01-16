@@ -1,9 +1,14 @@
 #pragma once
-#include "../../IOCPCommunication/INetInterface.h"
+
 #include <string>
 
-struct ClientUserInfo : UserInfo
+typedef unsigned UserKey;
+typedef unsigned UserId;
+
+struct ClientUserInfo
 {
+	unsigned	m_uUserKey;
+	unsigned	m_uUserId;
 	std::string	m_strName;
 	std::string m_strPassword;
 	std::string m_strSex;
@@ -24,5 +29,4 @@ struct ServerConfig
 
 	// 需要判断读取出来的配置是否正确
 	bool CheckValid();
-
 };

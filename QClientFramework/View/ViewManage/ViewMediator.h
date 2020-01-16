@@ -9,17 +9,17 @@ class ViewMediator : public QObject
 {
     Q_OBJECT
 public:
-    explicit ViewMediator(IMainClient *mainClient);
+	explicit ViewMediator(IMainClient *pMain);
     ~ViewMediator();
 
-    inline IMainClient* GetMainClient(){return m_mainClient;}
+    inline IMainClient* GetMainClient(){return m_pMain;}
 
 signals:
 
 public slots:
 
 private:
-    IMainClient *m_mainClient;
+    IMainClient *m_pMain;
 
 };
 

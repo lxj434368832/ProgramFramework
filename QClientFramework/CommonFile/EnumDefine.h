@@ -10,3 +10,13 @@ enum EServerType
 	EST_DATA_SERVER,
 	EST_SERVER_COUNT = 1000
 };
+
+//显示消息类型
+enum EPopupMsgType
+{
+	EPMT_UNKNOWN,
+	EPMT_INFORM,			//信息
+	EPMT_WARNING,           //告警
+	EPMT_CRITICAL,          //严重
+	EPMT_QUESTION			//问询
+};

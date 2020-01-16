@@ -1,7 +1,6 @@
 #include "MainServer.h"
-#include "../../Framework/include/log/logging.h"
-#include "../../Framework/include/cfg_reg_reader.h"
-#include "../../Framework/include/Utils.h"
+#include "../3rdParty/Framework/include/ConfigManage.h"
+#include "../3rdParty/Framework/include/Utils.h"
 #include "../CommonFile//CommonDefine.h"
 #include "../Model/ModelManage/ModelManage.h"
 #include "../Controller/ControllerManage/ControllerManage.h"
@@ -10,17 +9,10 @@
 
 MainServer::MainServer()
 {
-#ifdef ZX_LOGGING_H_
-	zxl::zx_logger *logger = zxl::zx_logger::instance();
-	zxl::configure::add_flag(zxl::config_flag::rolling_by_day);		//dgx：设置按时间打印日志
-	zxl::configure tmp_cfg(zxl::helpers::get_module_dir() + "\\config\\LogConfig.ini");
-	logger->reconfiguration(tmp_cfg);
-#endif
-
 	m_pModel = new ModelManage(this);
-	m_pController = new ControllerManage(this);
 	m_pMessage = new MessageHandle(this);
 	m_pCommunication = new TCPCommunication(this);
+	m_pController = new ControllerManage(this);
 }
 
 MainServer::~MainServer()
@@ -29,7 +21,6 @@ MainServer::~MainServer()
 	RELEASE(m_pMessage);
 	RELEASE(m_pController);
 	RELEASE(m_pModel);
-	zxl::zx_logger::delete_instance();
 }
 
 IModelManage* MainServer::GetModelManage()
@@ -78,17 +69,12 @@ void MainServer::Stop()
 bool MainServer::ReadConfigFile()
 {
 	std::string strConfigPath = Utils::get_module_path(nullptr, "\\config\\ServerConfig.ini");
-	cfg_reg_reader cfg_reader;
-	if (!cfg_reader.read_from_cfg(strConfigPath))
-	{
-		loge() << "读取配置文件:" << strConfigPath.c_str() << "失败！";
-		return false;
-	}
-	m_srvConfig.usListenPort	= std::stoi(cfg_reader.get_value_from_cfg("Server", "ListenPort", "0"));
-	m_srvConfig.uServerThreadCount = std::stoul(cfg_reader.get_value_from_cfg("Server", "ServerThreadCount", "0"));
-	m_srvConfig.uMessageThreadCount = std::stoul(cfg_reader.get_value_from_cfg("Server", "MessageThreadCount", "0"));
-	m_srvConfig.uInitAcceptCount = std::stoul(cfg_reader.get_value_from_cfg("Server", "InitAcceptCount", "0"));
-	m_srvConfig.uHeartbeatTime = std::stoul(cfg_reader.get_value_from_cfg("Server", "HeartbeatTime", "0"));
+	ConfigManage cfgMng(strConfigPath);
+	m_srvConfig.usListenPort	= cfgMng.GetValueInt("Server", "ListenPort", 0);
+	m_srvConfig.uServerThreadCount = cfgMng.GetValueInt("Server", "ServerThreadCount", 0);
+	m_srvConfig.uMessageThreadCount = cfgMng.GetValueInt("Server", "MessageThreadCount", 0);
+	m_srvConfig.uInitAcceptCount = cfgMng.GetValueInt("Server", "InitAcceptCount", 0);
+	m_srvConfig.uHeartbeatTime = cfgMng.GetValueInt("Server", "HeartbeatTime", 0);
 
 	if (false == m_srvConfig.CheckValid())
 	{

@@ -1,4 +1,5 @@
-#pragma once
+#ifndef MLOCK_H
+#define MLOCK_H
 
 #include <Windows.h>
 
@@ -31,3 +32,5 @@ public:
 private:
 	MLock *m_pLock;
 };
+
+#endif //MLOCK_H

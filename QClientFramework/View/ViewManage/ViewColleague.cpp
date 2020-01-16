@@ -6,7 +6,7 @@
 ViewColleague::ViewColleague(ViewMediator* mdt){
     m_pMdt = mdt;
     m_pMain = mdt->GetMainClient();
-    m_pCtrlMng = m_pMain->GetControllerInterface();
+    m_pCtrlMng = m_pMain->GetControllerManage();
 }
 
 ViewColleague::~ViewColleague()

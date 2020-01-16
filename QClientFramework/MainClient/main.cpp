@@ -1,6 +1,7 @@
 #include <vld.h>
 #include "MainClient.h"
 #include "../CommonFile/CommonDefine.h"
+#include "../Component/Utility/ClientService.h"
 #include "ImportLibrary.h"
 #include <string>
 #include <QApplication>
@@ -14,10 +15,14 @@ int main(int argc, char *argv[])
 	//QTextCodec::setCodecForLocale(QTextCodec::codecForName("GBK"));
     LogFile log;
 
+	ClientService::InstallAppCrashHandler();
+	if (ClientService::IsApplicationRun("QClientFramework"))
+		return 0;
+
     IMainClient *pMain = new MainClient;
     if (false == pMain->Start())
-    {
-        loge() << "服务开启失败，请查看日志！";
+	{
+		loge() << "软件启动失败，请查看日志！";
 		system("pause");
     }
 	else

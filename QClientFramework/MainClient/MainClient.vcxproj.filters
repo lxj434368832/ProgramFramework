@@ -59,29 +59,8 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resource\CloseIcon.png">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="Resource\MaximumIcon.png">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="Resource\MinimumIcon.png">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="Resource\NormalIcon.png">
-      <Filter>Resource Files</Filter>
-    </None>
     <CustomBuild Include="Resource.qrc">
       <Filter>Resource Files</Filter>
     </CustomBuild>
-    <None Include="Resource\StatusBarBgIcon.png">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="Resource\TitleBarBgIcon.png">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="Resource\TitleIcon.png">
-      <Filter>Resource Files</Filter>
-    </None>
   </ItemGroup>
 </Project>
