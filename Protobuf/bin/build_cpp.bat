@@ -1,3 +1,0 @@
-@echo start build...
-protoc Message.proto --cpp_out=./
-pause
