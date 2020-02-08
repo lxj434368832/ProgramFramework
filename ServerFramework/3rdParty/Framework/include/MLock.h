@@ -1,5 +1,4 @@
-#ifndef MLOCK_H
-#define MLOCK_H
+#pragma once
 
 #include <Windows.h>
 
@@ -18,19 +17,17 @@ class MAutoLock
 {
 public:
 	MAutoLock() = delete;
-	MAutoLock(MLock *pLock)
+	MAutoLock(MLock &lock)
+		:m_lock(lock)
 	{
-		m_pLock = pLock;
-		pLock->lock();
+		m_lock.lock();
 	}
 
 	~MAutoLock()
 	{
-		m_pLock->unlock();
+		m_lock.unlock();
 	}
 
 private:
-	MLock *m_pLock;
+	MLock &m_lock;
 };
-
-#endif //MLOCK_H

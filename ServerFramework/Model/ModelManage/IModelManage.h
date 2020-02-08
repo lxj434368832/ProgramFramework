@@ -7,18 +7,18 @@
 *************************************************************************/
 class IMainServer;
 class UserInfoManage;
+class MainModel;
 
 class IModelManage
 {
 public:
 	IModelManage(IMainServer* pMain = nullptr):m_pMain(pMain){}
 	virtual ~IModelManage() { m_pMain = nullptr; }
-	virtual IMainServer* GetMainServer() { return m_pMain; }
-
+	virtual MainModel* GetMainModel() = 0;
 	virtual UserInfoManage* GetUserInfoManage() = 0;
 
-	virtual bool Start() = 0;
-	virtual void Stop() = 0;
+	virtual bool Initialize() = 0;
+	virtual void Uninitialize() = 0;
 
 protected:
 	IMainServer*	m_pMain;

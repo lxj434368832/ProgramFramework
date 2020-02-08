@@ -26,14 +26,14 @@ int main(int argc, char *argv[])
 		scanf_s("%s", strCmd, 256);
 		if (_stricmp("-start", strCmd) == 0 || _stricmp("-s", strCmd) == 0)
 		{
-			if (false == pMain->Start())
+			if (false == pMain->StartServer())
 			{
 				loge() << "服务开启失败，请查看日志！";
 			}
 		}
 		else if (_stricmp("-stop", strCmd) == 0 || _stricmp("-p", strCmd) == 0)
 		{
-			pMain->Stop();
+			pMain->StopServer();
 		}
 		else if (_stricmp("-quit", strCmd) == 0 || _stricmp("-q", strCmd) == 0)
 		{

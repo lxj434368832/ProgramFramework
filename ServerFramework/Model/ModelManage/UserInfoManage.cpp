@@ -1,6 +1,7 @@
 #include "UserInfoManage.h"
 #include "IModelManage.h"
 #include "..\..\CommonFile\CommonDefine.h"
+#include <vector>
 
 UserInfoManage::UserInfoManage(IModelManage* pMgr)
 	:m_rscUser(USER_RESOURCE_COUNT)
@@ -13,7 +14,7 @@ UserInfoManage::~UserInfoManage()
 	m_pMgr = nullptr;
 }
 
-bool UserInfoManage::Start()
+bool UserInfoManage::Initialize()
 {
 	if (nullptr == m_pMgr)
 	{
@@ -24,41 +25,41 @@ bool UserInfoManage::Start()
 	return true;
 }
 
-void UserInfoManage::Stop()
+void UserInfoManage::Uninitialize()
 {
-
 	//m_mapIdKey.clear();				//用户id和key的映射关系
 	//m_mapUserList.clear();			//用户key和UserInfo的映射
 }
 
 void UserInfoManage::AddUser(UserKey uUserKey)
 {
+	logm() << "新连接到达userKey:" << uUserKey;
 	m_lckUserList.lock();
 	auto iter = m_mapUserList.find(uUserKey);
 	if (iter != m_mapUserList.end() && iter->second)
 	{
 		m_lckUserList.unlock();
-		loge() << "已经存在当前用户key:" << uUserKey <<"id:"<< iter->second->m_uUserId << "无需添加！";
+		loge() << "已经存在当前用户key:" << uUserKey <<"id:"<< iter->second->uUserId << "无需添加！";
 		return;
 	}
 
-	ClientUserInfo *pUser = m_rscUser.get();
+	SUserInfo *pUser = m_rscUser.get();
 	pUser->Reset();
-	pUser->m_uUserKey = uUserKey;
+	pUser->uUserKey = uUserKey;
 	m_mapUserList[uUserKey] = pUser;
 	m_lckUserList.unlock();
 
-	logm() << "新连接到达userKey:" << uUserKey;
 }
 
 void UserInfoManage::DeleteUser(UserKey uUserKey)
 {
-	ClientUserInfo *pUser = nullptr;
+	logm() << "连接断开userKey:" << uUserKey;
+	SUserInfo *pUser = nullptr;
 	m_lckUserList.lock();
 	auto iter = m_mapUserList.find(uUserKey);
 	if (m_mapUserList.end() != iter)
 	{
-		pUser = static_cast<ClientUserInfo*>(iter->second);
+		pUser = static_cast<SUserInfo*>(iter->second);
 	}
 	m_mapUserList.erase(uUserKey);
 	m_lckUserList.unlock();
@@ -66,31 +67,30 @@ void UserInfoManage::DeleteUser(UserKey uUserKey)
 	if (pUser)
 	{
 		m_lckIdKey.lock();
-		m_mapIdKey.erase(pUser->m_uUserId);
+		m_mapIdKey.erase(pUser->uUserId);
 		m_lckIdKey.unlock();
 
 		m_rscUser.put(pUser);
-		logm() << "连接断开userKey:" << uUserKey;
 	}
 }
 
-ClientUserInfo* UserInfoManage::GetClientUserInfo(UserKey uUserKey)
+SUserInfo* UserInfoManage::GetClientUserInfo(UserKey uUserKey)
 {
-	ClientUserInfo *pUser = nullptr;
+	SUserInfo *pUser = nullptr;
 	m_lckUserList.lock();
 	auto iter = m_mapUserList.find(uUserKey);
-	if (m_mapUserList.end() == iter)
+	if (m_mapUserList.end() != iter)
 	{
-		pUser = static_cast<ClientUserInfo*>(iter->second);
+		pUser = iter->second;
 	}
 	m_lckUserList.unlock();
 
 	return pUser;
 }
 
-ClientUserInfo* UserInfoManage::GetClientUserInfoById(UserId uUserId)
+SUserInfo* UserInfoManage::GetClientUserInfoById(UserId uUserId)
 {
-	ClientUserInfo* pUser = nullptr;
+	SUserInfo* pUser = nullptr;
 	UserKey uKey = 0;
 
 	m_lckIdKey.lock();
@@ -106,7 +106,7 @@ ClientUserInfo* UserInfoManage::GetClientUserInfoById(UserId uUserId)
 	auto iter1 = m_mapUserList.find(uKey);
 	if (m_mapUserList.end() != iter1)
 	{
-		pUser = static_cast<ClientUserInfo*>(iter1->second);
+		pUser = static_cast<SUserInfo*>(iter1->second);
 	}
 	m_lckUserList.unlock();
 
@@ -141,23 +141,47 @@ UserKey UserInfoManage::GetUserKeyById(UserId uUserId)
 	return uKey;
 }
 
-MLock* UserInfoManage::GetClientUserLock(UserKey uUserKey)
+void UserInfoManage::LockUserInfo(UserKey uUserKey)
 {
-	return &m_UserShareLock[uUserKey % USER_SHARE_LOCK_COUNT];
+	m_UserShareLock[uUserKey % USER_SHARE_LOCK_COUNT].lock();
 }
 
-void UserInfoManage::SetUserInfo(UserKey uUserKey, ClientUserInfo &info)
+void UserInfoManage::UnlockUserInfo(UserKey uUserKey)
 {
-	ClientUserInfo *pUser = GetClientUserInfo(uUserKey);
-	if (nullptr == pUser)
+	m_UserShareLock[uUserKey % USER_SHARE_LOCK_COUNT].unlock();
+}
+
+std::vector<unsigned> UserInfoManage::GetOfflineUserList()
+{
+	std::vector<unsigned> userKeyList;
+	std::vector<unsigned> userIdList;
+	
+	m_lckUserList.lock();
+	auto iter = m_mapUserList.begin();
+	while ( iter != m_mapUserList.end())
 	{
-		loge() << "不存在当前用户！";
-		return;
+		SUserInfo *pInfo = iter->second;
+		if (pInfo->uHeartCount >= 2)
+		{
+			userKeyList.push_back(pInfo->uUserKey);
+			userIdList.push_back(pInfo->uUserId);
+			iter = m_mapUserList.erase(iter);
+		}
+		else
+			iter++;
 	}
+	m_lckUserList.unlock();
 
-	MAutoLock lck(GetClientUserLock(uUserKey));
-	pUser->m_strName = info.m_strName;
-	pUser->m_strPassword = info.m_strPassword;
+	m_lckIdKey.lock();
+	for (unsigned uUserId : userIdList)
+	{
+		m_mapIdKey.erase(uUserId);
+	}
+	m_lckIdKey.unlock();
 
+	int iCount = userKeyList.size();
+	if (iCount > 0) 
+		LOGM("当前离线的有：%d人, 在线的有：%d人。", iCount, m_mapUserList.size());
 
+	return userKeyList;
 }

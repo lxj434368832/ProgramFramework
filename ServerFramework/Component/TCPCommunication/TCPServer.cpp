@@ -1,5 +1,5 @@
 #include "TCPServer.h"
-#include "ITCPCommunication.h"
+#include "ICommunication.h"
 #include "../../CommonFile/CommonDefine.h"
 #include "../../MainServer/IMainServer.h"
 #include "../../Model/ModelManage/IModelManage.h"
@@ -23,7 +23,7 @@ TCPServer::~TCPServer()
 	RELEASE(m_pIOCPServer);
 }
 
-bool TCPServer::Start()
+bool TCPServer::Initialize()
 {
 	m_pMsgHandle = m_pMain->GetMessageHandle();
 	if (nullptr == m_pMsgHandle)
@@ -39,28 +39,43 @@ bool TCPServer::Start()
 		return false;
 	}
 
-	ServerConfig &srvCfg = *m_pMain->GetServerConfig();
-	if (false == m_pIOCPServer->StartServer(srvCfg.usListenPort,
-		srvCfg.uInitAcceptCount, srvCfg.uServerThreadCount))
-		return false;
-
 	return true;
 }
 
-void TCPServer::Stop()
+void TCPServer::Uninitialize()
 {
 	m_funSendData = nullptr;		//发送数据回调
 	m_fuDisconnect = nullptr;		//主动断开连接回调
-	m_pIOCPServer->StopServer();
+
 	m_pMsgHandle = nullptr;
 	m_pUserMng = nullptr;
 }
 
-void TCPServer::SendData(UserKey uUserKey, const char * data, unsigned uLength)
+bool TCPServer::StartServer()
+{
+	SServerConfig &srvCfg = *m_pMain->GetServerConfig();
+	return m_pIOCPServer->StartServer(srvCfg.usListenPort,
+		srvCfg.uInitAcceptCount, srvCfg.uServerThreadCount);
+}
+
+void TCPServer::StopServer()
+{
+	m_pIOCPServer->StopServer();
+}
+
+void TCPServer::SendData(UserKey uUserKey, unsigned uMsgType, const char * data, unsigned uLength)
 {
 	if (m_funSendData)
 	{
-		m_funSendData(uUserKey, 0, data, uLength);
+		m_funSendData(uUserKey, uMsgType, data, uLength);
+	}
+}
+
+void TCPServer::SendData(UserKey uUserKey, SPbMsg &msg)
+{
+	if (m_funSendData)
+	{
+		m_funSendData(uUserKey, msg.uMsgType, msg.strMsg.data(), msg.strMsg.length());
 	}
 }
 
@@ -77,8 +92,8 @@ void TCPServer::AddUser(UserKey uUserKey)
 
 void TCPServer::HandData(UserKey uUserKey, unsigned uMsgType, const char * data, unsigned length)
 {
-	uMsgType;
-	if (m_pMsgHandle) m_pMsgHandle->HandleProtobufMessage(uUserKey, data, length);
+	if (m_pMsgHandle) 
+		m_pMsgHandle->HandleProtobufMessage(uUserKey, uMsgType, data, length);
 }
 
 void TCPServer::DeleteUser(UserKey uUserKey)

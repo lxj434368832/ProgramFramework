@@ -17,8 +17,8 @@ public:
 	UserInfoManage(IModelManage* pMgr);
 	virtual ~UserInfoManage();
 
-	bool Start();
-	void Stop();
+	bool Initialize();
+	void Uninitialize();
 
 	//新服务用户成功连接通知
 	void AddUser(UserKey uUserKey);
@@ -30,13 +30,13 @@ public:
 	* function：获取客户端用户信息通过UserKey
 	* return:	成功返回ClientUserInfo，失败返回nullptr
 	*************************************************************************/
-	ClientUserInfo* GetClientUserInfo(UserKey uUserKey);
+	SUserInfo* GetClientUserInfo(UserKey uUserKey);
 
 	/*************************************************************************
 	* function：获取客户端用户信息通过UserId
 	* return:	成功返回ClientUserInfo，失败返回nullptr
 	*************************************************************************/
-	ClientUserInfo* GetClientUserInfoById(UserId uUserId);
+	SUserInfo* GetClientUserInfoById(UserId uUserId);
 
 	/*************************************************************************
 	* function：添加UserId和UserKey的映射关系，用于用户登录的时候调用
@@ -51,22 +51,26 @@ public:
 	UserKey GetUserKeyById(UserId uUserId);
 
 	/*************************************************************************
-	* function：根据UserKey获取当前用户对应的锁
-	* return:	UserKey
+	* function：锁住UserKey对应的信息
 	*************************************************************************/
-	MLock*	GetClientUserLock(UserKey uUserKey);
+	void LockUserInfo(UserKey uUserKey);
 
-	void SetUserInfo(UserKey uUserKey, ClientUserInfo &info);
+	/*************************************************************************
+	* function：解锁UserKey对应的信息
+	*************************************************************************/
+	void UnlockUserInfo(UserKey uUserKey);
+
+	std::vector<unsigned> GetOfflineUserList();
 
 private:
 	IModelManage*	m_pMgr;
 
-	mqw::ResourceManage<ClientUserInfo>	m_rscUser;
+	mqw::ResourceManage<SUserInfo>	m_rscUser;
 	MLock				m_UserShareLock[USER_SHARE_LOCK_COUNT];
 
 	std::map<UserId, UserKey>		m_mapIdKey;			//用户id和key的映射关系
 	MLock							m_lckIdKey;			//用户id和key的映射关系锁
-	std::map<UserKey, ClientUserInfo*>	m_mapUserList;	//用户key和UserInfo的映射
+	std::map<UserKey, SUserInfo*>	m_mapUserList;	//用户key和UserInfo的映射
 	MLock							m_lckUserList;		//用户列表锁
 
 };

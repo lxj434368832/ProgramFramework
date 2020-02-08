@@ -9,6 +9,7 @@
 
 #include "ControllerColleague.h"
 #include "../../CommonFile/TypeDefine.h"
+#include <thread>
 
 class UserInfoManage;
 
@@ -18,11 +19,23 @@ public:
     explicit MainController(IControllerManage*);
     ~MainController() override;
 
-    bool Start();
-    void Stop();
+    bool Initialize();
+    void Uninitialize();
 
-	void UserLogin(ClientUserInfo &userInfo);
+	bool StartServer();
+	void StopServer();
+
+	void HandleLoginRq(const unsigned uUserKey, SDataExchange* pMsg);
+
+	void HandleHeartbeatNt(const unsigned uUserKey, SDataExchange* pMsg);
+
 private:
-	UserInfoManage   *m_pUserMng;
+	void HeartbeatHandle();
+
+private:
+	UserInfoManage   *m_pUserMng = nullptr;
+	TCPServer		 *m_pTcpSrv = nullptr;
+	std::thread		 *m_pHeartbeatThread = nullptr;	//心跳线程
+	HANDLE 			 m_hHeartbeatEvent = nullptr;	//心跳事件
 };
 

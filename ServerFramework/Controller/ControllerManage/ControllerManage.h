@@ -18,8 +18,8 @@ public:
 
     MainController* GetMainController() override;
 
-	bool Start() override;
-	void Stop() override;
+	bool Initialize() override;
+	void Uninitialize() override;
 
 private:
     MainController      *m_pMainCtrl = nullptr;

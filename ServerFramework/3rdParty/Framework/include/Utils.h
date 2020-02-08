@@ -10,7 +10,7 @@
 #include <windows.h>
 #include <string>
 
-namespace Utils
+namespace mqwUtils
 {
 //***********系统包装函数**************//
 #ifdef WIN32

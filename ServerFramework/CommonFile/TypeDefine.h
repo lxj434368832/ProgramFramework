@@ -5,21 +5,13 @@
 typedef unsigned UserKey;
 typedef unsigned UserId;
 
-struct ClientUserInfo
+struct SPbMsg
 {
-	unsigned	m_uUserKey;
-	unsigned	m_uUserId;
-	std::string	m_strName;
-	std::string m_strPassword;
-	std::string m_strSex;
-	unsigned	m_unAge;
-	std::string m_strFamilyAddress;
-	std::string m_strCompanyAddress;
-
-	void Reset();
+	unsigned	uMsgType;
+	std::string	strMsg;
 };
 
-struct ServerConfig
+struct SServerConfig
 {
 	unsigned short  usListenPort = 6666;         // 监听端口
 	unsigned int    uServerThreadCount = 4;			// 完成端口监听工作线程数量
@@ -29,4 +21,66 @@ struct ServerConfig
 
 	// 需要判断读取出来的配置是否正确
 	bool CheckValid();
+};
+
+struct SUserInfo
+{
+	unsigned	uUserKey;
+	unsigned	uUserId;
+	std::string	strLoginName;
+	std::string strPassword;
+	std::string	strName;
+	std::string strSex;
+	unsigned	uAge;
+	unsigned	uHeartCount = 0;
+	void Reset();
+};
+
+//namespace Json {
+//	class Value;
+//}
+namespace google
+{
+	namespace protobuf
+	{
+		class Message;
+	}
+}
+
+//数据交换的公共结构
+struct SDataExchange
+{
+	std::string strStructName;//结构中文名
+
+	bool ParsePbMsg(const char* pData, unsigned uLength, ::google::protobuf::Message *pMsg);
+	virtual bool ParseFromPb(const char* pData, unsigned uLength);
+	virtual bool ParseFromPbMsg(::google::protobuf::Message *pMsg);
+
+	virtual SPbMsg SerializeAsPbMsg();
+	SPbMsg PackPbMsg(unsigned uMsgType, std::string strMsg);
+};
+
+struct SRespondMsg : SDataExchange
+{
+	unsigned	uRsMsgType = 0;
+	unsigned	uResult = 0;
+	std::string strMsg;
+
+	virtual SPbMsg SerializeAsPbMsg();
+};
+
+struct SHeartBeatNt : SDataExchange
+{
+	unsigned	uUserId = 0;
+
+	bool ParseFromPb(const char* pData, unsigned uLength) override;
+};
+
+struct SLoginRq : SDataExchange
+{
+	unsigned		uUserId = 0;
+	std::string		strUserName;
+	std::string		strPassword;
+
+	bool ParseFromPb(const char* pData, unsigned uLength) override;
 };

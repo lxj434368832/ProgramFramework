@@ -18,9 +18,5 @@ public:
 	int GetValueInt(const std::string prefix, const std::string key, const int defaultValue = -1);
 
 private:
-
-	// 注册表相关
-	HKEY								m_keyRoot;
-	// 配置文件相关
-	std::string							m_strConfigFile;
+	std::string							m_strConfigFile;	// 配置文件名
 };

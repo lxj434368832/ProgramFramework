@@ -14,17 +14,22 @@ ModelManage::~ModelManage()
 	RELEASE(m_pUserInfo);
 }
 
+MainModel* ModelManage::GetMainModel()
+{
+	return m_pMainModel;
+}
+
 UserInfoManage* ModelManage::GetUserInfoManage()
 {
 	return m_pUserInfo;
 }
 
-bool ModelManage::Start()
+bool ModelManage::Initialize()
 {
-	return m_pUserInfo->Start();
+	return m_pUserInfo->Initialize();
 }
 
-void ModelManage::Stop()
+void ModelManage::Uninitialize()
 {
-	m_pUserInfo->Stop();
+	m_pUserInfo->Uninitialize();
 }

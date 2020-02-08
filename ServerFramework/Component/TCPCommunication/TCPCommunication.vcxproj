@@ -127,12 +127,12 @@
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="TCPCommunication.cpp" />
+    <ClCompile Include="Communication.cpp" />
     <ClCompile Include="TCPServer.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="TCPCommunication.h" />
-    <ClInclude Include="ITCPCommunication.h" />
+    <ClInclude Include="Communication.h" />
+    <ClInclude Include="ICommunication.h" />
     <ClInclude Include="TCPServer.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

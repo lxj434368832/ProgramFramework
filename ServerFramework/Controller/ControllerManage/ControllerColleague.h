@@ -7,13 +7,11 @@
 * company:
 /************************************************************************/
 
-class HandleRequestMessage;
-class HandleRespondMessage;
-class HandleNotifyMessage;
-class ITCPCommunication;
+class ICommunication;
 class IMainServer;
 class IControllerManage;
 class IModelManage;
+class IMessageHandle;
 
 class ControllerColleague
 {
@@ -23,10 +21,8 @@ public:
 
 protected:
 	IMainServer             *m_pMain = nullptr;
-    IControllerManage		*m_pCtrlMng = nullptr;
 	IModelManage			*m_pModelMng = nullptr;
-	ITCPCommunication		*m_pTcpCmmnt = nullptr;
-	HandleRequestMessage	*m_pHandleRqMsg = nullptr;
-	HandleRespondMessage	*m_pHandleRsMsg = nullptr;
-	HandleNotifyMessage		*m_pHandleNtMsg = nullptr;
+	IMessageHandle			*m_pMsgHandle = nullptr;
+	IControllerManage		*m_pCtrlMng = nullptr;
+	ICommunication			*m_pCmmnt = nullptr;
 };

@@ -7,12 +7,14 @@ class ModelManage : public IModelManage
 public:
 	ModelManage(IMainServer* pMain = nullptr);
 	~ModelManage();
+	MainModel* GetMainModel() override;
 	UserInfoManage* GetUserInfoManage() override;
 
-	bool Start() override;
-	void Stop() override;
+	bool Initialize() override;
+	void Uninitialize() override;
 
 private:
-	UserInfoManage*	m_pUserInfo;
+	MainModel		*m_pMainModel;		//Ö÷Ä£ÐÍ
+	UserInfoManage	*m_pUserInfo;
 };
 

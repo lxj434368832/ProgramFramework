@@ -8,23 +8,23 @@ class MainServer : public IMainServer
 public:
 	MainServer();
 	~MainServer();
-	ServerConfig* GetServerConfig() override;
+	SServerConfig* GetServerConfig() override;
 	IModelManage* GetModelManage() override;
 	IControllerManage* GetControllerManage() override;
 	IMessageHandle* GetMessageHandle() override;
-	ITCPCommunication* GetCommunication() override;
+	ICommunication* GetCommunication() override;
 
-	bool Start();
-	void Stop();
+	bool StartServer();
+	void StopServer();
 
 private:
 	bool ReadConfigFile();
 
 private:
-	ServerConfig		m_srvConfig;		//服务配置项
+	SServerConfig		m_srvConfig;		//服务配置项
 	IModelManage		*m_pModel;			//模型管理
 	IControllerManage	*m_pController;		//控制器
 	IMessageHandle*		m_pMessage;			//消息模块
-	ITCPCommunication*	m_pCommunication;	//通讯模块
+	ICommunication*		m_pCommunication;	//通讯模块
 };
 

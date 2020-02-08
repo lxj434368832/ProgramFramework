@@ -105,11 +105,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="MainModel.cpp" />
     <ClCompile Include="ModelManage.cpp" />
     <ClCompile Include="UserInfoManage.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="IModelManage.h" />
+    <ClInclude Include="MainModel.h" />
     <ClInclude Include="ModelManage.h" />
     <ClInclude Include="UserInfoManage.h" />
   </ItemGroup>

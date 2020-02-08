@@ -1,12 +1,12 @@
 #pragma once
 
 #include <string>
-#include "IMessageColleague.h"
+#include "HandleMessageColleague.h"
 
 namespace pbmsg { class Message; }
 class MessageHandle;
 
-class HandleRequestMessage : public IMessageColleague
+class HandleRequestMessage : public HandleMessageColleague
 {
 public:
 	HandleRequestMessage(IMessageHandle*);
