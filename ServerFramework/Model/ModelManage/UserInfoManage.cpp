@@ -59,9 +59,9 @@ void UserInfoManage::DeleteUser(UserKey uUserKey)
 	auto iter = m_mapUserList.find(uUserKey);
 	if (m_mapUserList.end() != iter)
 	{
-		pUser = static_cast<SUserInfo*>(iter->second);
+		pUser = iter->second;
+		m_mapUserList.erase(uUserKey);
 	}
-	m_mapUserList.erase(uUserKey);
 	m_lckUserList.unlock();
 
 	if (pUser)
@@ -154,30 +154,18 @@ void UserInfoManage::UnlockUserInfo(UserKey uUserKey)
 std::vector<unsigned> UserInfoManage::GetOfflineUserList()
 {
 	std::vector<unsigned> userKeyList;
-	std::vector<unsigned> userIdList;
 	
 	m_lckUserList.lock();
-	auto iter = m_mapUserList.begin();
-	while ( iter != m_mapUserList.end())
+	
+	for (auto iter = m_mapUserList.begin(); iter != m_mapUserList.end(); iter++)
 	{
 		SUserInfo *pInfo = iter->second;
 		if (pInfo->uHeartCount >= 2)
 		{
 			userKeyList.push_back(pInfo->uUserKey);
-			userIdList.push_back(pInfo->uUserId);
-			iter = m_mapUserList.erase(iter);
 		}
-		else
-			iter++;
 	}
 	m_lckUserList.unlock();
-
-	m_lckIdKey.lock();
-	for (unsigned uUserId : userIdList)
-	{
-		m_mapIdKey.erase(uUserId);
-	}
-	m_lckIdKey.unlock();
 
 	int iCount = userKeyList.size();
 	if (iCount > 0) 

@@ -17,8 +17,6 @@ public:
 	IOCPBase(INetInterface *pNet);
 	virtual ~IOCPBase();
 
-	bool InitIOCP(unsigned uThreadCount);
-
 	/*************************************************************************
 	* function：  开启针对服务端的监听
 	* param port: 本地监听的端口号
@@ -37,24 +35,27 @@ public:
 	virtual bool AddConnect(unsigned uUserKey, std::string ip, u_short port, int iRecnnt = -1);
 
 protected:
+	bool InitIOCP(unsigned uThreadCount);
+
 	void UninitIOCP();
 
 	//处理服务端操作
 	void HandServerOperate(int iResult, PER_SOCKET_CONTEXT *pSkContext, PER_IO_CONTEXT* pIO, DWORD dwBytesTransfered);
-
+	//投递连接
 	bool PostConnectEx(PER_SOCKET_CONTEXT *pSkContext);
-
-	void DoConnect(int iResult, PER_SOCKET_CONTEXT *pSkContext, PER_IO_CONTEXT* pIO);
+	//处理连接事务
+	void HandConnect(int iResult, PER_SOCKET_CONTEXT *pSkContext, PER_IO_CONTEXT* pIO);
+	//处理连接失败
+	virtual void HandConnectFailed(PER_SOCKET_CONTEXT *pSkContext);
 
 	//投递接受
 	bool PostAcceptEx(SOCKET listenSocket);
-
-	void DoAccept(int iResult, PER_SOCKET_CONTEXT *pListenSkContext, PER_IO_CONTEXT* pIO);
+	void HandAccept(int iResult, PER_SOCKET_CONTEXT *pListenSkContext, PER_IO_CONTEXT* pIO);
 
 	//
 	void PostReceive(PER_SOCKET_CONTEXT *pSkContext, PER_IO_CONTEXT* pIO);
 
-	void DoReceive(int iResult, PER_SOCKET_CONTEXT *pSkContext, PER_IO_CONTEXT* pIO, DWORD dwBytesTransfered);
+	void HandReceive(int iResult, PER_SOCKET_CONTEXT *pSkContext, PER_IO_CONTEXT* pIO, DWORD dwBytesTransfered);
 
 	//解包接收到的数据
 	void UnpackReceivedData(PER_SOCKET_CONTEXT *pSkContext, PER_IO_CONTEXT* pIO);
@@ -72,7 +73,7 @@ protected:
 	//发送
 	bool PostSend(PER_SOCKET_CONTEXT *pSkContext, PER_IO_CONTEXT* pIO);
 
-	void DoSend(int iResult, PER_SOCKET_CONTEXT *pSkContext, PER_IO_CONTEXT* pIO, DWORD dwBytesTransfered);
+	void HandSend(int iResult, PER_SOCKET_CONTEXT *pSkContext, PER_IO_CONTEXT* pIO, DWORD dwBytesTransfered);
 
 	/*************************************************************************
 	* function： 断开连接，外部回调
@@ -82,7 +83,7 @@ protected:
 	//
 	void PostDisconnectEx(PER_SOCKET_CONTEXT *pSkContext, PER_IO_CONTEXT* pIO);
 
-	void DoDisconnect(int iResult, PER_SOCKET_CONTEXT *pSkContext, PER_IO_CONTEXT* pIO);
+	void HandDisconnect(int iResult, PER_SOCKET_CONTEXT *pSkContext, PER_IO_CONTEXT* pIO);
 
 private:
 	void WorkThread();
