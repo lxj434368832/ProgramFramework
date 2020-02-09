@@ -10,6 +10,22 @@
       <Platform>Win32</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="include\INetInterface.h" />
+    <ClInclude Include="include\IOCPBase.h" />
+    <ClInclude Include="include\IOCPClient.h" />
+    <ClInclude Include="include\IOCPDef.h" />
+    <ClInclude Include="include\IOCPModule.h" />
+    <ClInclude Include="include\IOCPServer.h" />
+    <ClInclude Include="include\stdafx.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="source\INetInterface.cpp" />
+    <ClCompile Include="source\IOCPBase.cpp" />
+    <ClCompile Include="source\IOCPClient.cpp" />
+    <ClCompile Include="source\IOCPModule.cpp" />
+    <ClCompile Include="source\IOCPServer.cpp" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{3DC7FD45-F936-4CBE-9A30-3F5DBA7497B2}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
@@ -82,27 +98,6 @@
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <ClInclude Include="INetInterface.h" />
-    <ClInclude Include="IOCPBase.h" />
-    <ClInclude Include="IOCPClient.h" />
-    <ClInclude Include="IOCPModule.h" />
-    <ClInclude Include="IOCPDef.h" />
-    <ClInclude Include="IOCPServer.h" />
-    <ClInclude Include="stdafx.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="INetInterface.cpp" />
-    <ClCompile Include="IOCPBase.cpp" />
-    <ClCompile Include="IOCPClient.cpp" />
-    <ClCompile Include="IOCPModule.cpp" />
-    <ClCompile Include="IOCPServer.cpp" />
-    <ClCompile Include="main.cpp" />
-    <ClCompile Include="stdafx.cpp">
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
-    </ClCompile>
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
