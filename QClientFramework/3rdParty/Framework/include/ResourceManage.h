@@ -1,4 +1,5 @@
-#pragma once
+#ifndef RESOURCEMANAGE_H
+#define RESOURCEMANAGE_H
 /*************************************************************************
 * function：资源管理器定义文件，
 * author :	明巧文
@@ -213,3 +214,5 @@ namespace mqw
         unused_list_.clear();
     }
 }
+
+#endif //RESOURCEMANAGE_H

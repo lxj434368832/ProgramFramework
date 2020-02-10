@@ -4,7 +4,7 @@ struct ClientConfig;
 class IControllerManage;
 class IViewManage;
 class IModelManage;
-class ITCPCommunication;
+class ICommunication;
 class IMessageHandle;
 class MConfigManage;
 
@@ -18,11 +18,11 @@ public:
 	virtual IControllerManage* GetControllerManage() = 0;
 	virtual IViewManage* GetViewManage() = 0;
 
-	virtual ITCPCommunication* GetTCPCommunication() = 0;
+	virtual ICommunication* GetCommunication() = 0;
 	virtual IMessageHandle*	GetMessageHandle() = 0;
 
-	virtual bool Start() = 0;
-	virtual void Stop() = 0;
+	virtual bool StartClient() = 0;
+	virtual void StopClient() = 0;
 
 private:
 

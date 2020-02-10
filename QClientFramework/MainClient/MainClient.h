@@ -14,11 +14,11 @@ public:
 	IControllerManage* GetControllerManage() override;
 	IModelManage* GetModelManage() override;
 
-    ITCPCommunication* GetTCPCommunication() override;
+    ICommunication* GetCommunication() override;
 	IMessageHandle*	GetMessageHandle() override;
 
-	bool Start() override;
-	void Stop() override;
+	bool StartClient() override;
+	void StopClient() override;
 
 private:
 	bool ReadConfigFile();
@@ -30,7 +30,7 @@ private:
     IControllerManage*	m_pController;
 	IModelManage*		m_pModel;
 
-    ITCPCommunication*		m_pTCPCommunication;
+    ICommunication*		m_pTCPCommunication;
     IMessageHandle*         m_pMessage;
 };
 

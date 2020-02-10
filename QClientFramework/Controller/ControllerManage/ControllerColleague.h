@@ -9,10 +9,8 @@
 
 #include <QObject>
 
-class HandleRequestMessage;
-class HandleRespondMessage;
-class HandleNotifyMessage;
-class ITCPCommunication;
+class IMessageHandle;
+class ICommunication;
 class IModelManage;
 class ControllerManage;
 class IMainClient;
@@ -27,8 +25,6 @@ protected:
     IMainClient             *m_pMain = nullptr;
 	ControllerManage		*m_pCtrlMng = nullptr;
 	IModelManage			*m_pModel = nullptr; 
-	ITCPCommunication		*m_pTcpCmmnt = nullptr;
-	HandleRequestMessage	*m_pHandleRqMsg = nullptr;
-	HandleRespondMessage	*m_pHandleRsMsg = nullptr;
-	HandleNotifyMessage		*m_pHandleNtMsg = nullptr;
+	ICommunication			*m_pCmmnt = nullptr;
+	IMessageHandle			*m_pMsgHandle = nullptr;
 };

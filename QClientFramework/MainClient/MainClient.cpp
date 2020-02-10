@@ -2,7 +2,7 @@
 #include "..\View\ViewManage\ViewManage.h"
 #include "..\Controller\ControllerManage\ControllerManage.h"
 #include "..\Model\ModelManage\ModelManage.h"
-#include "..\Component\TCPCommunication\TCPCommunication.h"
+#include "..\Component\TCPCommunication\Communication.h"
 #include "..\Component\MessageHandle\MessageHandle.h"
 #include "../CommonFile/CommonDefine.h"
 #include "../3rdParty/MConfigManage/include/MConfigManage.h"
@@ -12,8 +12,9 @@
 
 MainClient::MainClient()
 {
-	m_pCfgMng = new MConfigManage(QApplication::applicationDirPath() + "\\Config\\ClientConfig.ini");
-	m_pTCPCommunication = new TCPCommunication(this);
+	m_pCfgMng = new MConfigManage(QApplication::applicationDirPath() + 
+		"\\Config\\ClientConfig.ini");
+	m_pTCPCommunication = new Communication(this);
 	m_pMessage = new MessageHandle(this);
 	m_pModel = new ModelManage(this);
 	m_pController = new ControllerManage(this);
@@ -55,7 +56,7 @@ IModelManage * MainClient::GetModelManage()
 	return m_pModel;
 }
 
-ITCPCommunication * MainClient::GetTCPCommunication()
+ICommunication * MainClient::GetCommunication()
 {
 	return m_pTCPCommunication;
 }
@@ -65,28 +66,28 @@ IMessageHandle * MainClient::GetMessageHandle()
 	return m_pMessage;
 }
 
-bool MainClient::Start()
+bool MainClient::StartClient()
 {
 	if (false == ReadConfigFile()) return false;
-	if (false == m_pTCPCommunication->Start()) return false;
-	if (false == m_pMessage->Start()) return false;
-	if (false == m_pModel->Start()) return false;
-	if (false == m_pController->Start()) return false;
-	if (false == m_pView->Start()) return false;
+	if (false == m_pTCPCommunication->Initialize()) return false;
+	if (false == m_pMessage->Initialize()) return false;
+	if (false == m_pModel->Initialize()) return false;
+	if (false == m_pController->Initialize()) return false;
+	if (false == m_pView->Initialize()) return false;
 
-	if (false == m_pView->ExecuteLogin()) return false;
+	if (false == m_pView->LoginWebServer()) return false;
 	m_pController->ExecuteSystem();
 
 	return true;
 }
 
-void MainClient::Stop()
+void MainClient::StopClient()
 {
-	m_pView->Stop();
-	m_pController->Stop();
-	m_pModel->Stop();
-	m_pMessage->Stop();
-	m_pTCPCommunication->Stop();
+	m_pView->Uninitialize();
+	m_pController->Uninitialize();
+	m_pModel->Uninitialize();
+	m_pMessage->Uninitialize();
+	m_pTCPCommunication->Uninitialize();
 }
 
 bool MainClient::ReadConfigFile()

@@ -3,27 +3,28 @@
 #include <set>
 #include "IMessageHandle.h"
 
-class ProtobufMsgFactory;
+class PbMessageHandle;
 
 class MessageHandle : public IMessageHandle
 {
 public:
 	MessageHandle(IMainClient *pMain = nullptr);
 	~MessageHandle();
-	ProtobufMsgFactory* GetProtobufMsgFactory() override;
+	PbMessageHandle* GetProtobufMsgFactory() override;
 	HandleRequestMessage* GetHandleRequestMessage() override;
 	HandleRespondMessage* GetHandleRespondMessage() override;
 	HandleNotifyMessage* GetHandleNotifyMessage() override;
 
 
-	bool Start() override;
-	void Stop() override;
+	bool Initialize() override;
+	void Uninitialize() override;
 
+	void RegisterMessageHandle() override;
 	//处理protobuf数据，供通讯模块调用
-	void HandleProtobufMessage(unsigned uUserKey, const char* data, unsigned length) override;
+	void HandleProtobufMessage(unsigned uUserKey, unsigned uMsgType, const char* data, unsigned length) override;
 
 private:
-	ProtobufMsgFactory				*m_pProtoMsgFtry;
+	PbMessageHandle				*m_pPbMessageHandle;
 	HandleRequestMessage			*m_pHandleRqMsg;
 	HandleRespondMessage			*m_pHandleRsMsg;
 	HandleNotifyMessage				*m_pHandleNtMsg;

@@ -8,19 +8,19 @@ MainModel::MainModel():
 
 }
 
-bool MainModel::Start()
+bool MainModel::Initialize()
 {
     return true;
 }
 
-void MainModel::Stop()
+void MainModel::Uninitialize()
 {
 
 }
 
-void MainModel::AddUser(unsigned uUserKey)
+void MainModel::AddServerUser(unsigned uUserKey)
 {
-	MAutoLock lck(&m_lckUserList);
+	MAutoLock lck(m_lckUserList);
 	auto iter = m_mapUserList.find(uUserKey);
 	if (iter != m_mapUserList.end() && iter->second)
 	{
@@ -34,7 +34,7 @@ void MainModel::AddUser(unsigned uUserKey)
 	m_mapUserList[uUserKey] = pUser;
 }
 
-void MainModel::DeleteUser(unsigned uUserKey)
+void MainModel::DeleteServerUser(unsigned uUserKey)
 {
 	SUserInfo *pUser = nullptr;
 	m_lckUserList.lock();
@@ -50,6 +50,35 @@ void MainModel::DeleteUser(unsigned uUserKey)
 	{
 		m_rscUser.put(pUser);
 	}
+}
+
+void MainModel::LockServerUserInfo(UserKey uUserKey)
+{
+	m_UserShareLock[uUserKey % USER_SHARE_LOCK_COUNT].lock();
+}
+
+void MainModel::UnlockServerUserInfo(UserKey uUserKey)
+{
+	m_UserShareLock[uUserKey % USER_SHARE_LOCK_COUNT].unlock();
+}
+
+std::vector<unsigned> MainModel::GetLoginUserList()
+{
+	std::vector<unsigned> userList;
+
+	m_lckUserList.lock();
+	for (auto iter = m_mapUserList.begin(); iter != m_mapUserList.end(); iter++)
+	{
+		SUserInfo *pUser = iter->second;
+		if (pUser->m_bLogin)
+		{
+			userList.push_back(pUser->m_uUserKey);
+		}
+	}
+	m_lckUserList.unlock();
+
+	logm() << "当前登录用户数为：" << userList.size() << "用户总数为:"<< m_mapUserList.size();
+	return userList;
 }
 
 SUserInfo& MainModel::GetUserInfo()

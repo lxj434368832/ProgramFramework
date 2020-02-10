@@ -19,10 +19,66 @@ struct ClientConfig
 
 struct SUserInfo
 {
-	unsigned		m_uUserKey;
-	unsigned		m_uUserId;
+	unsigned		m_uUserKey = 0;
+	unsigned		m_uUserId = 0;
 	std::string		m_strUserName;
 	std::string		m_strPassword;
 	std::string		m_strUserDesc;
 	std::string		m_strMac;
+	bool			m_bLogin = false;
+};
+
+//namespace Json {
+//	class Value;
+//}
+namespace google
+{
+	namespace protobuf
+	{
+		class Message;
+	}
+}
+
+struct SPbMsg
+{
+	unsigned	uMsgType;
+	std::string	strMsg;
+};
+
+//数据交换的公共结构
+struct SDataExchange
+{
+	std::string strStructName;//结构中文名
+
+	bool ParsePbMsg(const char* pData, unsigned uLength, ::google::protobuf::Message *pMsg);
+	virtual bool ParseFromPb(const char* pData, unsigned uLength);
+	virtual bool ParseFromPbMsg(::google::protobuf::Message *pMsg);
+
+	virtual SPbMsg SerializeAsPbMsg();
+	SPbMsg PackPbMsg(unsigned uMsgType, std::string strMsg);
+};
+
+struct SRespondMsg : SDataExchange
+{
+	unsigned	uRsMsgType = 0;
+	unsigned	uResult = 0;
+	std::string strMsg;
+
+	bool ParseFromPb(const char* pData, unsigned uLength) override;
+};
+
+struct SHeartBeatNt : SDataExchange
+{
+	unsigned	uUserId = 0;
+
+	virtual SPbMsg SerializeAsPbMsg();
+};
+
+struct SLoginRq : SDataExchange
+{
+	unsigned		uUserId = 0;
+	std::string		strUserName;
+	std::string		strPassword;
+
+	virtual SPbMsg SerializeAsPbMsg();
 };

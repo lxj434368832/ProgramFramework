@@ -16,8 +16,8 @@ public:
     ~ControllerManage() override;
     MainController* GetMainController() override;
 
-	bool Start() override;
-	void Stop() override;
+	bool Initialize() override;
+	void Uninitialize() override;
 
 	//登陆成功之后调用这里
 	void ExecuteSystem() override;

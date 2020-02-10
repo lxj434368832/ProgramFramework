@@ -20,15 +20,15 @@ MainModel *ModelManage::GetMainModel()
     return  m_mainModel;
 }
 
-bool ModelManage::Start()
+bool ModelManage::Initialize()
 {
-    if(false == m_mainModel->Start()) return false;
+    if(false == m_mainModel->Initialize()) return false;
 
 	return true;
 }
 
-void ModelManage::Stop()
+void ModelManage::Uninitialize()
 {
-    m_mainModel->Stop();
+    m_mainModel->Uninitialize();
 }
 

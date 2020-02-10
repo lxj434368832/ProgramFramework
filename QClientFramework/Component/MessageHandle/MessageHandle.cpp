@@ -1,17 +1,20 @@
 #include "MessageHandle.h"
 #include "../../MainClient/IMainClient.h"
-#include "ProtobufMsgFactory.h"
+#include "../../Controller/ControllerManage/IControllerManage.h"
+#include "../../Controller/ControllerManage/MainController.h"
+#include "PbMessageHandle.h"
 #include "HandleRequestMessage.h"
 #include "HandleRespondMessage.h"
 #include "HandleNotifyMessage.h"
 #include "../../CommonFile/CommonDefine.h"
 #include "../../CommonFile/TypeDefine.h"
+#include <../../3rdParty/Protobuf/include/Message.pb.h>
 
 
 MessageHandle::MessageHandle(IMainClient *pMain)
 	:IMessageHandle(pMain)
 {
-	m_pProtoMsgFtry = new ProtobufMsgFactory;
+	m_pPbMessageHandle = new PbMessageHandle;
 
 	m_pHandleRqMsg = new HandleRequestMessage(this);
 	m_pHandleRsMsg = new HandleRespondMessage(this);
@@ -23,7 +26,7 @@ MessageHandle::~MessageHandle()
 	RELEASE(m_pHandleNtMsg);
 	RELEASE(m_pHandleRsMsg);
 	RELEASE(m_pHandleRqMsg);
-	RELEASE(m_pProtoMsgFtry);
+	RELEASE(m_pPbMessageHandle);
 }
 
 HandleRequestMessage * MessageHandle::GetHandleRequestMessage()
@@ -41,30 +44,43 @@ HandleNotifyMessage * MessageHandle::GetHandleNotifyMessage()
 	return m_pHandleNtMsg;
 }
 
-ProtobufMsgFactory* MessageHandle::GetProtobufMsgFactory()
+PbMessageHandle* MessageHandle::GetProtobufMsgFactory()
 {
-	return m_pProtoMsgFtry;
+	return m_pPbMessageHandle;
 }
 
-bool MessageHandle::Start()
+bool MessageHandle::Initialize()
 {
 	logm() << "************开始消息处理的初始化************";
-	if (false == m_pProtoMsgFtry->Start(m_pMain->GetClientConfig()->uMessageThreadCount)) return false;
-	if (false == m_pHandleRqMsg->Start()) return false;
-	if (false == m_pHandleNtMsg->Start())	return false;
-	if (false == m_pHandleRsMsg->Start())	return false;
+	if (false == m_pPbMessageHandle->Initialize(
+		m_pMain->GetClientConfig()->uMessageThreadCount)) return false;
+	if (false == m_pHandleRqMsg->Initialize()) return false;
+	if (false == m_pHandleNtMsg->Initialize())	return false;
+	if (false == m_pHandleRsMsg->Initialize())	return false;
 	return true;
 }
 
-void MessageHandle::Stop()
+void MessageHandle::Uninitialize()
 {
-	m_pProtoMsgFtry->Stop();
-	m_pHandleRqMsg->Stop();
-	m_pHandleRsMsg->Stop();
-	m_pHandleNtMsg->Stop();
+	m_pPbMessageHandle->Uninitialize();
+	m_pHandleRqMsg->Uninitialize();
+	m_pHandleRsMsg->Uninitialize();
+	m_pHandleNtMsg->Uninitialize();
 }
 
-void MessageHandle::HandleProtobufMessage(unsigned uUserKey, const char * data, unsigned length)
+void MessageHandle::RegisterMessageHandle()
 {
-	m_pProtoMsgFtry->AddMessageData(uUserKey, data, length);
+	/*************************注册MainController的消息处理*************************/
+	MainController *pMainCtrl = m_pMain->GetControllerManage()->GetMainController();
+	m_pPbMessageHandle->RegisterMessageFunction(pbmsg::ELoginRs,
+		std::bind(&MainController::HandleLoginRs, pMainCtrl, std::placeholders::_1, std::placeholders::_2));
+
+
+	/*************************注册Controller的消息处理*************************/
+
+}
+
+void MessageHandle::HandleProtobufMessage(unsigned uUserKey, unsigned uMsgType, const char * data, unsigned length)
+{
+	m_pPbMessageHandle->AddMessageData(uUserKey, uMsgType, data, length);
 }

@@ -19,8 +19,10 @@ public:
 
 	//通知服务端新用户连接
 	virtual void AddUser(UserKey uUserKey);
+
 	//连接结果通知
-	virtual void ConnectResult(UserKey uUserKey, bool bSuccess);
+	virtual void ConnectNotify(UserKey uUserKey, bool bSuccess);
+
 	//处理服务数据
 	virtual void HandData(UserKey uUserKey, unsigned uMsgType, const char* data, unsigned length);
 

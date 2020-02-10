@@ -8,9 +8,13 @@
 /************************************************************************/
 
 #include <QThread>
+#include <thread>
 #include "ControllerColleague.h"
 
 class MainModel;
+struct SDataExchange;
+class ServerConnect;
+namespace std{ class thread; }
 
 class MainController : public ControllerColleague
 {
@@ -19,10 +23,11 @@ public:
     explicit MainController(ControllerManage*);
     ~MainController() override;
 
-    bool Start();
-	void Stop();
+    bool Initialize();
+	void Uninitialize();
 
-	void UserLoginResult(unsigned uUserKey, bool bRet, std::string strMsg);
+	//处理登录响应
+	void HandleLoginRs(const unsigned uUserKey, SDataExchange* pMsg);
 
 signals:
 	/*************************以下为对外的通知消息*************************/
@@ -65,7 +70,14 @@ private slots:
 	void slotTcpDisconnectNotify(unsigned uServerType);
 
 private:
-    MainModel		*m_pMainModel = nullptr;
+	void HeartbeatHandle();
+
+private:
+	MainModel		*m_pMainModel = nullptr;
+	ServerConnect	*m_pSrvCnnt = nullptr;		//服务端连接
     QThread			m_thread;                   //异步线程
+
+	std::thread		 *m_pHeartbeatThread = nullptr;	//心跳线程
+	HANDLE 			 m_hHeartbeatEvent = nullptr;	//心跳事件
 };
 

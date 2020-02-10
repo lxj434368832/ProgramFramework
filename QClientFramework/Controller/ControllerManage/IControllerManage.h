@@ -12,14 +12,14 @@ public:
 
 	virtual MainController* GetMainController() = 0;
 
-    virtual bool Start() = 0;
+    virtual bool Initialize() = 0;
 	/*************************************************************************
 	* function:Æô¶¯ÏµÍ³
 	* param :
 	* return:
 	*************************************************************************/
 	virtual void ExecuteSystem() = 0;
-    virtual void Stop() = 0;
+    virtual void Uninitialize() = 0;
 
 protected:
     IMainClient             *m_pMain = nullptr;

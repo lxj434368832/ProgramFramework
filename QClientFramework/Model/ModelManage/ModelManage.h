@@ -16,8 +16,8 @@ public:
     ~ModelManage() override;
     MainModel* GetMainModel() override;
 
-	bool Start() override;
-	void Stop() override;
+	bool Initialize() override;
+	void Uninitialize() override;
 
 private:
     MainModel           *m_mainModel;

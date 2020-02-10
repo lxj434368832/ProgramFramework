@@ -21,7 +21,7 @@ MainController *ControllerManage::GetMainController()
     return m_pMainCtrl;
 }
 
-bool ControllerManage::Start()
+bool ControllerManage::Initialize()
 {
 	ClientConfig *cfg = m_pMain->GetClientConfig();
 	if (nullptr == cfg)
@@ -30,14 +30,14 @@ bool ControllerManage::Start()
 		return false;
 	}
 
-    if(false == m_pMainCtrl->Start()) return false;
+    if(false == m_pMainCtrl->Initialize()) return false;
 
     return true;
 }
 
-void ControllerManage::Stop()
+void ControllerManage::Uninitialize()
 {
-    m_pMainCtrl->Stop();
+    m_pMainCtrl->Uninitialize();
 }
 
 void ControllerManage::ExecuteSystem()

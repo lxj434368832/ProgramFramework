@@ -41,16 +41,16 @@ ViewManage::~ViewManage()
 	RELEASE(m_pViewMdt);
 }
 
-bool ViewManage::Start()
+bool ViewManage::Initialize()
 {
 	return true;
 }
 
-void ViewManage::Stop()
+void ViewManage::Uninitialize()
 {
 }
 
-bool ViewManage::ExecuteLogin()
+bool ViewManage::LoginWebServer()
 {
 	LoginDialog lgDlg(m_pViewMdt);
 	if (QDialog::Accepted == lgDlg.exec())

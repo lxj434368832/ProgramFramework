@@ -4,20 +4,36 @@
 #include "../../3rdParty/Framework/include/ResourceManage.h"
 #include "..\..\CommonFile\TypeDefine.h"
 #include "..\..\3rdParty\Framework\include\MLock.h"
+#include <vector>
+
 
 class MainModel
 {
 public:
     MainModel();
 
-    bool Start();
-	void Stop();
+    bool Initialize();
+	void Uninitialize();
 
 	//新服务用户成功连接通知
-	void AddUser(unsigned uUserKey);
+	void AddServerUser(unsigned uUserKey);
 
-	// 删除用户
-	void DeleteUser(unsigned uUserKey);
+	// 删除服务用户
+	void DeleteServerUser(unsigned uUserKey);
+
+	SUserInfo* GetServerUser(unsigned uUserKey);
+
+	/*************************************************************************
+	* function：锁住UserKey对应的信息
+	*************************************************************************/
+	void LockServerUserInfo(UserKey uUserKey);
+
+	/*************************************************************************
+	* function：解锁UserKey对应的信息
+	*************************************************************************/
+	void UnlockServerUserInfo(UserKey uUserKey);
+
+	std::vector<unsigned> GetLoginUserList();
 
 	SUserInfo& GetUserInfo();
 
@@ -25,7 +41,7 @@ public:
 
 private:
 	mqw::ResourceManage<SUserInfo>	m_rscUser;
-	//MLock				m_shareLock[CONNECT_SHARE_LOCK_COUNT];
+	MLock				m_UserShareLock[USER_SHARE_LOCK_COUNT];
 
 	std::map<UserKey, SUserInfo*>	m_mapUserList;		//用户key和UserInfo的映射
 	MLock							m_lckUserList;		//用户列表锁

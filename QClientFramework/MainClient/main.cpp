@@ -20,7 +20,7 @@ int main(int argc, char *argv[])
 		return 0;
 
     IMainClient *pMain = new MainClient;
-    if (false == pMain->Start())
+    if (false == pMain->StartClient())
 	{
 		loge() << "软件启动失败，请查看日志！";
 		system("pause");
@@ -28,7 +28,7 @@ int main(int argc, char *argv[])
 	else
 		a.exec();
 
-    pMain->Stop();
+    pMain->StopClient();
     RELEASE(pMain);
 	return 0;
 }

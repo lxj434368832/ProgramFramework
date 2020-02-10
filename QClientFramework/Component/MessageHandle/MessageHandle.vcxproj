@@ -71,12 +71,12 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <IncludePath>..\..\..\protobuf\include;$(IncludePath)</IncludePath>
+    <IncludePath>..\..\3rdParty\protobuf\include;$(IncludePath)</IncludePath>
     <OutDir>$(SolutionDir)$(Platform)\$(Configuration)\</OutDir>
     <IntDir>$(Configuration)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>..\..\..\protobuf\include;$(IncludePath)</IncludePath>
+    <IncludePath>..\..\3rdParty\protobuf\include;$(IncludePath)</IncludePath>
     <TargetName>$(ProjectName)d</TargetName>
     <OutDir>$(SolutionDir)$(Platform)\$(Configuration)\</OutDir>
     <IntDir>$(Configuration)\</IntDir>
@@ -143,23 +143,25 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\3rdParty\Protobuf\include\Message.pb.h" />
     <ClInclude Include="HandleNotifyMessage.h" />
     <ClInclude Include="HandleRequestMessage.h" />
     <ClInclude Include="HandleRespondMessage.h" />
-    <ClInclude Include="IMessageColleague.h" />
+    <ClInclude Include="HandleMessageColleague.h" />
     <ClInclude Include="IMessageHandle.h" />
-    <ClInclude Include="Message.pb.h" />
     <ClInclude Include="MessageHandle.h" />
-    <ClInclude Include="ProtobufMsgFactory.h" />
+    <ClInclude Include="PbMessageFactory.h" />
+    <ClInclude Include="PbMessageHandle.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\3rdParty\Protobuf\include\Message.pb.cc" />
     <ClCompile Include="HandleNotifyMessage.cpp" />
     <ClCompile Include="HandleRequestMessage.cpp" />
     <ClCompile Include="HandleRespondMessage.cpp" />
-    <ClCompile Include="IMessageColleague.cpp" />
-    <ClCompile Include="Message.pb.cc" />
+    <ClCompile Include="HandleMessageColleague.cpp" />
     <ClCompile Include="MessageHandle.cpp" />
-    <ClCompile Include="ProtobufMsgFactory.cpp" />
+    <ClCompile Include="PbMessageFactory.cpp" />
+    <ClCompile Include="PbMessageHandle.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -2,10 +2,12 @@
 #include "../../Model/ModelManage/IModelManage.h"
 #include "../../CommonFile/CommonDefine.h"
 #include "../../Model/ModelManage/MainModel.h"
-#include "../../Component/MessageHandle/HandleRequestMessage.h"
-#include "../../Component/TCPCommunication/ITCPCommunication.h"
+#include "../../Component/MessageHandle/IMessageHandle.h"
+#include "../../Component/TCPCommunication/ICommunication.h"
+#include "../../Component/TCPCommunication/ServerConnect.h"
 #include "../../Component/Utility/NetworkHelp.h"
 #include "../../MainClient/IMainClient.h"
+#include <memory>
 
 MainController::MainController(ControllerManage *pCtrlMng) :
     ControllerColleague(pCtrlMng)
@@ -13,17 +15,12 @@ MainController::MainController(ControllerManage *pCtrlMng) :
 	//连接信号和槽
 	connect(this, SIGNAL(signalUserLogin(std::string, std::string)), SLOT(slotUserLogin(std::string, std::string)));
 	connect(this, SIGNAL(signalExecuteSystem()), SLOT(slotExecuteSystem()));
-    connect(m_pTcpCmmnt, SIGNAL(signalTcpConnectNotify(uint,bool)), SLOT(slotTcpConnectNotify(uint,bool)));
-    connect(m_pTcpCmmnt,SIGNAL(signalTcpDisconnectNotify(uint)),SLOT(slotTcpDisconnectNotify(uint)));
+    connect(m_pCmmnt, SIGNAL(signalTcpConnectNotify(uint,bool)), SLOT(slotTcpConnectNotify(uint,bool)));
+    connect(m_pCmmnt,SIGNAL(signalTcpDisconnectNotify(uint)),SLOT(slotTcpDisconnectNotify(uint)));
 
 	//开启异步线程
     moveToThread(&m_thread);
     m_thread.start();
-
-
-	//注册通讯消息处理
-	//m_pTcpCmmnt->RegistMessageHandle(EMsgType::e_user_login_rs, std::bind(&MainController::HandlTcpLoginRespondMsg,
-	//	this, std::placeholders::_1, std::placeholders::_2));
 
 	qRegisterMetaType<std::string>("std::string");
 }
@@ -40,7 +37,7 @@ MainController::~MainController()
 	m_pMainModel = nullptr;
 }
 
-bool MainController::Start()
+bool MainController::Initialize()
 {
     m_pMainModel = m_pModel->GetMainModel();
      if(nullptr == m_pMainModel)
@@ -49,11 +46,27 @@ bool MainController::Start()
          return false;
      }
 
+	 m_pSrvCnnt = m_pCmmnt->GetServerConnect();
+	 if (nullptr == m_pSrvCnnt)
+	 {
+		 loge() << "获取服务端连接失败!";
+		 return false;
+	 }
+
+	 m_pMsgHandle->RegisterMessageHandle();
+	 m_pHeartbeatThread = new std::thread(&MainController::HeartbeatHandle, this);
+
     return true;
 }
 
-void MainController::Stop()
+void MainController::Uninitialize()
 {
+	::SetEvent(m_hHeartbeatEvent);
+	if (m_pHeartbeatThread->joinable())
+		m_pHeartbeatThread->join();
+
+	m_pMainModel = nullptr;
+	m_pSrvCnnt = nullptr;
 }
 
 void MainController::slotUserLogin(std::string strUserName, std::string strPassword)
@@ -88,7 +101,7 @@ void MainController::slotUserLogin(std::string strUserName, std::string strPassw
 
 	//3、添加TCP连接
 	emit signalLoginTipMsg("开始连接服务器...");
-	if (false == m_pTcpCmmnt->ConnectServer())
+	if (false == m_pCmmnt->ConnectServer())
 	{
 		emit signalLoginMessageNt(false, "连接服务器失败！");
 	}
@@ -108,19 +121,69 @@ void MainController::slotTcpConnectNotify(unsigned uServerType, bool bSuccess)
 	if (bSuccess)
 	{
 		LOGM("连接服务:%d成功！",uServerType);
-		m_pMainModel->AddUser(uServerType);
-		std::string strMsg = m_pHandleRqMsg->BuildLoginRequest("mingqiaowen", "123456");
-		m_pTcpCmmnt->SendData(uServerType, strMsg.data(), strMsg.length());
+		m_pMainModel->AddServerUser(uServerType);
+		SLoginRq msg;
+		msg.uUserId = uServerType;
+		msg.strUserName = "mingqiaowen";
+		msg.strPassword = "123456";
+		m_pSrvCnnt->SendData(uServerType, msg.SerializeAsPbMsg());
 	}
 }
 
 void MainController::slotTcpDisconnectNotify(unsigned uServerType)
 {
 	LOGM("userKey:%d连接断开",uServerType);
-	m_pMainModel->DeleteUser(uServerType);
+	m_pMainModel->DeleteServerUser(uServerType);
 }
 
-void MainController::UserLoginResult(unsigned uUserKey, bool bRet, std::string strMsg)
+void MainController::HeartbeatHandle()
 {
-	LOGM("用户:%d 登录结果：%2s", uUserKey, strMsg.c_str());
+	m_hHeartbeatEvent = ::CreateEvent(NULL, false, false, NULL);
+	if (NULL == m_hHeartbeatEvent)
+	{
+		loge() << "创建心跳事件失败！";
+		return;
+	}
+
+	SHeartBeatNt msg;
+	msg.uUserId = 1;
+	SPbMsg pbMsg = msg.SerializeAsPbMsg();
+
+	DWORD dwHeartbeatTime = m_pMain->GetClientConfig()->uHeartbeatTime;
+
+	while (true)
+	{
+		DWORD dwRet = ::WaitForSingleObject(m_hHeartbeatEvent, dwHeartbeatTime);
+		if (WAIT_OBJECT_0 == dwRet)
+		{
+			logm() << "正常退出心跳线程。";
+			break;
+		}
+		else if (WAIT_FAILED == dwRet)
+		{
+			loge() << "心跳线程发生错误：" << ::GetLastError();
+			break;
+		}
+
+		std::vector<unsigned> userList = m_pMainModel->GetLoginUserList();
+		for (unsigned uUserKey : userList)
+		{
+			m_pSrvCnnt->SendData(uUserKey, pbMsg);
+		}
+	}
+}
+
+void MainController::HandleLoginRs(const unsigned uUserKey, SDataExchange* pMsg)
+{
+	std::unique_ptr<SRespondMsg> pRs(static_cast<SRespondMsg*>(pMsg));
+	SUserInfo *pUser = m_pMainModel->GetServerUser(uUserKey);
+	if (nullptr == pUser)
+	{
+		LOGE("服务端用户key：%d 不存在。");
+		return;
+	}
+
+	m_pMainModel->LockServerUserInfo(uUserKey);
+	pUser->m_bLogin = true;
+	m_pMainModel->UnlockServerUserInfo(uUserKey);
 }

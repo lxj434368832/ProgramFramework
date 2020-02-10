@@ -1,28 +1,29 @@
-#include "ITCPCommunication.h"
+#include "ICommunication.h"
 #include "..\..\MainClient\IMainClient.h"
 #include "..\MessageHandle\IMessageHandle.h"
 #include "..\..\CommonFile\TypeDefine.h"
 #include "..\..\CommonFile\CommonDefine.h"
 #include "..\..\CommonFile\EnumDefine.h"
 #include "ServerConnect.h"
+#include <windows.h>
 #include "../../3rdParty/IOCPCommunication/include/IOCPClient.h"
 
-ServerConnect::ServerConnect(ITCPCommunication *pCmmnt)
+ServerConnect::ServerConnect(ICommunication *pCmmnt)
 	:INetInterface()
 {
-	m_pCommunication = pCmmnt;
+	m_pCmmnt = pCmmnt;
 	m_pIOCPClient = new IOCPClient(this);
 }
 
 ServerConnect::~ServerConnect()
 {
-	m_pCommunication = nullptr;
+	m_pCmmnt = nullptr;
 	RELEASE(m_pIOCPClient);
 }
 
-bool ServerConnect::Start(unsigned uThreadCount)
+bool ServerConnect::Initialize(unsigned uThreadCount)
 {
-	m_pMsgModule = m_pCommunication->GetMainClient()->GetMessageHandle();
+	m_pMsgModule = m_pCmmnt->GetMainClient()->GetMessageHandle();
 	if (nullptr == m_pMsgModule)
 	{
 		loge() << "获取消息处理模块失败！";
@@ -34,7 +35,7 @@ bool ServerConnect::Start(unsigned uThreadCount)
 	return true;
 }
 
-void ServerConnect::Stop()
+void ServerConnect::Uninitialize()
 {
 	m_pIOCPClient->StopClient();
 	m_pMsgModule = nullptr;
@@ -49,11 +50,19 @@ bool ServerConnect::AddConnect(unsigned uUserKey, std::string ip, ushort port, i
 	}
 }
 
-void ServerConnect::Send(unsigned uUserKey, const char * data, unsigned uLength)
+void ServerConnect::SendData(UserKey uUserKey, SPbMsg &msg)
 {
 	if (m_funSendData)
 	{
-		m_funSendData(uUserKey, 0, data, uLength);
+		m_funSendData(uUserKey, msg.uMsgType, msg.strMsg.data(), msg.strMsg.length());
+	}
+}
+
+void ServerConnect::Send(unsigned uUserKey, unsigned uMsgType, const char * data, unsigned uLength)
+{
+	if (m_funSendData)
+	{
+		m_funSendData(uUserKey, uMsgType, data, uLength);
 	}
 }
 
@@ -62,22 +71,20 @@ void ServerConnect::Disconnect(unsigned uUserKey)
 	if (m_fuDisconnect)	m_fuDisconnect(uUserKey);
 }
 
-void ServerConnect::AddUser(unsigned uUserKey)
+void ServerConnect::ConnectNotify(UserKey uUserKey, bool bSuccess)
 {
-	emit m_pCommunication->signalTcpConnectNotify(uUserKey);
+	emit m_pCmmnt->signalTcpConnectNotify(uUserKey, bSuccess);
 }
 
 void ServerConnect::HandData(unsigned uUserKey, unsigned uMsgType, const char* data, unsigned length)
 {
-	uMsgType;
-
 	if (m_pMsgModule)
 	{
-		m_pMsgModule->HandleProtobufMessage(uUserKey, data, length);
+		m_pMsgModule->HandleProtobufMessage(uUserKey, uMsgType, data, length);
 	}
 }
 
 void ServerConnect::DeleteUser(unsigned uUserKey)
 {
-	emit m_pCommunication->signalTcpDisconnectNotify(uUserKey);
+	emit m_pCmmnt->signalTcpDisconnectNotify(uUserKey);
 }

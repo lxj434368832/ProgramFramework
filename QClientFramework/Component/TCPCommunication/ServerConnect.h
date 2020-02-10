@@ -9,18 +9,19 @@
 
 class MessageHandle;
 class IOCPClient;
-class ITCPCommunication;
-class IMessageHandle;
+class ICommunication;
+class IMessageHandle; 
+struct SPbMsg;
 
 //#define CONNECT_SHARE_LOCK_COUNT 16
 
 class ServerConnect : public INetInterface
 {
 public:
-	ServerConnect(ITCPCommunication *pCmmnt = nullptr);
+	ServerConnect(ICommunication *pCmmnt = nullptr);
 	virtual ~ServerConnect();
-	bool Start(unsigned uThreadCount);
-	void Stop();
+	bool Initialize(unsigned uThreadCount);
+	void Uninitialize();
 
 	/*************************************************************************
 	* function：开启一个连接需要考虑是否需要重连
@@ -33,11 +34,18 @@ public:
 
 	/*************************************************************************
 	* function： 发送数据
+	* param uMsgType: 消息类型
+	* param msg:	 需要发送的数据
+	*************************************************************************/
+	void SendData(UserKey uUserKey, SPbMsg &msg);
+
+	/*************************************************************************
+	* function： 发送数据
 	* param key: 用户id
 	* param data:需要发送的数据
 	* return:	 无
 	*************************************************************************/
-	void Send(unsigned uUserKey, const char* data, unsigned uLength);
+	void Send(unsigned uUserKey, unsigned uMsgType, const char* data, unsigned uLength);
 
 	/*************************************************************************
 	* function： 断开连接，底层会回调DeleteUser函数
@@ -48,8 +56,8 @@ public:
 
 private:
 	//实现INetInterface接口
-	//新服务用户成功连接通知
-	void AddUser(unsigned uUserKey) override;
+	//连接结果通知
+	void ConnectNotify(UserKey uUserKey, bool bSuccess) override;
 
 	//处理服务数据
 	void HandData(unsigned uUserKey, unsigned uMsgType, const char* data, unsigned length) override;
@@ -58,7 +66,7 @@ private:
 	void DeleteUser(unsigned uUserKey) override;
 
 private:
-	ITCPCommunication*	m_pCommunication;
+	ICommunication*	m_pCmmnt;
 	IMessageHandle*		m_pMsgModule;
 	IOCPClient			*m_pIOCPClient;	//IOCP 客户端
 

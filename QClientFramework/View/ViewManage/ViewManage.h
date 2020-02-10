@@ -14,9 +14,9 @@ public:
 	ViewManage(IMainClient *_main = nullptr);
     ~ViewManage() override;
 
-	bool Start() override;
-	void Stop() override;
-	bool ExecuteLogin() override;
+	bool Initialize() override;
+	void Uninitialize() override;
+	bool LoginWebServer() override;
 
 	/*************************************************************************
 	* function: œ‘ æµØ¥∞œ˚œ¢

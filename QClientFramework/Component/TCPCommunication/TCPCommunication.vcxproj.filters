@@ -37,7 +37,7 @@
     <ClInclude Include="ServerConnect.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="TCPCommunication.h">
+    <ClInclude Include="Communication.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -45,18 +45,18 @@
     <ClCompile Include="ServerConnect.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="TCPCommunication.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_ITCPCommunication.cpp">
+    <ClCompile Include="GeneratedFiles\Debug\moc_ICommunication.cpp">
       <Filter>Generated Files\Debug</Filter>
     </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_ITCPCommunication.cpp">
+    <ClCompile Include="GeneratedFiles\Release\moc_ICommunication.cpp">
       <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="Communication.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <CustomBuild Include="ITCPCommunication.h">
+    <CustomBuild Include="ICommunication.h">
       <Filter>Header Files</Filter>
     </CustomBuild>
   </ItemGroup>
