@@ -73,7 +73,7 @@
     <LinkIncremental>true</LinkIncremental>
     <OutDir>$(SolutionDir)$(Platform)\$(Configuration)\</OutDir>
     <IntDir>$(Configuration)\</IntDir>
-    <IncludePath>..\..\..\protobuf\include;$(IncludePath)</IncludePath>
+    <IncludePath>..\..\3rdParty\protobuf\include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <IncludePath>..\..\..\protobuf\include;$(IncludePath)</IncludePath>
@@ -89,6 +89,7 @@
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <MinimalRebuild>false</MinimalRebuild>
     </ClCompile>
     <Link>
       <TargetMachine>MachineX86</TargetMachine>
@@ -123,7 +124,7 @@
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\3rdParty\Protobuf\bin\Message.pb.cc" />
+    <ClCompile Include="..\..\3rdParty\Protobuf\include\Message.pb.cc" />
     <ClCompile Include="HandleNotifyMessage.cpp" />
     <ClCompile Include="HandleRequestMessage.cpp" />
     <ClCompile Include="HandleRespondMessage.cpp" />
@@ -133,7 +134,7 @@
     <ClCompile Include="PbMessageHandle.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\3rdParty\Protobuf\bin\Message.pb.h" />
+    <ClInclude Include="..\..\3rdParty\Protobuf\include\Message.pb.h" />
     <ClInclude Include="HandleRespondMessage.h" />
     <ClInclude Include="IMessageHandle.h" />
     <ClInclude Include="HandleMessageColleague.h" />

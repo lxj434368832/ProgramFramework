@@ -1,6 +1,6 @@
 #include "TypeDefine.h"
 #include "CommonDefine.h"
-#include "Message.pb.h"
+#include <Message.pb.h>
 
 void SUserInfo::Reset()
 {
@@ -9,9 +9,6 @@ void SUserInfo::Reset()
 	strName.clear();
 	strPassword.clear();
 	strSex.clear();
-	unAge = 0;
-	m_strFamilyAddress.clear();
-	m_strCompanyAddress.clear();
 }
 
 bool SServerConfig::CheckValid()

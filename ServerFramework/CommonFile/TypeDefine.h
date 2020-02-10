@@ -5,12 +5,6 @@
 typedef unsigned UserKey;
 typedef unsigned UserId;
 
-struct SPbMsg
-{
-	unsigned	uMsgType;
-	std::string	strMsg;
-};
-
 struct SServerConfig
 {
 	unsigned short  usListenPort = 6666;         // 监听端口
@@ -46,6 +40,12 @@ namespace google
 		class Message;
 	}
 }
+
+struct SPbMsg
+{
+	unsigned	uMsgType;
+	std::string	strMsg;
+};
 
 //数据交换的公共结构
 struct SDataExchange

@@ -2,9 +2,6 @@
 
 #include "ICommunication.h"
 
-class TCPServer;
-class PbMessageHandle;
-
 class Communication : public ICommunication
 {
 public:

@@ -5,7 +5,6 @@
 #include <thread>
 #include "../../3rdParty/Framework/include/ResourceManage.h"
 
-namespace pbmsg{ class Message; }
 struct SMessageData;
 struct SDataExchange;
 

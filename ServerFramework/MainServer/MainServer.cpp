@@ -4,6 +4,7 @@
 #include "../CommonFile//CommonDefine.h"
 #include "../Model/ModelManage/ModelManage.h"
 #include "../Controller/ControllerManage/ControllerManage.h"
+#include "../Controller/ControllerManage/MainController.h"
 #include "../Component/MessageHandle/MessageHandle.h"
 #include "../Component/TCPCommunication/Communication.h"
 
@@ -55,13 +56,13 @@ bool MainServer::StartServer()
 	if (false == m_pMessage->Initialize()) return false;
 	if (false == m_pCommunication->Initialize()) return false;
 	if (false == m_pController->Initialize()) return false;
-	if (false == m_pCommunication->StartServer()) return false;
+	if (false == m_pController->GetMainController()->StartServer()) return false;
 	return true;
 }
 
 void MainServer::StopServer()
 {
-	m_pCommunication->StopServer();
+	m_pController->GetMainController()->StopServer();
 	m_pController->Uninitialize();
 	m_pCommunication->Uninitialize();
 	m_pMessage->Uninitialize();
@@ -70,7 +71,7 @@ void MainServer::StopServer()
 
 bool MainServer::ReadConfigFile()
 {
-	std::string strConfigPath = Utils::get_module_path(nullptr, "\\config\\ServerConfig.ini");
+	std::string strConfigPath = mqwUtils::get_module_path(nullptr, "\\config\\ServerConfig.ini");
 	ConfigManage cfgMng(strConfigPath);
 	m_srvConfig.usListenPort	= cfgMng.GetValueInt("Server", "ListenPort", 0);
 	m_srvConfig.uServerThreadCount = cfgMng.GetValueInt("Server", "ServerThreadCount", 0);

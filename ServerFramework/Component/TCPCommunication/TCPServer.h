@@ -1,11 +1,12 @@
 #pragma once
 
-#include "../../../IOCPCommunication/INetInterface.h"
+#include "../../3rdParty/IOCPCommunication/include/INetInterface.h"
 
 class IMainServer;
 class IOCPServer;
 class UserInfoManage;
 class IMessageHandle;
+struct SPbMsg;
 
 class TCPServer : public INetInterface
 {

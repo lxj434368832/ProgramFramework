@@ -9,6 +9,7 @@
 #include "..\..\CommonFile\TypeDefine.h"
 
 class IMainServer;
+class TCPServer;
 
 class ICommunication
 {
@@ -19,9 +20,6 @@ public:
 
 	virtual bool Initialize() = 0;
 	virtual void Uninitialize() = 0;
-
-	virtual bool StartServer() = 0;
-	virtual void StopServer() = 0;
 
 protected:
 	IMainServer *m_pMain;

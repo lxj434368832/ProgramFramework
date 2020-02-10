@@ -12,6 +12,7 @@
 #include <thread>
 
 class UserInfoManage;
+class TCPServer;
 
 class MainController : public ControllerColleague
 {

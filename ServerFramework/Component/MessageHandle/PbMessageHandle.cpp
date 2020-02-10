@@ -5,7 +5,7 @@
 #include "PbMessageFactory.h"
 #include <thread>
 
-class SDataExchange;
+struct SDataExchange;
 
 struct SMessageData
 {
@@ -115,11 +115,11 @@ void PbMessageHandle::MessageHandleThread()
 		auto it = m_mapMsgHandle.find(msgData->uMsgType);
 		if (it != m_mapMsgHandle.end())
 		{
-			(it->second)(msgData->uUserKey, &msgData->pDataExg);
+			(it->second)(msgData->uUserKey, msgData->pDataExg);
 		}
 		else
 		{
-			loge() << "消息：" << msgData->uMsgType << " 没有对应的处理方法。";
+			LOGE("消息:%d没有对应的处理方法。", msgData->uMsgType);
 		}
 
 		m_rscMessage.put(msgData);

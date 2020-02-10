@@ -9,6 +9,8 @@
 #include "../../3rdParty/Framework/include/MLock.h"
 #include "../../CommonFile/TypeDefine.h"
 #include "../../CommonFile/EnumDefine.h"
+#include <vector>
+
 class IModelManage;
 
 class UserInfoManage

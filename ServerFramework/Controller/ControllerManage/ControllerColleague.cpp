@@ -5,7 +5,7 @@
 
 ControllerColleague::ControllerColleague(IControllerManage *pCtrlMng)
 {
-	m_pMain = pCtrlMng->GetMainClient();
+	m_pMain = pCtrlMng->GetMainServer();
 	m_pCtrlMng = pCtrlMng;
 	m_pModelMng = m_pMain->GetModelManage();
 

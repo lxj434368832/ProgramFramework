@@ -6,7 +6,7 @@
 #include "../../Model/ModelManage/UserInfoManage.h"
 #include "../../Controller/ControllerManage/IControllerManage.h"
 #include "../MessageHandle/IMessageHandle.h"
-#include "../../../IOCPCommunication/IOCPServer.h"
+#include "../../3rdParty/IOCPCommunication/include/IOCPServer.h"
 
 TCPServer::TCPServer(IMainServer *pMain)
 	:INetInterface()

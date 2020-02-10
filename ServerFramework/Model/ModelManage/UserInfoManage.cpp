@@ -1,7 +1,6 @@
 #include "UserInfoManage.h"
 #include "IModelManage.h"
 #include "..\..\CommonFile\CommonDefine.h"
-#include <vector>
 
 UserInfoManage::UserInfoManage(IModelManage* pMgr)
 	:m_rscUser(USER_RESOURCE_COUNT)
