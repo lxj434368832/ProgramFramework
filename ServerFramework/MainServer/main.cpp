@@ -20,8 +20,6 @@ int main(int argc, char *argv[])
 		printf("%s -start /-s            to startup the service\n", SZAPPNAME);
 		printf("%s -stop /-p             to stop the service\n", SZAPPNAME);
 		printf("%s -quit /-q             to quit the service\n", SZAPPNAME);
-
-		printf("This may take several seconds,  Please wait.\n");
 		
 		scanf_s("%s", strCmd, 256);
 		if (_stricmp("-start", strCmd) == 0 || _stricmp("-s", strCmd) == 0)

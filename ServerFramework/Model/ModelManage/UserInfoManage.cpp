@@ -159,7 +159,7 @@ std::vector<unsigned> UserInfoManage::GetOfflineUserList()
 	for (auto iter = m_mapUserList.begin(); iter != m_mapUserList.end(); iter++)
 	{
 		SUserInfo *pInfo = iter->second;
-		if (pInfo->uHeartCount >= 2)
+		if (++pInfo->uHeartCount >= 2)
 		{
 			userKeyList.push_back(pInfo->uUserKey);
 		}
@@ -168,7 +168,7 @@ std::vector<unsigned> UserInfoManage::GetOfflineUserList()
 
 	int iCount = userKeyList.size();
 	if (iCount > 0) 
-		LOGM("当前离线的有：%d人, 在线的有：%d人。", iCount, m_mapUserList.size());
+		LOGM("当前离线的有：%d人, 总共有：%d人。", iCount, m_mapUserList.size());
 
 	return userKeyList;
 }

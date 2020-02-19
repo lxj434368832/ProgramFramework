@@ -71,7 +71,7 @@ protected:
 	//打包数据
 	void PackSendData(PER_SOCKET_CONTEXT * pSkContext, unsigned uMsgType, const char* data, unsigned length);
 	//发送
-	bool PostSend(PER_SOCKET_CONTEXT *pSkContext, PER_IO_CONTEXT* pIO);
+	bool PostSend(PER_SOCKET_CONTEXT *pSkContext);
 
 	void HandSend(int iResult, PER_SOCKET_CONTEXT *pSkContext, PER_IO_CONTEXT* pIO, DWORD dwBytesTransfered);
 
@@ -82,6 +82,8 @@ protected:
 	void Disconnect(unsigned uUserKey);
 	//
 	void PostDisconnectEx(PER_SOCKET_CONTEXT *pSkContext, PER_IO_CONTEXT* pIO);
+
+	void ReCycleSocketRsc(PER_SOCKET_CONTEXT * pSkContext, PER_IO_CONTEXT* pIO);
 
 	void HandDisconnect(int iResult, PER_SOCKET_CONTEXT *pSkContext, PER_IO_CONTEXT* pIO);
 

@@ -84,3 +84,8 @@ struct SLoginRq : SDataExchange
 
 	bool ParseFromPb(const char* pData, unsigned uLength) override;
 };
+
+struct SLoginRs : SRespondMsg
+{
+	virtual SPbMsg SerializeAsPbMsg();
+};

@@ -71,7 +71,7 @@ void MainServer::StopServer()
 
 bool MainServer::ReadConfigFile()
 {
-	std::string strConfigPath = mqwUtils::get_module_path(nullptr, "\\config\\ServerConfig.ini");
+	std::string strConfigPath = mqwUtils::GetModulePath(nullptr, "\\config\\ServerConfig.ini");
 	ConfigManage cfgMng(strConfigPath);
 	m_srvConfig.usListenPort	= cfgMng.GetValueInt("Server", "ListenPort", 0);
 	m_srvConfig.uServerThreadCount = cfgMng.GetValueInt("Server", "ServerThreadCount", 0);

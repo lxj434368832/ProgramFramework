@@ -58,6 +58,8 @@ void MainController::StopServer()
 	::SetEvent(m_hHeartbeatEvent);
 	if (m_pHeartbeatThread->joinable())
 		m_pHeartbeatThread->join();
+	RELEASE(m_pHeartbeatThread);
+	RELEASE_HANDLE(m_hHeartbeatEvent);
 
 	m_pTcpSrv->StopServer();
 }
@@ -109,9 +111,11 @@ void MainController::HandleLoginRq(const unsigned uUserKey, SDataExchange* pMsg)
 	pUser->strLoginName = pRq->strUserName;
 	pUser->strPassword = pRq->strPassword;
 	m_pUserMng->UnlockUserInfo(uUserKey);
+	LOGM("用户key:%d id:%d loginName:%s 登录成功。",
+		uUserKey, pUser->uUserId, pUser->strLoginName.data());
 
 	m_pUserMng->AddUserIdUserKeyMap(pRq->uUserId, uUserKey);
-	SRespondMsg loginRs;
+	SLoginRs loginRs;
 	loginRs.uResult = 0;
 	loginRs.strMsg = "用户登录成功。";
 	m_pTcpSrv->SendData(uUserKey, loginRs.SerializeAsPbMsg());

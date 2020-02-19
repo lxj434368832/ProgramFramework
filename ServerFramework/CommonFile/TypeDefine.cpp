@@ -89,9 +89,9 @@ SPbMsg SRespondMsg::SerializeAsPbMsg()
 bool SHeartBeatNt::ParseFromPb(const char* pData, unsigned uLength)
 {
 	strStructName = "ÐÄÌøÏûÏ¢";
-	pbmsg::LoginRq rq;
-	if (false == ParsePbMsg(pData, uLength, &rq)) return false;
-	uUserId = rq.user_id();
+	pbmsg::HeartbeatNt msg;
+	if (false == ParsePbMsg(pData, uLength, &msg)) return false;
+	uUserId = msg.user_id();
 	return true;
 }
 
@@ -104,4 +104,10 @@ bool SLoginRq::ParseFromPb(const char* pData, unsigned uLength)
 	strUserName = rq.username();
 	strPassword = rq.password();
 	return true;
+}
+
+SPbMsg SLoginRs::SerializeAsPbMsg()
+{
+	uRsMsgType = pbmsg::ELoginRs;
+	return SRespondMsg::SerializeAsPbMsg();
 }

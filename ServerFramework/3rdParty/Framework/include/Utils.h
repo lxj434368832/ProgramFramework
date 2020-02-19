@@ -14,20 +14,17 @@ namespace mqwUtils
 {
 //***********系统包装函数**************//
 #ifdef WIN32
-    std::string get_module_path(HMODULE module, const char *f_name);        // 获取文件路径名
-	HMODULE get_self_module_handle();                                       // 获得当前模块句柄包括dll模块
-	bool is_process_a(HMODULE module, char *pname);                         // 判断模块名
-	int get_num_of_processors();					// 获取PC的CPU数量
+    std::string GetModulePath(HMODULE module, const char *f_name);        // 获取文件路径名
+	HMODULE GetCurrentModuleHandle();                                       // 获得当前模块句柄包括dll模块
+	bool IsModuleNameMatch(HMODULE module, char *pName);                         // 判断模块名
+	int GetProcessorCount();					// 获取PC的CPU数量
 	//guid类型:%08X-%04X-%04x-%02X%02X-%02X%02X%02X%02X%02X%02X
-	std::string make_guid();
+	std::string MakeGuid();
 
 	std::string GetErrorMessage(DWORD dw);
 
 	bool GetMacByGetAdaptersInfo(std::string& macOUT);
 	bool GetMacByGetAdaptersAddresses(std::string& macOUT);
-
 #endif
-    bool is_time(time_t ms, time_t dms);           // 是否大于时间
-    bool is_time_v(time_t &ms, time_t dms);        // 大于时间修改
 
 }
