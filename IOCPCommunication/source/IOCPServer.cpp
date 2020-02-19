@@ -107,33 +107,41 @@ void IOCPServer::StopServer()
 {
 	if (false == m_bStart) return;
 	m_bStart = false;
-	//关闭监听		
+
+	logm() << "关闭监听端口。";
 	RELEASE_SOCKET(m_pListenSocketContext->m_socket);
 	d->rscSocketContext.put(m_pListenSocketContext);
 	m_pListenSocketContext = nullptr;
 
-	//关闭所有socket句柄以清除所有挂起的重叠IO操作
+	logm() << "取消所有连接socket的IO操作。";
 	d->lckConnectList.lock();
 	auto iter = d->mapConnectList.begin();
 	while (iter != d->mapConnectList.end())
 	{
 		PER_SOCKET_CONTEXT *pSkContext = iter->second;
-		if (INVALID_SOCKET != pSkContext->m_socket)
+		if (INVALID_SOCKET == pSkContext->m_socket)
 		{
-			if (EOP_ACCEPT == pSkContext->m_ReceiveContext.m_oprateType)
-				;
-			else
-				::shutdown(pSkContext->m_socket, SD_BOTH);
-
-			RELEASE_SOCKET(pSkContext->m_socket);
+			LOGM("连接列表中的资源不正确,不应该存在INVALID_SOCKET！");
+			iter++;
 		}
 		else
 		{
-			LOGM("连接列表中的资源不正确,不应该存在INVALID_SOCKET！");
-		}
+			if (EOP_ACCEPT == pSkContext->m_ReceiveContext.m_oprateType)
+			{
+				iter++;
+			}
+			else
+			{
+				::InterlockedExchange(&pSkContext->m_iDisconnectFlag, 1);
 
-		d->mapConnectList.erase(iter++);
-		d->rscSocketContext.put(pSkContext);
+				//if (SOCKET_ERROR == ::shutdown(pSkContext->m_socket, SD_SEND))
+				//	logm() << "shutdown失败, code:" << ::WSAGetLastError();
+				if (0 == ::CancelIoEx((HANDLE)pSkContext->m_socket, NULL))
+					logm() << "CancelIoEx失败, code:" << ::GetLastError();
+				iter++;
+
+			}
+		}
 	}
 	d->lckConnectList.unlock();
 

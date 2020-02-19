@@ -45,8 +45,8 @@ struct PER_IO_CONTEXT
 	char		*m_szBuffer;
 	unsigned	m_uBufLength;
 	unsigned	m_uDataLength;
-	WPARAM		m_wParam;			// 扩展参数
-	LPARAM		m_lParam;			// 扩展参数2
+	LPARAM		m_lParam;			// 扩展参数1
+	WPARAM		m_wParam;			// 扩展参数2
 
 	PER_IO_CONTEXT(unsigned BufLen = MAX_BUF_LEN)
 	{
@@ -62,11 +62,6 @@ struct PER_IO_CONTEXT
 	{
 		delete[] m_szBuffer;
 		m_szBuffer = nullptr;
-		if (INVALID_SOCKET != m_socket)	//释放socket资源，可能不必要
-		{ 
-			::closesocket(m_socket);
-			m_socket = INVALID_SOCKET;
-		}
 	}
 
 	void Reset()
@@ -102,8 +97,7 @@ struct PER_SOCKET_CONTEXT
 	SOCKET					m_socket;                   // 每一个客户端连接的Socket
 	SOCKADDR_IN				m_clientAddr;               // 客户端的地址
 	PER_RECEIVE_IO_CONTEXT	m_ReceiveContext;			//接收上下文
-	int						m_iDisconnectFlag;			//断开连接标识
-	int						m_iSendPendingFlag;			//发送请求标识
+	long					m_iDisconnectFlag;			//断开连接标识，1表示断开，准备重用，2表示断开，不重用
 	std::queue<PER_IO_CONTEXT*> m_queueIoContext;       //客户端发送数据请求的上下队列
 
 	// 初始化
@@ -115,9 +109,9 @@ struct PER_SOCKET_CONTEXT
 	// 释放资源
 	~PER_SOCKET_CONTEXT()
 	{
-		if (m_socket != INVALID_SOCKET)
+		if (INVALID_SOCKET != m_socket)	//释放socket资源
 		{
-			closesocket(m_socket);
+			::closesocket(m_socket);
 			m_socket = INVALID_SOCKET;
 		}
 	}
@@ -129,7 +123,6 @@ struct PER_SOCKET_CONTEXT
 		memset(&m_clientAddr, 0, sizeof(m_clientAddr));
 		m_ReceiveContext.Reset();
 		m_iDisconnectFlag = 0;
-		m_iSendPendingFlag = 0;
 		
 		if(false == m_queueIoContext.empty())
 		{
@@ -158,8 +151,6 @@ struct IOCPBaseData
 	unsigned						uThreadCount;			//事务线程个数
 	std::thread				 		*aThreadList;			//事务线程池列表
 
-	std::map<unsigned, PER_SOCKET_CONTEXT*>	mapStayConnect; //待连接队列
-	MLock									lckStayConnect;	//待连接队列锁
 	std::map<unsigned, PER_SOCKET_CONTEXT*>	mapConnectList;	//连接列表
 	MLock									lckConnectList;	//连接列表锁
 
@@ -167,8 +158,6 @@ struct IOCPBaseData
 	mqw::ResourceManage<PER_SOCKET_CONTEXT>	rscSocketContext;	//socket资源管理
 	mqw::ResourceManage<PER_IO_CONTEXT>		rscIoContext;		//IO资源管理
 	INetInterface							*pNetInterface;		//网络接口
-	std::thread								*pHeartbeatThread;	//心跳线程
-	HANDLE 									hHeartbeatEvent;	//心跳事件
 
 	IOCPBaseData(INetInterface *pNet) :
 		pNetInterface(pNet),
@@ -178,8 +167,6 @@ struct IOCPBaseData
 	{
 		uThreadCount = 0;
 		aThreadList = NULL;
-		pHeartbeatThread = NULL;
-		hHeartbeatEvent = NULL;
 	}
 
 	~IOCPBaseData()

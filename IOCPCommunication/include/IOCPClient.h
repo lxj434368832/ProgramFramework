@@ -23,13 +23,5 @@ class IOCPClient :public IOCPBase
 	  * return:		 返回此连接对应的id,但不代表连接成功，为0代表连接出现了错误
 	  *************************************************************************/
 	  bool AddConnect(unsigned uUserKey, std::string ip, u_short port, int iRecnnt = -1);
-
-	  //处理连接失败
-	  void HandConnectFailed(PER_SOCKET_CONTEXT *pSkContext) override;
-
-private:
-	  //心跳线程处理
-	  void HeartbeatHandle();
-
 };
 
