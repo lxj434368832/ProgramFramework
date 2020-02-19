@@ -39,8 +39,3 @@ void ControllerManage::Uninitialize()
 {
     m_pMainCtrl->Uninitialize();
 }
-
-void ControllerManage::ExecuteSystem()
-{
-	emit m_pMainCtrl->signalExecuteSystem();
-}

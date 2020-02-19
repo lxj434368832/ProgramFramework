@@ -77,6 +77,7 @@ bool SRespondMsg::ParseFromPb(const char* pData, unsigned uLength)
 	if (false == ParsePbMsg(pData, uLength, &msg)) return false;
 	uResult = msg.result();
 	strMsg = msg.result_msg();
+	return true;
 }
 
 SPbMsg SHeartBeatNt::SerializeAsPbMsg()

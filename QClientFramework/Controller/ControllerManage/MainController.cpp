@@ -64,6 +64,11 @@ void MainController::Uninitialize()
 	::SetEvent(m_hHeartbeatEvent);
 	if (m_pHeartbeatThread->joinable())
 		m_pHeartbeatThread->join();
+	RELEASE(m_pHeartbeatThread);
+	RELEASE_HANDLE(m_hHeartbeatEvent);
+
+	disconnect(m_pCmmnt, SIGNAL(signalTcpConnectNotify(uint, bool)),this, SLOT(slotTcpConnectNotify(uint, bool)));
+	disconnect(m_pCmmnt, SIGNAL(signalTcpDisconnectNotify(uint)),this, SLOT(slotTcpDisconnectNotify(uint)));
 
 	m_pMainModel = nullptr;
 	m_pSrvCnnt = nullptr;
@@ -74,7 +79,7 @@ void MainController::slotUserLogin(std::string strUserName, std::string strPassw
 	//1、登陆web
 	signalLoginTipMsg("开始登陆web验证账户名和密码...");
 	std::string strMac = NetworkHelp::GetMACAdress().toLocal8Bit().data();
-	ClientConfig *pCfg = m_pMain->GetClientConfig();
+	//ClientConfig *pCfg = m_pMain->GetClientConfig();
 	//SUserInfo user = m_pWebCnnt->UserLogin(strUserName, strPassword, strMac);
 
 	SUserInfo user;
@@ -120,20 +125,24 @@ void MainController::slotTcpConnectNotify(unsigned uServerType, bool bSuccess)
 {
 	if (bSuccess)
 	{
-		LOGM("连接服务:%d成功！",uServerType);
-		m_pMainModel->AddServerUser(uServerType);
+		LOGM("连接服务Key:%d成功！",uServerType);
+		SUserInfo &user = m_pMainModel->GetUserInfo();
+
 		SLoginRq msg;
 		msg.uUserId = uServerType;
-		msg.strUserName = "mingqiaowen";
-		msg.strPassword = "123456";
+		msg.strUserName = user.m_strUserName + std::to_string(uServerType);
+		msg.strPassword = user.m_strPassword;
 		m_pSrvCnnt->SendData(uServerType, msg.SerializeAsPbMsg());
+	}
+	else
+	{
+		loge() << "连接服务uServerType:" << uServerType << "失败！";
 	}
 }
 
 void MainController::slotTcpDisconnectNotify(unsigned uServerType)
 {
-	LOGM("userKey:%d连接断开",uServerType);
-	m_pMainModel->DeleteServerUser(uServerType);
+	LOGM("服务Key:%d的连接断开",uServerType);
 }
 
 void MainController::HeartbeatHandle()
@@ -165,10 +174,10 @@ void MainController::HeartbeatHandle()
 			break;
 		}
 
-		std::vector<unsigned> userList = m_pMainModel->GetLoginUserList();
-		for (unsigned uUserKey : userList)
+		QSet<unsigned> setSrvKey = m_pMainModel->GetLoginServer();
+		for (unsigned uSrvKey : setSrvKey)
 		{
-			m_pSrvCnnt->SendData(uUserKey, pbMsg);
+			m_pSrvCnnt->SendData(uSrvKey, pbMsg);
 		}
 	}
 }
@@ -176,14 +185,19 @@ void MainController::HeartbeatHandle()
 void MainController::HandleLoginRs(const unsigned uUserKey, SDataExchange* pMsg)
 {
 	std::unique_ptr<SRespondMsg> pRs(static_cast<SRespondMsg*>(pMsg));
-	SUserInfo *pUser = m_pMainModel->GetServerUser(uUserKey);
-	if (nullptr == pUser)
-	{
-		LOGE("服务端用户key：%d 不存在。");
-		return;
-	}
 
-	m_pMainModel->LockServerUserInfo(uUserKey);
-	pUser->m_bLogin = true;
-	m_pMainModel->UnlockServerUserInfo(uUserKey);
+	if (0 == pRs->uResult)
+	{
+		LOGM("登录服务Key%d成功。", uUserKey);
+		m_pMainModel->AddLoginServer(uUserKey);
+
+		if (EST_CMD_SERVER == uUserKey)
+		{
+			int iUserType = 1;
+			//int iUserType = m_pMainModel->GetUserInfo().m_iUserType;
+			emit signalShowMainWindow(iUserType);
+		}
+	}
+	else
+		LOGE("登录服务Key%d失败！", uUserKey);
 }

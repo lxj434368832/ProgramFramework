@@ -9,7 +9,7 @@ enum EServerType
 	EST_UNKNOWN,
 	EST_CMD_SERVER,
 	EST_DATA_SERVER,
-	EST_SERVER_COUNT = 2
+	EST_SERVER_COUNT = 5
 };
 
 //显示消息类型

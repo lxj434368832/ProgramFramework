@@ -11,7 +11,7 @@ public:
 	virtual bool Initialize() = 0;
 	virtual void Uninitialize() = 0;
 
-	virtual bool LoginWebServer() = 0;
+	virtual bool StartClient() = 0;
 
 protected:
 	IMainClient *m_pMain = nullptr;

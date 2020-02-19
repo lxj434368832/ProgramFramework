@@ -75,8 +75,7 @@ bool MainClient::StartClient()
 	if (false == m_pController->Initialize()) return false;
 	if (false == m_pView->Initialize()) return false;
 
-	if (false == m_pView->LoginWebServer()) return false;
-	m_pController->ExecuteSystem();
+	if (false == m_pView->StartClient()) return false;
 
 	return true;
 }

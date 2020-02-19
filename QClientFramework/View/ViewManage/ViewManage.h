@@ -6,6 +6,7 @@
 class ViewMediator;
 class MMainWindow;
 class QSplashScreen;
+class MainController;
 
 class ViewManage : public QObject, public IViewManage
 {
@@ -16,7 +17,7 @@ public:
 
 	bool Initialize() override;
 	void Uninitialize() override;
-	bool LoginWebServer() override;
+	bool StartClient() override;
 
 	/*************************************************************************
 	* function: 显示弹窗消息
@@ -32,6 +33,7 @@ private slots:
 	void slotPopupShowMessage(unsigned uType, std::string strTitle, std::string strMsg);
 
 private:
+	MainController	*m_pMainCtrl;		//主控制器
     ViewMediator    *m_pViewMdt;        //视图中介者
 	MMainWindow     *m_pMainWnd;        //主窗体
 	QSplashScreen	*m_pSplash;			//闪屏窗体

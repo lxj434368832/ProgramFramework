@@ -5,7 +5,9 @@
 * datetime：2017-12-14
 * company:  
 *************************************************************************/
+#include <thread>
 #include "../../3rdParty/IOCPCommunication/include/INetInterface.h"
+#include "..\..\3rdParty\Framework\include\MLock.h"
 
 class MessageHandle;
 class IOCPClient;
@@ -66,9 +68,23 @@ private:
 	void DeleteUser(unsigned uUserKey) override;
 
 private:
-	ICommunication*	m_pCmmnt;
-	IMessageHandle*		m_pMsgModule;
-	IOCPClient			*m_pIOCPClient;	//IOCP 客户端
+	void DeamonConnectCallback(unsigned uInterval);
 
+private:
+	struct SServerInfo
+	{
+		unsigned	uUserKey;
+		std::string	strIp;
+		ushort		usPort;
+		int			iRecnnt = 0;
+		bool		bNeedConnect = false;
+	};
+
+	ICommunication		*m_pCmmnt;
+	IMessageHandle		*m_pMsgModule;
+	IOCPClient			*m_pIOCPClient;				//IOCP 客户端
+	std::map<unsigned, SServerInfo> m_mapSrvInfo;	//服务信息列表
+	MLock							m_lckSrvInfo;	//服务信息锁
+	std::thread						*m_pThDeamenConnect;	//守护连接线程
+	HANDLE							m_hDeamenConnect;		//守护连接事件
 };
-

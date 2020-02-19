@@ -43,4 +43,5 @@ bool Communication::ConnectServer()
 			return false;
 		}
 	}
+	return true;
 }

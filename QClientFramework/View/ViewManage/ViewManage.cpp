@@ -29,10 +29,10 @@ ViewManage::ViewManage(IMainClient *_main)
 	lbSplash->setMovie(splashGif);
 	splashGif->start();
 
-	MainController *pMainCtrl = m_pMain->GetControllerManage()->GetMainController();
-	connect(pMainCtrl, SIGNAL(signalSplashMessage(std::string)), SLOT(slotSplashMessage(std::string)));
-	connect(pMainCtrl, SIGNAL(signalShowMainWindow(uint)), SLOT(slotShowMainWindow(uint)));
-	connect(pMainCtrl, SIGNAL(signalPopupShowMessage(uint, std::string, std::string)), SLOT(slotPopupShowMessage(uint, std::string, std::string)));
+	m_pMainCtrl = m_pMain->GetControllerManage()->GetMainController();
+	connect(m_pMainCtrl, SIGNAL(signalSplashMessage(std::string)), SLOT(slotSplashMessage(std::string)));
+	connect(m_pMainCtrl, SIGNAL(signalShowMainWindow(uint)), SLOT(slotShowMainWindow(uint)));
+	connect(m_pMainCtrl, SIGNAL(signalPopupShowMessage(uint, std::string, std::string)), SLOT(slotPopupShowMessage(uint, std::string, std::string)));
 }
 
 ViewManage::~ViewManage()
@@ -50,13 +50,15 @@ void ViewManage::Uninitialize()
 {
 }
 
-bool ViewManage::LoginWebServer()
+bool ViewManage::StartClient()
 {
 	LoginDialog lgDlg(m_pViewMdt);
 	if (QDialog::Accepted == lgDlg.exec())
 	{
 		m_pSplash->show();
 		m_pSplash->showMessage(QString::fromLocal8Bit("正在启动系统..."), Qt::AlignBottom, Qt::white);
+		
+		//emit m_pMainCtrl->signalExecuteSystem();
 		return true;
 	}
 	else
@@ -64,7 +66,6 @@ bool ViewManage::LoginWebServer()
 		RELEASE(m_pSplash);
 		return false;
 	}
-	return true;
 }
 
 void ViewManage::slotSplashMessage(std::string strMsg)
@@ -110,6 +111,7 @@ unsigned ViewManage::PopupShowMessage(unsigned uType, std::string strTitle, std:
 
 void ViewManage::slotShowMainWindow(unsigned uUserType)
 {
+	if (nullptr == m_pSplash) return;
 	/*
 	switch (uUserType)
 	{
