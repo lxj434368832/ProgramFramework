@@ -9,6 +9,7 @@
 #include <WinSock2.h>
 #include <MSWSock.h>
 #include <queue>
+#include <atomic>
 
 #define MAX_BUF_LEN 512			//发送缓冲区大小512B
 #define MAX_RCV_BUF_LEN 5120	//接收缓冲区大小5K
@@ -39,18 +40,18 @@ struct PackHeader
 struct PER_IO_CONTEXT
 {
 	OVERLAPPED	m_overlapped;
+	unsigned	m_uUserKey;
 	SOCKET		m_socket;
 	EOperateType m_oprateType;
 	WSABUF		m_wsaBuf;
 	char		*m_szBuffer;
 	unsigned	m_uBufLength;
 	unsigned	m_uDataLength;
-	LPARAM		m_lParam;			// 扩展参数1
-	WPARAM		m_wParam;			// 扩展参数2
 
 	PER_IO_CONTEXT(unsigned BufLen = MAX_BUF_LEN)
 	{
 		ZeroMemory(&m_overlapped, sizeof(m_overlapped));
+		m_uUserKey = 0;
 		m_socket = INVALID_SOCKET;
 		m_uBufLength = BufLen;
 		m_szBuffer = new char[BufLen];
@@ -66,14 +67,13 @@ struct PER_IO_CONTEXT
 
 	void Reset()
 	{
+		m_uUserKey = 0;
 		m_socket = INVALID_SOCKET;
 		m_oprateType = EOP_UNKNOWN;
 		m_wsaBuf.buf = m_szBuffer;
 		m_wsaBuf.len = 0;
 		ZeroMemory(m_szBuffer, m_uBufLength);
-		m_uDataLength = 0;	
-		m_wParam = 0;
-		m_lParam = 0;
+		m_uDataLength = 0;
 	}
 };
 
@@ -97,7 +97,7 @@ struct PER_SOCKET_CONTEXT
 	SOCKET					m_socket;                   // 每一个客户端连接的Socket
 	SOCKADDR_IN				m_clientAddr;               // 客户端的地址
 	PER_RECEIVE_IO_CONTEXT	m_ReceiveContext;			//接收上下文
-	long					m_iDisconnectFlag;			//断开连接标识，1表示断开，准备重用，2表示断开，不重用
+	std::atomic_int			m_iDisconnectFlag;			//断开连接标识，1表示断开，准备重用，2表示断开，不重用
 	std::queue<PER_IO_CONTEXT*> m_queueIoContext;       //客户端发送数据请求的上下队列
 
 	// 初始化
@@ -142,8 +142,8 @@ struct IOCPBaseData
 {
 	enum
 	{
-		SOCKET_RESOURCE_COUNT = 5,
-		IO_RESOURCE_COUNT = 5,
+		SOCKET_RESOURCE_COUNT = 20,
+		IO_RESOURCE_COUNT = 40,
 		SOCKET_CONTEXT_LOCK_COUNT = 10
 	};
 
@@ -151,6 +151,7 @@ struct IOCPBaseData
 	unsigned						uThreadCount;			//事务线程个数
 	std::thread				 		*aThreadList;			//事务线程池列表
 
+	std::atomic_uint						uUserNum;		//用户编号
 	std::map<unsigned, PER_SOCKET_CONTEXT*>	mapConnectList;	//连接列表
 	MLock									lckConnectList;	//连接列表锁
 
@@ -165,6 +166,7 @@ struct IOCPBaseData
 		rscSocketContext(SOCKET_RESOURCE_COUNT),
 		rscIoContext(IO_RESOURCE_COUNT)
 	{
+		uUserNum = 100;
 		uThreadCount = 0;
 		aThreadList = NULL;
 	}

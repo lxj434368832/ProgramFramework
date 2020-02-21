@@ -40,8 +40,9 @@ int IOCPModule::GetProcessorCount()
 
 SOCKET IOCPModule::Socket()
 {
-	//return::WSASocket(AF_INET, SOCK_STREAM, IPPROTO_TCP, NULL, 0, WSA_FLAG_OVERLAPPED);
-	return::WSASocket(AF_INET, SOCK_STREAM, 0, NULL, 0, WSA_FLAG_OVERLAPPED);
+	SOCKET sock = ::WSASocket(AF_INET, SOCK_STREAM, IPPROTO_TCP, NULL, 0, WSA_FLAG_OVERLAPPED);
+	return sock;
+	//return::WSASocket(AF_INET, SOCK_STREAM, 0, NULL, 0, WSA_FLAG_OVERLAPPED);
 }
 
 int IOCPModule::Bind(SOCKET s, const LPSOCKADDR name)
@@ -98,7 +99,7 @@ int IOCPModule::AcceptEx(SOCKET listenSocket, PER_IO_CONTEXT *pIO)
 		iRet = ::WSAGetLastError();
 		if (WSA_IO_PENDING != iRet)
 		{
-			LOGM("¿ªÆôAcceptExÊ§°Ü£¬´íÎóÂë:%d", iRet);
+			LOGM("¿ªÆôsokcet:%d AcceptExÊ§°Ü£¬´íÎóÂë:%d", pIO->m_socket, iRet);
 		}
 		else
 			iRet = 0;

@@ -66,12 +66,8 @@ bool IOCPServer::StartServerListen(u_short port, unsigned iMaxConnectCount)
 			{
 				LOGM("创建Server监听socket失败，错误码：%d", WSAGetLastError());
 				break;
-			}
+			}	
 		}
-
-		//SO_REUSEADDR允许同一port上启动同一服务器的多个实例(多个进程)。但每个实例绑定的IP地址是不能相同的。
-		//int nOpt = 1;
-		//setsockopt(m_pListenSocketContext->m_Socket, SOL_SOCKET, SO_REUSEADDR, (char*)&nOpt, sizeof(nOpt));	//重用地址
 
 		SOCKADDR_IN addrLocal;
 		addrLocal.sin_family = AF_INET;
@@ -132,14 +128,19 @@ void IOCPServer::StopServer()
 			}
 			else
 			{
-				::InterlockedExchange(&pSkContext->m_iDisconnectFlag, 1);
+				ReCycleSocketRsc(pSkContext, nullptr);
+				PER_IO_CONTEXT* pIO = d->rscIoContext.get();
+				pIO->m_socket = pSkContext->m_socket;
+				if (IOCPModule::Instance()->DisconnectEx(pIO))
+				{
+					//投递失败，直接回收资源
+					RELEASE_SOCKET(pSkContext->m_socket);
+					d->rscSocketContext.put(pSkContext);
 
-				//if (SOCKET_ERROR == ::shutdown(pSkContext->m_socket, SD_SEND))
-				//	logm() << "shutdown失败, code:" << ::WSAGetLastError();
-				if (0 == ::CancelIoEx((HANDLE)pSkContext->m_socket, NULL))
-					logm() << "CancelIoEx失败, code:" << ::GetLastError();
-				iter++;
-
+					pIO->Reset();
+					d->rscIoContext.put(pIO);
+				}
+				iter = d->mapConnectList.erase(iter);
 			}
 		}
 	}

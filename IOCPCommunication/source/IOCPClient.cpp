@@ -29,9 +29,6 @@ bool IOCPClient::AddConnect(unsigned uUserKey, std::string ip, u_short port, int
 
 	do
 	{
-		PER_IO_CONTEXT *pIO = &pSkContext->m_ReceiveContext;
-		pIO->m_lParam = iRecnnt;
-
 		if (INVALID_SOCKET == pSkContext->m_socket)
 		{
 			if (INVALID_SOCKET == (pSkContext->m_socket = IOCPModule::Instance()->Socket()))
@@ -39,25 +36,30 @@ bool IOCPClient::AddConnect(unsigned uUserKey, std::string ip, u_short port, int
 				LOGM("创建socket失败，错误码：%d", WSAGetLastError());
 				break;
 			}
+			if (IOCPModule::Instance()->BindIoCompletionPort(pSkContext, d->hIOCompletionPort)) break;
+
+			SOCKADDR_IN addrLocal;
+			addrLocal.sin_addr.s_addr = ADDR_ANY;
+			addrLocal.sin_family = AF_INET;
+			addrLocal.sin_port = 0;
+			IOCPModule::Instance()->Bind(pSkContext->m_socket, (LPSOCKADDR)&addrLocal);
 		}
-
-		if (IOCPModule::Instance()->BindIoCompletionPort(pSkContext, d->hIOCompletionPort)) break;
-		pIO->m_socket = pSkContext->m_socket;
-
-		SOCKADDR_IN addrLocal;
-		addrLocal.sin_addr.s_addr = ADDR_ANY;
-		addrLocal.sin_family = AF_INET;
-		addrLocal.sin_port = 0;
-		if (IOCPModule::Instance()->Bind(pIO->m_socket, (LPSOCKADDR)&addrLocal)) break;
-
-		SOCKADDR_IN *pSrvAddr = &pSkContext->m_clientAddr;
-		pSrvAddr->sin_family = AF_INET;
-		IOCPModule::Instance()->ParseIPAddress(ip, &pSrvAddr->sin_addr);
-		pSrvAddr->sin_port = htons(port);
-
-		bRet = PostConnectEx(pSkContext);
+		bRet = true;
 
 	} while (0);
+
+	if (false == bRet)
+	{
+		RELEASE_SOCKET(pSkContext->m_socket);
+		d->rscSocketContext.put(pSkContext);
+		return bRet;
+	}
+	SOCKADDR_IN *pSrvAddr = &pSkContext->m_clientAddr;
+	pSrvAddr->sin_family = AF_INET;
+	IOCPModule::Instance()->ParseIPAddress(ip, &pSrvAddr->sin_addr);
+	pSrvAddr->sin_port = htons(port);
+
+	bRet = PostConnectEx(pSkContext);
 
 	return bRet;
 }
@@ -66,8 +68,9 @@ void IOCPClient::StopClient()
 {
 	//关闭所有socket句柄以清除所有挂起的重叠IO操作
 	logm() << "关闭所有socket连接。";
-	d->lckConnectList.lock();
-	for (auto iter = d->mapConnectList.begin(); iter != d->mapConnectList.end(); iter++)
+	d->lckConnectList.lock(); 
+	auto iter = d->mapConnectList.begin();
+	while ( iter != d->mapConnectList.end())
 	{
 		PER_SOCKET_CONTEXT *pSkContext = iter->second;
 		if (INVALID_SOCKET != pSkContext->m_socket)
@@ -76,12 +79,23 @@ void IOCPClient::StopClient()
 			{
 				if (0 == ::CancelIoEx((HANDLE)pSkContext->m_socket, NULL))
 					logm() << "CancelIoEx失败, code:" << ::GetLastError();
-				//::InterlockedExchange(&pSkContext->m_iDisconnectFlag, 1);
+				iter++;
 			}
 			else
 			{
-				if (0 == ::CancelIoEx((HANDLE)pSkContext->m_socket, NULL))
-					logm() << "CancelIoEx失败, code:" << ::GetLastError();
+				ReCycleSocketRsc(pSkContext, nullptr);
+				PER_IO_CONTEXT* pIO = d->rscIoContext.get();
+				pIO->m_socket = pSkContext->m_socket;
+				if (IOCPModule::Instance()->DisconnectEx(pIO))
+				{
+					//投递失败，直接回收资源
+					RELEASE_SOCKET(pSkContext->m_socket);
+					d->rscSocketContext.put(pSkContext);
+
+					pIO->Reset();
+					d->rscIoContext.put(pIO);
+				}
+				iter = d->mapConnectList.erase(iter);
 			}
 		}
 		else
