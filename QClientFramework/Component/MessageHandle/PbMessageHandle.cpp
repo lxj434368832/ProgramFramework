@@ -122,5 +122,5 @@ void PbMessageHandle::MessageHandleThread()
 		m_rscMessage.put(msgData);
 	}
 
-	logm() << "ThreadID:" << std::this_thread::get_id()<< "ÍË³ö";
+	logm() << "MessageHandleThread ThreadID:" << std::this_thread::get_id()<< "ÍË³ö.";
 }

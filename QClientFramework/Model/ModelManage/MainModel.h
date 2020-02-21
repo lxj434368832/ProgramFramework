@@ -28,7 +28,9 @@ public:
 
 	void AddLoginServer(UserKey uUserKey);
 
-	QSet<unsigned> GetLoginServer();
+	void DelLoginServer(UserKey uUserKey);
+
+	QSet<unsigned> GetLoginServerList();
 
 private:
 	SUserInfo	m_user;

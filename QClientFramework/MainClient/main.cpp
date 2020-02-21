@@ -23,7 +23,6 @@ int main(int argc, char *argv[])
     if (false == pMain->StartClient())
 	{
 		loge() << "软件启动失败，请查看日志！";
-		system("pause");
     }
 	else
 		a.exec();

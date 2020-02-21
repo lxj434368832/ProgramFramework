@@ -58,7 +58,7 @@ bool ViewManage::StartClient()
 		m_pSplash->show();
 		m_pSplash->showMessage(QString::fromLocal8Bit("正在启动系统..."), Qt::AlignBottom, Qt::white);
 		
-		//emit m_pMainCtrl->signalExecuteSystem();
+		emit m_pMainCtrl->signalExecuteSystem();
 		return true;
 	}
 	else

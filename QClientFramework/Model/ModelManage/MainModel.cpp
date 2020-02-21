@@ -32,7 +32,12 @@ void MainModel::AddLoginServer(UserKey uUserKey)
 	m_setSrvUser.insert(uUserKey);
 }
 
-QSet<unsigned> MainModel::GetLoginServer()
+void MainModel::DelLoginServer(UserKey uUserKey)
+{
+	m_setSrvUser.remove(uUserKey);
+}
+
+QSet<unsigned> MainModel::GetLoginServerList()
 {
 	return m_setSrvUser;
 }

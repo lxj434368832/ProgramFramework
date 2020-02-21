@@ -83,15 +83,16 @@ bool ServerConnect::AddConnect(unsigned uUserKey, std::string ip, ushort port, i
 
 void ServerConnect::SendData(UserKey uUserKey, SPbMsg &msg)
 {
-	if (m_funSendData)
-	{
-		m_funSendData(uUserKey, msg.uMsgType, msg.strMsg.data(), msg.strMsg.length());
-	}
+	this->Send(uUserKey, msg.uMsgType, msg.strMsg.data(), msg.strMsg.length());
 }
 
 void ServerConnect::Send(unsigned uUserKey, unsigned uMsgType, const char * data, unsigned uLength)
 {
-	if (m_funSendData)
+	if (m_mapSrvInfo.find(uUserKey) == m_mapSrvInfo.end())
+	{
+		LOGM("SrvKey:%d离线，停止发送数据。", uUserKey);
+	}
+	else if (m_funSendData)
 	{
 		m_funSendData(uUserKey, uMsgType, data, uLength);
 	}

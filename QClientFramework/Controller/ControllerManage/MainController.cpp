@@ -142,6 +142,7 @@ void MainController::slotTcpConnectNotify(unsigned uServerType, bool bSuccess)
 
 void MainController::slotTcpDisconnectNotify(unsigned uServerType)
 {
+	m_pMainModel->DelLoginServer(uServerType);
 	LOGM("服务Key:%d的连接断开",uServerType);
 }
 
@@ -174,7 +175,7 @@ void MainController::HeartbeatHandle()
 			break;
 		}
 
-		QSet<unsigned> setSrvKey = m_pMainModel->GetLoginServer();
+		QSet<unsigned> setSrvKey = m_pMainModel->GetLoginServerList();
 		for (unsigned uSrvKey : setSrvKey)
 		{
 			m_pSrvCnnt->SendData(uSrvKey, pbMsg);
