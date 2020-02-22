@@ -36,4 +36,5 @@ private:
 	SUserInfo	m_user;
 	MLock		m_lckUserInfo;
 	QSet<unsigned>	m_setSrvUser;
+	MLock			m_lckSrvUser;
 };

@@ -17,7 +17,7 @@
 std::string GetAppDir();
 
 //写日志函数
-void LOG(const char * szLibName, char* format, ...);
+void LOG(const char * szLibName, const char* format, ...);
 
 
 #define LOGM(format, ...)  do{  \

@@ -16,7 +16,7 @@ class SingleLog
 public:
 	SingleLog();
 	~SingleLog();
-	void AddLog(char* format, ...);
+	void AddLog(const char* format, ...);
 
 	template <typename T>
 	inline SingleLog& operator<<(const T& log)
@@ -47,7 +47,7 @@ public:
 	{
 		return s_instance;
 	}
-	void AddLog(std::string &strLog);
+	void AddLog(const std::string &strLog);
 
 	void Timeout(unsigned uTimerID);
 

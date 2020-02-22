@@ -77,7 +77,7 @@ void MainController::Uninitialize()
 void MainController::slotUserLogin(std::string strUserName, std::string strPassword)
 {
 	//1、登陆web
-	signalLoginTipMsg("开始登陆web验证账户名和密码...");
+	emit signalLoginTipMsg("开始登陆web验证账户名和密码...");
 	std::string strMac = NetworkHelp::GetMACAdress().toLocal8Bit().data();
 	//ClientConfig *pCfg = m_pMain->GetClientConfig();
 	//SUserInfo user = m_pWebCnnt->UserLogin(strUserName, strPassword, strMac);
@@ -102,23 +102,23 @@ void MainController::slotUserLogin(std::string strUserName, std::string strPassw
 		loge() << "获取web服务器配置信息失败！";
 		//emit signalLoginMessageNt(false, "获取web服务器配置信息失败！");
 		//return; 失败了没关系，本地还有配置项
-	}*/
-
-	//3、添加TCP连接
-	emit signalLoginTipMsg("开始连接服务器...");
-	if (false == m_pCmmnt->ConnectServer())
-	{
-		emit signalLoginMessageNt(false, "连接服务器失败！");
-	}
-	else
-		emit signalLoginMessageNt(true, "连接服务器成功！");
+		}*/
+	emit signalLoginMessageNt(true, "连接服务器成功！");
 }
 
 void MainController::slotExecuteSystem()
 {
+	//3、添加TCP连接
+
 	int iUserType = 1;
+	emit signalSplashMessage("开始连接服务器...");
+	if (false == m_pCmmnt->ConnectServer())
+	{
+		emit signalSplashMessage("连接服务器失败！");
+	}
+	else
+		emit signalShowMainWindow(iUserType);
 	//int iUserType = m_pMainModel->GetUserInfo().m_iUserType;
-	emit signalShowMainWindow(iUserType);
 }
 
 void MainController::slotTcpConnectNotify(unsigned uServerType, bool bSuccess)
@@ -192,12 +192,12 @@ void MainController::HandleLoginRs(const unsigned uUserKey, SDataExchange* pMsg)
 		LOGM("登录服务Key%d成功。", uUserKey);
 		m_pMainModel->AddLoginServer(uUserKey);
 
-		if (EST_CMD_SERVER == uUserKey)
-		{
-			int iUserType = 1;
-			//int iUserType = m_pMainModel->GetUserInfo().m_iUserType;
-			emit signalShowMainWindow(iUserType);
-		}
+		//if (EST_CMD_SERVER == uUserKey)
+		//{
+		//	int iUserType = 1;
+		//	//int iUserType = m_pMainModel->GetUserInfo().m_iUserType;
+		//	emit signalShowMainWindow(iUserType);
+		//}
 	}
 	else
 		LOGE("登录服务Key%d失败！", uUserKey);
