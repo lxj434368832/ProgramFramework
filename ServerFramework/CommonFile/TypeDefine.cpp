@@ -2,15 +2,6 @@
 #include "CommonDefine.h"
 #include <Message.pb.h>
 
-void SUserInfo::Reset()
-{
-	uUserKey = 0;
-	uUserId = 0;
-	strName.clear();
-	strPassword.clear();
-	strSex.clear();
-}
-
 bool SServerConfig::CheckValid()
 {
 	if (usListenPort == 0
@@ -21,6 +12,17 @@ bool SServerConfig::CheckValid()
 		return false;
 	}
 	return true;
+}
+
+void SUserInfo::Reset()
+{
+	uUserKey = 0;
+	uUserId = 0;
+	strName.clear();
+	strPassword.clear();
+	strSex.clear();
+	uAge = 0;
+	uHeartCount = 0;
 }
 
 bool SDataExchange::ParsePbMsg(const char* pData, unsigned uLength, ::google::protobuf::Message *pMsg)

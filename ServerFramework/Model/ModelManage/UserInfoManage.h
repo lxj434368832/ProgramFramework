@@ -62,6 +62,8 @@ public:
 	*************************************************************************/
 	void UnlockUserInfo(UserKey uUserKey);
 
+	void ClearUserHeartbeatCount(UserKey uUserKey);
+
 	std::vector<unsigned> GetOfflineUserList();
 
 private:

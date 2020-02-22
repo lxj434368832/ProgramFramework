@@ -32,6 +32,7 @@ int main(int argc, char *argv[])
 		else if (_stricmp("-stop", strCmd) == 0 || _stricmp("-p", strCmd) == 0)
 		{
 			pMain->StopServer();
+			break;
 		}
 		else if (_stricmp("-quit", strCmd) == 0 || _stricmp("-q", strCmd) == 0)
 		{
@@ -40,7 +41,7 @@ int main(int argc, char *argv[])
 
 	} while (true);
 	delete pMain;
-	system("pause");
+	//system("pause");
     return 0;
 }
 

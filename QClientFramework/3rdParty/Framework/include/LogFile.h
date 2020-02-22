@@ -10,6 +10,7 @@
 *******************************************************************/
 
 #include <sstream>
+#include <list>
 
 class SingleLog
 {
@@ -55,7 +56,7 @@ private:
 	void CheckFileName();
 	void WriteLogThread();
 
-	void WriteLog(std::string &strLog);
+	void WriteLog(std::list<std::string>& listLog);
 
 private:
 	static LogFile* s_instance;

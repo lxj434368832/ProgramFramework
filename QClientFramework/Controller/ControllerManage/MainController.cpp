@@ -189,7 +189,7 @@ void MainController::HandleLoginRs(const unsigned uUserKey, SDataExchange* pMsg)
 
 	if (0 == pRs->uResult)
 	{
-		LOGM("登录服务Key%d成功。", uUserKey);
+		LOGM("登录服务Key:%d 成功。", uUserKey);
 		m_pMainModel->AddLoginServer(uUserKey);
 
 		//if (EST_CMD_SERVER == uUserKey)
@@ -200,5 +200,5 @@ void MainController::HandleLoginRs(const unsigned uUserKey, SDataExchange* pMsg)
 		//}
 	}
 	else
-		LOGE("登录服务Key%d失败！", uUserKey);
+		LOGE("登录服务Key:%d 失败！", uUserKey);
 }

@@ -256,37 +256,24 @@ void IOCPBase::HandServerOperate(int iResult, PER_SOCKET_CONTEXT *pSkContext, PE
 
 bool IOCPBase::PostConnectEx(PER_SOCKET_CONTEXT *pSkContext)
 {
-	//if (0 < ::InterlockedExchangeAdd(&pSkContext->m_iDisconnectFlag, 0))
-	//{
-	//	LOGM("检测到连接已经断开，将直接回收资源！");
-	//	//直接回收资源
-	//	d->lckConnectList.lock();
-	//	d->mapConnectList.erase(pSkContext->m_uUserKey);
-	//	d->lckConnectList.unlock();
-	//	RELEASE_SOCKET(pSkContext->m_socket);
-	//	d->rscSocketContext.put(pSkContext);
-	//	return false;
-	//}
+	d->lckConnectList.lock();
+	d->mapConnectList[pSkContext->m_uUserKey] = pSkContext;
+	d->lckConnectList.unlock();
 
 	PER_IO_CONTEXT *pIO = &pSkContext->m_ReceiveContext;
 	pIO->m_socket = pSkContext->m_socket;
 	pIO->m_oprateType = EOP_CONNECT;
 	if (IOCPModule::Instance()->ConnectEx(pIO, (LPSOCKADDR)&pSkContext->m_clientAddr))
 	{
-		d->pNetInterface->ConnectNotify(pSkContext->m_uUserKey, false);
-		pIO->Reset();
-		d->rscIoContext.put(pIO);
+		d->lckConnectList.lock();
+		d->mapConnectList.erase(pSkContext->m_uUserKey);
+		d->lckConnectList.unlock();
 		RELEASE_SOCKET(pSkContext->m_socket);
 		d->rscSocketContext.put(pSkContext);
 		return false;
 	}
-	else
-	{
-		d->lckConnectList.lock();
-		d->mapConnectList[pSkContext->m_uUserKey] = pSkContext;
-		d->lckConnectList.unlock();
-		return true;
-	}
+
+	return true;
 }
 
 void IOCPBase::HandConnect(int iResult, PER_SOCKET_CONTEXT *pSkContext, PER_IO_CONTEXT* pIO)
@@ -295,10 +282,16 @@ void IOCPBase::HandConnect(int iResult, PER_SOCKET_CONTEXT *pSkContext, PER_IO_C
 	{
 		//通知上层连接成功
 		d->pNetInterface->ConnectNotify(pSkContext->m_uUserKey, true);
+
+		//linger lgOpt;
+		//lgOpt.l_onoff = 1;
+		//lgOpt.l_linger = 5;	//等待5s
+		//setsockopt(pSkContext->m_socket, SOL_SOCKET, SO_DONTLINGER, (const char*)&lgOpt, sizeof(BOOL));
+
 		//投递接收
 		pIO->m_wsaBuf.len = pIO->m_uBufLength;
 		PostReceive(pSkContext, pIO);
-		LOGM("UserKey:%d socket:%d连接成功！", pSkContext->m_uUserKey, pSkContext->m_socket);
+		//LOGM("UserKey:%d socket:%d连接成功！", pSkContext->m_uUserKey, pSkContext->m_socket);
 	}
 	else
 	{
@@ -312,7 +305,7 @@ void IOCPBase::HandConnect(int iResult, PER_SOCKET_CONTEXT *pSkContext, PER_IO_C
 		}
 		else
 		{
-			LOGM("socket:%d投递ConnectEx失败，错误码：%d。", pSkContext->m_socket, iResult);
+			LOGM("socket:%d ConnectEx失败，错误码：%d。", pSkContext->m_socket, iResult);
 		}
 
 		//通知上层连接失败
@@ -328,7 +321,7 @@ bool IOCPBase::PostAcceptEx(SOCKET listenSocket)
 {
 	if (INVALID_SOCKET == listenSocket)
 	{
-		LOGM("listenSocket无效！");
+		LOGM("listenSocket已经关闭，停止投递接收！");
 		return false;
 	}
 
@@ -338,6 +331,10 @@ bool IOCPBase::PostAcceptEx(SOCKET listenSocket)
 	PER_IO_CONTEXT *pIO = &pSkContext->m_ReceiveContext;
 	pIO->m_uUserKey = pSkContext->m_uUserKey;
 
+	d->lckConnectList.lock();
+	d->mapConnectList[pSkContext->m_uUserKey] = pSkContext;
+	d->lckConnectList.unlock();
+		
 	bool bRet = false;
 	for (int i = 0; i < 5; i++)
 	{
@@ -355,23 +352,24 @@ bool IOCPBase::PostAcceptEx(SOCKET listenSocket)
 		if (IOCPModule::Instance()->AcceptEx(listenSocket, pIO))	//失败
 		{
 			RELEASE_SOCKET(pSkContext->m_socket);
+			LOGE("userKey:%d socket:%d 投递AcceptEx失败，将重试！", pSkContext->m_uUserKey, pSkContext->m_socket);
 		}
 		else
 		{
-			d->lckConnectList.lock();
-			d->mapConnectList[pSkContext->m_uUserKey] = pSkContext;
-			d->lckConnectList.unlock();
 			bRet = true;
-			LOGM("socket:%d userKey:%d 投递AcceptEx成功。", pSkContext->m_socket, pSkContext->m_uUserKey);
+			//LOGM("socket:%d userKey:%d 投递AcceptEx成功。", pSkContext->m_socket, pSkContext->m_uUserKey);
 			break;
 		}
-	}
+	}//end for
 
 	if (false == bRet)
 	{
-		RELEASE_SOCKET(pSkContext->m_socket);
+		d->lckConnectList.lock();
+		d->mapConnectList.erase(pSkContext->m_uUserKey);
+		d->lckConnectList.unlock();
+
 		d->rscSocketContext.put(pSkContext);
-		LOGM("userKey:%d投递AcceptEx失败！", pSkContext->m_uUserKey);
+		LOGE("userKey:%d socket:%d 投递AcceptEx失败！", pSkContext->m_uUserKey, pSkContext->m_socket);
 	}
 	return bRet;
 }
@@ -386,23 +384,18 @@ void IOCPBase::HandAccept(int iResult, PER_SOCKET_CONTEXT *pListenSkContext, PER
 	}
 	d->lckConnectList.unlock();
 
-	if (0 == iResult)	//投递AcceptEx成功
+	if (nullptr == pSkContext)
+	{
+		LOGE("没有找到userKey:%d socket:%d 的用户。", pIO->m_uUserKey, pIO->m_socket);
+	}
+	else if (0 == iResult)	//投递AcceptEx成功
 	{
 		SOCKADDR_IN *pClientAddr = nullptr;
 		IOCPModule::Instance()->GetAcceptExSockaddrs(pIO, (LPSOCKADDR*)&pClientAddr);
+		memcpy(&(pSkContext->m_clientAddr), pClientAddr, sizeof(SOCKADDR_IN));
 
-		LOGM("客户端%s:%d连入,用户套接字：%d", IOCPModule::Instance()->GetIPAddress(&pClientAddr->sin_addr).c_str(), 
-			ntohs(pClientAddr->sin_port), pSkContext->m_socket);
-
-		if (pSkContext)
-		{
-			memcpy(&(pSkContext->m_clientAddr), pClientAddr, sizeof(SOCKADDR_IN));
-		}
-		else
-		{
-			LOGM("pClientSkContext为空，发生错误！");
-			assert(pSkContext);
-		}
+		//LOGM("客户端%s:%d连入,用户套接字：%d", IOCPModule::Instance()->GetIPAddress(&pClientAddr->sin_addr).c_str(), 
+		//	ntohs(pClientAddr->sin_port), pSkContext->m_socket);
 
 		//通知服务端新连接到达
 		d->pNetInterface->AddUser(pSkContext->m_uUserKey);
@@ -412,20 +405,13 @@ void IOCPBase::HandAccept(int iResult, PER_SOCKET_CONTEXT *pListenSkContext, PER
 	}
 	else
 	{
-		LOGM("投递AcceptEx失败，错误码：%d", iResult);
-		if (pSkContext)
-		{
-			d->lckConnectList.lock();
-			d->mapConnectList.erase(pSkContext->m_uUserKey);
-			d->lckConnectList.unlock();
+		//原则上是退出时进入到这里
+		LOGM("投递userKey:%d socket:%d AcceptEx失败，错误码：%d", pSkContext->m_uUserKey, pSkContext->m_socket, iResult);
+		d->lckConnectList.lock();
+		d->mapConnectList.erase(pSkContext->m_uUserKey);
+		d->lckConnectList.unlock();
 
-			int idxLock = pSkContext->m_uUserKey % IOCPBaseData::SOCKET_CONTEXT_LOCK_COUNT;
-			d->aLckSocketContext[idxLock].lock();
-			RELEASE_SOCKET(pSkContext->m_socket);
-			d->aLckSocketContext[idxLock].unlock();
-
-			d->rscSocketContext.put(pSkContext);
-		}
+		d->rscSocketContext.put(pSkContext);
 	}
 }
 
@@ -544,8 +530,7 @@ bool IOCPBase::PostSend(PER_SOCKET_CONTEXT *pSkContext)
 
 void IOCPBase::HandSend(int iResult, PER_SOCKET_CONTEXT *pSkContext, PER_IO_CONTEXT* pIO, DWORD dwBytesTransfered)
 {
-	LOGM("dwBytesTransfered:%d  InternalHigh:%d.", dwBytesTransfered, pIO->m_overlapped.InternalHigh);
-
+	//LOGM("dwBytesTransfered:%d  InternalHigh:%d.", dwBytesTransfered, pIO->m_overlapped.InternalHigh);
 	if (iResult)
 	{
 		if (ERROR_NETNAME_DELETED == iResult)
@@ -612,6 +597,8 @@ void IOCPBase::PostDisconnectEx(PER_SOCKET_CONTEXT *pSkContext, PER_IO_CONTEXT* 
 
 		pIO->Reset();
 		d->rscIoContext.put(pIO);
+
+		d->iExitUserCount--;
 	}
 }
 
@@ -635,7 +622,7 @@ void IOCPBase::ReCycleSocketRsc(PER_SOCKET_CONTEXT * pSkContext, PER_IO_CONTEXT*
 
 		//通知上层接口关闭连接
 		d->pNetInterface->DeleteUser(pSkContext->m_uUserKey);
-		LOGM("关闭user:%d的连接。", pSkContext->m_uUserKey);
+		//LOGM("关闭user:%d的连接。", pSkContext->m_uUserKey);
 	}
 	else if (1 == pSkContext->m_iDisconnectFlag)
 	{
@@ -646,7 +633,7 @@ void IOCPBase::ReCycleSocketRsc(PER_SOCKET_CONTEXT * pSkContext, PER_IO_CONTEXT*
 			pIO->Reset();
 			d->rscIoContext.put(pIO);
 		}
-		LOGM("user:%d已经断开连接，将不处理。", pSkContext->m_uUserKey);
+		//LOGM("user:%d已经断开连接，将不处理。", pSkContext->m_uUserKey);
 	}
 }
 
@@ -657,23 +644,24 @@ void IOCPBase::HandDisconnect(int iResult, PER_SOCKET_CONTEXT *pSkContext, PER_I
 	{
 		if (ERROR_NETNAME_DELETED == iResult)
 		{
-			LOGM("断开连接失败，网络的另一端已下线！");
+			LOGM("socket:%d 断开连接失败，网络的另一端已下线！", pSkContext->m_socket);
 		}
 		else
 		{
-			LOGM("断开连接失败，错误码:%d", iResult);
+			LOGM("socket:%d 断开连接失败，错误码:%d", pSkContext->m_socket, iResult);
 		}
 		d->aLckSocketContext[idxLock].lock();
 		RELEASE_SOCKET(pSkContext->m_socket);
 		d->aLckSocketContext[idxLock].unlock();
 	}
-	else
-		LOGM("socket:%d将会重用。", pSkContext->m_socket);
+	//else
+	//	LOGM("socket:%d将会重用。", pSkContext->m_socket);
 
 	d->rscSocketContext.put(pSkContext);
 
 	pIO->Reset();
 	d->rscIoContext.put(pIO);
+	d->iExitUserCount--;
 }
 
 void IOCPBase::PostReceive(PER_SOCKET_CONTEXT *pSkContext, PER_IO_CONTEXT* pIO)
@@ -681,7 +669,7 @@ void IOCPBase::PostReceive(PER_SOCKET_CONTEXT *pSkContext, PER_IO_CONTEXT* pIO)
 	if (0 < pSkContext->m_iDisconnectFlag)
 	{
 		ReCycleSocketRsc(pSkContext, nullptr);
-		LOGM("检测到连接断开，故停止接收数据！");
+		//LOGM("检测到连接已经断开userKey:%d，故停止接收数据！", pSkContext->m_uUserKey);
 		return;
 	}
 
@@ -693,23 +681,21 @@ void IOCPBase::PostReceive(PER_SOCKET_CONTEXT *pSkContext, PER_IO_CONTEXT* pIO)
 
 void IOCPBase::HandReceive(int iResult, PER_SOCKET_CONTEXT *pSkContext, PER_IO_CONTEXT* pIO, DWORD dwBytesTransfered)
 {
-	LOGM("dwBytesTransfered:%d  InternalHigh:%d.", dwBytesTransfered, pIO->m_overlapped.InternalHigh);
-
+	//LOGM("dwBytesTransfered:%d  InternalHigh:%d.", dwBytesTransfered, pIO->m_overlapped.InternalHigh);
 	if (iResult)
 	{
 		if (ERROR_NETNAME_DELETED == iResult)
-			LOGM("网络的另一端已下线！");
+			LOGM("网络的另一端已断开userKey:%d socket：%d 的连接！", pSkContext->m_uUserKey, pSkContext->m_socket);
 		else if (ERROR_OPERATION_ABORTED == iResult)
-			LOGM("用户已取消socket：%d的连接！", pSkContext->m_socket);
+			LOGM("用户已取消userKey:%d socket：%d的连接！", pSkContext->m_uUserKey, pSkContext->m_socket);
 		else
-			LOGM("SRV接收失败，错误码：%d", iResult);
+			LOGM("userKey:%d socket：%d SRV接收失败，错误码：%d", pSkContext->m_uUserKey, pSkContext->m_socket, iResult);
 
 		PostDisconnectEx(pSkContext, d->rscIoContext.get());
 	}
 	else if (0 == dwBytesTransfered)	//代表服务器已断开此socket连接
 	{
-		LOGM("网络的另一端已断开socket：%d的连接！", pSkContext->m_socket);
-
+		//LOGM("接收到userKey:%d socket：%d数据长度为0！", pSkContext->m_uUserKey, pSkContext->m_socket);
 		PostDisconnectEx(pSkContext, d->rscIoContext.get());
 	}
 	else

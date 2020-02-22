@@ -10,13 +10,14 @@
 *******************************************************************/
 
 #include <sstream>
+#include <list>
 
 class SingleLog
 {
 public:
 	SingleLog();
 	~SingleLog();
-	void AddLog(char* format, ...);
+	void AddLog(const char* format, ...);
 
 	template <typename T>
 	inline SingleLog& operator<<(const T& log)
@@ -47,7 +48,7 @@ public:
 	{
 		return s_instance;
 	}
-	void AddLog(std::string &strLog);
+	void AddLog(const std::string &strLog);
 
 	void Timeout(unsigned uTimerID);
 
@@ -55,7 +56,7 @@ private:
 	void CheckFileName();
 	void WriteLogThread();
 
-	void WriteLog(std::string &strLog);
+	void WriteLog(std::list<std::string>& listLog);
 
 private:
 	static LogFile* s_instance;

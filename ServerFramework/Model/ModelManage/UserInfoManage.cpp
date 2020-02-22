@@ -69,7 +69,9 @@ void UserInfoManage::DeleteUser(UserKey uUserKey)
 		m_mapIdKey.erase(pUser->uUserId);
 		m_lckIdKey.unlock();
 
+		LockUserInfo(uUserKey);
 		m_rscUser.put(pUser);
+		UnlockUserInfo(uUserKey);
 	}
 }
 
@@ -150,6 +152,17 @@ void UserInfoManage::UnlockUserInfo(UserKey uUserKey)
 	m_UserShareLock[uUserKey % USER_SHARE_LOCK_COUNT].unlock();
 }
 
+void UserInfoManage::ClearUserHeartbeatCount(UserKey uUserKey)
+{
+	m_lckUserList.lock();
+	auto iter = m_mapUserList.find(uUserKey);
+	if (m_mapUserList.end() != iter)
+	{
+		iter->second->uHeartCount = 0;
+	}
+	m_lckUserList.unlock();
+}
+
 std::vector<unsigned> UserInfoManage::GetOfflineUserList()
 {
 	std::vector<unsigned> userKeyList;
@@ -159,7 +172,7 @@ std::vector<unsigned> UserInfoManage::GetOfflineUserList()
 	for (auto iter = m_mapUserList.begin(); iter != m_mapUserList.end(); iter++)
 	{
 		SUserInfo *pInfo = iter->second;
-		if (++pInfo->uHeartCount >= 2)
+		if (++pInfo->uHeartCount >= 15)
 		{
 			userKeyList.push_back(pInfo->uUserKey);
 		}

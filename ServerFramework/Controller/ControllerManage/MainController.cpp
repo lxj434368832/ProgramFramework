@@ -103,10 +103,11 @@ void MainController::HandleLoginRq(const unsigned uUserKey, SDataExchange* pMsg)
 	SUserInfo* pUser = m_pUserMng->GetClientUserInfo(uUserKey);
 	if (nullptr == pUser)
 	{
-		LOGE("登录用户key:%d userId:%d userName:%s不存在。", uUserKey, pRq->uUserId, pRq->strUserName);
+		LOGE("登录用户key:%d userId:%d userName:%s不存在。", uUserKey, pRq->uUserId, pRq->strUserName.data());
 		return;
 	}
 	m_pUserMng->LockUserInfo(uUserKey);
+	pUser->uHeartCount = 0;
 	pUser->uUserId = pRq->uUserId;
 	pUser->strLoginName = pRq->strUserName;
 	pUser->strPassword = pRq->strPassword;
@@ -131,6 +132,7 @@ void MainController::HandleHeartbeatNt(const unsigned uUserKey, SDataExchange* p
 		return;
 	}
 
+	logm() << "接收到用户：" << uUserKey << "的心跳消息。";
 	m_pUserMng->LockUserInfo(uUserKey);
 	pUser->uHeartCount = 0;
 	m_pUserMng->UnlockUserInfo(uUserKey);

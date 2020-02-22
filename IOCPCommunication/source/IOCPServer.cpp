@@ -109,7 +109,8 @@ void IOCPServer::StopServer()
 	d->rscSocketContext.put(m_pListenSocketContext);
 	m_pListenSocketContext = nullptr;
 
-	logm() << "取消所有连接socket的IO操作。";
+	logm() << "取消所有连接socket的IO操作。"; 
+	d->iExitUserCount = 0;
 	d->lckConnectList.lock();
 	auto iter = d->mapConnectList.begin();
 	while (iter != d->mapConnectList.end())
@@ -122,7 +123,7 @@ void IOCPServer::StopServer()
 		}
 		else
 		{
-			if (EOP_ACCEPT == pSkContext->m_ReceiveContext.m_oprateType)
+			if (EOP_ACCEPT >= pSkContext->m_ReceiveContext.m_oprateType)
 			{
 				iter++;
 			}
@@ -140,11 +141,20 @@ void IOCPServer::StopServer()
 					pIO->Reset();
 					d->rscIoContext.put(pIO);
 				}
+				else
+					d->iExitUserCount++;
+
 				iter = d->mapConnectList.erase(iter);
 			}
 		}
 	}
 	d->lckConnectList.unlock();
+
+	for (int i = 0; i < 50 && d->iExitUserCount > 5; i++)
+	{
+		::Sleep(500);
+		logm() << "等待断开连接处理完毕。";
+	}
 
 	IOCPBase::UninitIOCP();
 }

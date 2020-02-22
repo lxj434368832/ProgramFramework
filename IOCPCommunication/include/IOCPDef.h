@@ -142,7 +142,7 @@ struct IOCPBaseData
 {
 	enum
 	{
-		SOCKET_RESOURCE_COUNT = 20,
+		SOCKET_RESOURCE_COUNT = 100,
 		IO_RESOURCE_COUNT = 40,
 		SOCKET_CONTEXT_LOCK_COUNT = 10
 	};
@@ -159,6 +159,7 @@ struct IOCPBaseData
 	mqw::ResourceManage<PER_SOCKET_CONTEXT>	rscSocketContext;	//socket资源管理
 	mqw::ResourceManage<PER_IO_CONTEXT>		rscIoContext;		//IO资源管理
 	INetInterface							*pNetInterface;		//网络接口
+	std::atomic_int							iExitUserCount;		//退出用户计数
 
 	IOCPBaseData(INetInterface *pNet) :
 		pNetInterface(pNet),
@@ -169,6 +170,7 @@ struct IOCPBaseData
 		uUserNum = 100;
 		uThreadCount = 0;
 		aThreadList = NULL;
+		iExitUserCount = 0;
 	}
 
 	~IOCPBaseData()
