@@ -172,7 +172,7 @@ std::vector<unsigned> UserInfoManage::GetOfflineUserList()
 	for (auto iter = m_mapUserList.begin(); iter != m_mapUserList.end(); iter++)
 	{
 		SUserInfo *pInfo = iter->second;
-		if (++pInfo->uHeartCount >= 15)
+		if (++pInfo->uHeartCount >= 12)
 		{
 			userKeyList.push_back(pInfo->uUserKey);
 		}

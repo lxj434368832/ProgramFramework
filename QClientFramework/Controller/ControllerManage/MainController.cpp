@@ -35,6 +35,7 @@ MainController::~MainController()
 	}
 
 	m_pMainModel = nullptr;
+	m_pSrvCnnt = nullptr;
 }
 
 bool MainController::Initialize()
@@ -69,9 +70,6 @@ void MainController::Uninitialize()
 
 	disconnect(m_pCmmnt, SIGNAL(signalTcpConnectNotify(uint, bool)),this, SLOT(slotTcpConnectNotify(uint, bool)));
 	disconnect(m_pCmmnt, SIGNAL(signalTcpDisconnectNotify(uint)),this, SLOT(slotTcpDisconnectNotify(uint)));
-
-	m_pMainModel = nullptr;
-	m_pSrvCnnt = nullptr;
 }
 
 void MainController::slotUserLogin(std::string strUserName, std::string strPassword)

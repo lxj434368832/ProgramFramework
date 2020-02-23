@@ -40,7 +40,7 @@ bool Communication::ConnectServer()
 		if (false == m_pConnect->AddConnect(i, cfg->strServerIP, cfg->usServerPort, 1))
 		{
 			loge() << "添加对命令服务器的连接失败！";
-			return false;
+			//return false;
 		}
 	}
 	return true;
