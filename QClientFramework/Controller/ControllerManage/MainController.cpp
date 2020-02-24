@@ -113,6 +113,7 @@ void MainController::slotExecuteSystem()
 	if (false == m_pCmmnt->ConnectServer())
 	{
 		emit signalSplashMessage("连接服务器失败！");
+		emit signalShowMainWindow(iUserType);		//此处根据具体的业务来加
 	}
 	else
 		emit signalShowMainWindow(iUserType);
