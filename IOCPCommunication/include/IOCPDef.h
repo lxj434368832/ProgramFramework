@@ -178,3 +178,10 @@ struct IOCPBaseData
 		pNetInterface = nullptr;
 	}
 };
+
+struct IOCPClientData : IOCPBaseData
+{
+	IOCPClientData(INetInterface *pNet)
+		: IOCPBaseData(pNet)
+	{}
+};

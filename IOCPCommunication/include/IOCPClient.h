@@ -6,9 +6,12 @@
 * company:  
 *************************************************************************/
 #include "IOCPBase.h"
+#include "stdafx.h"
 
 class IOCPClient :public IOCPBase
 {
+	DECLARE_DATA(IOCPClient)
+
   public:
 	  IOCPClient(INetInterface *pNet);
 	  virtual ~IOCPClient();
@@ -24,4 +27,3 @@ class IOCPClient :public IOCPBase
 	  *************************************************************************/
 	  bool AddConnect(unsigned uUserKey, std::string ip, u_short port, int iRecnnt = -1);
 };
-

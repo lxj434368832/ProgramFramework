@@ -9,12 +9,14 @@
 
 struct PER_SOCKET_CONTEXT;
 struct PER_IO_CONTEXT;
+struct IOCPBaseData;
 class INetInterface;
 
 class IOCPBase
 {
 public:
 	IOCPBase(INetInterface *pNet);
+	IOCPBase(IOCPBaseData *d);
 	virtual ~IOCPBase();
 
 	/*************************************************************************
@@ -89,5 +91,5 @@ private:
 	void WorkThread();
 
 protected:
-	struct IOCPBaseData *d;
+	IOCPBaseData *d;
 };
