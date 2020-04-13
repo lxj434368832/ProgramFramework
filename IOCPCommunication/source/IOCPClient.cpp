@@ -6,7 +6,7 @@
 
 
 IOCPClient::IOCPClient(INetInterface *pNet):
-	IOCPBase(new IOCPClientData(pNet))
+	IOCPBase(pNet)
 {
 }
 

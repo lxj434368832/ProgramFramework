@@ -16,7 +16,6 @@ class IOCPBase
 {
 public:
 	IOCPBase(INetInterface *pNet);
-	IOCPBase(IOCPBaseData *d);
 	virtual ~IOCPBase();
 
 	/*************************************************************************

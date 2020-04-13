@@ -10,8 +10,6 @@
 
 class IOCPClient :public IOCPBase
 {
-	DECLARE_DATA(IOCPClient)
-
   public:
 	  IOCPClient(INetInterface *pNet);
 	  virtual ~IOCPClient();

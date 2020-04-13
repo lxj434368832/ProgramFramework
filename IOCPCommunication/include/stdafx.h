@@ -30,10 +30,3 @@ static HANDLE consolehwnd = ::GetStdHandle(STD_OUTPUT_HANDLE);
 #ifndef RELEASE_SOCKET
 #define RELEASE_SOCKET(x) {if(x !=INVALID_SOCKET) { ::closesocket(x);x = INVALID_SOCKET;}}
 #endif
-
-
-#define DECLARE_DATA(Class) /
-inline Class##Data* d_func() { return static_cast<Class##Data *>(d); } /
-inline const Class##Data* d_func() const { return static_cast<const Class##Data *>(d); }
-
-#define M_D(Class) Class##Data * const d = d_func()
