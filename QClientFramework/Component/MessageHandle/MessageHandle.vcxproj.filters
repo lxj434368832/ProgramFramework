@@ -17,19 +17,7 @@
     <ClInclude Include="MessageHandle.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="HandleNotifyMessage.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="HandleRequestMessage.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="HandleRespondMessage.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\3rdParty\Protobuf\include\Message.pb.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="HandleMessageColleague.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="PbMessageHandle.h">
@@ -43,19 +31,7 @@
     <ClCompile Include="MessageHandle.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="HandleNotifyMessage.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="HandleRequestMessage.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="HandleRespondMessage.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\3rdParty\Protobuf\include\Message.pb.cc">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="HandleMessageColleague.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="PbMessageHandle.cpp">

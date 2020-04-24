@@ -9,8 +9,6 @@
 
 #include <QObject>
 
-class IMessageHandle;
-class ICommunication;
 class IModelManage;
 class ControllerManage;
 class IMainClient;
@@ -25,6 +23,4 @@ protected:
     IMainClient             *m_pMain = nullptr;
 	ControllerManage		*m_pCtrlMng = nullptr;
 	IModelManage			*m_pModel = nullptr; 
-	ICommunication			*m_pCmmnt = nullptr;
-	IMessageHandle			*m_pMsgHandle = nullptr;
 };

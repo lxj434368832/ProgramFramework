@@ -15,8 +15,6 @@ MainController::MainController(ControllerManage *pCtrlMng) :
 	//连接信号和槽
 	connect(this, SIGNAL(signalUserLogin(std::string, std::string)), SLOT(slotUserLogin(std::string, std::string)));
 	connect(this, SIGNAL(signalExecuteSystem()), SLOT(slotExecuteSystem()));
-    connect(m_pCmmnt, SIGNAL(signalTcpConnectNotify(uint,bool)), SLOT(slotTcpConnectNotify(uint,bool)));
-    connect(m_pCmmnt,SIGNAL(signalTcpDisconnectNotify(uint)),SLOT(slotTcpDisconnectNotify(uint)));
 
 	//开启异步线程
     moveToThread(&m_thread);

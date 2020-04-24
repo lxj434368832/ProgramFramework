@@ -1,8 +1,18 @@
 #include "MainModel.h"
 #include "..\..\CommonFile\EnumDefine.h"
 #include "..\..\CommonFile\CommonDefine.h"
+#include "../../Component/TCPCommunication/Communication.h"
+#include "..\..\Component\MessageHandle\MessageHandle.h"
 
-MainModel::MainModel()
+MainModel::MainModel(ModelManage* pMdlMng) :
+ModelColleague(pMdlMng)
+{
+	connect(m_pCmmnt, SIGNAL(signalTcpConnectNotify(uint, bool)), SLOT(slotTcpConnectNotify(uint, bool)));
+	connect(m_pCmmnt, SIGNAL(signalTcpDisconnectNotify(uint)), SLOT(slotTcpDisconnectNotify(uint)));
+
+}
+
+MainModel::~MainModel()
 {
 
 }
@@ -44,6 +54,16 @@ void MainModel::DelLoginServer(UserKey uUserKey)
 QSet<unsigned> MainModel::GetLoginServerList()
 {
 	return m_setSrvUser;
+}
+
+void MainModel::slotTcpConnectNotify(unsigned uServerType, bool bSuccess)
+{
+
+}
+
+void MainModel::slotTcpDisconnectNotify(unsigned uServerType)
+{
+
 }
 
 SUserInfo& MainModel::GetUserInfo()

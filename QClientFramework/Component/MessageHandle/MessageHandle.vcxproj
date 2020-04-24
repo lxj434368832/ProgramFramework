@@ -144,10 +144,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="..\..\3rdParty\Protobuf\include\Message.pb.h" />
-    <ClInclude Include="HandleNotifyMessage.h" />
-    <ClInclude Include="HandleRequestMessage.h" />
-    <ClInclude Include="HandleRespondMessage.h" />
-    <ClInclude Include="HandleMessageColleague.h" />
     <ClInclude Include="IMessageHandle.h" />
     <ClInclude Include="MessageHandle.h" />
     <ClInclude Include="PbMessageFactory.h" />
@@ -155,10 +151,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\3rdParty\Protobuf\include\Message.pb.cc" />
-    <ClCompile Include="HandleNotifyMessage.cpp" />
-    <ClCompile Include="HandleRequestMessage.cpp" />
-    <ClCompile Include="HandleRespondMessage.cpp" />
-    <ClCompile Include="HandleMessageColleague.cpp" />
     <ClCompile Include="MessageHandle.cpp" />
     <ClCompile Include="PbMessageFactory.cpp" />
     <ClCompile Include="PbMessageHandle.cpp" />

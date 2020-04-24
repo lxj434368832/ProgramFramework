@@ -14,9 +14,6 @@ public:
 	IControllerManage* GetControllerManage() override;
 	IModelManage* GetModelManage() override;
 
-    ICommunication* GetCommunication() override;
-	IMessageHandle*	GetMessageHandle() override;
-
 	bool StartClient() override;
 	void StopClient() override;
 
@@ -29,8 +26,5 @@ private:
 	IViewManage*		m_pView;
     IControllerManage*	m_pController;
 	IModelManage*		m_pModel;
-
-    ICommunication*		m_pTCPCommunication;
-    IMessageHandle*         m_pMessage;
 };
 
