@@ -2,7 +2,7 @@
 #include "ModelManage.h"
 
 
-ModelColleague::ModelColleague(ModelManage *pMdlMng, QObject *parent)
+ModelColleague::ModelColleague(IModelManage *pMdlMng, QObject *parent)
 	:QObject(parent)
 {
 	m_pMain = pMdlMng->GetMainClient();

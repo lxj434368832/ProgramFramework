@@ -13,8 +13,6 @@ public:
 	bool Initialize() override;
 	void Uninitialize() override;
 
-	bool ConnectServer() override;
-
 private:
 	ServerConnect*		m_pConnect;
 

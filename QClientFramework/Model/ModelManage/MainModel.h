@@ -5,20 +5,28 @@
 #include "..\..\3rdParty\Framework\include\MLock.h"
 #include "ModelColleague.h"
 
+class ServerConnect;
+class MainController;
+
 class MainModel : public ModelColleague
 {
 	Q_OBJECT
-
 public:
-	MainModel(ModelManage*);
+	MainModel(IModelManage*);
 	~MainModel() override;
 
     bool Initialize();
 	void Uninitialize();
 
-	void SaveUserInfo(SUserInfo& user);
+	bool UserLoginWeb(SUserInfo &user);
+
+	bool GetConfigInfo();
 
 	SUserInfo& GetUserInfo();
+
+	bool ConnectTcpServer();
+
+	void LoginTcpServer(unsigned uServerType);
 
 	/*************************************************************************
 	* function：锁住UserKey对应的信息
@@ -31,8 +39,6 @@ public:
 	void UnlockUserInfo();
 
 	void AddLoginServer(UserKey uUserKey);
-
-	void DelLoginServer(UserKey uUserKey);
 
 	QSet<unsigned> GetLoginServerList();
 
@@ -49,8 +55,15 @@ private slots:
 	void slotTcpDisconnectNotify(unsigned uServerType);
 
 private:
-	SUserInfo	m_user;
-	MLock		m_lckUserInfo;
+	/*************************以下为消息回调函数*************************/
+	void OnLoginRs(const unsigned uUserKey, SDataExchange* pMsg);
+
+private:
+	ServerConnect	*m_pSrvCnnt = nullptr;		//服务端连接
+	MainController	*m_pMainCtrl = nullptr;		//
+
+	SUserInfo		m_user;
+	MLock			m_lckUserInfo;
 	QSet<unsigned>	m_setSrvUser;
 	MLock			m_lckSrvUser;
 };

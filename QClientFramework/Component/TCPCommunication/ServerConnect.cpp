@@ -5,25 +5,27 @@
 #include "..\..\CommonFile\CommonDefine.h"
 #include "..\..\CommonFile\EnumDefine.h"
 #include "ServerConnect.h"
-#include <windows.h>
 #include "../../3rdParty/IOCPCommunication/include/IOCPClient.h"
+#include "..\..\Model\ModelManage\IModelManage.h"
+#include <windows.h>
 
-ServerConnect::ServerConnect(ICommunication *pCmmnt)
-	:INetInterface()
+ServerConnect::ServerConnect(IMainClient *pMain) :
+	QObject(),
+	INetInterface()
 {
-	m_pCmmnt = pCmmnt;
+	m_pMain = pMain;
 	m_pIOCPClient = new IOCPClient(this);
 }
 
 ServerConnect::~ServerConnect()
 {
-	m_pCmmnt = nullptr;
+	m_pMain = nullptr;
 	RELEASE(m_pIOCPClient);
 }
 
 bool ServerConnect::Initialize(unsigned uThreadCount)
 {
-	m_pMsgModule = m_pCmmnt->GetMainClient()->GetMessageHandle();
+	m_pMsgModule = m_pMain->GetModelManage()->GetMessageHandle();
 	if (nullptr == m_pMsgModule)
 	{
 		loge() << "获取消息处理模块失败！";
@@ -108,7 +110,7 @@ void ServerConnect::Disconnect(unsigned uUserKey)
 
 void ServerConnect::ConnectNotify(UserKey uUserKey, bool bSuccess)
 {
-	emit m_pCmmnt->signalTcpConnectNotify(uUserKey, bSuccess);
+	emit signalTcpConnectNotify(uUserKey, bSuccess);
 	if (false == bSuccess)
 	{
 		MAutoLock lck(m_lckSrvInfo);
@@ -130,7 +132,7 @@ void ServerConnect::HandData(unsigned uUserKey, unsigned uMsgType, const char* d
 
 void ServerConnect::DeleteUser(unsigned uUserKey)
 {
-	emit m_pCmmnt->signalTcpDisconnectNotify(uUserKey);
+	emit signalTcpDisconnectNotify(uUserKey);
 
 	MAutoLock lck(m_lckSrvInfo);
 	auto iter = m_mapSrvInfo.find(uUserKey);

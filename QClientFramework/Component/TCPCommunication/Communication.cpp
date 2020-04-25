@@ -7,7 +7,7 @@
 Communication::Communication(IMainClient *main)
 	:ICommunication(main)
 {
-	m_pConnect = new ServerConnect(this);
+	m_pConnect = new ServerConnect(main);
 }
 
 Communication::~Communication()
@@ -29,19 +29,4 @@ bool Communication::Initialize()
 void Communication::Uninitialize()
 {
 	m_pConnect->Uninitialize();
-}
-
-bool Communication::ConnectServer()
-{
-	ClientConfig *cfg = m_pMain->GetClientConfig();
-	
-	for (int i = EST_CMD_SERVER; i < EST_SERVER_COUNT; i++)
-	{
-		if (false == m_pConnect->AddConnect(i, cfg->strServerIP, cfg->usServerPort, 1))
-		{
-			loge() << "添加对命令服务器的连接失败！";
-			return false;
-		}
-	}
-	return true;
 }

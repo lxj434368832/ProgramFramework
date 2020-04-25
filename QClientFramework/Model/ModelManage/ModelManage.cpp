@@ -8,10 +8,10 @@
 ModelManage::ModelManage(IMainClient *_main)
 	:IModelManage(_main)
 {
-	m_pCmmnt = new Communication(this);
-	m_pMsgHandle = new MessageHandle(this);
+	m_pCmmnt = new Communication(m_pMain);
+	m_pMsgHandle = new MessageHandle(m_pMain);
 
-    m_pMainModel = new MainModel();
+    m_pMainModel = new MainModel(this);
 }
 
 ModelManage::~ModelManage()

@@ -9,7 +9,7 @@
 
 #include <QObject>
 
-class ModelManage;
+class IModelManage;
 class IMainClient;
 class IMessageHandle;
 class ICommunication;
@@ -17,12 +17,12 @@ class ICommunication;
 class ModelColleague : public QObject
 {
 public:
-	ModelColleague(ModelManage *, QObject *parent = nullptr);
+	ModelColleague(IModelManage *, QObject *parent = nullptr);
 	virtual ~ModelColleague();
 
 protected:
 	IMainClient             *m_pMain = nullptr;
-	ModelManage				*m_pMdlMng = nullptr;
+	IModelManage			*m_pMdlMng = nullptr;
 	ICommunication			*m_pCmmnt = nullptr;
 	IMessageHandle			*m_pMsgHandle = nullptr;
 };

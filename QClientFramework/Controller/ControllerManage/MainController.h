@@ -10,6 +10,7 @@
 #include <QThread>
 #include <thread>
 #include "ControllerColleague.h"
+#include "..\..\CommonFile\TypeDefine.h"
 
 class MainModel;
 struct SDataExchange;
@@ -25,9 +26,6 @@ public:
 
     bool Initialize();
 	void Uninitialize();
-
-	//处理登录响应
-	void HandleLoginRs(const unsigned uUserKey, SDataExchange* pMsg);
 
 signals:
 	/*************************以下为对外的通知消息*************************/
@@ -60,21 +58,22 @@ private slots:
 
 
 	/*************************以下为本类自定槽函数*************************/
-	/*************************************************************************
-	* function：		 Tcp连接状态通知
-	* param uServerType: 服务器类型
-	* param state:		 连接成功标识
-	* param once:		 第一次连接标识
-	*************************************************************************/
-	void slotTcpConnectNotify(unsigned uServerType, bool bSuccess);
-	void slotTcpDisconnectNotify(unsigned uServerType);
+
+	/***********************以下为MainModel回调的函数**********************/
+public:
+	//处理登录响应
+	void HandleLoginRs(const unsigned uUserKey, std::auto_ptr<SRespondMsg> pRs);
+
+	void HandleTcpConnectNotify(unsigned uServerType, bool bSuccess);
+
+	void HandleTcpDisconnectNotify(unsigned uServerType);
 
 private:
 	void HeartbeatHandle();
 
+
 private:
 	MainModel		*m_pMainModel = nullptr;
-	ServerConnect	*m_pSrvCnnt = nullptr;		//服务端连接
     QThread			m_thread;                   //异步线程
 
 	std::thread		 *m_pHeartbeatThread = nullptr;	//心跳线程

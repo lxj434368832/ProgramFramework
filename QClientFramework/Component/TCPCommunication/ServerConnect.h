@@ -5,22 +5,24 @@
 * datetime：2017-12-14
 * company:  
 *************************************************************************/
+#include <QObject>
 #include <thread>
 #include "../../3rdParty/IOCPCommunication/include/INetInterface.h"
 #include "..\..\3rdParty\Framework\include\MLock.h"
 
 class MessageHandle;
 class IOCPClient;
-class ICommunication;
+class IMainClient;
 class IMessageHandle; 
 struct SPbMsg;
 
 //#define CONNECT_SHARE_LOCK_COUNT 16
 
-class ServerConnect : public INetInterface
+class ServerConnect : public QObject, public INetInterface
 {
+	Q_OBJECT
 public:
-	ServerConnect(ICommunication *pCmmnt = nullptr);
+	ServerConnect(IMainClient *pMain);
 	virtual ~ServerConnect();
 	bool Initialize(unsigned uThreadCount);
 	void Uninitialize();
@@ -56,6 +58,10 @@ public:
 	*************************************************************************/
 	void Disconnect(unsigned uUserKey);
 
+signals:
+	void signalTcpConnectNotify(unsigned uServerType, bool bSuccess);
+	void signalTcpDisconnectNotify(unsigned uServerType);
+
 private:
 	//实现INetInterface接口
 	//连接结果通知
@@ -80,7 +86,7 @@ private:
 		bool		bNeedConnect = false;
 	};
 
-	ICommunication		*m_pCmmnt;
+	IMainClient			*m_pMain;
 	IMessageHandle		*m_pMsgModule;
 	IOCPClient			*m_pIOCPClient;				//IOCP 客户端
 	std::map<unsigned, SServerInfo> m_mapSrvInfo;	//服务信息列表

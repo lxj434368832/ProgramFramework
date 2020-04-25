@@ -2,6 +2,8 @@
 
 class IMainClient;
 class MainModel;
+class ICommunication;
+class IMessageHandle;
 
 class IModelManage
 {
