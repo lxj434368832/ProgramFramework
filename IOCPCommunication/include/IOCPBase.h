@@ -16,8 +16,10 @@ class IOCPBase
 {
 public:
 	IOCPBase(INetInterface *pNet);
+	IOCPBase(IOCPBaseData*);
 	virtual ~IOCPBase();
 
+protected:
 	/*************************************************************************
 	* function：  开启针对服务端的监听
 	* param port: 本地监听的端口号
@@ -35,7 +37,6 @@ public:
 	*************************************************************************/
 	virtual bool AddConnect(unsigned uUserKey, std::string ip, u_short port, int iRecnnt = -1);
 
-protected:
 	bool InitIOCP(unsigned uThreadCount);
 
 	void UninitIOCP();
@@ -60,8 +61,8 @@ protected:
 	void UnpackReceivedData(PER_SOCKET_CONTEXT *pSkContext, PER_IO_CONTEXT* pIO);
 
 	/*************************************************************************
-	* function： 发送数据，外部回调
-	* param key: 用户id
+	* function： 发送数据
+	* param key: 用户key
 	* param data:需要发送的数据
 	* return:	 无
 	*************************************************************************/
@@ -75,10 +76,10 @@ protected:
 	void HandSend(int iResult, PER_SOCKET_CONTEXT *pSkContext, PER_IO_CONTEXT* pIO, DWORD dwBytesTransfered);
 
 	/*************************************************************************
-	* function： 断开连接，外部回调
-	* param key: 用户id
+	* function： 断开连接
+	* param key: 用户Key
 	*************************************************************************/
-	void Disconnect(unsigned uUserKey);
+	virtual void Disconnect(unsigned uUserKey);
 	//
 	void PostDisconnectEx(PER_SOCKET_CONTEXT *pSkContext, PER_IO_CONTEXT* pIO);
 

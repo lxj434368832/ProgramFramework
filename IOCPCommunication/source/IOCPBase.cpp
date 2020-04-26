@@ -7,12 +7,11 @@
 IOCPBase::IOCPBase(INetInterface *pNet)
 :d(new IOCPBaseData(pNet))
 {
-	if (d->pNetInterface)
-	{
-		d->pNetInterface->SetNetworkCallback(std::bind(&IOCPBase::Send, this, std::placeholders::_1,
-			std::placeholders::_2, std::placeholders::_3, std::placeholders::_4),
-			std::bind(&IOCPBase::Disconnect, this, std::placeholders::_1));
-	}
+}
+
+IOCPBase::IOCPBase(IOCPBaseData* d)
+{
+	this->d = d;
 }
 
 IOCPBase::~IOCPBase()

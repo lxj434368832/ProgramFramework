@@ -121,3 +121,13 @@ void IOCPClient::StopClient()
 
 	IOCPBase::UninitIOCP();
 }
+
+void IOCPClient::SendData(unsigned uUserKey, unsigned uMsgType, const char* data, unsigned uLength)
+{
+	IOCPBase::Send(uUserKey, uMsgType, data, uLength);
+}
+
+void IOCPClient::Disconnect(unsigned uUserKey)
+{
+	IOCPBase::Disconnect(uUserKey);
+}

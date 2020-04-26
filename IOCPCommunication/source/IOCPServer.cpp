@@ -6,10 +6,9 @@
 #include <assert.h>
 
 IOCPServer::IOCPServer(INetInterface *pNet) : 
-	IOCPBase(pNet)
+	d(new IOCPServerData(pNet)),
+	IOCPBase(d)
 {
-	m_bStart = false;
-	m_pListenSocketContext = nullptr;
 }
 
 IOCPServer::~IOCPServer()
@@ -45,7 +44,7 @@ bool IOCPServer::StartServer(USHORT nPort, unsigned dwMaxConnection, unsigned uT
 		RELEASE_HANDLE(d->hIOCompletionPort);
 		return false;
 	}
-	m_bStart = true;
+	d->bStart = true;
 	return true;
 }
 
@@ -54,15 +53,15 @@ bool IOCPServer::StartServerListen(u_short port, unsigned iMaxConnectCount)
 	bool bRet = false;
 	do
 	{
-		if (nullptr == m_pListenSocketContext)
+		if (nullptr == d->pListenSocketContext)
 		{
-			m_pListenSocketContext = d->rscSocketContext.get();
+			d->pListenSocketContext = d->rscSocketContext.get();
 		}
 
-		if (INVALID_SOCKET == m_pListenSocketContext->m_socket)
+		if (INVALID_SOCKET == d->pListenSocketContext->m_socket)
 		{
-			m_pListenSocketContext->m_socket = IOCPModule::Instance()->Socket();
-			if (INVALID_SOCKET == m_pListenSocketContext->m_socket)
+			d->pListenSocketContext->m_socket = IOCPModule::Instance()->Socket();
+			if (INVALID_SOCKET == d->pListenSocketContext->m_socket)
 			{
 				LOGM("创建Server监听socket失败，错误码：%d", WSAGetLastError());
 				break;
@@ -73,16 +72,16 @@ bool IOCPServer::StartServerListen(u_short port, unsigned iMaxConnectCount)
 		addrLocal.sin_family = AF_INET;
 		addrLocal.sin_addr.s_addr = ADDR_ANY;
 		addrLocal.sin_port = htons(port);
-		if (IOCPModule::Instance()->Bind(m_pListenSocketContext->m_socket, (LPSOCKADDR)&addrLocal)) break;
+		if (IOCPModule::Instance()->Bind(d->pListenSocketContext->m_socket, (LPSOCKADDR)&addrLocal)) break;
 
-		if (IOCPModule::Instance()->Listen(m_pListenSocketContext->m_socket, SOMAXCONN)) break;
+		if (IOCPModule::Instance()->Listen(d->pListenSocketContext->m_socket, SOMAXCONN)) break;
 
-		if (IOCPModule::Instance()->BindIoCompletionPort(m_pListenSocketContext, d->hIOCompletionPort)) break;
+		if (IOCPModule::Instance()->BindIoCompletionPort(d->pListenSocketContext, d->hIOCompletionPort)) break;
 
 		//投递接受操作
 		for (unsigned i = 0; i < iMaxConnectCount; i++)
 		{
-			if (false == (bRet = PostAcceptEx(m_pListenSocketContext->m_socket)))
+			if (false == (bRet = PostAcceptEx(d->pListenSocketContext->m_socket)))
 			{
 				break;
 			}
@@ -92,22 +91,22 @@ bool IOCPServer::StartServerListen(u_short port, unsigned iMaxConnectCount)
 
 	if (false == bRet)
 	{
-		RELEASE_SOCKET(m_pListenSocketContext->m_socket);
-		d->rscSocketContext.put(m_pListenSocketContext);
-		m_pListenSocketContext = nullptr;
+		RELEASE_SOCKET(d->pListenSocketContext->m_socket);
+		d->rscSocketContext.put(d->pListenSocketContext);
+		d->pListenSocketContext = nullptr;
 	}
 	return bRet;
 }
 
 void IOCPServer::StopServer()
 {
-	if (false == m_bStart) return;
-	m_bStart = false;
+	if (false == d->bStart) return;
+	d->bStart = false;
 
 	logm() << "关闭监听端口。";
-	RELEASE_SOCKET(m_pListenSocketContext->m_socket);
-	d->rscSocketContext.put(m_pListenSocketContext);
-	m_pListenSocketContext = nullptr;
+	RELEASE_SOCKET(d->pListenSocketContext->m_socket);
+	d->rscSocketContext.put(d->pListenSocketContext);
+	d->pListenSocketContext = nullptr;
 
 	logm() << "取消所有连接socket的IO操作。"; 
 	d->iExitUserCount = 0;
@@ -162,4 +161,14 @@ void IOCPServer::StopServer()
 void IOCPServer::StartHeartbeatCheck()
 {
 
+}
+
+void IOCPServer::SendData(unsigned uUserKey, unsigned uMsgType, const char* data, unsigned uLength)
+{
+	IOCPBase::Send(uUserKey, uMsgType, data, uLength);
+}
+
+void IOCPServer::Disconnect(unsigned uUserKey)
+{
+	IOCPBase::Disconnect(uUserKey);
 }

@@ -178,3 +178,16 @@ struct IOCPBaseData
 		pNetInterface = nullptr;
 	}
 };
+
+struct IOCPServerData : public IOCPBaseData
+{
+	bool						bStart;
+	PER_SOCKET_CONTEXT			*pListenSocketContext;	//¼àÌısocketÉÏÏÂÎÄ
+	
+	IOCPServerData(INetInterface *pNet):
+		IOCPBaseData(pNet)
+	{
+		bStart = false;
+		pListenSocketContext = nullptr;
+	}
+};

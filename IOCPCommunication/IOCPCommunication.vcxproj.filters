@@ -34,9 +34,6 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="source\INetInterface.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
     <ClCompile Include="source\IOCPBase.cpp">
       <Filter>源文件</Filter>
     </ClCompile>

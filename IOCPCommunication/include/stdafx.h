@@ -5,7 +5,9 @@
 #pragma once
 
 // TODO:  在此处引用程序需要的其他头文件
-#include "..\Framework\include\LogFile.h"	
+#include "..\Framework\include\LogFile.h"
+//#include "..\Framework\include\LibLog.h"
+//#define LIB_NAME "LogTest"
 
 #ifndef Log
 static HANDLE consolehwnd = ::GetStdHandle(STD_OUTPUT_HANDLE);
