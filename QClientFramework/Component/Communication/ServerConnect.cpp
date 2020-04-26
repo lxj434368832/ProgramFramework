@@ -94,9 +94,9 @@ void ServerConnect::Send(unsigned uUserKey, unsigned uMsgType, const char * data
 	{
 		LOGM("SrvKey:%d离线，停止发送数据。", uUserKey);
 	}
-	else if (m_funSendData)
+	else if (m_pIOCPClient)
 	{
-		m_funSendData(uUserKey, uMsgType, data, uLength);
+		m_pIOCPClient->SendData(uUserKey, uMsgType, data, uLength);
 	}
 }
 
@@ -105,7 +105,7 @@ void ServerConnect::Disconnect(unsigned uUserKey)
 	m_lckSrvInfo.lock();
 	m_mapSrvInfo.erase(uUserKey);
 	m_lckSrvInfo.unlock();
-	if (m_fuDisconnect)	m_fuDisconnect(uUserKey);
+	if (m_pIOCPClient)	m_pIOCPClient->Disconnect(uUserKey);
 }
 
 void ServerConnect::ConnectNotify(UserKey uUserKey, bool bSuccess)

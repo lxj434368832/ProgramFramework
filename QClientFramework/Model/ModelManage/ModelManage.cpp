@@ -1,7 +1,7 @@
 #include "ModelManage.h"
 #include "MainModel.h"
 #include "../../CommonFile/CommonDefine.h"
-#include "../../Component/TCPCommunication/Communication.h"
+#include "../../Component/Communication/Communication.h"
 #include "..\..\Component\MessageHandle\MessageHandle.h"
 
 

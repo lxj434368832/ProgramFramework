@@ -3,8 +3,8 @@
 #include "../../CommonFile/CommonDefine.h"
 #include "../../Model/ModelManage/MainModel.h"
 #include "../../Component/MessageHandle/IMessageHandle.h"
-#include "../../Component/TCPCommunication/ICommunication.h"
-#include "../../Component/TCPCommunication/ServerConnect.h"
+#include "../../Component/Communication/ICommunication.h"
+#include "../../Component/Communication/ServerConnect.h"
 #include "../../Component/Utility/NetworkHelp.h"
 #include "../../MainClient/IMainClient.h"
 #include <memory>
