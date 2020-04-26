@@ -6,7 +6,6 @@
 * company:  
 *************************************************************************/
 #include "IOCPBase.h"
-#include "stdafx.h"
 
 class IOCPClient :public IOCPBase
 {
