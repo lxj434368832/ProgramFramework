@@ -18,12 +18,12 @@ public:
 	bool Initialize() override;
 	void Uninitialize() override;
 
-	void RegisterMessageHandle() override;
+	void RegisterMessageHandle(unsigned, std::function<void(const unsigned uUserKey, SDataExchange*)>) override;
 	//处理protobuf数据，供通讯模块调用
 	void HandleProtobufMessage(unsigned uUserKey, unsigned uMsgType, const char* data, unsigned length) override;
 
 private:
-	PbMessageHandle				*m_pPbMessageHandle;
+	PbMessageHandle					*m_pPbMsgHandle;
 	HandleRequestMessage			*m_pHandleRqMsg;
 	HandleRespondMessage			*m_pHandleRsMsg;
 	HandleNotifyMessage				*m_pHandleNtMsg;

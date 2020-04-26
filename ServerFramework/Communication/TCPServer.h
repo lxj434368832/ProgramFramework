@@ -1,11 +1,11 @@
 #pragma once
 
-#include "../../3rdParty/IOCPCommunication/include/INetInterface.h"
+#include "../3rdParty/IOCPCommunication/include/INetInterface.h"
 
 class IMainServer;
 class IOCPServer;
 class UserInfoManage;
-class IMessageHandle;
+class PbMessageHandle;
 struct SPbMsg;
 
 class TCPServer : public INetInterface
@@ -51,6 +51,6 @@ private:
 private:
 	IMainServer			*m_pMain;
 	IOCPServer			*m_pIOCPServer;	//IOCP ·þÎñ¶Ë
-	IMessageHandle		*m_pMsgHandle;
+	PbMessageHandle		*m_pPbMsgHandle;
 	UserInfoManage		*m_pUserMng;
 };

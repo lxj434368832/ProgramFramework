@@ -1,19 +1,19 @@
 #include "TCPServer.h"
 #include "ICommunication.h"
-#include "../../CommonFile/CommonDefine.h"
-#include "../../MainServer/IMainServer.h"
-#include "../../Model/ModelManage/IModelManage.h"
-#include "../../Model/ModelManage/UserInfoManage.h"
-#include "../../Controller/ControllerManage/IControllerManage.h"
-#include "../MessageHandle/IMessageHandle.h"
-#include "../../3rdParty/IOCPCommunication/include/IOCPServer.h"
+#include "../CommonFile/CommonDefine.h"
+#include "../MainServer/IMainServer.h"
+#include "../Model/ModelManage/IModelManage.h"
+#include "../Model/ModelManage/UserInfoManage.h"
+#include "../Controller/ControllerManage/IControllerManage.h"
+#include "../Component/MessageHandle/PbMessageHandle.h"
+#include "../3rdParty/IOCPCommunication/include/IOCPServer.h"
 
 TCPServer::TCPServer(IMainServer *pMain)
 	:INetInterface()
 {
 	m_pMain = pMain;
 	m_pIOCPServer = new IOCPServer(this);
-	m_pMsgHandle = nullptr;
+	m_pPbMsgHandle = nullptr;
 	m_pUserMng = nullptr;
 }
 
@@ -25,8 +25,8 @@ TCPServer::~TCPServer()
 
 bool TCPServer::Initialize()
 {
-	m_pMsgHandle = m_pMain->GetMessageHandle();
-	if (nullptr == m_pMsgHandle)
+	m_pPbMsgHandle = m_pMain->GetCommunication()->GetPbMessageHandle();
+	if (nullptr == m_pPbMsgHandle)
 	{
 		loge() << "获取消息处理失败！";
 		return false;
@@ -44,10 +44,7 @@ bool TCPServer::Initialize()
 
 void TCPServer::Uninitialize()
 {
-	m_funSendData = nullptr;		//发送数据回调
-	m_fuDisconnect = nullptr;		//主动断开连接回调
-
-	m_pMsgHandle = nullptr;
+	m_pPbMsgHandle = nullptr;
 	m_pUserMng = nullptr;
 }
 
@@ -65,23 +62,23 @@ void TCPServer::StopServer()
 
 void TCPServer::SendData(UserKey uUserKey, unsigned uMsgType, const char * data, unsigned uLength)
 {
-	if (m_funSendData)
+	if (m_pIOCPServer)
 	{
-		m_funSendData(uUserKey, uMsgType, data, uLength);
+		m_pIOCPServer->SendData(uUserKey, uMsgType, data, uLength);
 	}
 }
 
 void TCPServer::SendData(UserKey uUserKey, SPbMsg &msg)
 {
-	if (m_funSendData)
+	if (m_pIOCPServer)
 	{
-		m_funSendData(uUserKey, msg.uMsgType, msg.strMsg.data(), msg.strMsg.length());
+		m_pIOCPServer->SendData(uUserKey, msg.uMsgType, msg.strMsg.data(), msg.strMsg.length());
 	}
 }
 
 void TCPServer::Disconnect(UserKey uUserKey)
 {
-	if (m_fuDisconnect)	m_fuDisconnect(uUserKey);
+	if (m_pIOCPServer)	m_pIOCPServer->Disconnect(uUserKey);
 }
 
 void TCPServer::AddUser(UserKey uUserKey)
@@ -92,8 +89,8 @@ void TCPServer::AddUser(UserKey uUserKey)
 
 void TCPServer::HandData(UserKey uUserKey, unsigned uMsgType, const char * data, unsigned length)
 {
-	if (m_pMsgHandle) 
-		m_pMsgHandle->HandleProtobufMessage(uUserKey, uMsgType, data, length);
+	if (m_pPbMsgHandle) 
+		m_pPbMsgHandle->AddMessageData(uUserKey, uMsgType, data, length);
 }
 
 void TCPServer::DeleteUser(UserKey uUserKey)
@@ -101,3 +98,4 @@ void TCPServer::DeleteUser(UserKey uUserKey)
 	if (m_pUserMng)
 		m_pUserMng->DeleteUser(uUserKey);
 }
+

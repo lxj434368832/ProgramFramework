@@ -11,7 +11,6 @@ class ICommunication;
 class IMainServer;
 class IControllerManage;
 class IModelManage;
-class IMessageHandle;
 
 class ControllerColleague
 {
@@ -22,7 +21,6 @@ public:
 protected:
 	IMainServer             *m_pMain = nullptr;
 	IModelManage			*m_pModelMng = nullptr;
-	IMessageHandle			*m_pMsgHandle = nullptr;
 	IControllerManage		*m_pCtrlMng = nullptr;
 	ICommunication			*m_pCmmnt = nullptr;
 };

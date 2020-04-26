@@ -5,14 +5,19 @@
 #include "../../Model/ModelManage/IModelManage.h"
 #include "../../Model/ModelManage/UserInfoManage.h"
 #include "../../Component/MessageHandle/IMessageHandle.h"
-#include "../../Component/TCPCommunication/ICommunication.h"
-#include "../../Component/TCPCommunication/TCPServer.h"
+#include "../../Communication/ICommunication.h"
+#include "../../Communication/TCPServer.h"
+#include "../../3rdParty/Protobuf/include/Message.pb.h"
 #include <memory>
 #include <vector>
 
 MainController::MainController(IControllerManage *pCtrlMng) :
     ControllerColleague(pCtrlMng)
 {
+	m_pCmmnt->RegisterMessageHandle(pbmsg::ELoginRq,
+		std::bind(&MainController::HandleLoginRq, this, std::placeholders::_1, std::placeholders::_2));
+	m_pCmmnt->RegisterMessageHandle(pbmsg::EHeartbeatNt,
+		std::bind(&MainController::HandleHeartbeatNt, this, std::placeholders::_1, std::placeholders::_2));
 }
 
 MainController::~MainController()
@@ -46,7 +51,6 @@ void MainController::Uninitialize()
 
 bool MainController::StartServer()
 {
-	m_pMsgHandle->RegisterMessageHandle();
 	if (false == m_pTcpSrv->StartServer()) return false;
 	m_pHeartbeatThread = new std::thread(&MainController::HeartbeatHandle, this);
 

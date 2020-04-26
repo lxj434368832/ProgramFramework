@@ -1,5 +1,8 @@
 #pragma once
 
+#include <functional>
+#include "..\..\CommonFile\TypeDefine.h"
+
 class IMainServer;
 class PbMessageHandle;
 class HandleRequestMessage;
@@ -20,7 +23,7 @@ public:
 	virtual bool Initialize() = 0;
 	virtual void Uninitialize() = 0;
 
-	virtual void RegisterMessageHandle() = 0;
+	virtual void RegisterMessageHandle(unsigned, std::function<void(const unsigned uUserKey, SDataExchange*)>) = 0;
 	//处理protobuf数据
 	virtual void HandleProtobufMessage(unsigned uUserKey, unsigned uMsgType, const char* data, unsigned length) = 0;
 

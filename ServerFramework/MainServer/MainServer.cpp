@@ -5,13 +5,11 @@
 #include "../Model/ModelManage/ModelManage.h"
 #include "../Controller/ControllerManage/ControllerManage.h"
 #include "../Controller/ControllerManage/MainController.h"
-#include "../Component/MessageHandle/MessageHandle.h"
-#include "../Component/TCPCommunication/Communication.h"
+#include "../Communication/Communication.h"
 
 MainServer::MainServer()
 {
 	m_pModel = new ModelManage(this);
-	m_pMessage = new MessageHandle(this);
 	m_pCommunication = new Communication(this);
 	m_pController = new ControllerManage(this);
 }
@@ -19,7 +17,6 @@ MainServer::MainServer()
 MainServer::~MainServer()
 {
 	RELEASE(m_pCommunication);
-	RELEASE(m_pMessage);
 	RELEASE(m_pController);
 	RELEASE(m_pModel);
 }
@@ -32,11 +29,6 @@ IModelManage* MainServer::GetModelManage()
 IControllerManage* MainServer::GetControllerManage()
 {
 	return m_pController;
-}
-
-IMessageHandle* MainServer::GetMessageHandle()
-{
-	return m_pMessage;
 }
 
 ICommunication* MainServer::GetCommunication()
@@ -53,7 +45,6 @@ bool MainServer::StartServer()
 {
 	if (false == ReadConfigFile()) return false;
 	if (false == m_pModel->Initialize()) return false;
-	if (false == m_pMessage->Initialize()) return false;
 	if (false == m_pCommunication->Initialize()) return false;
 	if (false == m_pController->Initialize()) return false;
 	if (false == m_pController->GetMainController()->StartServer()) return false;
@@ -65,7 +56,6 @@ void MainServer::StopServer()
 	m_pController->GetMainController()->StopServer();
 	m_pController->Uninitialize();
 	m_pCommunication->Uninitialize();
-	m_pMessage->Uninitialize();
 	m_pModel->Uninitialize();
 }
 

@@ -8,6 +8,8 @@
 
 #include "IOCPBase.h"
 
+struct IOCPServerData;
+
 class IOCPServer : public IOCPBase
 {
 public:
@@ -20,6 +22,20 @@ public:
 	//心跳检测函数，由主线程定时调用。
 	void StartHeartbeatCheck();
 
+	/*************************************************************************
+	* function： 发送数据，外部回调
+	* param key: 用户id
+	* param data:需要发送的数据
+	* return:	 无
+	*************************************************************************/
+	void SendData(unsigned uUserKey, unsigned uMsgType, const char* data, unsigned uLength);
+
+	/*************************************************************************
+	* function： 断开连接，外部回调
+	* param key: 用户id
+	*************************************************************************/
+	void Disconnect(unsigned uUserKey) override;
+
 private:
 	/*************************************************************************
 	* function：  开启针对服务端的监听
@@ -27,9 +43,8 @@ private:
 	* param iMaxServerCount:最大的连接个数
 	* return:	  成功返回true,失败返回false.
 	*************************************************************************/
-	bool StartServerListen(u_short port, unsigned iMaxConnectCount);
+	bool StartServerListen(u_short port, unsigned iMaxConnectCount) override;
 
 private:
-	bool						m_bStart;
-	PER_SOCKET_CONTEXT			*m_pListenSocketContext;	//监听socket上下文
+	IOCPServerData *d;
 };

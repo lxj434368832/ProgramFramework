@@ -8,9 +8,7 @@ ControllerColleague::ControllerColleague(IControllerManage *pCtrlMng)
 	m_pMain = pCtrlMng->GetMainServer();
 	m_pCtrlMng = pCtrlMng;
 	m_pModelMng = m_pMain->GetModelManage();
-
 	m_pCmmnt = m_pMain->GetCommunication();
-	m_pMsgHandle = m_pMain->GetMessageHandle();
 }
 
 ControllerColleague::~ControllerColleague()
@@ -18,7 +16,5 @@ ControllerColleague::~ControllerColleague()
     m_pMain = nullptr;
     m_pCtrlMng = nullptr;
 	m_pModelMng = nullptr;
-
 	m_pCmmnt = nullptr;
-	m_pMsgHandle = nullptr;
 }
