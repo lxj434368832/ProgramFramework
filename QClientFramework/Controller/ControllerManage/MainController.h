@@ -57,22 +57,26 @@ private slots:
 	void slotExecuteSystem();
 
 
+private slots:
 	/*************************以下为本类自定槽函数*************************/
+	/*************************************************************************
+	* function：		 Tcp连接状态通知
+	* param uServerType: 服务器类型
+	* param state:		 连接成功标识
+	* param once:		 第一次连接标识
+	*************************************************************************/
+	void slotTcpConnectNotify(unsigned uServerType, bool bSuccess);
+	void slotTcpDisconnectNotify(unsigned uServerType);
 
-	/***********************以下为MainModel回调的函数**********************/
-public:
+private:
+	/*************************以下为消息回调函数*************************/
+	void HandleHeartbeat();
+
 	//处理登录响应
-	void HandleLoginRs(const unsigned uUserKey, std::auto_ptr<SRespondMsg> pRs);
-
-	void HandleTcpConnectNotify(unsigned uServerType, bool bSuccess);
-
-	void HandleTcpDisconnectNotify(unsigned uServerType);
+	void HandleLoginRs(const unsigned uUserKey, SDataExchange* pMsg);
 
 private:
-	void HeartbeatHandle();
-
-
-private:
+	ServerConnect* m_pSrvCnnt = nullptr;		//服务端连接
 	MainModel		*m_pMainModel = nullptr;
     QThread			m_thread;                   //异步线程
 

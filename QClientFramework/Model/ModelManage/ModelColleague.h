@@ -11,8 +11,6 @@
 
 class IModelManage;
 class IMainClient;
-class IMessageHandle;
-class ICommunication;
 
 class ModelColleague : public QObject
 {
@@ -23,7 +21,4 @@ public:
 protected:
 	IMainClient             *m_pMain = nullptr;
 	IModelManage			*m_pMdlMng = nullptr;
-	ICommunication			*m_pCmmnt = nullptr;
-	IMessageHandle			*m_pMsgHandle = nullptr;
 };
-

@@ -9,9 +9,11 @@
 
 #include <QObject>
 
+class IMainClient;
 class IModelManage;
 class ControllerManage;
-class IMainClient;
+class IMessageHandle;
+class ICommunication;
 
 class ControllerColleague : public QObject
 {
@@ -23,4 +25,6 @@ protected:
     IMainClient             *m_pMain = nullptr;
 	ControllerManage		*m_pCtrlMng = nullptr;
 	IModelManage			*m_pModel = nullptr; 
+	ICommunication*			m_pCmmnt = nullptr;
+	IMessageHandle*			m_pMsgHandle = nullptr;
 };
