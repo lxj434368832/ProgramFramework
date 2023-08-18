@@ -6,7 +6,7 @@
 #include "..\..\CommonFile\EnumDefine.h"
 #include "ServerConnect.h"
 #include "../../3rdParty/IOCPCommunication/include/IOCPClient.h"
-#include "..\..\Model\ModelManage\IModelManage.h"
+#include "..\..\Controller\ControllerManage\IControllerManage.h"
 #include <windows.h>
 
 ServerConnect::ServerConnect(IMainClient *pMain) :
@@ -25,7 +25,7 @@ ServerConnect::~ServerConnect()
 
 bool ServerConnect::Initialize(unsigned uThreadCount)
 {
-	m_pMsgModule = m_pMain->GetModelManage()->GetMessageHandle();
+	m_pMsgModule = m_pMain->GetControllerManage()->GetMessageHandle();
 	if (nullptr == m_pMsgModule)
 	{
 		loge() << "获取消息处理模块失败！";

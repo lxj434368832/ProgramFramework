@@ -1,4 +1,4 @@
-#include <vld.h>
+//#include <vld.h>
 #include "MainClient.h"
 #include "../CommonFile/CommonDefine.h"
 #include "../Component/Utility/ClientService.h"

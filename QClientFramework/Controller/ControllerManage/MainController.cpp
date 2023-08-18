@@ -62,7 +62,8 @@ bool MainController::Initialize()
 
 void MainController::Uninitialize()
 {
-	::SetEvent(m_hHeartbeatEvent);
+	if (m_hHeartbeatEvent)
+		::SetEvent(m_hHeartbeatEvent);
 	if (m_pHeartbeatThread->joinable())
 		m_pHeartbeatThread->join();
 	RELEASE(m_pHeartbeatThread);
