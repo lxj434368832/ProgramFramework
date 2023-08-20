@@ -77,10 +77,12 @@ private:
 
 private:
 	ServerConnect* m_pSrvCnnt = nullptr;		//服务端连接
-	MainModel		*m_pMainModel = nullptr;
     QThread			m_thread;                   //异步线程
-
 	std::thread		 *m_pHeartbeatThread = nullptr;	//心跳线程
 	HANDLE 			 m_hHeartbeatEvent = nullptr;	//心跳事件
+
+	SUserInfo		m_user;
+	QSet<unsigned>	m_setSrvUser;
+	MLock			m_lckSrvUser;
 };
 

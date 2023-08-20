@@ -40,20 +40,12 @@ MainController::~MainController()
 	disconnect(m_pSrvCnnt, SIGNAL(signalTcpConnectNotify(uint, bool)), this, SLOT(slotTcpConnectNotify(uint, bool)));
 	disconnect(m_pSrvCnnt, SIGNAL(signalTcpDisconnectNotify(uint)), this, SLOT(slotTcpDisconnectNotify(uint)));
 	m_pSrvCnnt = nullptr;
-	m_pMainModel = nullptr;
 }
 
 bool MainController::Initialize()
 {
 	PbMessageHandle* pPbMsgHdl = m_pMsgHandle->GetPbMessageHandle();
 	pPbMsgHdl->RegisterMessageFunction(pbmsg::ELoginRs, std::bind(&MainController::HandleLoginRs, this, std::placeholders::_1, std::placeholders::_2));
-
-    m_pMainModel = m_pModel->GetMainModel();
-     if(nullptr == m_pMainModel)
-     {
-         loge()<< "获取主模型失败!";
-         return false;
-     }
 
 	 m_pHeartbeatThread = new std::thread(&MainController::HandleHeartbeat, this);
 
@@ -80,17 +72,15 @@ void MainController::slotUserLogin(std::string strUserName, std::string strPassw
 	std::string strMac = NetworkHelp::GetMACAdress().toLocal8Bit().data();
 	//m_pWebCnnt->UserLogin(strUserName, strPassword, strMac);
 
-	SUserInfo user;
-	user.m_uUserId = 1;
-	user.m_strUserName = strUserName;
-	user.m_strPassword = strPassword;
-	user.m_strMac = strMac;
-	if (0 == user.m_uUserId)
+	m_user.m_uUserId = 1;
+	m_user.m_strUserName = strUserName;
+	m_user.m_strPassword = strPassword;
+	m_user.m_strMac = strMac;
+	if (0 == m_user.m_uUserId)
 	{
 		emit signalLoginMessageNt(false, "登陆web失败！");
 		return;
 	}
-	m_pMainModel->SaveUserInfo(user);
 
 	//2、从web获取配置信息
 	signalLoginTipMsg("开始获取客户端配置信息...");
@@ -109,7 +99,6 @@ void MainController::slotExecuteSystem()
 	//3、添加TCP连接
 	emit signalSplashMessage("开始连接服务器...");
 	int iUserType = 1;
-	//int iUserType = m_pMainModel->GetUserInfo().m_iUserType;
 	ClientConfig* cfg = m_pMain->GetClientConfig();
 
 	for (int i = EST_CMD_SERVER; i < EST_SERVER_COUNT; i++)
@@ -130,13 +119,14 @@ void MainController::slotTcpConnectNotify(unsigned uServerType, bool bSuccess)
 	if (bSuccess)
 	{
 		LOGM("连接服务Key:%d成功！", uServerType);
-
-		SUserInfo& user = m_pMainModel->GetUserInfo();
+		m_lckSrvUser.lock();
+		m_setSrvUser.insert(uServerType);
+		m_lckSrvUser.unlock();
 
 		SLoginRq msg;
 		msg.uUserId = uServerType;
-		msg.strUserName = user.m_strUserName + std::to_string(uServerType);
-		msg.strPassword = user.m_strPassword;
+		msg.strUserName = m_user.m_strUserName + std::to_string(uServerType);
+		msg.strPassword = m_user.m_strPassword;
 		m_pSrvCnnt->SendData(uServerType, msg.SerializeAsPbMsg());
 	}
 	else
@@ -147,7 +137,9 @@ void MainController::slotTcpConnectNotify(unsigned uServerType, bool bSuccess)
 
 void MainController::slotTcpDisconnectNotify(unsigned uServerType)
 {
-	m_pMainModel->DelLoginServer(uServerType);
+	m_lckSrvUser.lock();
+	m_setSrvUser.remove(uServerType);
+	m_lckSrvUser.unlock();
 	LOGM("服务Key:%d的连接断开", uServerType);
 }
 
@@ -180,8 +172,7 @@ void MainController::HandleHeartbeat()
 			break;
 		}
 
-		QSet<unsigned> setSrvKey = m_pMainModel->GetLoginServerList();
-		for (unsigned uSrvKey : setSrvKey)
+		for (unsigned uSrvKey : m_setSrvUser)
 		{
 			m_pSrvCnnt->SendData(uSrvKey, pbMsg);
 		}
@@ -197,8 +188,6 @@ void MainController::HandleLoginRs(const unsigned uUserKey, SDataExchange* pMsg)
 		LOGM("登录服务Key:%d 成功。", uUserKey);
 		//if (EST_CMD_SERVER == uUserKey)
 		//{
-		//	int iUserType = 1;
-		//	//int iUserType = m_pMainModel->GetUserInfo().m_iUserType;
 		//	emit signalShowMainWindow(iUserType);
 		//}
 	}

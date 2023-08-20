@@ -38,16 +38,10 @@ void MainModel::UnlockUserInfo()
 
 void MainModel::AddLoginServer(UserKey uUserKey)
 {
-	m_lckSrvUser.lock();
-	m_setSrvUser.insert(uUserKey);
-	m_lckSrvUser.unlock();
 }
 
 void MainModel::DelLoginServer(UserKey uUserKey)
 {
-	m_lckSrvUser.lock();
-	m_setSrvUser.remove(uUserKey);
-	m_lckSrvUser.unlock();
 }
 
 QSet<unsigned> MainModel::GetLoginServerList()
