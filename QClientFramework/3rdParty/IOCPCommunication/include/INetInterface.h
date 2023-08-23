@@ -1,24 +1,17 @@
 #pragma once
 
-typedef unsigned UserKey;
-
 class INetInterface
 {
 public:
 	INetInterface() = default;
 	virtual ~INetInterface() = default;
 
-	//通知服务端新用户连接
-	virtual void AddUser(UserKey uUserKey){}
+	//新连接通知
+	virtual void ConnectNotify(unsigned uKey, bool bSuccess = true) = 0;
 
-	//连接结果通知
-	virtual void ConnectNotify(UserKey uUserKey, bool bSuccess){}
+	//断开连接通知
+	virtual void DisConnectNotify(unsigned uKey) = 0;
 
 	//处理服务数据
-	virtual void HandData(UserKey uUserKey, unsigned uMsgType, const char* data, unsigned length) = 0;
-
-	//通讯层回调删除用户
-	virtual void DeleteUser(UserKey uUserKey) = 0;
+	virtual void HandData(unsigned uKey, unsigned uMsgType, const char* data, unsigned length) = 0;
 };
-
-

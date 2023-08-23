@@ -13,8 +13,9 @@ struct IOCPServerData;
 class IOCPServer : public IOCPBase
 {
 public:
-	IOCPServer(INetInterface *pNet = nullptr);
-	virtual ~IOCPServer();
+	IOCPServer();
+	~IOCPServer();
+	void InitData(INetInterface *pNet);
 
 	bool StartServer(USHORT nPort, unsigned dwMaxConnection = 10, unsigned uThreadCount = 0);
 	void StopServer();

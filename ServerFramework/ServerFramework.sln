@@ -27,6 +27,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Model", "Model", "{92B254DA
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Communication", "Communication\Communication.vcxproj", "{ED60ACB4-734B-41F1-99C2-472C31DB25C3}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "IOCPCommunication", "..\IOCPCommunication\IOCPCommunication.vcxproj", "{3DC7FD45-F936-4CBE-9A30-3F5DBA7497B2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Mixed Platforms = Debug|Mixed Platforms
@@ -135,6 +137,20 @@ Global
 		{ED60ACB4-734B-41F1-99C2-472C31DB25C3}.Release|x64.Build.0 = Release|x64
 		{ED60ACB4-734B-41F1-99C2-472C31DB25C3}.Release|x86.ActiveCfg = Release|Win32
 		{ED60ACB4-734B-41F1-99C2-472C31DB25C3}.Release|x86.Build.0 = Release|Win32
+		{3DC7FD45-F936-4CBE-9A30-3F5DBA7497B2}.Debug|Mixed Platforms.ActiveCfg = Debug|Win32
+		{3DC7FD45-F936-4CBE-9A30-3F5DBA7497B2}.Debug|Mixed Platforms.Build.0 = Debug|Win32
+		{3DC7FD45-F936-4CBE-9A30-3F5DBA7497B2}.Debug|Win32.ActiveCfg = Debug|Win32
+		{3DC7FD45-F936-4CBE-9A30-3F5DBA7497B2}.Debug|Win32.Build.0 = Debug|Win32
+		{3DC7FD45-F936-4CBE-9A30-3F5DBA7497B2}.Debug|x64.ActiveCfg = Debug|Win32
+		{3DC7FD45-F936-4CBE-9A30-3F5DBA7497B2}.Debug|x86.ActiveCfg = Debug|Win32
+		{3DC7FD45-F936-4CBE-9A30-3F5DBA7497B2}.Debug|x86.Build.0 = Debug|Win32
+		{3DC7FD45-F936-4CBE-9A30-3F5DBA7497B2}.Release|Mixed Platforms.ActiveCfg = Release|Win32
+		{3DC7FD45-F936-4CBE-9A30-3F5DBA7497B2}.Release|Mixed Platforms.Build.0 = Release|Win32
+		{3DC7FD45-F936-4CBE-9A30-3F5DBA7497B2}.Release|Win32.ActiveCfg = Release|Win32
+		{3DC7FD45-F936-4CBE-9A30-3F5DBA7497B2}.Release|Win32.Build.0 = Release|Win32
+		{3DC7FD45-F936-4CBE-9A30-3F5DBA7497B2}.Release|x64.ActiveCfg = Release|Win32
+		{3DC7FD45-F936-4CBE-9A30-3F5DBA7497B2}.Release|x86.ActiveCfg = Release|Win32
+		{3DC7FD45-F936-4CBE-9A30-3F5DBA7497B2}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -143,6 +159,7 @@ Global
 		{3BCB497D-EF92-4078-9A2C-6D7F2EBD020C} = {C04992CB-81DE-476E-9675-DF05B6BA96B2}
 		{797E77B0-FE1B-4F9E-B80F-FA7FFCCEAC66} = {F699CE2A-99CE-4C32-A2E9-6E3FDC2427E8}
 		{248BC29E-FFC6-4EA4-BA70-79E00A4A19C9} = {92B254DA-16C9-4FF4-9339-90B0150D72CF}
+		{3DC7FD45-F936-4CBE-9A30-3F5DBA7497B2} = {C04992CB-81DE-476E-9675-DF05B6BA96B2}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {747B22D3-D839-4E2C-BBD1-31BFFD1124A7}

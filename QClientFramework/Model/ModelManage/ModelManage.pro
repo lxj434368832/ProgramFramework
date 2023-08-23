@@ -13,12 +13,10 @@ CONFIG(debug, debug|release) {
 }
 
 HEADERS += \
-    IModelManage.h \
-    ModelManage.h \
-    StatisticModel.h \
-    MainModel.h
+    include\IModelManage.h \
+    src\ModelManage.h \
+    src\MainModel.h
 
 SOURCES += \
-    ModelManage.cpp \
-    StatisticModel.cpp \
-    MainModel.cpp
+    src\ModelManage.cpp \
+    src\MainModel.cpp

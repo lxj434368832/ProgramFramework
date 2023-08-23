@@ -6,7 +6,7 @@ bool ClientConfig::CheckValid()
 {
         if (strServerIP.empty()
             || 0== usServerPort
-            || 0 == uIOCPThreadCount
+            || 0 == uServerThreadCount
             || 0 == uHeartbeatTime )
         {
             return false;

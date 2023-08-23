@@ -12,7 +12,7 @@ TCPServer::TCPServer(IMainServer *pMain)
 	:INetInterface()
 {
 	m_pMain = pMain;
-	m_pIOCPServer = new IOCPServer(this);
+	m_pIOCPServer = new IOCPServer();
 	m_pPbMsgHandle = nullptr;
 	m_pUserMng = nullptr;
 }
@@ -51,6 +51,7 @@ void TCPServer::Uninitialize()
 bool TCPServer::StartServer()
 {
 	SServerConfig &srvCfg = *m_pMain->GetServerConfig();
+	m_pIOCPServer->InitData(this);
 	return m_pIOCPServer->StartServer(srvCfg.usListenPort,
 		srvCfg.uInitAcceptCount, srvCfg.uServerThreadCount);
 }
@@ -81,10 +82,16 @@ void TCPServer::Disconnect(UserKey uUserKey)
 	if (m_pIOCPServer)	m_pIOCPServer->Disconnect(uUserKey);
 }
 
-void TCPServer::AddUser(UserKey uUserKey)
+void TCPServer::ConnectNotify(UserKey uUserKey, bool bSuccess)
 {
 	if(m_pUserMng)
 		m_pUserMng->AddUser(uUserKey);
+}
+
+void TCPServer::DisConnectNotify(UserKey uUserKey)
+{
+	if (m_pUserMng)
+		m_pUserMng->DeleteUser(uUserKey);
 }
 
 void TCPServer::HandData(UserKey uUserKey, unsigned uMsgType, const char * data, unsigned length)
@@ -92,10 +99,3 @@ void TCPServer::HandData(UserKey uUserKey, unsigned uMsgType, const char * data,
 	if (m_pPbMsgHandle) 
 		m_pPbMsgHandle->AddMessageData(uUserKey, uMsgType, data, length);
 }
-
-void TCPServer::DeleteUser(UserKey uUserKey)
-{
-	if (m_pUserMng)
-		m_pUserMng->DeleteUser(uUserKey);
-}
-

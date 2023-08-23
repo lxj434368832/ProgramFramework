@@ -5,14 +5,19 @@
 #include "..\include\stdafx.h"
 #include <assert.h>
 
-IOCPServer::IOCPServer(INetInterface *pNet) : 
-	d(new IOCPServerData(pNet)),
-	IOCPBase(d)
+IOCPServer::IOCPServer()
+	: IOCPBase()
 {
 }
 
 IOCPServer::~IOCPServer()
 {
+}
+
+void IOCPServer::InitData(INetInterface *pNet)
+{
+	this->d = new IOCPServerData(pNet);
+	IOCPBase::d = this->d;
 }
 
 bool IOCPServer::StartServer(USHORT nPort, unsigned dwMaxConnection, unsigned uThreadCount)

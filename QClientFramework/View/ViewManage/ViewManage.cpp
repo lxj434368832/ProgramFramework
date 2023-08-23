@@ -4,14 +4,24 @@
 #include "../../CommonFile/CommonDefine.h"
 #include "../MainWindow/LoginDialog.h"
 #include "../../MainClient/IMainClient.h"
-#include "../../Controller/ControllerManage/IControllerManage.h"
-#include "../../Controller/ControllerManage/MainController.h"
+#include "../../../Controller/ControllerManage/include/IControllerManage.h"
+#include "../../../Controller/ControllerManage/include/IMainController.h"
 #include "../../CommonFile/EnumDefine.h"
 #include <QSplashScreen>
 #include <QLabel>
 #include <QMovie>
 #include <QMessageBox>
 
+
+IViewManage* IViewManage::Create(IMainClient *pMain)
+{
+	return new ViewManage(pMain);
+}
+
+void IViewManage::Delete(IViewManage*& p)
+{
+	RELEASE(p);
+}
 
 
 ViewManage::ViewManage(IMainClient *_main)

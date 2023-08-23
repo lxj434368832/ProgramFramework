@@ -6,7 +6,7 @@
 class ViewMediator;
 class MMainWindow;
 class QSplashScreen;
-class MainController;
+class IMainController;
 
 class ViewManage : public QObject, public IViewManage
 {
@@ -33,9 +33,8 @@ private slots:
 	void slotPopupShowMessage(unsigned uType, std::string strTitle, std::string strMsg);
 
 private:
-	MainController	*m_pMainCtrl;		//主控制器
+	IMainController	*m_pMainCtrl;		//主控制器
     ViewMediator    *m_pViewMdt;        //视图中介者
 	MMainWindow     *m_pMainWnd;        //主窗体
 	QSplashScreen	*m_pSplash;			//闪屏窗体
 };
-

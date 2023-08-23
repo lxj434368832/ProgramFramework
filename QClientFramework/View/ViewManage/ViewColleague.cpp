@@ -1,7 +1,7 @@
 #include "ViewColleague.h"
 #include "ViewMediator.h"
 #include "../../MainClient/IMainClient.h"
-#include "../../Controller/ControllerManage/IControllerManage.h"
+#include "../../Controller/ControllerManage/include/IControllerManage.h"
 
 ViewColleague::ViewColleague(ViewMediator* mdt){
     m_pMdt = mdt;

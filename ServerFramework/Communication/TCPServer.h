@@ -39,14 +39,14 @@ public:
 
 private:
 	//实现INetInterface接口
-	//新服务用户成功连接通知
-	virtual void AddUser(UserKey uUserKey) override;
+	// 新用户连接通知
+	void ConnectNotify(UserKey uUserKey, bool bSuccess) override;
 
-	//处理服务数据
-	virtual void HandData(UserKey uUserKey, unsigned uMsgType, const char* data, unsigned length) override;
+	// 用户断开连接通知
+	void DisConnectNotify(UserKey uUserKey) override;
 
-	// 删除用户
-	virtual void DeleteUser(UserKey uUserKey) override;
+	// 处理服务数据
+	void HandData(UserKey uUserKey, unsigned uMsgType, const char* data, unsigned length) override;
 
 private:
 	IMainServer			*m_pMain;

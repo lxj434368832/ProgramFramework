@@ -26,36 +26,45 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="ControllerColleague.cpp">
+    <ClCompile Include="Debug\moc_IMainController.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ControllerColleague.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ControllerManage.cpp">
+    <ClCompile Include="src\ControllerManage.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Release\moc_MainController.cpp">
-      <Filter>Generated Files\Release</Filter>
-    </ClCompile>
-    <ClCompile Include="MainController.cpp">
+    <ClCompile Include="src\MainController.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Debug\moc_MainController.cpp">
       <Filter>Generated Files\Debug</Filter>
     </ClCompile>
+    <ClCompile Include="Release\moc_MainController.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="Release\moc_IMainController.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="ControllerColleague.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <CustomBuild Include="ControllerManage.h">
+    <CustomBuild Include="include\IMainController.h">
       <Filter>Header Files</Filter>
     </CustomBuild>
-    <ClInclude Include="IControllerManage.h">
+    <CustomBuild Include="src\MainController.h">
       <Filter>Header Files</Filter>
-    </ClInclude>
+    </CustomBuild>
   </ItemGroup>
   <ItemGroup>
-    <CustomBuild Include="MainController.h">
+    <ClInclude Include="include\IControllerManage.h">
       <Filter>Header Files</Filter>
-    </CustomBuild>
+    </ClInclude>
+    <ClInclude Include="src\ControllerColleague.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ControllerManage.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

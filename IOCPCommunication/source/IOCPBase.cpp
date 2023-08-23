@@ -9,11 +9,6 @@ IOCPBase::IOCPBase(INetInterface *pNet)
 {
 }
 
-IOCPBase::IOCPBase(IOCPBaseData* d)
-{
-	this->d = d;
-}
-
 IOCPBase::~IOCPBase()
 {
 	RELEASE(d);
@@ -397,7 +392,7 @@ void IOCPBase::HandAccept(int iResult, PER_SOCKET_CONTEXT *pListenSkContext, PER
 		//	ntohs(pClientAddr->sin_port), pSkContext->m_socket);
 
 		//通知服务端新连接到达
-		d->pNetInterface->AddUser(pSkContext->m_uUserKey);
+		d->pNetInterface->ConnectNotify(pSkContext->m_uUserKey);
 		pIO->m_wsaBuf.len = pIO->m_uBufLength;
 		PostReceive(pSkContext, pIO);
 		PostAcceptEx(pListenSkContext->m_socket);
@@ -620,7 +615,7 @@ void IOCPBase::ReCycleSocketRsc(PER_SOCKET_CONTEXT * pSkContext, PER_IO_CONTEXT*
 		d->aLckSocketContext[idxLock].unlock();
 
 		//通知上层接口关闭连接
-		d->pNetInterface->DeleteUser(pSkContext->m_uUserKey);
+		d->pNetInterface->DisConnectNotify(pSkContext->m_uUserKey);
 		//LOGM("关闭user:%d的连接。", pSkContext->m_uUserKey);
 	}
 	else if (1 == pSkContext->m_iDisconnectFlag)

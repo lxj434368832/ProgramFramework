@@ -15,11 +15,15 @@ class INetInterface;
 class IOCPBase
 {
 public:
+	IOCPBase() = default;
 	IOCPBase(INetInterface *pNet);
-	IOCPBase(IOCPBaseData*);
 	virtual ~IOCPBase();
 
 protected:
+	bool InitIOCP(unsigned uThreadCount);
+
+	void UninitIOCP();
+
 	/*************************************************************************
 	* function：  开启针对服务端的监听
 	* param port: 本地监听的端口号
@@ -36,10 +40,6 @@ protected:
 	* return:		 返回此连接对应的id,但不代表连接成功，为0代表连接出现了错误
 	*************************************************************************/
 	virtual bool AddConnect(unsigned uUserKey, std::string ip, u_short port, int iRecnnt = -1);
-
-	bool InitIOCP(unsigned uThreadCount);
-
-	void UninitIOCP();
 
 	//处理服务端操作
 	void HandServerOperate(int iResult, PER_SOCKET_CONTEXT *pSkContext, PER_IO_CONTEXT* pIO, DWORD dwBytesTransfered);

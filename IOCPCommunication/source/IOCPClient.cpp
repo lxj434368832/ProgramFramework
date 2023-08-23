@@ -20,12 +20,12 @@ bool IOCPClient::StartClient(unsigned uThreadCount)
 	return true;
 }
 
-bool IOCPClient::AddConnect(unsigned uUserKey, std::string ip, u_short port, int iRecnnt)
+bool IOCPClient::AddConnect(unsigned uSrvKey, std::string ip, u_short port, int iRecnnt)
 {
 	bool bRet = false;
 	PER_SOCKET_CONTEXT *pSkContext = d->rscSocketContext.get();
 	pSkContext->Reset();
-	pSkContext->m_uUserKey = uUserKey;
+	pSkContext->m_uUserKey = uSrvKey;
 
 	do
 	{
@@ -122,12 +122,12 @@ void IOCPClient::StopClient()
 	IOCPBase::UninitIOCP();
 }
 
-void IOCPClient::SendData(unsigned uUserKey, unsigned uMsgType, const char* data, unsigned uLength)
+void IOCPClient::SendData(unsigned uSrvKey, unsigned uMsgType, const char* data, unsigned uLength)
 {
-	IOCPBase::Send(uUserKey, uMsgType, data, uLength);
+	IOCPBase::Send(uSrvKey, uMsgType, data, uLength);
 }
 
-void IOCPClient::Disconnect(unsigned uUserKey)
+void IOCPClient::Disconnect(unsigned uSrvKey)
 {
-	IOCPBase::Disconnect(uUserKey);
+	IOCPBase::Disconnect(uSrvKey);
 }

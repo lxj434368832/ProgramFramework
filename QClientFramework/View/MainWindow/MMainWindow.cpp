@@ -1,6 +1,6 @@
 #include "MMainWindow.h"
 #include "ui_MMainWindow.h"
-#include "..\..\Controller\ControllerManage\ControllerManage.h"
+#include "..\..\Controller\ControllerManage\include\IControllerManage.h"
 #include "..\..\CommonFile\CommonDefine.h"
 #include <QFileDialog>
 #include <QElapsedTimer>

@@ -34,36 +34,22 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="MainModel.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ModelManage.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ModelColleague.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_MainModel.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_MainModel.cpp">
-      <Filter>Generated Files\Release</Filter>
-    </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="IModelManage.h">
+    <ClInclude Include="include\IModelManage.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ModelManage.h">
+    <ClInclude Include="src\ModelColleague.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ModelColleague.h">
+    <ClInclude Include="src\ModelManage.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <CustomBuild Include="MainModel.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
+    <ClCompile Include="src\ModelColleague.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ModelManage.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
